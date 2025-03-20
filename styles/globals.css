@@ -1,0 +1,389 @@
+:root {
+  --royal-green: #1B392F;
+  --royal-gold: #C4A962;
+  --royal-cream: #E5E0D5;
+  --royal-brown: #D3C4A9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--royal-cream);
+  color: var(--royal-green);
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  box-sizing: content-box !important;
+}
+
+/* Section Styles */
+.hero-section {
+  background-color: var(--royal-green);
+  color: var(--royal-cream);
+  padding: 0 0 3rem 0;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+}
+
+.benefits-section {
+  background-color: var(--royal-cream);
+  padding: 6rem 0;
+}
+
+.how-it-works {
+  background-color: var(--royal-brown);
+  padding: 6rem 0;
+}
+
+.rewards-section {
+  background-color: var(--royal-cream);
+  padding: 6rem 0;
+}
+
+.testimonials-section {
+  background-color: var(--royal-brown);
+  padding: 6rem 0;
+}
+
+.footer {
+  background-color: var(--royal-green);
+  color: var(--royal-cream);
+  padding: 4rem 0;
+}
+
+/* Card Styles */
+.benefit-card {
+  background-color: var(--royal-cream);
+  border-radius: 15px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reward-card {
+  background-color: var(--royal-cream);
+  border-radius: 15px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.testimonial-card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+/* Button Styles */
+.btn-royal-gold {
+  background-color: var(--royal-gold) !important;
+  color: var(--royal-green) !important;
+  border: none !important;
+  padding: 12px 30px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-royal-gold:hover {
+  background-color: #b39855 !important;
+  transform: translateY(-2px);
+}
+
+/* Text Styles */
+.section-title {
+  color: var(--royal-green);
+  font-family: 'Crimson Text', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+.hero-title {
+  font-family: 'Crimson Text', serif;
+  font-size: 3.2rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.2;
+  color: var(--royal-gold) !important;
+}
+
+/* Add styles for hero image */
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Points Badge */
+.points-badge {
+  background-color: var(--royal-gold);
+  color: var(--royal-green);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* Navigation */
+.navbar {
+  background-color: var(--royal-green) !important;
+  padding: 0.75rem 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  box-sizing: content-box !important;
+}
+
+.navbar-logo {
+  border-radius: 50%;
+  object-fit: cover;
+  max-height: none !important;
+  height: auto !important;
+  box-sizing: content-box !important;
+}
+
+.navbar-brand {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-sizing: content-box !important;
+}
+
+.brand-text {
+  color: var(--royal-gold) !important;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0 !important;
+  margin-left: 0.5rem !important;
+  box-sizing: content-box !important;
+}
+
+.nav-button {
+  background-color: var(--royal-gold) !important;
+  color: var(--royal-green) !important;
+  border: none !important;
+  padding: 8px 24px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.nav-button:hover {
+  background-color: #b39855 !important;
+  transform: translateY(-2px);
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  background-color: var(--royal-gold);
+  color: var(--royal-green);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #b39855;
+  transform: translateY(-2px);
+}
+
+/* Utility Classes */
+.font-serif {
+  font-family: 'Crimson Text', serif !important;
+}
+
+.text-royal-cream {
+  color: var(--royal-cream) !important;
+}
+
+.text-royal-green {
+  color: var(--royal-green) !important;
+}
+
+.bg-royal-green {
+  background-color: var(--royal-green) !important;
+}
+
+.bg-royal-gold {
+  background-color: var(--royal-gold) !important;
+}
+
+.bg-royal-cream {
+  background-color: var(--royal-cream) !important;
+}
+
+/* Footer Headings */
+.footer h3,
+.footer h4 {
+  color: var(--royal-gold) !important;
+  font-family: 'Crimson Text', serif;
+  margin-bottom: 1.5rem;
+}
+
+/* Additional utility class */
+.text-royal-gold {
+  color: var(--royal-gold) !important;
+}
+
+/* Style the step numbers in How It Works section */
+.step-number {
+  width: 60px;
+  height: 60px;
+  background-color: var(--royal-green);
+  color: var(--royal-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 0 8px rgba(196, 169, 98, 0.2),
+              0 0 0 16px rgba(196, 169, 98, 0.1);
+  font-family: 'Crimson Text', serif;
+}
+
+/* Navbar logo styles */
+.navbar img {
+  object-fit: contain;
+}
+
+/* Top header styles */
+.top-header {
+  background-color: var(--royal-green);
+  padding: 1rem 0;
+  margin: 0;
+  border: none;
+}
+
+/* Main navigation styles */
+.main-nav {
+  background-color: var(--royal-green);
+  padding: 1rem 0;
+  margin: 0;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-logo {
+  border-radius: 50%;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: none;
+  max-height: none;
+}
+
+.brand-text {
+  color: var(--royal-gold);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.login-button {
+  background-color: var(--royal-gold);
+  color: var(--royal-green);
+  border: none;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #b39855;
+  transform: translateY(-2px);
+}
+
+/* Keep other existing styles */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--royal-green);
+  font-size: 0.9rem;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.header-right a {
+  color: var(--royal-green);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header-right a:hover {
+  color: var(--royal-gold);
+}
+
+.divider {
+  color: var(--royal-gold);
+}
+
+/* Override any potential Bootstrap borders */
+.container {
+  border: none !important;
+  margin: 0 auto !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+} 
