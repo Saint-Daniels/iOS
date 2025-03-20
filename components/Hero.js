@@ -1,9 +1,12 @@
 'use client';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Hero() {
+  const router = useRouter();
+
   return (
     <section className="hero-section">
       <Container>
@@ -29,9 +32,12 @@ export default function Hero() {
                 Take control of your healthcare journey with rewards fit for royalty. 
                 Sign up today and begin earning points towards a healthier, more rewarding future.
               </p>
-              <Button className="btn-royal-gold">
+              <button 
+                className="btn-royal-gold"
+                onClick={() => router.push('/enrollment')}
+              >
                 BEGIN YOUR ROYAL JOURNEY
-              </Button>
+              </button>
             </div>
           </Col>
         </Row>

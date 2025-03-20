@@ -79,6 +79,11 @@ body {
   padding: 2rem;
   height: 100%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
 }
 
 .reward-card {
@@ -89,10 +94,11 @@ body {
 }
 
 .testimonial-card {
-  background-color: #fff;
+  background-color: #FFFFFF;
+  padding: 2.5rem;
   border-radius: 15px;
-  padding: 2rem;
   margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* Button Styles */
@@ -111,14 +117,23 @@ body {
   transform: translateY(-2px);
 }
 
-/* Text Styles */
+/* Simple section title styles */
 .section-title {
-  color: var(--royal-green);
   font-family: 'Crimson Text', serif;
-  font-size: 2.5rem;
+  color: var(--royal-green);
   text-align: center;
-  margin-bottom: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 }
 
 .hero-title {
@@ -605,5 +620,132 @@ body {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
+  }
+}
+
+/* Add to existing styles */
+.testimonial-image-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #FFFFFF;
+}
+
+.testimonial-image {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.testimonials-section blockquote {
+  color: #333333;
+}
+
+.testimonials-section .text-muted {
+  color: #666666 !important;
+}
+
+/* Add to existing styles */
+.benefit-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background-color: var(--royal-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.benefit-icon {
+  width: 50px;
+  height: 50px;
+  opacity: 0.9;
+  filter: brightness(0) invert(0.8) sepia(0.3) saturate(2) hue-rotate(10deg);
+}
+
+/* Add enrollment page styles */
+.enrollment-page {
+  background-color: var(--royal-cream);
+  padding: 4rem 0;
+  min-height: calc(100vh - 180px);
+}
+
+.enrollment-card {
+  background-color: #FFFFFF;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.enrollment-title {
+  color: var(--royal-green);
+  font-family: 'Crimson Text', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.enrollment-subtitle {
+  color: var(--royal-green);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.enrollment-form {
+  max-width: 100%;
+}
+
+.enrollment-form .form-label {
+  color: var(--royal-green);
+  font-weight: 500;
+}
+
+.enrollment-form .form-control {
+  padding: 0.75rem;
+  border: 1px solid var(--royal-brown);
+  border-radius: 8px;
+}
+
+.enrollment-form .form-control:focus {
+  border-color: var(--royal-gold);
+  box-shadow: 0 0 0 0.2rem rgba(196, 169, 98, 0.25);
+}
+
+.enrollment-form .form-check-label {
+  color: var(--royal-green);
+  font-size: 0.9rem;
+}
+
+.login-link {
+  color: var(--royal-green);
+  margin-top: 1.5rem;
+}
+
+.login-link a {
+  color: var(--royal-gold);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .enrollment-page {
+    padding: 2rem 1rem;
+  }
+  
+  .enrollment-card {
+    padding: 2rem;
+  }
+  
+  .enrollment-title {
+    font-size: 2rem;
   }
 } 

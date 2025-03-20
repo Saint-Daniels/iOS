@@ -1,23 +1,24 @@
 'use client';
 
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import Image from 'next/image';
 
 export default function Benefits() {
   const benefits = [
     {
       title: "Premium Rewards",
-      icon: "🎁",
-      description: "Unlock exclusive healthcare services, products, and experiences with your earned points."
+      description: "Unlock exclusive healthcare services, products, and experiences with your earned points.",
+      icon: "/images/crown-silhouette.svg"
     },
     {
       title: "Royal Treatment",
-      icon: "👑",
-      description: "Priority scheduling, personalized care plans, and VIP healthcare experiences await you."
+      description: "Priority scheduling, personalized care plans, and VIP healthcare experiences await you.",
+      icon: "/images/shield-silhouette.svg"
     },
     {
       title: "Wellness Incentives",
-      icon: "❤️",
-      description: "Earn rewards for maintaining your health and wellness goals. Our program encourages and celebrates your commitment to a healthier lifestyle."
+      description: "Earn points for maintaining your health through preventive care and healthy lifestyle choices.",
+      icon: "/images/heart-silhouette.svg"
     }
   ];
 
@@ -29,7 +30,15 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <Col md={4} key={index}>
               <div className="benefit-card text-center">
-                <div className="display-4 mb-3">{benefit.icon}</div>
+                <div className="benefit-icon-wrapper mb-4">
+                  <Image 
+                    src={benefit.icon}
+                    alt={benefit.title}
+                    width={50}
+                    height={50}
+                    className="benefit-icon"
+                  />
+                </div>
                 <h3 className="font-serif mb-3">{benefit.title}</h3>
                 <p className="text-muted">{benefit.description}</p>
               </div>

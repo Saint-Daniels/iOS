@@ -1,6 +1,7 @@
 'use client';
 
 import { Container, Row, Col } from 'react-bootstrap';
+import Image from 'next/image';
 
 export default function Testimonials() {
   return (
@@ -10,12 +11,14 @@ export default function Testimonials() {
         <Row className="justify-content-center">
           <Col md={8}>
             <div className="testimonial-card text-center">
-              <div className="mb-4">
-                <img 
-                  src="/images/testimonial-avatar.jpg" 
-                  alt="Member" 
-                  className="rounded-circle"
-                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+              <div className="testimonial-image-wrapper mb-4">
+                <Image 
+                  src="/images/pro.jpeg" 
+                  alt="Professional Member Testimonial"
+                  width={120}
+                  height={120}
+                  className="testimonial-image"
+                  priority
                 />
               </div>
               <blockquote className="mb-4">
