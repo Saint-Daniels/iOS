@@ -1,46 +1,53 @@
 'use client';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 export default function Footer() {
   return (
     <footer className="footer">
       <Container>
-        <Row>
-          <Col lg={3}>
-            <h3 className="font-serif mb-4">SAINT DANIELS</h3>
+        <div className="footer-content">
+          <div className="footer-column">
+            <h3 className="footer-title">SAINT DANIELS</h3>
             <div className="social-icons">
-              <a href="#" className="social-icon">FB</a>
-              <a href="#" className="social-icon">IN</a>
-              <a href="#" className="social-icon">SC</a>
-              <a href="#" className="social-icon">TT</a>
-              <a href="#" className="social-icon">IG</a>
+              <a href="#" className="social-icon" aria-label="Facebook">FB</a>
+              <a href="#" className="social-icon" aria-label="LinkedIn">IN</a>
+              <a href="#" className="social-icon" aria-label="Snapchat">SC</a>
+              <a href="#" className="social-icon" aria-label="Twitter">TT</a>
+              <a href="#" className="social-icon" aria-label="Instagram">IG</a>
             </div>
-          </Col>
-          <Col lg={3}>
-            <h4 className="font-serif mb-4">MEMBERS</h4>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-royal-cream text-decoration-none">Newsletter</a></li>
-              <li><a href="#" className="text-royal-cream text-decoration-none">Partners</a></li>
-              <li><a href="#" className="text-royal-cream text-decoration-none">Help Center</a></li>
+          </div>
+          
+          <div className="footer-column">
+            <h4 className="footer-title">MEMBERS</h4>
+            <ul className="footer-links">
+              <li><a href="#">Newsletter</a></li>
+              <li><a href="#">Partners</a></li>
+              <li><a href="#">Help Center</a></li>
             </ul>
-          </Col>
-          <Col lg={3}>
-            <h4 className="font-serif mb-4">RESOURCES</h4>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-royal-cream text-decoration-none">Documents</a></li>
-              <li><a href="#" className="text-royal-cream text-decoration-none">Privacy Policy</a></li>
-              <li><a href="#" className="text-royal-cream text-decoration-none">Terms of Service</a></li>
+          </div>
+          
+          <div className="footer-column">
+            <h4 className="footer-title">RESOURCES</h4>
+            <ul className="footer-links">
+              <li><a href="#">Documents</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
             </ul>
-          </Col>
-          <Col lg={3}>
-            <h4 className="font-serif mb-4">COMPANY</h4>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-royal-cream text-decoration-none">About Us</a></li>
-              <li><a href="#" className="text-royal-cream text-decoration-none">Contact</a></li>
+          </div>
+          
+          <div className="footer-column">
+            <h4 className="footer-title">COMPANY</h4>
+            <ul className="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
             </ul>
-          </Col>
-        </Row>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} Saint Daniels. All rights reserved.</p>
+        </div>
       </Container>
     </footer>
   );

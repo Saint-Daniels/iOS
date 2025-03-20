@@ -9,18 +9,6 @@ export default function Hero() {
       <Container>
         <Row className="align-items-center">
           <Col lg={6}>
-            <h1 className="hero-title">
-              ROYAL<br />HEALTHCARE
-            </h1>
-            <p className="lead mb-4">
-              Take control of your healthcare journey with rewards fit for royalty. 
-              Sign up today and begin earning points towards a healthier, more rewarding future.
-            </p>
-            <Button className="btn-royal-gold">
-              BEGIN YOUR ROYAL JOURNEY
-            </Button>
-          </Col>
-          <Col lg={6}>
             <div className="hero-image-container">
               <Image 
                 src="/images/Poland.jpeg"
@@ -30,6 +18,20 @@ export default function Hero() {
                 className="hero-image"
                 priority
               />
+            </div>
+          </Col>
+          <Col lg={6}>
+            <div className="hero-content">
+              <h1 className="hero-title">
+                ROYAL<br />HEALTHCARE
+              </h1>
+              <p className="lead mb-4">
+                Take control of your healthcare journey with rewards fit for royalty. 
+                Sign up today and begin earning points towards a healthier, more rewarding future.
+              </p>
+              <Button className="btn-royal-gold">
+                BEGIN YOUR ROYAL JOURNEY
+              </Button>
             </div>
           </Col>
         </Row>

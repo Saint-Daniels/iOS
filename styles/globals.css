@@ -3,6 +3,7 @@
   --royal-gold: #C4A962;
   --royal-cream: #E5E0D5;
   --royal-brown: #D3C4A9;
+  --container-padding: 1rem;
 }
 
 * {
@@ -26,10 +27,11 @@ body {
 .hero-section {
   background-color: var(--royal-green);
   color: var(--royal-cream);
-  padding: 0 0 3rem 0;
-  min-height: 50vh;
+  padding: 0 var(--container-padding) 3rem;
+  min-height: 45vh;
   display: flex;
   align-items: center;
+  margin-top: 0;
 }
 
 .benefits-section {
@@ -55,7 +57,7 @@ body {
 .footer {
   background-color: var(--royal-green);
   color: var(--royal-cream);
-  padding: 4rem 0;
+  padding: 4rem var(--container-padding) 2rem;
 }
 
 /* Card Styles */
@@ -109,26 +111,33 @@ body {
 
 .hero-title {
   font-family: 'Crimson Text', serif;
-  font-size: 3.2rem;
-  margin-bottom: 1.2rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
   line-height: 1.2;
   color: var(--royal-gold) !important;
 }
 
 /* Add styles for hero image */
 .hero-image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 1rem;
+  padding: 0 2rem 0 0;
+  margin: 0;
 }
 
 .hero-image {
-  width: 100%;
+  width: 90%;
   height: auto;
   border-radius: 15px;
   object-fit: cover;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content {
+  padding-left: 2rem;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Points Badge */
@@ -170,7 +179,7 @@ body {
 .brand-text {
   color: var(--royal-gold) !important;
   font-family: 'Crimson Text', serif;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 600;
   line-height: 1;
   padding: 0 !important;
@@ -281,7 +290,7 @@ body {
 /* Top header styles */
 .top-header {
   background-color: var(--royal-green);
-  padding: 1rem 0;
+  padding: 1rem var(--container-padding);
   margin: 0;
   border: none;
 }
@@ -325,20 +334,19 @@ body {
   max-height: none;
 }
 
-.brand-text {
-  color: var(--royal-gold);
-  font-family: 'Crimson Text', serif;
-  font-size: 1.8rem;
-  font-weight: 600;
+.header-logo {
+  width: 60px !important;
+  height: 60px !important;
 }
 
 .login-button {
   background-color: var(--royal-gold);
   color: var(--royal-green);
   border: none;
-  padding: 8px 24px;
+  padding: 12px 32px;
   border-radius: 30px;
   font-weight: 600;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -353,6 +361,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   color: var(--royal-green);
   font-size: 0.9rem;
   border: none;
@@ -384,6 +394,203 @@ body {
 .container {
   border: none !important;
   margin: 0 auto !important;
+  padding: 0 var(--container-padding) !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Base responsive styles */
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .brand-text {
+    font-size: 1.8rem;
+  }
+  
+  .header-logo {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Hero responsive styles */
+@media (max-width: 991px) {
+  .hero-section {
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .hero-image-container {
+    padding: 0;
+    margin: 1rem 0 2rem;
+  }
+
+  .hero-image {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* Footer responsive styles */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-column {
+  padding: 0;
+}
+
+.footer-title {
+  color: var(--royal-gold);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: var(--royal-gold);
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 1rem;
+}
+
+.footer-links a {
+  color: var(--royal-cream);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 1rem;
+  display: inline-block;
+  padding: 0.25rem 0;
+}
+
+.footer-links a:hover {
+  color: var(--royal-gold);
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--royal-gold);
+  color: var(--royal-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+  background-color: #b39855;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(196, 169, 98, 0.2);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem var(--container-padding) 1.5rem;
+  }
+
+  .footer-content {
+    gap: 2rem;
+  }
+
+  .footer-column {
+    text-align: center;
+  }
+
+  .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+/* Benefits section responsive */
+@media (max-width: 768px) {
+  .benefits-section {
+    text-align: center;
+    padding: 3rem var(--container-padding);
+  }
+}
+
+/* How it works section responsive */
+@media (max-width: 768px) {
+  .how-it-works {
+    text-align: center;
+    padding: 3rem var(--container-padding);
+  }
+  
+  .step-number {
+    margin: 0 auto 1rem;
+  }
+}
+
+/* Rewards section responsive */
+@media (max-width: 768px) {
+  .rewards-section {
+    padding: 3rem var(--container-padding);
+  }
+  
+  .reward-card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Button responsive styles */
+@media (max-width: 768px) {
+  .btn-royal-gold {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 } 
