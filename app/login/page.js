@@ -139,13 +139,6 @@ export default function Login() {
           </Row>
         </Container>
       </div>
-      <footer className="minimal-footer">
-        <Container>
-          <div className="footer-bottom">
-            <p>© 2025 Saint Daniels Healthcare Rewards. All Rights Reserved</p>
-          </div>
-        </Container>
-      </footer>
     </div>
   );
 } 

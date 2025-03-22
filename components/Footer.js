@@ -8,6 +8,7 @@ const Footer = () => {
   const pathname = usePathname();
   const isMinimalFooter = pathname === '/login' || 
                          pathname === '/signup' || 
+                         pathname === '/register' ||
                          pathname === '/newsletter' || 
                          pathname === '/partners' || 
                          pathname === '/help' ||
@@ -18,15 +19,7 @@ const Footer = () => {
                          pathname === '/contact';
 
   if (isMinimalFooter) {
-    return (
-      <footer className="minimal-footer">
-        <div className="container">
-          <div className="footer-bottom">
-            <p>© 2025 Saint Daniels Healthcare Rewards. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    );
+    return null;
   }
 
   return (

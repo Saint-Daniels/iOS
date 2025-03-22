@@ -106,13 +106,12 @@ body {
 
 /* Section Styles */
 .hero-section {
+  padding: 0;
+  margin: 0;
   background-color: var(--royal-green);
-  color: var(--royal-cream);
-  padding: 2rem var(--container-padding) 3rem;
-  min-height: 45vh;
+  min-height: calc(100vh - 72px - 500px); /* Made hero even smaller */
   display: flex;
   align-items: center;
-  margin-top: 2rem;
 }
 
 .benefits-section {
@@ -182,13 +181,13 @@ body {
   transition: all 0.3s ease !important;
   width: 100%;
   max-width: 300px;
-  margin: 2rem 0;
+  margin: 1rem 0; /* Reduced from 2rem */
   display: inline-block;
   text-align: center;
 }
 
 .hero-section .btn-royal-gold {
-  margin: 2rem 0;
+  margin: 1rem 0; /* Reduced from 2rem */
   display: inline-block;
 }
 
@@ -219,9 +218,9 @@ body {
 
 .hero-title {
   font-family: 'Crimson Text', serif;
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
+  font-size: 3rem; /* Reduced from 3.5rem */
+  margin-bottom: 1rem; /* Reduced from 1.5rem */
+  line-height: 1.1;
   font-weight: 700;
 }
 
@@ -274,30 +273,27 @@ body {
 
 /* Add styles for hero image */
 .hero-image-container {
-  position: relative;
-  padding: 2rem;
+  padding: 0.75rem; /* Reduced padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-image {
-  width: 100%;
-  height: auto;
   border-radius: 20px;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.hero-image:hover {
-  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  height: auto;
 }
 
 .hero-content {
-  padding-left: 2rem;
+  padding: 0.75rem 0; /* Reduced padding */
+  color: var(--royal-cream);
 }
 
 .hero-content p {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  font-size: 1rem; /* Reduced from 1.1rem */
+  margin-bottom: 1rem;
 }
 
 /* Points Badge */
@@ -313,12 +309,9 @@ body {
 
 /* Navigation */
 .navbar {
-  background-color: var(--royal-green) !important;
-  padding: 1rem 0 !important;
-  margin: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
-  box-sizing: content-box !important;
+  padding: 0.5rem 0;
+  margin: 0;
+  background-color: var(--royal-green);
 }
 
 .navbar-logo {
@@ -598,27 +591,21 @@ body {
 /* Hero responsive styles */
 @media (max-width: 991px) {
   .hero-section {
-    padding-top: 0;
-    text-align: center;
-  }
-
-  .hero-image-container {
-    padding: 0;
-    margin: 1rem 0 2rem;
-  }
-
-  .hero-image {
-    width: 95%;
-    max-width: 500px;
-    margin: 0 auto;
+    min-height: auto;
+    padding: 0.5rem 0;
   }
 
   .hero-content {
-    padding: 0 1rem;
+    text-align: center;
+    padding: 0.25rem 0;
   }
 
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+
+  .hero-image-container {
+    padding: 0.25rem 0;
   }
 }
 
@@ -734,6 +721,7 @@ body {
   margin-bottom: 1.5rem;
   position: relative;
   padding-bottom: 1rem;
+  text-align: left;
 }
 
 .footer-title::after {
@@ -744,6 +732,7 @@ body {
   width: 50px;
   height: 2px;
   background-color: var(--royal-gold);
+  transition: all 0.3s ease;
 }
 
 .footer-links {
@@ -1228,12 +1217,11 @@ body {
   content: '';
   position: absolute;
   bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 60px;
   height: 3px;
   background: var(--royal-gold);
-  border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
 .login-bubble .text-muted {
@@ -1319,24 +1307,13 @@ body {
   position: relative;
 }
 
-.login-bubble .text-primary::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--royal-gold);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
 .login-bubble .text-primary:hover {
   color: #b39855 !important;
 }
 
-.login-bubble .text-primary:hover::after {
-  transform: scaleX(1);
+/* Remove the underline effect */
+.login-bubble .text-primary::after {
+  display: none;
 }
 
 .login-bubble .form-check-input:checked {
@@ -2878,7 +2855,18 @@ html, body {
 
   .footer-column {
     width: 100%;
-    text-align: left;
+    text-align: center;
+  }
+
+  .footer-title {
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .footer-bottom {

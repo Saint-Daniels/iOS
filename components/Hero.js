@@ -17,8 +17,8 @@ export default function Hero() {
               <Image 
                 src="/images/Poland.jpeg"
                 alt="Royal Healthcare"
-                width={600}
-                height={600}
+                width={500}
+                height={500}
                 className="hero-image"
                 priority
               />
@@ -31,10 +31,12 @@ export default function Hero() {
                 <br />
                 <span className="royal-text">HEALTHCARE</span>
               </h1>
-              <p className="lead mb-4">
-                Take control of your healthcare journey with rewards fit for royalty. 
-                Sign up today and begin earning points towards a healthier, more rewarding future.
-              </p>
+              <div className="hero-text-container">
+                <p className="lead mb-3">
+                  Take control of your healthcare journey with rewards fit for royalty. 
+                  Sign up today and begin earning points towards a healthier, more rewarding future.
+                </p>
+              </div>
               <button 
                 className="btn-royal-gold"
                 onClick={() => router.push('/signup')}
