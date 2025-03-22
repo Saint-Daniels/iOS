@@ -13,9 +13,10 @@ export default function Header() {
             <Image 
               src="/images/saintdanielslogo.jpeg" 
               alt="Saint Daniels Logo" 
-              width={50} 
-              height={50} 
+              width={100} 
+              height={100} 
               className="header-logo"
+              priority
             />
             <span className="brand-text">SAINT DANIELS</span>
           </div>

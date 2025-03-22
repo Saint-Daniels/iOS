@@ -11,6 +11,7 @@
   padding: 0;
   border: none;
   outline: none;
+  box-sizing: border-box;
 }
 
 body {
@@ -27,11 +28,11 @@ body {
 .hero-section {
   background-color: var(--royal-green);
   color: var(--royal-cream);
-  padding: 0 var(--container-padding) 3rem;
+  padding: 2rem var(--container-padding) 3rem;
   min-height: 45vh;
   display: flex;
   align-items: center;
-  margin-top: 0;
+  margin-top: 2rem;
 }
 
 .benefits-section {
@@ -379,9 +380,103 @@ body {
 /* Top header styles */
 .top-header {
   background-color: var(--royal-green);
-  padding: 1rem var(--container-padding);
+  padding: 1.5rem var(--container-padding);
   margin: 0;
   border: none;
+}
+
+.header-logo {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50%;
+}
+
+.brand-text {
+  color: var(--royal-gold) !important;
+  font-family: 'Crimson Text', serif;
+  font-size: 3rem !important;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0 !important;
+  margin-left: 1rem !important;
+  box-sizing: content-box !important;
+}
+
+.login-button {
+  background-color: var(--royal-gold);
+  color: var(--royal-green);
+  border: none;
+  padding: 12px 36px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    width: 100%;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .brand-text {
+    font-size: 3.2rem !important;
+    margin-left: 1rem !important;
+    line-height: 1;
+  }
+  
+  .header-logo {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  .login-button {
+    padding: 14px 36px;
+    font-size: 1.3rem;
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .header-content {
+    padding: 0.75rem 0;
+  }
+
+  .brand-text {
+    font-size: 2.8rem !important;
+    margin-left: 0.75rem !important;
+  }
+
+  .header-logo {
+    width: 85px !important;
+    height: 85px !important;
+  }
+
+  .navbar-logo {
+    width: 85px !important;
+    height: 85px !important;
+  }
+
+  .login-button {
+    padding: 12px 32px;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+
+  .nav-button {
+    padding: 12px 32px !important;
+    font-size: 1.2rem !important;
+  }
 }
 
 /* Main navigation styles */
@@ -483,13 +578,14 @@ body {
 .container {
   border: none !important;
   margin: 0 auto !important;
-  padding: 0 var(--container-padding) !important;
+  padding: 0 1rem !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
   margin-top: 0 !important;
   padding-top: 0 !important;
-  width: 100%;
-  max-width: 1200px;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 /* Base responsive styles */
@@ -497,6 +593,8 @@ body {
   .header-content {
     justify-content: center;
     text-align: center;
+    padding: 1rem 0;
+    width: 100%;
   }
   
   .brand-text {
@@ -550,6 +648,57 @@ body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem var(--container-padding) 1rem;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-column {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+  }
+
+  .footer-links {
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-links a {
+    font-size: 0.95rem;
+    padding: 0.2rem 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+  }
 }
 
 /* Minimal Footer Styles */
@@ -610,7 +759,7 @@ body {
   left: 0;
   width: 50px;
   height: 2px;
-  background-color: var(--royal-gold);
+  background: var(--royal-gold);
 }
 
 .footer-links {
@@ -679,34 +828,6 @@ body {
   margin: 0;
   font-weight: 500;
   letter-spacing: 0.3px;
-}
-
-@media (max-width: 768px) {
-  .footer {
-    padding: 3rem var(--container-padding) 1.5rem;
-  }
-
-  .footer-content {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
-
-  .footer-column {
-    text-align: center;
-  }
-
-  .footer-title::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .social-icons {
-    justify-content: center;
-  }
-  
-  .footer-links {
-    align-items: center;
-  }
 }
 
 /* Benefits section responsive */
@@ -2746,4 +2867,96 @@ html {
 
 .signup-button:hover {
   background-color: var(--royal-gold-dark);
+}
+
+/* Base styles to prevent side-scroll */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+
+  .footer-column {
+    width: 100%;
+    text-align: left;
+  }
+
+  .footer-bottom {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .feature-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .cta-section {
+    padding: 2rem 1rem;
+  }
+
+  .nav-links {
+    padding: 0.5rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Additional iPhone-specific optimizations */
+@media (max-width: 390px) {
+  .brand-text {
+    font-size: 2.2rem !important;
+    margin-left: 0.75rem !important;
+  }
+
+  .header-logo {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .navbar-logo {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .login-button {
+    padding: 12px 32px;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+
+  .nav-button {
+    padding: 12px 32px !important;
+    font-size: 1.2rem !important;
+  }
 }

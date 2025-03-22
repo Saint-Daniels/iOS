@@ -19,4 +19,18 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
+}
+
+export const metadata = {
+  title: 'Saint Daniels Healthcare Rewards',
+  description: 'Empowering healthcare professionals with exclusive rewards and benefits. Join Saint Daniels Healthcare Rewards for premium healthcare career opportunities and financial solutions.',
+  keywords: 'healthcare rewards, medical professionals, healthcare benefits, medical career opportunities, Saint Daniels Healthcare',
+  openGraph: {
+    title: 'Saint Daniels Healthcare Rewards',
+    description: 'Empowering healthcare professionals with exclusive rewards and benefits.',
+    url: 'https://saintdanielshealthcare.com',
+    siteName: 'Saint Daniels Healthcare Rewards',
+    type: 'website',
+  },
+  viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0',
 } 
