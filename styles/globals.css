@@ -1646,79 +1646,136 @@ body {
 
 /* Partners Page Styles */
 .partners-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #E5DDD3 0%, #D3C4A9 100%);
   padding: 4rem 0;
+  background: linear-gradient(135deg, #E5DDD3 0%, #D3C4A9 100%);
+  min-height: 100vh;
 }
 
 .partners-title {
   font-family: 'Crimson Text', serif;
   color: var(--royal-green);
   font-size: 2.5rem;
+  font-weight: 700;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .partners-subtitle {
   color: #666;
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  text-align: center;
 }
 
 .partner-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   border-radius: 20px;
-  padding: 2rem;
-  height: 100%;
-  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
 }
 
 .partner-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.partner-logo {
-  text-align: center;
-  margin-bottom: 1.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .partner-image {
-  border-radius: 10px;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
-.partner-benefits {
+.card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  object-position: center;
+  background-color: #f8f9fa;
+  padding: 2rem;
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+}
+
+.partner-card:hover .card-img {
+  transform: scale(1.03);
+}
+
+.partner-card .card-body {
+  padding: 2rem;
+}
+
+.partner-card .card-title {
+  color: var(--royal-green);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.partner-card .card-text {
+  color: #4a4a4a;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.partner-features {
   list-style: none;
   padding: 0;
-  margin: 1.5rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
-.partner-benefits li {
+.partner-features li {
+  color: #4a4a4a;
   padding: 0.5rem 0;
-  color: #666;
   position: relative;
   padding-left: 1.5rem;
+  font-size: 1.1rem;
 }
 
-.partner-benefits li::before {
-  content: '✓';
+.partner-features li::before {
+  content: "•";
   color: var(--royal-gold);
   position: absolute;
   left: 0;
+  top: 0.5rem;
 }
 
-.partner-link {
+.learn-more {
   color: var(--royal-gold);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
   display: inline-block;
-  margin-top: 1rem;
 }
 
-.partner-cta {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 3rem;
-  border-radius: 20px;
-  margin-top: 4rem;
+.learn-more:hover {
+  color: var(--royal-green);
+}
+
+@media (max-width: 768px) {
+  .partners-page {
+    padding: 2rem 0;
+  }
+
+  .partners-title {
+    font-size: 2rem;
+  }
+
+  .partner-card .card-title {
+    font-size: 1.5rem;
+  }
+
+  .partner-card .card-text,
+  .partner-features li {
+    font-size: 1rem;
+  }
 }
 
 /* Help Center Page Styles */
