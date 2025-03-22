@@ -7,9 +7,7 @@ const nextConfig = {
     unoptimized: true,
     domains: ['localhost', process.env.NEXT_PUBLIC_DOMAIN || 'your-domain.ondigitalocean.app'],
   },
-  experimental: {
-    appDir: true
-  },
+  experimental: {},
   assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
   basePath: '',
 };

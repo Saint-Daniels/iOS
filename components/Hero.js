@@ -1,7 +1,8 @@
 'use client';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function Hero() {
@@ -26,7 +27,9 @@ export default function Hero() {
           <Col lg={6}>
             <div className="hero-content">
               <h1 className="hero-title">
-                ROYAL<br />HEALTHCARE
+                <span className="royal-text">ROYAL</span>
+                <br />
+                <span className="royal-text">HEALTHCARE</span>
               </h1>
               <p className="lead mb-4">
                 Take control of your healthcare journey with rewards fit for royalty. 
@@ -34,7 +37,7 @@ export default function Hero() {
               </p>
               <button 
                 className="btn-royal-gold"
-                onClick={() => router.push('/enrollment')}
+                onClick={() => router.push('/signup')}
               >
                 BEGIN YOUR ROYAL JOURNEY
               </button>

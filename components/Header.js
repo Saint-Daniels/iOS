@@ -2,6 +2,7 @@
 
 import { Container } from 'react-bootstrap';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -18,7 +19,9 @@ export default function Header() {
             />
             <span className="brand-text">SAINT DANIELS</span>
           </div>
-          <button className="login-button">Login</button>
+          <Link href="/login">
+            <button className="login-button">Login</button>
+          </Link>
         </div>
       </Container>
     </div>

@@ -1,11 +1,37 @@
 'use client';
 
-import { Container } from 'react-bootstrap';
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export default function Footer() {
+const Footer = () => {
+  const pathname = usePathname();
+  const isMinimalFooter = pathname === '/login' || 
+                         pathname === '/signup' || 
+                         pathname === '/newsletter' || 
+                         pathname === '/partners' || 
+                         pathname === '/help' ||
+                         pathname === '/documents' ||
+                         pathname === '/privacy' ||
+                         pathname === '/terms' ||
+                         pathname === '/about' ||
+                         pathname === '/contact';
+
+  if (isMinimalFooter) {
+    return (
+      <footer className="minimal-footer">
+        <div className="container">
+          <div className="footer-bottom">
+            <p>© 2025 Saint Daniels Healthcare Rewards. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="footer">
-      <Container>
+      <div className="container">
         <div className="footer-content">
           <div className="footer-column">
             <h3 className="footer-title">SAINT DANIELS</h3>
@@ -21,34 +47,36 @@ export default function Footer() {
           <div className="footer-column">
             <h4 className="footer-title">MEMBERS</h4>
             <ul className="footer-links">
-              <li><a href="#">Newsletter</a></li>
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Help Center</a></li>
+              <li><Link href="/newsletter">Newsletter</Link></li>
+              <li><Link href="/partners">Partners</Link></li>
+              <li><Link href="/help">Help Center</Link></li>
             </ul>
           </div>
           
           <div className="footer-column">
             <h4 className="footer-title">RESOURCES</h4>
             <ul className="footer-links">
-              <li><a href="#">Documents</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><Link href="/documents">Documents</Link></li>
+              <li><Link href="/privacy">Privacy Policy</Link></li>
+              <li><Link href="/terms">Terms of Service</Link></li>
             </ul>
           </div>
           
           <div className="footer-column">
             <h4 className="footer-title">COMPANY</h4>
             <ul className="footer-links">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
         </div>
         
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Saint Daniels. All rights reserved.</p>
+          <p>© 2025 Saint Daniels Healthcare Rewards. All rights reserved.</p>
         </div>
-      </Container>
+      </div>
     </footer>
   );
-} 
+};
+
+export default Footer; 

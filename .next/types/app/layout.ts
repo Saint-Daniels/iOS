@@ -1,4 +1,4 @@
-// File: /Users/imacuser/Desktop/untitled folder 7/saintdanielsdigtalocean/app/layout.js
+// File: /Users/imacuser/Desktop/untitled folder 9/saintdanielsdigtalocean/app/layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
