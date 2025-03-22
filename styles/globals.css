@@ -11,7 +11,6 @@
   padding: 0;
   border: none;
   outline: none;
-  box-sizing: border-box;
 }
 
 body {
@@ -380,103 +379,9 @@ body {
 /* Top header styles */
 .top-header {
   background-color: var(--royal-green);
-  padding: 1.5rem var(--container-padding);
+  padding: 1rem var(--container-padding);
   margin: 0;
   border: none;
-}
-
-.header-logo {
-  width: 70px !important;
-  height: 70px !important;
-  border-radius: 50%;
-}
-
-.brand-text {
-  color: var(--royal-gold) !important;
-  font-family: 'Crimson Text', serif;
-  font-size: 3rem !important;
-  font-weight: 600;
-  line-height: 1;
-  padding: 0 !important;
-  margin-left: 1rem !important;
-  box-sizing: content-box !important;
-}
-
-.login-button {
-  background-color: var(--royal-gold);
-  color: var(--royal-green);
-  border: none;
-  padding: 12px 36px;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* Mobile responsive styles */
-@media (max-width: 768px) {
-  .header-content {
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    width: 100%;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .brand-text {
-    font-size: 3.2rem !important;
-    margin-left: 1rem !important;
-    line-height: 1;
-  }
-  
-  .header-logo {
-    width: 100px !important;
-    height: 100px !important;
-  }
-  
-  .login-button {
-    padding: 14px 36px;
-    font-size: 1.3rem;
-    margin-left: 1rem;
-  }
-}
-
-@media (max-width: 390px) {
-  .header-content {
-    padding: 0.75rem 0;
-  }
-
-  .brand-text {
-    font-size: 2.8rem !important;
-    margin-left: 0.75rem !important;
-  }
-
-  .header-logo {
-    width: 85px !important;
-    height: 85px !important;
-  }
-
-  .navbar-logo {
-    width: 85px !important;
-    height: 85px !important;
-  }
-
-  .login-button {
-    padding: 12px 32px;
-    font-size: 1.2rem;
-    margin-left: 0.5rem;
-  }
-
-  .nav-button {
-    padding: 12px 32px !important;
-    font-size: 1.2rem !important;
-  }
 }
 
 /* Main navigation styles */
@@ -578,14 +483,13 @@ body {
 .container {
   border: none !important;
   margin: 0 auto !important;
-  padding: 0 1rem !important;
+  padding: 0 var(--container-padding) !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
   margin-top: 0 !important;
   padding-top: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 1200px;
 }
 
 /* Base responsive styles */
@@ -593,8 +497,6 @@ body {
   .header-content {
     justify-content: center;
     text-align: center;
-    padding: 1rem 0;
-    width: 100%;
   }
   
   .brand-text {
@@ -759,7 +661,7 @@ body {
   left: 0;
   width: 50px;
   height: 2px;
-  background: var(--royal-gold);
+  background-color: var(--royal-gold);
 }
 
 .footer-links {
@@ -2876,7 +2778,6 @@ html, body {
   position: relative;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 /* Mobile optimizations */
@@ -2935,28 +2836,16 @@ html, body {
 /* Additional iPhone-specific optimizations */
 @media (max-width: 390px) {
   .brand-text {
-    font-size: 2.2rem !important;
-    margin-left: 0.75rem !important;
+    font-size: 1.6rem !important;
   }
 
-  .header-logo {
-    width: 60px !important;
-    height: 60px !important;
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
   }
 
-  .navbar-logo {
-    width: 60px !important;
-    height: 60px !important;
-  }
-
-  .login-button {
-    padding: 12px 32px;
-    font-size: 1.2rem;
-    margin-left: 0.5rem;
-  }
-
-  .nav-button {
-    padding: 12px 32px !important;
-    font-size: 1.2rem !important;
+  .hero-image {
+    width: 100%;
+    max-width: none;
   }
 }
