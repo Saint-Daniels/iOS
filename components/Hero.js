@@ -11,8 +11,8 @@ export default function Hero() {
   return (
     <section className="hero-section">
       <Container>
-        <Row className="align-items-center">
-          <Col lg={6}>
+        <Row className="align-items-center g-0">
+          <Col lg={6} className="order-lg-1">
             <div className="hero-image-container">
               <Image 
                 src="/images/Poland.jpeg"
@@ -24,19 +24,17 @@ export default function Hero() {
               />
             </div>
           </Col>
-          <Col lg={6}>
+          <Col lg={6} className="order-lg-2">
             <div className="hero-content">
               <h1 className="hero-title">
                 <span className="royal-text">ROYAL</span>
                 <br />
                 <span className="royal-text">HEALTHCARE</span>
               </h1>
-              <div className="hero-text-container">
-                <p className="lead mb-3">
-                  Take control of your healthcare journey with rewards fit for royalty. 
-                  Sign up today and begin earning points towards a healthier, more rewarding future.
-                </p>
-              </div>
+              <p className="lead mb-3">
+                Take control of your healthcare journey with rewards fit for royalty. 
+                Sign up today and begin earning points towards a healthier, more rewarding future.
+              </p>
               <button 
                 className="btn-royal-gold"
                 onClick={() => router.push('/signup')}

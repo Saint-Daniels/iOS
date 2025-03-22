@@ -28,7 +28,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: var(--royal-green);
-  min-height: calc(100vh - 72px - 500px); /* Made hero even smaller */
+  min-height: auto; /* Remove fixed height */
   display: flex;
   align-items: center;
 }
@@ -231,6 +231,7 @@ body {
   padding: 0.5rem 0;
   margin: 0;
   background-color: var(--royal-green);
+  min-height: 60px;
 }
 
 .navbar-logo {
@@ -239,37 +240,38 @@ body {
   max-height: none !important;
   height: auto !important;
   box-sizing: content-box !important;
-  width: 50px !important;
-  height: 50px !important;
+  width: 45px !important;
+  height: 45px !important;
 }
 
 .navbar-brand {
-  padding: 0 !important;
+  padding: 0.25rem 0 !important;
   margin: 0 !important;
-  border: none !important;
-  box-sizing: content-box !important;
+  display: flex;
+  align-items: center;
 }
 
 .brand-text {
   color: var(--royal-gold) !important;
   font-family: 'Crimson Text', serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  line-height: 1;
-  padding: 0 !important;
   margin-left: 0.5rem !important;
-  box-sizing: content-box !important;
+  padding: 0 !important;
 }
 
 .nav-button {
   background-color: var(--royal-gold) !important;
   color: var(--royal-green) !important;
   border: none !important;
-  padding: 10px 30px !important;
+  padding: 8px 24px !important;
   border-radius: 30px !important;
   font-weight: 600 !important;
   transition: all 0.3s ease !important;
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
 }
 
 .nav-button:hover {
@@ -278,6 +280,24 @@ body {
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0.35rem 0;
+    min-height: 50px;
+  }
+
+  .navbar-brand {
+    padding: 0.15rem 0 !important;
+  }
+
+  .brand-text {
+    font-size: 1.4rem;
+  }
+
+  .navbar-logo {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
   .nav-button {
     padding: 6px 20px !important;
     font-size: 0.9rem !important;
@@ -649,7 +669,7 @@ body {
   left: 0;
   width: 50px;
   height: 2px;
-  background-color: var(--royal-gold);
+  background: var(--royal-gold);
   transition: all 0.3s ease;
 }
 
@@ -2755,6 +2775,7 @@ html, body {
   position: relative;
   margin: 0;
   padding: 0;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Mobile optimizations */
@@ -2788,7 +2809,7 @@ html, body {
   }
 
   .hero-section {
-    padding: 2rem 1rem;
+    padding: 1rem 0;
   }
 
   .hero-content {
