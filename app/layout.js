@@ -1,24 +1,17 @@
-import { Inter } from 'next/font/google';
-import Script from 'next/script';
+import './globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Inter } from 'next/font/google'
+import BootstrapClient from './components/BootstrapClient'
 
-// Import styles
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/styles/globals.css';
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-});
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Saint Daniels Healthcare Rewards',
-  description: 'Empowering healthcare professionals with exclusive rewards and benefits. Join Saint Daniels Healthcare Rewards for premium healthcare career opportunities and financial solutions.',
-  keywords: 'healthcare rewards, medical professionals, healthcare benefits, medical career opportunities, Saint Daniels Healthcare',
+  title: 'Office Dashboard',
+  description: 'Modern office management system',
+  keywords: 'office dashboard, workspace management, professional tools',
   openGraph: {
-    title: 'Saint Daniels Healthcare Rewards',
-    description: 'Empowering healthcare professionals with exclusive rewards and benefits.',
-    url: 'https://saintdanielshealthcare.com',
-    siteName: 'Saint Daniels Healthcare Rewards',
+    title: 'Office Dashboard',
+    description: 'Professional office dashboard for managing your workspace.',
     type: 'website',
   },
 }
@@ -29,14 +22,12 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-        <link rel="icon" href="/images/saintdanielslogo.jpeg" type="image/jpeg" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${inter.className} root-layout`}>
+      <body className={inter.className}>
+        <BootstrapClient />
         {children}
-        <Script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" strategy="afterInteractive" />
-        <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" strategy="afterInteractive" />
       </body>
     </html>
-  );
+  )
 } 
