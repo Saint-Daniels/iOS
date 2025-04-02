@@ -6,8 +6,10 @@ import Link from 'next/link';
 import PageTransition from '@/components/PageTransition';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -18,9 +20,16 @@ export default function SignupPage() {
     agreeToTerms: false
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    // Here you would typically send the data to your backend
+    console.log('Form submitted:', formData);
+    // Redirect to the application form
+    router.push('/application');
   };
 
   const handleChange = (e) => {
