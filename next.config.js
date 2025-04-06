@@ -15,7 +15,7 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Enable powered by header
+  // Disable powered by header
   poweredByHeader: false,
 };
 

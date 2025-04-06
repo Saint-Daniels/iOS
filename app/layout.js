@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://saintdanielshealthcare.com'),
   title: 'Saint Daniels Healthcare Rewards',
   description: 'Empowering healthcare professionals with exclusive rewards and benefits. Join Saint Daniels Healthcare Rewards for premium healthcare career opportunities and financial solutions.',
   keywords: 'healthcare rewards, medical professionals, healthcare benefits, medical career opportunities, Saint Daniels Healthcare',
