@@ -1,15 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    unoptimized: true,
-    domains: ['localhost', process.env.NEXT_PUBLIC_DOMAIN || 'your-domain.ondigitalocean.app'],
+    domains: ['localhost'],
+    // Enable automatic image optimization
+    unoptimized: false,
   },
-  experimental: {},
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
-  basePath: '',
+  // Enable automatic static optimization
+  experimental: {
+    optimizeCss: true,
+    // Enable modern JavaScript features
+    modern: true
+  },
+  // Enable compression
+  compress: true,
+  // Enable powered by header
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig; 
