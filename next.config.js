@@ -7,12 +7,6 @@ const nextConfig = {
     // Enable automatic image optimization
     unoptimized: false,
   },
-  // Enable automatic static optimization
-  experimental: {
-    optimizeCss: true,
-    // Enable modern JavaScript features
-    modern: true
-  },
   // Enable compression
   compress: true,
   // Disable powered by header
