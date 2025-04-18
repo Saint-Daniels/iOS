@@ -2,7 +2,7 @@
 
 import { Container, Row, Col } from 'react-bootstrap';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
+import Navbar from '../../components/Navbar';
 
 export default function AboutUs() {
   const values = [

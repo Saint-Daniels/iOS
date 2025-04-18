@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft, FaArrowRight, FaUser, FaMapMarkerAlt, FaBriefcase, FaShieldAlt, FaFileSignature, FaTrash, FaCopy, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-import LegalDisclaimer from '@/components/LegalDisclaimer';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import PageTransition from '@/components/PageTransition';
+import LegalDisclaimer from '../../components/LegalDisclaimer';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import PageTransition from '../../components/PageTransition';
 
 const ApplicationForm = () => {
   const router = useRouter();
