@@ -3,19 +3,19 @@
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
-import MainNavbar from '../components/Navbar';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
 import Benefits from '../components/Benefits';
 import HowItWorks from '../components/HowItWorks';
 import Rewards from '../components/Rewards';
 import Testimonials from '../components/Testimonials';
-import Footer from '../components/Footer';
 
 export default function Home() {
   return (
     <PageTransition>
-      <MainNavbar />
+      <Navbar />
       <div className="home-page">
         <Hero />
         <Benefits />
