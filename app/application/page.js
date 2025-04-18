@@ -13,7 +13,9 @@ const ApplicationForm = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: '',
+    middleName: '',
     lastName: '',
+    suffix: '',
     email: '',
     phone: '',
     dateOfBirth: '',
@@ -21,7 +23,9 @@ const ApplicationForm = () => {
     hasChildren: false,
     isClaimedOnTaxes: false,
     taxFilingStatus: '',
-    spouseName: '',
+    spouseFirstName: '',
+    spouseLastName: '',
+    spouseSSN: '',
     spouseDateOfBirth: '',
     dependents: [],
     residentialStreet: '',
@@ -274,7 +278,7 @@ const ApplicationForm = () => {
   const handleDependentAdd = () => {
     setFormData(prev => ({
       ...prev,
-      dependents: [...prev.dependents, { name: '', dateOfBirth: '' }]
+      dependents: [...prev.dependents, { firstName: '', lastName: '', ssn: '', dateOfBirth: '' }]
     }));
   };
 
@@ -372,7 +376,9 @@ const ApplicationForm = () => {
         break;
       case 2:
         if (!formData.taxFilingStatus) errors.taxFilingStatus = 'Tax filing status is required';
-        if (formData.isMarried && !formData.spouseName) errors.spouseName = 'Spouse name is required';
+        if (formData.isMarried && !formData.spouseFirstName) errors.spouseFirstName = 'Spouse first name is required';
+        if (formData.isMarried && !formData.spouseLastName) errors.spouseLastName = 'Spouse last name is required';
+        if (formData.isMarried && !formData.spouseSSN) errors.spouseSSN = 'Spouse SSN is required';
         if (formData.isMarried && !formData.spouseDateOfBirth) errors.spouseDateOfBirth = 'Spouse date of birth is required';
         if (formData.hasChildren && formData.dependents.length === 0) errors.dependents = 'Please add at least one child';
         break;
@@ -471,8 +477,19 @@ const ApplicationForm = () => {
   // Update SSN input to show masked value
   const formatSSN = (value) => {
     const ssn = value.replace(/\D/g, '');
-    if (ssn.length <= 4) return ssn;
+    if (ssn.length < 9) {
+      return ssn;
+    }
     return '•••-••-' + ssn.slice(-4);
+  };
+
+  const handleSSNChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+    setFormData(prev => ({
+      ...prev,
+      socialSecurityNumber: value
+    }));
+    validateSSN(value);
   };
 
   const renderStep = () => {
@@ -502,6 +519,18 @@ const ApplicationForm = () => {
                 )}
               </div>
               <div className="form-group">
+                <label className="form-label">Middle Name</label>
+                <input
+                  type="text"
+                  name="middleName"
+                  value={formData.middleName}
+                  onChange={handleInputChange}
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="form-group">
                 <label className="form-label">Last Name</label>
                 <input
                   type="text"
@@ -514,6 +543,23 @@ const ApplicationForm = () => {
                 {stepErrors.lastName && (
                   <p className="text-red-500 text-sm mt-1">{stepErrors.lastName}</p>
                 )}
+              </div>
+              <div className="form-group">
+                <label className="form-label">Suffix</label>
+                <select
+                  name="suffix"
+                  value={formData.suffix}
+                  onChange={handleInputChange}
+                  className="form-control"
+                >
+                  <option value="">Select suffix</option>
+                  <option value="Jr">Jr</option>
+                  <option value="Sr">Sr</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                  <option value="V">V</option>
+                </select>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -593,19 +639,35 @@ const ApplicationForm = () => {
                   <h3 className="text-lg font-semibold">Spouse Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="form-group">
-                      <label className="form-label">Spouse's Name</label>
+                      <label className="form-label">Spouse's First Name</label>
                       <input
                         type="text"
-                        name="spouseName"
-                        value={formData.spouseName}
+                        name="spouseFirstName"
+                        value={formData.spouseFirstName}
                         onChange={handleInputChange}
-                        className={getInputClassName('spouseName')}
+                        className={getInputClassName('spouseFirstName')}
                         required
                       />
-                      {stepErrors.spouseName && (
-                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseName}</p>
+                      {stepErrors.spouseFirstName && (
+                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseFirstName}</p>
                       )}
                     </div>
+                    <div className="form-group">
+                      <label className="form-label">Spouse's Last Name</label>
+                      <input
+                        type="text"
+                        name="spouseLastName"
+                        value={formData.spouseLastName}
+                        onChange={handleInputChange}
+                        className={getInputClassName('spouseLastName')}
+                        required
+                      />
+                      {stepErrors.spouseLastName && (
+                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseLastName}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="form-group">
                       <label className="form-label">Spouse's Date of Birth</label>
                       <input
@@ -619,6 +681,25 @@ const ApplicationForm = () => {
                       {stepErrors.spouseDateOfBirth && (
                         <p className="text-red-500 text-sm mt-1">{stepErrors.spouseDateOfBirth}</p>
                       )}
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Spouse's SSN</label>
+                      <input
+                        type="text"
+                        name="spouseSSN"
+                        value={formData.spouseSSN.length === 9 ? formatSSN(formData.spouseSSN) : formData.spouseSSN}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                          setFormData(prev => ({
+                            ...prev,
+                            spouseSSN: value
+                          }));
+                        }}
+                        className="form-control"
+                        placeholder="Enter 9 digits"
+                        maxLength="11"
+                        required
+                      />
                     </div>
                   </div>
                 </div>
@@ -643,39 +724,70 @@ const ApplicationForm = () => {
                 <div className="bg-gray-50 p-4 rounded-lg space-y-4">
                   <h3 className="text-lg font-semibold">Children Information</h3>
                   {formData.dependents.map((dependent, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-lg relative">
-                      <div className="form-group">
-                        <label className="form-label">Child's Name</label>
-                        <input
-                          type="text"
-                          value={dependent.name}
-                          onChange={(e) => handleDependentChange(index, 'name', e.target.value)}
-                          className="form-control"
-                          required
-                        />
+                    <div key={index} className="border-b border-gray-200 pb-4 mb-4">
+                      <div className="flex justify-between items-center mb-4">
+                        <h4 className="text-md font-medium">Child {index + 1}</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newDependents = [...formData.dependents];
+                            newDependents.splice(index, 1);
+                            setFormData(prev => ({ ...prev, dependents: newDependents }));
+                          }}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <FaTrash />
+                        </button>
                       </div>
-                      <div className="form-group">
-                        <label className="form-label">Date of Birth</label>
-                        <input
-                          type="date"
-                          value={dependent.dateOfBirth}
-                          onChange={(e) => handleDependentChange(index, 'dateOfBirth', e.target.value)}
-                          className="form-control"
-                          required
-                        />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="form-group">
+                          <label className="form-label">First Name</label>
+                          <input
+                            type="text"
+                            value={dependent.firstName}
+                            onChange={(e) => handleDependentChange(index, 'firstName', e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">Last Name</label>
+                          <input
+                            type="text"
+                            value={dependent.lastName}
+                            onChange={(e) => handleDependentChange(index, 'lastName', e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setFormData(prev => ({
-                            ...prev,
-                            dependents: prev.dependents.filter((_, i) => i !== index)
-                          }));
-                        }}
-                        className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                      >
-                        <FaTrash className="text-lg" />
-                      </button>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div className="form-group">
+                          <label className="form-label">Date of Birth</label>
+                          <input
+                            type="date"
+                            value={dependent.dateOfBirth}
+                            onChange={(e) => handleDependentChange(index, 'dateOfBirth', e.target.value)}
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">SSN</label>
+                          <input
+                            type="text"
+                            value={dependent.ssn.length === 9 ? formatSSN(dependent.ssn) : dependent.ssn}
+                            onChange={(e) => {
+                              const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                              handleDependentChange(index, 'ssn', value);
+                            }}
+                            className="form-control"
+                            placeholder="Enter 9 digits"
+                            maxLength="11"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -1102,6 +1214,13 @@ const ApplicationForm = () => {
                   <option value="aetna">Aetna</option>
                   <option value="cigna">Cigna</option>
                   <option value="ambetter">Ambetter</option>
+                  <option value="bcbs">Blue Cross Blue Shield</option>
+                  <option value="wellcare">WellCare</option>
+                  <option value="humana">Humana</option>
+                  <option value="caresource">CareSource</option>
+                  <option value="molina">Molina</option>
+                  <option value="oscar">Oscar</option>
+                  <option value="devoted">Devoted</option>
                 </select>
               </div>
 
@@ -1145,15 +1264,8 @@ const ApplicationForm = () => {
                   <input
                     type="text"
                     name="socialSecurityNumber"
-                    value={formatSSN(formData.socialSecurityNumber)}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '').slice(0, 9);
-                      setFormData(prev => ({
-                        ...prev,
-                        socialSecurityNumber: value
-                      }));
-                      validateSSN(value);
-                    }}
+                    value={formData.socialSecurityNumber.length === 9 ? formatSSN(formData.socialSecurityNumber) : formData.socialSecurityNumber}
+                    onChange={handleSSNChange}
                     className={`form-control ${
                       formData.socialSecurityNumber.length > 0
                         ? ssnValidation.isValid
