@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Accordion } from 'react-bootstrap';
-import MainNavbar from '@/components/Navbar';
-import PageTransition from '@/components/PageTransition';
+import MainNavbar from '../../components/Navbar';
+import PageTransition from '../../components/PageTransition';
 
 export default function HelpCenter() {
   const [searchQuery, setSearchQuery] = useState('');

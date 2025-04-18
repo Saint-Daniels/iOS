@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
-import MainNavbar from '@/components/Navbar';
+import MainNavbar from '../../components/Navbar';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
