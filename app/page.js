@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import Link from 'next/link';
-import Image from 'next/image';
-import MainNavbar from '@/components/Navbar';
-import PageTransition from '@/components/PageTransition';
+import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FaArrowRight } from 'react-icons/fa';
+import MainNavbar from '../components/Navbar';
+import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
 import Benefits from '../components/Benefits';
 import HowItWorks from '../components/HowItWorks';

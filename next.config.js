@@ -11,16 +11,6 @@ const nextConfig = {
   compress: true,
   // Disable powered by header
   poweredByHeader: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': __dirname,
-    };
-    return config;
-  },
-  experimental: {
-    appDir: true,
-  },
 };
 
 module.exports = nextConfig; 
