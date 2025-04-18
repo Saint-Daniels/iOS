@@ -3,7 +3,7 @@ import Script from 'next/script';
 
 // Import styles
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/styles/globals.css';
+import '../styles/globals.css';
 
 const inter = Inter({ 
   subsets: ['latin'],
