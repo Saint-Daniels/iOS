@@ -11,6 +11,7 @@ import Benefits from '../components/Benefits';
 import HowItWorks from '../components/HowItWorks';
 import Rewards from '../components/Rewards';
 import Testimonials from '../components/Testimonials';
+import Link from 'next/link';
 
 export default function Home() {
   return (
