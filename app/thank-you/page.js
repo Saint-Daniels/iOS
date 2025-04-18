@@ -2,9 +2,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaCheckCircle } from 'react-icons/fa';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import PageTransition from '@/components/PageTransition';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import PageTransition from '../../components/PageTransition';
 
 const ThankYou = () => {
   const router = useRouter();
