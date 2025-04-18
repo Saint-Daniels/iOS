@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import PageTransition from '@/components/PageTransition';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import PageTransition from '../../components/PageTransition';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {

@@ -1,7 +1,7 @@
 'use client';
 
 import { Container } from 'react-bootstrap';
-import Navbar from '@/components/Navbar';
+import Navbar from '../../components/Navbar';
 
 export default function TermsOfService() {
   return (

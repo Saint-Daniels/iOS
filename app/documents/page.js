@@ -3,7 +3,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
-import MainNavbar from '@/components/Navbar';
+import MainNavbar from '../../components/Navbar';
 
 export default function Documents() {
   const documentCategories = [
