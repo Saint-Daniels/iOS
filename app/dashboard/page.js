@@ -238,7 +238,7 @@ export default function Dashboard() {
                       <path d="M19 5V10" stroke="#3A77FF" strokeWidth="2" strokeLinecap="round"/>
                     </svg>
                   </div>
-                  <h4>Connect with a Trainer</h4>
+                  <h4>Workout Rewards</h4>
                   <p className="text-muted mb-4">Get personalized fitness plans and coaching from certified trainers.</p>
                   <Button 
                     className="dashboard-btn" 
