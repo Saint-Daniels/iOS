@@ -8,14 +8,15 @@ try {
   app = getApp();
 } catch (error) {
   const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID
+    apiKey: process.env.FIREBASE_API_KEY || "AIzaSyDr7bC7uZCSllzpz0QF6DVnylrLprwYd84",
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN || "saintdaniels-6144c.firebaseapp.com",
+    projectId: process.env.FIREBASE_PROJECT_ID || "saintdaniels-6144c",
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "saintdaniels-6144c.firebasestorage.app",
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "99705276201",
+    appId: process.env.FIREBASE_APP_ID || "1:99705276201:web:6695bbbc70012e92071938",
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID || "G-1CPD7FC0RZ"
   };
+  console.log("API route initializing Firebase with config for project:", firebaseConfig.projectId);
   app = initializeApp(firebaseConfig);
 }
 
