@@ -96,9 +96,6 @@ const ApplicationForm = () => {
   // Add a modal state
   const [showSignatureModal, setShowSignatureModal] = useState(false);
 
-  // Add debug mode
-  const [debugMode, setDebugMode] = useState(true);
-
   // Extract marketing ID from URL when component mounts
   useEffect(() => {
     const extractedID = extractMarketingID();
@@ -359,7 +356,6 @@ const ApplicationForm = () => {
   // Validate signature
   const validateSignature = () => {
     if (!formData.signatureurl || formData.signatureurl.length < 100) {
-      console.error("Signature validation failed: No valid signature URL found");
       setSignatureValidation({
         isValid: false,
         message: 'Please provide your signature'
@@ -373,7 +369,6 @@ const ApplicationForm = () => {
       return false;
     }
     
-    console.log("Signature validation passed");
     setSignatureValidation({
       isValid: true,
       message: 'Signature confirmed'
@@ -541,8 +536,42 @@ const ApplicationForm = () => {
         errors['residentialaddress.zipcode'] = 'ZIP code is required';
         isValid = false;
       }
+      
+      if (!formData.residentialaddress.country.trim()) {
+        errors['residentialaddress.country'] = 'Country is required';
+        isValid = false;
+      }
     }
     else if (step === 5) {
+      // Mailing address validation - only validate if not using residential address
+      if (!formData.sameAsResidential) {
+        if (!formData.mailingStreet.trim()) {
+          errors.mailingStreet = 'Mailing street address is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingCity.trim()) {
+          errors.mailingCity = 'Mailing city is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingState.trim()) {
+          errors.mailingState = 'Mailing state/province is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingZip.trim()) {
+          errors.mailingZip = 'Mailing ZIP code is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingCountry.trim()) {
+          errors.mailingCountry = 'Mailing country is required';
+          isValid = false;
+        }
+      }
+    }
+    else if (step === 6) {
       // Origin information
       if (!formData.countryOfOrigin) {
         errors.countryOfOrigin = 'Country of origin is required';
@@ -554,7 +583,7 @@ const ApplicationForm = () => {
         isValid = false;
       }
     }
-    else if (step === 6) {
+    else if (step === 7) {
       // Employment information
       if (!formData.occupation.trim()) {
         errors.occupation = 'Occupation is required';
@@ -614,7 +643,7 @@ const ApplicationForm = () => {
         return;
       }
       
-      if (step < 8) {
+      if (step < 9) {
         // Move to the next step
         setStep(step + 1);
         return;
@@ -710,7 +739,6 @@ const ApplicationForm = () => {
   
   const saveSignature = () => {
     if (!signaturePadRef.current) {
-      console.error('Signature pad not initialized');
       return false;
     }
     
@@ -734,7 +762,6 @@ const ApplicationForm = () => {
       const dataURL = signaturePadRef.current.toDataURL('image/png', 1.0);
       
       if (!dataURL || dataURL.length < 100) {
-        console.error('Failed to generate signature data URL');
         return false;
       }
       
@@ -759,16 +786,13 @@ const ApplicationForm = () => {
       
       return true;
     } catch (error) {
-      console.error('Error saving signature:', error);
       return false;
     }
   };
   
   // Initialize signature pad
   const initializeSignaturePad = () => {
-    console.log("initializeSignaturePad called");
     if (!signatureCanvasRef.current) {
-      console.error("Canvas reference is null");
       return null;
     }
     
@@ -781,7 +805,6 @@ const ApplicationForm = () => {
       // Set canvas dimensions
       const canvas = signatureCanvasRef.current;
       const rect = canvas.getBoundingClientRect();
-      console.log("Canvas size:", rect.width, rect.height);
       
       const ratio = Math.max(window.devicePixelRatio || 1, 1);
       
@@ -803,8 +826,6 @@ const ApplicationForm = () => {
       
       canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
       canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-      console.log("Creating new SignaturePad instance...");
       
       // Create new SignaturePad instance with improved settings
       signaturePadRef.current = new SignaturePad(canvas, {
@@ -817,8 +838,6 @@ const ApplicationForm = () => {
         dotSize: 2,   // Better for touch
       });
       
-      console.log("Signature pad created successfully");
-      
       return () => {
         if (signaturePadRef.current) {
           signaturePadRef.current.off();
@@ -828,7 +847,6 @@ const ApplicationForm = () => {
         canvas.removeEventListener('touchmove', handleTouchMove);
       };
     } catch (err) {
-      console.error("Error in initializeSignaturePad:", err);
       return null;
     }
   };
@@ -849,8 +867,6 @@ const ApplicationForm = () => {
   // Re-initialize when modal opens with a more reliable approach
   useEffect(() => {
     if (showSignatureModal) {
-      console.log("Modal open, initializing signature pad...");
-      
       // Clear previous signature data when opening modal
       if (signaturePadRef.current) {
         signaturePadRef.current.clear();
@@ -859,35 +875,30 @@ const ApplicationForm = () => {
       // Delay to ensure DOM is ready and modal is visible
       const timer = setTimeout(() => {
         try {
-          console.log("Attempting to initialize signature pad after delay");
           const canvas = signatureCanvasRef.current;
           if (!canvas) {
-            console.error("Canvas element not found after delay!");
             return;
           }
           
           const cleanup = initializeSignaturePad();
-          console.log('Signature pad initialized after delay');
           
           // Handle window resize for responsive canvas
           const handleResize = () => {
             try {
-              console.log("Window resize detected, reinitializing signature pad");
               initializeSignaturePad();
             } catch (err) {
-              console.error('Error reinitializing signature pad on resize:', err);
+              // Silent error handling
             }
           };
           
           // Handle orientation change on mobile
           const handleOrientationChange = () => {
             try {
-              console.log("Orientation change detected, reinitializing signature pad");
               setTimeout(() => {
                 initializeSignaturePad();
               }, 200);
             } catch (err) {
-              console.error('Error reinitializing signature pad on orientation change:', err);
+              // Silent error handling
             }
           };
           
@@ -902,7 +913,7 @@ const ApplicationForm = () => {
             }
           };
         } catch (err) {
-          console.error('Error initializing signature pad:', err);
+          // Silent error handling
         }
       }, 300); // Increased delay for better reliability
       
@@ -944,11 +955,6 @@ const ApplicationForm = () => {
       document.body.style.overflow = ''; // Restore scrolling
     };
   }, [showSignatureModal]);
-
-  // Add debug panel toggle
-  const toggleDebugMode = () => {
-    setDebugMode(!debugMode);
-  };
 
   const renderStep = () => {
     switch (step) {
@@ -1462,6 +1468,9 @@ const ApplicationForm = () => {
                     className="form-control"
                     required
                   />
+                  {stepErrors.mailingStreet && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.mailingStreet}</p>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="form-group">
@@ -1474,17 +1483,30 @@ const ApplicationForm = () => {
                       className="form-control"
                       required
                     />
+                    {stepErrors.mailingCity && (
+                      <p className="text-red-500 text-sm mt-1">{stepErrors.mailingCity}</p>
+                    )}
                   </div>
                   <div className="form-group">
-                    <label className="form-label">State</label>
-                    <input
-                      type="text"
+                    <label className="form-label">State/Province</label>
+                    <select
                       name="mailingState"
                       value={formData.mailingState}
                       onChange={handleInputChange}
                       className="form-control"
                       required
-                    />
+                      disabled={!formData.mailingCountry}
+                    >
+                      <option value="">Select state/province</option>
+                      {getStatesForCountry(formData.mailingCountry).map(state => (
+                        <option key={state.value} value={state.value}>
+                          {state.label}
+                        </option>
+                      ))}
+                    </select>
+                    {stepErrors.mailingState && (
+                      <p className="text-red-500 text-sm mt-1">{stepErrors.mailingState}</p>
+                    )}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1498,17 +1520,35 @@ const ApplicationForm = () => {
                       className="form-control"
                       required
                     />
+                    {stepErrors.mailingZip && (
+                      <p className="text-red-500 text-sm mt-1">{stepErrors.mailingZip}</p>
+                    )}
                   </div>
                   <div className="form-group">
                     <label className="form-label">Country</label>
-                    <input
-                      type="text"
+                    <select
                       name="mailingCountry"
                       value={formData.mailingCountry}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        setFormData(prev => ({ 
+                          ...prev, 
+                          mailingState: '' 
+                        }));
+                      }}
                       className="form-control"
                       required
-                    />
+                    >
+                      <option value="">Select country</option>
+                      {countries.map(country => (
+                        <option key={country.value} value={country.value}>
+                          {country.label}
+                        </option>
+                      ))}
+                    </select>
+                    {stepErrors.mailingCountry && (
+                      <p className="text-red-500 text-sm mt-1">{stepErrors.mailingCountry}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1784,7 +1824,6 @@ const ApplicationForm = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            console.log("Change signature clicked");
                             setShowSignatureModal(true);
                           }}
                           className="bg-gray-700 hover:bg-gray-800 text-white py-2 px-4 rounded-md text-sm font-medium"
@@ -1820,7 +1859,6 @@ const ApplicationForm = () => {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          console.log("Sign button clicked");
                           setShowSignatureModal(true);
                         }}
                         style={{
@@ -1908,24 +1946,6 @@ const ApplicationForm = () => {
                     </div>
                   </div>
                   
-                  {/* Test button row that's hard to miss */}
-                  {step === 8 && (
-                    <div className="mb-4 p-3 bg-red-500 text-white rounded-md">
-                      <p className="text-white font-bold mb-2">CLICK THIS RED BUTTON TO SIGN:</p>
-                      <button 
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          console.log("EMERGENCY TEST BUTTON CLICKED");
-                          setShowSignatureModal(true);
-                        }}
-                        className="w-full bg-white text-red-600 font-bold py-3 px-4 rounded text-lg"
-                      >
-                        OPEN SIGNATURE MODAL
-                      </button>
-                    </div>
-                  )}
-
                   <form onSubmit={handleSubmit} className="enrollment-form">
                     {renderStep()}
 
@@ -1940,7 +1960,7 @@ const ApplicationForm = () => {
                           Previous
                         </button>
                       )}
-                      {step < 8 ? (
+                      {step < 9 ? (
                         <button
                           type="button"
                           onClick={() => {
@@ -2039,13 +2059,10 @@ const ApplicationForm = () => {
                 className="flex-1 py-2 px-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-bold"
                 style={{ backgroundColor: '#1d4ed8', fontWeight: 'bold' }}
                 onClick={() => {
-                  console.log("Save button clicked");
                   const result = saveSignature();
                   if (result) {
-                    console.log("Signature saved successfully, closing modal");
                     setShowSignatureModal(false);
                   } else {
-                    console.log("Signature save failed");
                     alert('Please provide your signature before continuing.');
                   }
                 }} 
@@ -2053,58 +2070,6 @@ const ApplicationForm = () => {
                 Accept & Continue
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Debug panel */}
-      {debugMode && (
-        <div style={{
-          position: 'fixed',
-          bottom: '0',
-          left: '0',
-          right: '0',
-          padding: '10px',
-          backgroundColor: 'rgba(255, 0, 0, 0.9)',
-          color: 'white',
-          zIndex: 99999,
-          textAlign: 'center',
-          boxShadow: '0 -4px 6px rgba(0, 0, 0, 0.1)'
-        }}>
-          <h3 style={{fontWeight: 'bold', marginBottom: '5px'}}>SIGNATURE DEBUG PANEL</h3>
-          <div style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '5px'}}>
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                setShowSignatureModal(true);
-              }}
-              style={{
-                backgroundColor: 'white',
-                color: 'black',
-                padding: '8px 15px',
-                borderRadius: '4px',
-                fontWeight: 'bold',
-                border: 'none'
-              }}
-            >
-              OPEN SIGNATURE MODAL
-            </button>
-            <button 
-              onClick={toggleDebugMode}
-              style={{
-                backgroundColor: 'black',
-                color: 'white',
-                padding: '8px 15px',
-                borderRadius: '4px',
-                border: 'none'
-              }}
-            >
-              Hide Debug Panel
-            </button>
-          </div>
-          <div style={{fontSize: '14px'}}>
-            <p>Modal State: {showSignatureModal ? 'OPEN' : 'CLOSED'}</p>
-            <p>Canvas Ref: {signatureCanvasRef.current ? 'EXISTS' : 'NULL'}</p>
           </div>
         </div>
       )}
