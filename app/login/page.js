@@ -6,11 +6,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-// Dummy credentials
-const VALID_CREDENTIALS = {
-  email: 'user@example.com',
-  password: 'password123'
-};
+// Dummy credentials - No longer required as we'll accept any input
+// const VALID_CREDENTIALS = {
+//   email: 'user@example.com',
+//   password: 'password123'
+// };
 
 export default function Login() {
   const router = useRouter();
@@ -24,14 +24,14 @@ export default function Login() {
     e.preventDefault();
     setError('');
 
-    // Check credentials
-    if (formData.email === VALID_CREDENTIALS.email && 
-        formData.password === VALID_CREDENTIALS.password) {
+    // Accept any non-empty credentials
+    if (formData.email.trim() && formData.password.trim()) {
       // Set login status and redirect to dashboard
       sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('userEmail', formData.email); // Store for personalization
       router.push('/dashboard');
     } else {
-      setError('Invalid email or password. Please try again.');
+      setError('Please enter both email and password.');
     }
   };
 
@@ -68,6 +68,7 @@ export default function Login() {
                   <div className="text-center mb-4">
                     <h2>Welcome Back</h2>
                     <p className="text-muted">Please sign in to your account</p>
+                    <p className="text-success small">For testing: Any email and password will work</p>
                   </div>
                   
                   {error && (

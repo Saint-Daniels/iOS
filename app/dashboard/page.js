@@ -1,33 +1,84 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Navbar, ProgressBar } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Navbar, ProgressBar, Modal } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import ReceiptScanner from '../components/ReceiptScanner';
+import PersonalTrainerModal from '../components/PersonalTrainerModal';
 
 export default function Dashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [showReceiptScanner, setShowReceiptScanner] = useState(false);
+  const [showTrainerModal, setShowTrainerModal] = useState(false);
+  const [pointsBalance, setPointsBalance] = useState(1250);
+  const [userName, setUserName] = useState('User');
+  const [activities, setActivities] = useState([
+    {
+      date: 'March 22, 2024',
+      description: 'Earned 100 points - Health Check-up'
+    },
+    {
+      date: 'March 15, 2024',
+      description: 'Redeemed 200 points - Gift Card'
+    },
+    {
+      date: 'March 10, 2024',
+      description: 'Earned 150 points - Dental Visit'
+    }
+  ]);
 
-  // Check if user is logged in
+  // Check if user is logged in and get user email
   useEffect(() => {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (!isLoggedIn) {
       router.push('/login');
     } else {
+      // Get user email from session storage
+      const userEmail = sessionStorage.getItem('userEmail');
+      if (userEmail) {
+        // Extract name from email (before @ symbol)
+        const namePart = userEmail.split('@')[0];
+        // Capitalize first letter
+        const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+        setUserName(formattedName);
+      }
       setLoading(false);
     }
   }, [router]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userEmail');
     router.push('/login');
   };
 
   const handleOfferClick = (offerId) => {
     // Handle offer click - could navigate to offer details or show modal
     console.log('Offer clicked:', offerId);
+  };
+
+  const handleScanSuccess = (result) => {
+    // Update points balance
+    setPointsBalance(prev => prev + result.pointsAwarded);
+    
+    // Add to activity list
+    const today = new Date();
+    const formattedDate = today.toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    
+    setActivities(prev => [
+      {
+        date: formattedDate,
+        description: `Earned ${result.pointsAwarded} points - Organic Food Rebate`
+      },
+      ...prev
+    ]);
   };
 
   if (loading) {
@@ -63,7 +114,7 @@ export default function Dashboard() {
 
       <Container>
         <div className="dashboard-welcome">
-          <h1>Welcome Back, User!</h1>
+          <h1>Welcome Back, {userName}!</h1>
           <p className="text-muted">Manage your healthcare rewards and track your progress</p>
         </div>
 
@@ -72,7 +123,7 @@ export default function Dashboard() {
             <Card className="dashboard-card h-100">
               <Card.Body>
                 <Card.Title>Points Balance</Card.Title>
-                <div className="points-display">1,250</div>
+                <div className="points-display">{pointsBalance}</div>
                 <p className="text-muted mb-4">Available Rewards Points</p>
                 <div className="progress-section">
                   <div className="progress mb-3" style={{ height: '20px' }}>
@@ -101,18 +152,12 @@ export default function Dashboard() {
               <Card.Body>
                 <Card.Title>Recent Activity</Card.Title>
                 <ul className="activity-list">
-                  <li className="activity-item">
-                    <div className="activity-date">March 22, 2024</div>
-                    <p className="activity-description">Earned 100 points - Health Check-up</p>
-                  </li>
-                  <li className="activity-item">
-                    <div className="activity-date">March 15, 2024</div>
-                    <p className="activity-description">Redeemed 200 points - Gift Card</p>
-                  </li>
-                  <li className="activity-item">
-                    <div className="activity-date">March 10, 2024</div>
-                    <p className="activity-description">Earned 150 points - Dental Visit</p>
-                  </li>
+                  {activities.map((activity, index) => (
+                    <li key={index} className="activity-item">
+                      <div className="activity-date">{activity.date}</div>
+                      <p className="activity-description">{activity.description}</p>
+                    </li>
+                  ))}
                 </ul>
                 <Button className="dashboard-btn mt-3">
                   View All Activities
@@ -148,6 +193,60 @@ export default function Dashboard() {
                 <Button className="dashboard-btn mt-3">
                   View Coverage Details
                 </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="g-4 mb-5">
+          <Col md={6}>
+            <Card className="dashboard-card h-100">
+              <Card.Body>
+                <Card.Title>Grocery Points</Card.Title>
+                <div className="p-3 text-center">
+                  <div className="mb-3">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 21C5.89543 21 5 20.1046 5 19V3C5 2.44772 5.44772 2 6 2H18C18.5523 2 19 2.44772 19 3V19C19 20.1046 18.1046 21 17 21H7Z" stroke="#4CAF50" strokeWidth="2"/>
+                      <path d="M9 7H15" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M9 11H15" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M9 15H13" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  <h4>Grocery Rewards</h4>
+                  <p className="text-muted mb-4">Earn 1 point for every dollar spent on USDA food. Upload your receipt to redeem!</p>
+                  <Button 
+                    className="dashboard-btn" 
+                    onClick={() => setShowReceiptScanner(true)}
+                  >
+                    Scan Receipt
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          
+          <Col md={6}>
+            <Card className="dashboard-card h-100">
+              <Card.Body>
+                <Card.Title>Personal Trainer</Card.Title>
+                <div className="p-3 text-center">
+                  <div className="mb-3">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.5 6.5C6.5 8.98528 8.51472 11 11 11C13.4853 11 15.5 8.98528 15.5 6.5C15.5 4.01472 13.4853 2 11 2C8.51472 2 6.5 4.01472 6.5 6.5Z" stroke="#3A77FF" strokeWidth="2"/>
+                      <path d="M3 19C3 15.6863 5.68629 13 9 13H13C16.3137 13 19 15.6863 19 19V22H3V19Z" stroke="#3A77FF" strokeWidth="2"/>
+                      <path d="M16.5 7.5H21.5" stroke="#3A77FF" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M19 5V10" stroke="#3A77FF" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  <h4>Connect with a Trainer</h4>
+                  <p className="text-muted mb-4">Get personalized fitness plans and coaching from certified trainers.</p>
+                  <Button 
+                    className="dashboard-btn" 
+                    onClick={() => setShowTrainerModal(true)}
+                  >
+                    Connect Now
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -225,6 +324,18 @@ export default function Dashboard() {
           </Col>
         </Row>
       </Container>
+
+      {/* Modals */}
+      <ReceiptScanner 
+        show={showReceiptScanner} 
+        onHide={() => setShowReceiptScanner(false)} 
+        onSuccess={handleScanSuccess}
+      />
+      
+      <PersonalTrainerModal
+        show={showTrainerModal}
+        onHide={() => setShowTrainerModal(false)}
+      />
     </div>
   );
 } 
