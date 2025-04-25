@@ -1,17 +1,20 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft, FaArrowRight, FaUser, FaMapMarkerAlt, FaBriefcase, FaShieldAlt, FaFileSignature, FaTrash, FaCopy, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import LegalDisclaimer from '../../components/LegalDisclaimer';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
+import { extractMarketingID } from '../utils/leadTracking';
+import SignaturePad from 'signature_pad';
 
 const ApplicationForm = () => {
   const router = useRouter();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
+    // Personal information
     firstName: '',
     middleName: '',
     lastName: '',
@@ -19,37 +22,60 @@ const ApplicationForm = () => {
     email: '',
     phone: '',
     dateOfBirth: '',
+    ssn: '',
+    stateoforigin: '',
+
+    // Family information 
     isMarried: false,
     hasChildren: false,
     isClaimedOnTaxes: false,
     taxFilingStatus: '',
-    spouseFirstName: '',
-    spouseLastName: '',
-    spouseSSN: '',
-    spouseDateOfBirth: '',
+    
+    // Spouse information (as map for database)
+    spouseinfo: {
+      firstname: '',
+      lastname: '',
+      dateofbirth: '',
+      ssn: ''
+    },
     dependents: [],
-    residentialStreet: '',
-    residentialCity: '',
-    residentialState: '',
-    residentialZip: '',
-    residentialCountry: '',
+    
+    // Residential address (as map for database)
+    residentialaddress: {
+      streetaddress: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      country: ''
+    },
+    
     sameAsResidential: true,
     mailingStreet: '',
     mailingCity: '',
     mailingState: '',
     mailingZip: '',
     mailingCountry: '',
+    
     countryOfOrigin: '',
-    stateOfOrigin: '',
     occupation: '',
     expectedSalary: '',
+    
+    // Insurance information
     hasExistingInsurance: false,
     existingInsuranceType: '',
     healthInsuranceProvider: '',
+    oscar: '',
+    unitedhealthcare: '',
+    wellcare: '',
     deductible: '',
-    socialSecurityNumber: '',
-    electronicSignature: '',
+    
+    // Signature information
+    signature: false,
+    signatureurl: '', // This is the field used to display the signature
     signatureConsent: false,
+
+    // Status for tracking
+    status: 'Application Submitted'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ssnValidation, setSsnValidation] = useState({
@@ -62,6 +88,22 @@ const ApplicationForm = () => {
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [stepErrors, setStepErrors] = useState({});
+  const [marketingID, setMarketingID] = useState('UNKNOWN');
+
+  const signatureCanvasRef = useRef(null);
+  const signaturePadRef = useRef(null);
+
+  // Add a modal state
+  const [showSignatureModal, setShowSignatureModal] = useState(false);
+
+  // Add debug mode
+  const [debugMode, setDebugMode] = useState(true);
+
+  // Extract marketing ID from URL when component mounts
+  useEffect(() => {
+    const extractedID = extractMarketingID();
+    setMarketingID(extractedID);
+  }, []);
 
   // Add country and state options
   const countries = [
@@ -314,17 +356,42 @@ const ApplicationForm = () => {
     }
   };
 
-  const validateSignature = (firstName, lastName) => {
-    const isValid = firstName === formData.firstName && lastName === formData.lastName;
+  // Validate signature
+  const validateSignature = () => {
+    if (!formData.signatureurl || formData.signatureurl.length < 100) {
+      console.error("Signature validation failed: No valid signature URL found");
+      setSignatureValidation({
+        isValid: false,
+        message: 'Please provide your signature'
+      });
+      
+      setStepErrors(prev => ({
+        ...prev,
+        signatureurl: 'Your signature is required'
+      }));
+      
+      return false;
+    }
+    
+    console.log("Signature validation passed");
     setSignatureValidation({
-      isValid,
-      message: isValid ? 'Signature matches personal information' : 'Signature must match your first and last name exactly'
+      isValid: true,
+      message: 'Signature confirmed'
     });
-    return isValid;
+    
+    setStepErrors(prev => ({
+      ...prev,
+      signatureurl: undefined
+    }));
+    
+    return true;
   };
 
-  // Validate all required fields
+  // Fix the validateForm function to ensure isValid is properly set
   const validateForm = () => {
+    const errors = {};
+    
+    // Check required fields
     const requiredFields = {
       firstName: 'First Name',
       lastName: 'Last Name',
@@ -332,29 +399,45 @@ const ApplicationForm = () => {
       phone: 'Phone',
       dateOfBirth: 'Date of Birth',
       taxFilingStatus: 'Tax Filing Status',
-      residentialStreet: 'Residential Street',
-      residentialCity: 'Residential City',
-      residentialState: 'Residential State',
-      residentialZip: 'Residential ZIP',
-      residentialCountry: 'Residential Country',
+      residentialaddress: 'Residential Address',
       countryOfOrigin: 'Country of Origin',
-      stateOfOrigin: 'State of Origin',
       occupation: 'Occupation',
       expectedSalary: 'Expected Salary',
       healthInsuranceProvider: 'Health Insurance Provider',
-      deductible: 'Deductible',
-      socialSecurityNumber: 'Social Security Number',
-      signatureFirstName: 'Signature First Name',
-      signatureLastName: 'Signature Last Name',
-      signatureConsent: 'Signature Consent'
+      deductible: 'Deductible'
     };
 
-    const missingFields = Object.entries(requiredFields)
-      .filter(([key]) => !formData[key])
-      .map(([_, label]) => label);
+    // Only check required fields for US residents
+    if (formData.countryOfOrigin === 'US') {
+      requiredFields.stateoforigin = 'State of Origin';
+    }
 
-    setIsFormValid(missingFields.length === 0);
-    return missingFields;
+    let isValid = true;
+    for (const [key, label] of Object.entries(requiredFields)) {
+      if (!formData[key]) {
+        errors[key] = `${label} is required`;
+        isValid = false;
+      }
+    }
+
+    // Check SSN
+    if (!validateSSN(formData.ssn)) {
+      errors.ssn = 'Please enter a valid 9-digit Social Security Number';
+      isValid = false;
+    }
+
+    // Check signature
+    if (!formData.signatureData) {
+      errors.signatureData = 'Signature is required';
+    }
+    
+    if (!formData.signatureConsent) {
+      errors.signatureConsent = 'You must consent to the electronic signature';
+    }
+    
+    setStepErrors(errors);
+    setIsFormValid(isValid);
+    return isValid;
   };
 
   // Update form validation on any change
@@ -362,67 +445,148 @@ const ApplicationForm = () => {
     validateForm();
   }, [formData]);
 
-  // Update validateStep function to make state optional for non-US countries
-  const validateStep = () => {
-    const errors = {};
+  // Update the formatCurrency function to include the dollar sign
+  const formatCurrency = (value) => {
+    if (!value) return '';
     
-    switch (step) {
-      case 1:
-        if (!formData.firstName) errors.firstName = 'First name is required';
-        if (!formData.lastName) errors.lastName = 'Last name is required';
-        if (!formData.email) errors.email = 'Email is required';
-        if (!formData.phone) errors.phone = 'Phone number is required';
-        if (!formData.dateOfBirth) errors.dateOfBirth = 'Date of birth is required';
-        break;
-      case 2:
-        if (!formData.taxFilingStatus) errors.taxFilingStatus = 'Tax filing status is required';
-        if (formData.isMarried && !formData.spouseFirstName) errors.spouseFirstName = 'Spouse first name is required';
-        if (formData.isMarried && !formData.spouseLastName) errors.spouseLastName = 'Spouse last name is required';
-        if (formData.isMarried && !formData.spouseSSN) errors.spouseSSN = 'Spouse SSN is required';
-        if (formData.isMarried && !formData.spouseDateOfBirth) errors.spouseDateOfBirth = 'Spouse date of birth is required';
-        if (formData.hasChildren && formData.dependents.length === 0) errors.dependents = 'Please add at least one child';
-        break;
-      case 3:
-        if (!formData.residentialStreet) errors.residentialStreet = 'Street address is required';
-        if (!formData.residentialCity) errors.residentialCity = 'City is required';
-        if (!formData.residentialState) errors.residentialState = 'State is required';
-        if (!formData.residentialZip) errors.residentialZip = 'ZIP code is required';
-        if (!formData.residentialCountry) errors.residentialCountry = 'Country is required';
-        break;
-      case 4:
-        if (!formData.sameAsResidential) {
-          if (!formData.mailingStreet) errors.mailingStreet = 'Street address is required';
-          if (!formData.mailingCity) errors.mailingCity = 'City is required';
-          if (!formData.mailingState) errors.mailingState = 'State is required';
-          if (!formData.mailingZip) errors.mailingZip = 'ZIP code is required';
-          if (!formData.mailingCountry) errors.mailingCountry = 'Country is required';
-        }
-        break;
-      case 5:
-        if (!formData.countryOfOrigin) errors.countryOfOrigin = 'Country of origin is required';
-        // Only require state if US is selected
-        if (formData.countryOfOrigin === 'US' && !formData.stateOfOrigin) {
-          errors.stateOfOrigin = 'State of origin is required for US residents';
-        }
-        break;
-      case 6:
-        if (!formData.occupation) errors.occupation = 'Occupation is required';
-        if (!formData.expectedSalary) errors.expectedSalary = 'Expected salary is required';
-        break;
-      case 7:
-        if (!formData.healthInsuranceProvider) errors.healthInsuranceProvider = 'Health insurance provider is required';
-        if (!formData.deductible) errors.deductible = 'Deductible preference is required';
-        break;
-      case 8:
-        if (!formData.socialSecurityNumber) errors.socialSecurityNumber = 'Social security number is required';
-        if (!formData.signatureFirstName) errors.signatureFirstName = 'First name is required';
-        if (!formData.signatureLastName) errors.signatureLastName = 'Last name is required';
-        if (!formData.signatureConsent) errors.signatureConsent = 'You must consent to the electronic signature';
-        break;
+    // Remove non-numeric characters except decimal point
+    const numericValue = value.replace(/[^0-9.]/g, '');
+    
+    // Format with commas and 2 decimal places
+    const parts = numericValue.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // Handle decimals
+    if (parts.length > 1) {
+      parts[1] = parts[1].substring(0, 2); // Limit to 2 decimal places
+      return '$' + parts.join('.');
     }
+    
+    return '$' + parts[0];
+  };
 
+  // Validate the current step
+  const validateStep = () => {
+    let errors = {};
+    let isValid = true;
+    
+    console.log(`Validating step ${step}`);
+    
+    // Common validation for step 1-8
+    if (step === 1) {
+      // Personal info validation
+      if (!formData.firstName.trim()) {
+        errors.firstName = 'First name is required';
+        isValid = false;
+      }
+      
+      if (!formData.lastName.trim()) {
+        errors.lastName = 'Last name is required';
+        isValid = false;
+      }
+      
+      if (!formData.email.trim()) {
+        errors.email = 'Email is required';
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        errors.email = 'Please enter a valid email';
+        isValid = false;
+      }
+      
+      if (!formData.phone.trim()) {
+        errors.phone = 'Phone number is required';
+        isValid = false;
+      }
+      
+      if (!formData.dateOfBirth) {
+        errors.dateOfBirth = 'Date of birth is required';
+        isValid = false;
+      }
+    } 
+    else if (step === 3 && formData.isMarried) {
+      // Spouse info validation (if married)
+      if (!formData.spouseinfo.firstname.trim()) {
+        errors['spouseinfo.firstname'] = 'Spouse first name is required';
+        isValid = false;
+      }
+      
+      if (!formData.spouseinfo.lastname.trim()) {
+        errors['spouseinfo.lastname'] = 'Spouse last name is required';
+        isValid = false;
+      }
+      
+      if (!formData.spouseinfo.dateofbirth) {
+        errors['spouseinfo.dateofbirth'] = 'Spouse date of birth is required';
+        isValid = false;
+      }
+    }
+    else if (step === 4) {
+      // Residential address validation
+      if (!formData.residentialaddress.streetaddress.trim()) {
+        errors['residentialaddress.streetaddress'] = 'Street address is required';
+        isValid = false;
+      }
+      
+      if (!formData.residentialaddress.city.trim()) {
+        errors['residentialaddress.city'] = 'City is required';
+        isValid = false;
+      }
+      
+      if (!formData.residentialaddress.state.trim()) {
+        errors['residentialaddress.state'] = 'State is required';
+        isValid = false;
+      }
+      
+      if (!formData.residentialaddress.zipcode.trim()) {
+        errors['residentialaddress.zipcode'] = 'ZIP code is required';
+        isValid = false;
+      }
+    }
+    else if (step === 5) {
+      // Origin information
+      if (!formData.countryOfOrigin) {
+        errors.countryOfOrigin = 'Country of origin is required';
+        isValid = false;
+      }
+      
+      if (formData.countryOfOrigin === 'US' && !formData.stateoforigin) {
+        errors.stateoforigin = 'State of origin is required for US residents';
+        isValid = false;
+      }
+    }
+    else if (step === 6) {
+      // Employment information
+      if (!formData.occupation.trim()) {
+        errors.occupation = 'Occupation is required';
+        isValid = false;
+      }
+      
+      if (!formData.expectedSalary) {
+        errors.expectedSalary = 'Expected salary is required';
+        isValid = false;
+      }
+    }
+    else if (step === 8) {
+      // Final step validation - signature
+      if (!formData.ssn || formData.ssn.length !== 9) {
+        errors.ssn = 'A valid 9-digit Social Security Number is required';
+        isValid = false;
+      }
+      
+      if (!formData.signatureurl || formData.signatureurl.length < 100) {
+        console.log("Signature validation failed in validateStep");
+        errors.signatureurl = 'Your signature is required';
+        isValid = false;
+      }
+      
+      if (!formData.signatureConsent) {
+        errors.signatureConsent = 'You must consent to the electronic signature';
+        isValid = false;
+      }
+    }
+    
     setStepErrors(errors);
-    return Object.keys(errors).length === 0;
+    return isValid;
   };
 
   // Add getInputClassName function
@@ -432,44 +596,81 @@ const ApplicationForm = () => {
     }`;
   };
 
-  // Update handleSubmit to include API call
+  // Handle form submission with updated signature handling
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const missingFields = validateForm();
     
-    if (missingFields.length > 0) {
-      alert(`Please fill in all required fields:\n${missingFields.join('\n')}`);
-      return;
-    }
-
-    if (!validateSSN(formData.socialSecurityNumber)) {
-      return;
-    }
-
-    if (!validateSignature(formData.signatureFirstName, formData.signatureLastName)) {
-      return;
-    }
-    
-    setIsSubmitting(true);
     try {
-      const response = await fetch('/api/submit-application', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit application');
+      console.log('Attempting to submit application form');
+      
+      // Final validation
+      if (!validateStep()) {
+        console.error('Form validation failed on submit');
+        // Scroll to the first error
+        const firstErrorEl = document.querySelector('.text-red-500');
+        if (firstErrorEl) {
+          firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
       }
-
-      const data = await response.json();
-      router.push('/thank-you');
+      
+      if (step < 8) {
+        // Move to the next step
+        setStep(step + 1);
+        return;
+      }
+      
+      // Verify signature exists before submitting
+      if (!formData.signatureurl || formData.signatureurl.length < 100) {
+        console.error('Missing signature on final submission');
+        setStepErrors(prev => ({
+          ...prev,
+          signatureurl: 'A valid signature is required to submit your application'
+        }));
+        return;
+      }
+      
+      setIsSubmitting(true);
+      
+      // Format the data for submission
+      const submissionData = {
+        ...formData,
+        // Format the date properly
+        applicationDate: new Date().toISOString(),
+        // Add marketing ID if present
+        marketingid: marketingID || 'UNKNOWN'
+      };
+      
+      // For demo/dev purposes, log the data being submitted
+      console.log('Submitting application data:', JSON.stringify(submissionData).substring(0, 500) + '...');
+      
+      try {
+        // Make the API call
+        const response = await fetch('/api/submit-application', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submissionData),
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(result.message || 'Failed to submit application');
+        }
+        
+        console.log('Application submitted successfully:', result);
+        
+        // Redirect to thank you page
+        router.push('/thank-you');
+      } catch (error) {
+        console.error('Error submitting application:', error);
+        setIsSubmitting(false);
+        alert('There was an error submitting your application. Please try again.');
+      }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Failed to submit application. Please try again.');
-    } finally {
+      console.error('Unexpected error during submission:', error);
       setIsSubmitting(false);
     }
   };
@@ -487,9 +688,266 @@ const ApplicationForm = () => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 9);
     setFormData(prev => ({
       ...prev,
-      socialSecurityNumber: value
+      ssn: value
     }));
     validateSSN(value);
+  };
+
+  const clearSignature = () => {
+    if (signaturePadRef.current) {
+      signaturePadRef.current.clear();
+      setFormData(prev => ({ 
+        ...prev, 
+        signatureurl: '',
+        signature: false
+      }));
+      setSignatureValidation({
+        isValid: false,
+        message: 'Signature cleared'
+      });
+    }
+  };
+  
+  const saveSignature = () => {
+    if (!signaturePadRef.current) {
+      console.error('Signature pad not initialized');
+      return false;
+    }
+    
+    if (signaturePadRef.current.isEmpty()) {
+      setSignatureValidation({
+        isValid: false,
+        message: 'Please provide a signature'
+      });
+      
+      // Update step errors
+      setStepErrors(prev => ({
+        ...prev,
+        signatureurl: 'Signature is required'
+      }));
+      
+      return false;
+    }
+    
+    try {
+      // Use higher quality PNG format with better resolution
+      const dataURL = signaturePadRef.current.toDataURL('image/png', 1.0);
+      
+      if (!dataURL || dataURL.length < 100) {
+        console.error('Failed to generate signature data URL');
+        return false;
+      }
+      
+      // Update form data with signature
+      setFormData(prev => ({ 
+        ...prev, 
+        signatureurl: dataURL,
+        signature: true 
+      }));
+      
+      // Update validation state
+      setSignatureValidation({
+        isValid: true,
+        message: 'Signature provided'
+      });
+      
+      // Clear any signature errors
+      setStepErrors(prev => ({
+        ...prev,
+        signatureurl: undefined
+      }));
+      
+      return true;
+    } catch (error) {
+      console.error('Error saving signature:', error);
+      return false;
+    }
+  };
+  
+  // Initialize signature pad
+  const initializeSignaturePad = () => {
+    console.log("initializeSignaturePad called");
+    if (!signatureCanvasRef.current) {
+      console.error("Canvas reference is null");
+      return null;
+    }
+    
+    try {
+      // Clear any existing instance
+      if (signaturePadRef.current) {
+        signaturePadRef.current.off();
+      }
+      
+      // Set canvas dimensions
+      const canvas = signatureCanvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+      console.log("Canvas size:", rect.width, rect.height);
+      
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      
+      // Set canvas dimensions properly based on display size
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      canvas.getContext("2d").scale(ratio, ratio);
+
+      // Add touch event handlers to prevent scrolling while signing on mobile
+      const handleTouchStart = (e) => {
+        // Prevent scroll/zoom during signature
+        e.preventDefault();
+      };
+      
+      const handleTouchMove = (e) => {
+        // Prevent scroll/zoom during signature
+        e.preventDefault();
+      };
+      
+      canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+      canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+      console.log("Creating new SignaturePad instance...");
+      
+      // Create new SignaturePad instance with improved settings
+      signaturePadRef.current = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(0, 0, 0)',
+        velocityFilterWeight: 0.5,
+        minWidth: 0.6,
+        maxWidth: 2.8,
+        throttle: 10, // More responsive
+        dotSize: 2,   // Better for touch
+      });
+      
+      console.log("Signature pad created successfully");
+      
+      return () => {
+        if (signaturePadRef.current) {
+          signaturePadRef.current.off();
+        }
+        // Remove event listeners
+        canvas.removeEventListener('touchstart', handleTouchStart);
+        canvas.removeEventListener('touchmove', handleTouchMove);
+      };
+    } catch (err) {
+      console.error("Error in initializeSignaturePad:", err);
+      return null;
+    }
+  };
+  
+  // Initialize signature pad on component mount
+  useEffect(() => {
+    // Skip initialization during server-side rendering
+    if (typeof window !== 'undefined') {
+      try {
+        const cleanup = initializeSignaturePad();
+        return () => cleanup && cleanup();
+      } catch (err) {
+        console.error('Error in initial signature pad setup:', err);
+      }
+    }
+  }, []);
+
+  // Re-initialize when modal opens with a more reliable approach
+  useEffect(() => {
+    if (showSignatureModal) {
+      console.log("Modal open, initializing signature pad...");
+      
+      // Clear previous signature data when opening modal
+      if (signaturePadRef.current) {
+        signaturePadRef.current.clear();
+      }
+      
+      // Delay to ensure DOM is ready and modal is visible
+      const timer = setTimeout(() => {
+        try {
+          console.log("Attempting to initialize signature pad after delay");
+          const canvas = signatureCanvasRef.current;
+          if (!canvas) {
+            console.error("Canvas element not found after delay!");
+            return;
+          }
+          
+          const cleanup = initializeSignaturePad();
+          console.log('Signature pad initialized after delay');
+          
+          // Handle window resize for responsive canvas
+          const handleResize = () => {
+            try {
+              console.log("Window resize detected, reinitializing signature pad");
+              initializeSignaturePad();
+            } catch (err) {
+              console.error('Error reinitializing signature pad on resize:', err);
+            }
+          };
+          
+          // Handle orientation change on mobile
+          const handleOrientationChange = () => {
+            try {
+              console.log("Orientation change detected, reinitializing signature pad");
+              setTimeout(() => {
+                initializeSignaturePad();
+              }, 200);
+            } catch (err) {
+              console.error('Error reinitializing signature pad on orientation change:', err);
+            }
+          };
+          
+          window.addEventListener('resize', handleResize);
+          window.addEventListener('orientationchange', handleOrientationChange);
+          
+          return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('orientationchange', handleOrientationChange);
+            if (cleanup) {
+              cleanup();
+            }
+          };
+        } catch (err) {
+          console.error('Error initializing signature pad:', err);
+        }
+      }, 300); // Increased delay for better reliability
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showSignatureModal]);
+
+  // Add useEffect to handle proper display formatting of salary on input change
+  useEffect(() => {
+    // Only run this effect when we have a salary value
+    if (formData.expectedSalary) {
+      // This will help with cursor jumping issues
+      const timeoutId = setTimeout(() => {
+        // We don't need to format here because the formatting happens in the value attribute
+        // This effect is just to ensure validation happens correctly after user input
+        validateStep();
+      }, 500);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [formData.expectedSalary]);
+
+  // Use an effect to handle document clicks for the modal
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (signatureCanvasRef.current && signatureCanvasRef.current.contains(e.target)) {
+        // Click was inside canvas, do nothing
+        return;
+      }
+    };
+
+    if (showSignatureModal) {
+      document.addEventListener('click', handleDocumentClick);
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+      document.body.style.overflow = ''; // Restore scrolling
+    };
+  }, [showSignatureModal]);
+
+  // Add debug panel toggle
+  const toggleDebugMode = () => {
+    setDebugMode(!debugMode);
   };
 
   const renderStep = () => {
@@ -642,28 +1100,28 @@ const ApplicationForm = () => {
                       <label className="form-label">Spouse's First Name</label>
                       <input
                         type="text"
-                        name="spouseFirstName"
-                        value={formData.spouseFirstName}
+                        name="spouseinfo.firstname"
+                        value={formData.spouseinfo.firstname}
                         onChange={handleInputChange}
-                        className={getInputClassName('spouseFirstName')}
+                        className={getInputClassName('spouseinfo.firstname')}
                         required
                       />
-                      {stepErrors.spouseFirstName && (
-                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseFirstName}</p>
+                      {stepErrors.spouseinfo && (
+                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseinfo.firstname}</p>
                       )}
                     </div>
                     <div className="form-group">
                       <label className="form-label">Spouse's Last Name</label>
                       <input
                         type="text"
-                        name="spouseLastName"
-                        value={formData.spouseLastName}
+                        name="spouseinfo.lastname"
+                        value={formData.spouseinfo.lastname}
                         onChange={handleInputChange}
-                        className={getInputClassName('spouseLastName')}
+                        className={getInputClassName('spouseinfo.lastname')}
                         required
                       />
-                      {stepErrors.spouseLastName && (
-                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseLastName}</p>
+                      {stepErrors.spouseinfo && (
+                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseinfo.lastname}</p>
                       )}
                     </div>
                   </div>
@@ -672,27 +1130,27 @@ const ApplicationForm = () => {
                       <label className="form-label">Spouse's Date of Birth</label>
                       <input
                         type="date"
-                        name="spouseDateOfBirth"
-                        value={formData.spouseDateOfBirth}
+                        name="spouseinfo.dateofbirth"
+                        value={formData.spouseinfo.dateofbirth}
                         onChange={handleInputChange}
-                        className={getInputClassName('spouseDateOfBirth')}
+                        className={getInputClassName('spouseinfo.dateofbirth')}
                         required
                       />
-                      {stepErrors.spouseDateOfBirth && (
-                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseDateOfBirth}</p>
+                      {stepErrors.spouseinfo && (
+                        <p className="text-red-500 text-sm mt-1">{stepErrors.spouseinfo.dateofbirth}</p>
                       )}
                     </div>
                     <div className="form-group">
                       <label className="form-label">Spouse's SSN</label>
                       <input
                         type="text"
-                        name="spouseSSN"
-                        value={formData.spouseSSN.length === 9 ? formatSSN(formData.spouseSSN) : formData.spouseSSN}
+                        name="spouseinfo.ssn"
+                        value={formData.spouseinfo.ssn.length === 9 ? formatSSN(formData.spouseinfo.ssn) : formData.spouseinfo.ssn}
                         onChange={(e) => {
                           const value = e.target.value.replace(/\D/g, '').slice(0, 9);
                           setFormData(prev => ({
                             ...prev,
-                            spouseSSN: value
+                            spouseinfo: { ...prev.spouseinfo, ssn: value }
                           }));
                         }}
                         className="form-control"
@@ -853,14 +1311,14 @@ const ApplicationForm = () => {
                 <label className="form-label">Street Address</label>
                 <input
                   type="text"
-                  name="residentialStreet"
-                  value={formData.residentialStreet}
+                  name="residentialaddress.streetaddress"
+                  value={formData.residentialaddress.streetaddress}
                   onChange={handleInputChange}
-                  className={getInputClassName('residentialStreet')}
+                  className={getInputClassName('residentialaddress.streetaddress')}
                   required
                 />
-                {stepErrors.residentialStreet && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.residentialStreet}</p>
+                {stepErrors.residentialaddress && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.streetaddress}</p>
                 )}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -868,35 +1326,35 @@ const ApplicationForm = () => {
                   <label className="form-label">City</label>
                   <input
                     type="text"
-                    name="residentialCity"
-                    value={formData.residentialCity}
+                    name="residentialaddress.city"
+                    value={formData.residentialaddress.city}
                     onChange={handleInputChange}
-                    className={getInputClassName('residentialCity')}
+                    className={getInputClassName('residentialaddress.city')}
                     required
                   />
-                  {stepErrors.residentialCity && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialCity}</p>
+                  {stepErrors.residentialaddress && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.city}</p>
                   )}
                 </div>
                 <div className="form-group">
                   <label className="form-label">State/Province</label>
                   <select
-                    name="residentialState"
-                    value={formData.residentialState}
+                    name="residentialaddress.state"
+                    value={formData.residentialaddress.state}
                     onChange={handleInputChange}
-                    className={getInputClassName('residentialState')}
+                    className={getInputClassName('residentialaddress.state')}
                     required
-                    disabled={!formData.residentialCountry}
+                    disabled={!formData.residentialaddress.country}
                   >
                     <option value="">Select state/province</option>
-                    {getStatesForCountry(formData.residentialCountry).map(state => (
+                    {getStatesForCountry(formData.residentialaddress.country).map(state => (
                       <option key={state.value} value={state.value}>
                         {state.label}
                       </option>
                     ))}
                   </select>
-                  {stepErrors.residentialState && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialState}</p>
+                  {stepErrors.residentialaddress && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.state}</p>
                   )}
                 </div>
               </div>
@@ -905,26 +1363,32 @@ const ApplicationForm = () => {
                   <label className="form-label">ZIP Code</label>
                   <input
                     type="text"
-                    name="residentialZip"
-                    value={formData.residentialZip}
+                    name="residentialaddress.zipcode"
+                    value={formData.residentialaddress.zipcode}
                     onChange={handleInputChange}
-                    className={getInputClassName('residentialZip')}
+                    className={getInputClassName('residentialaddress.zipcode')}
                     required
                   />
-                  {stepErrors.residentialZip && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialZip}</p>
+                  {stepErrors.residentialaddress && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.zipcode}</p>
                   )}
                 </div>
                 <div className="form-group">
                   <label className="form-label">Country</label>
                   <select
-                    name="residentialCountry"
-                    value={formData.residentialCountry}
+                    name="residentialaddress.country"
+                    value={formData.residentialaddress.country}
                     onChange={(e) => {
                       handleInputChange(e);
-                      setFormData(prev => ({ ...prev, residentialState: '' }));
+                      setFormData(prev => ({ 
+                        ...prev, 
+                        residentialaddress: { 
+                          ...prev.residentialaddress, 
+                          state: '' 
+                        } 
+                      }));
                     }}
-                    className={getInputClassName('residentialCountry')}
+                    className={getInputClassName('residentialaddress.country')}
                     required
                   >
                     <option value="">Select country</option>
@@ -934,8 +1398,8 @@ const ApplicationForm = () => {
                       </option>
                     ))}
                   </select>
-                  {stepErrors.residentialCountry && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialCountry}</p>
+                  {stepErrors.residentialaddress && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.country}</p>
                   )}
                 </div>
               </div>
@@ -962,11 +1426,11 @@ const ApplicationForm = () => {
                       setFormData(prev => ({
                         ...prev,
                         sameAsResidential: true,
-                        mailingStreet: prev.residentialStreet,
-                        mailingCity: prev.residentialCity,
-                        mailingState: prev.residentialState,
-                        mailingZip: prev.residentialZip,
-                        mailingCountry: prev.residentialCountry
+                        mailingStreet: prev.residentialaddress.streetaddress,
+                        mailingCity: prev.residentialaddress.city,
+                        mailingState: prev.residentialaddress.state,
+                        mailingZip: prev.residentialaddress.zipcode,
+                        mailingCountry: prev.residentialaddress.country
                       }));
                     } else {
                       setFormData(prev => ({
@@ -1070,7 +1534,7 @@ const ApplicationForm = () => {
                     value={formData.countryOfOrigin}
                     onChange={(e) => {
                       handleInputChange(e);
-                      setFormData(prev => ({ ...prev, stateOfOrigin: '' }));
+                      setFormData(prev => ({ ...prev, stateoforigin: '' }));
                     }}
                     className={getInputClassName('countryOfOrigin')}
                     required
@@ -1089,10 +1553,10 @@ const ApplicationForm = () => {
                 <div className="form-group">
                   <label className="form-label">State/Province of Origin</label>
                   <select
-                    name="stateOfOrigin"
-                    value={formData.stateOfOrigin}
+                    name="stateoforigin"
+                    value={formData.stateoforigin}
                     onChange={handleInputChange}
-                    className={getInputClassName('stateOfOrigin')}
+                    className={getInputClassName('stateoforigin')}
                     required={formData.countryOfOrigin === 'US'}
                     disabled={!formData.countryOfOrigin || formData.countryOfOrigin !== 'US'}
                   >
@@ -1103,8 +1567,8 @@ const ApplicationForm = () => {
                       </option>
                     ))}
                   </select>
-                  {stepErrors.stateOfOrigin && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateOfOrigin}</p>
+                  {stepErrors.stateoforigin && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateoforigin}</p>
                   )}
                   {formData.countryOfOrigin && formData.countryOfOrigin !== 'US' && (
                     <p className="text-sm text-gray-500 mt-1">State/Province selection is optional for non-US residents</p>
@@ -1132,23 +1596,36 @@ const ApplicationForm = () => {
                   name="occupation"
                   value={formData.occupation}
                   onChange={handleInputChange}
-                  className="form-control"
+                  className={getInputClassName('occupation')}
                   required
                 />
+                {stepErrors.occupation && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.occupation}</p>
+                )}
               </div>
               <div className="form-group">
                 <label className="form-label">Expected Salary (Current Tax Year)</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                   <input
-                    type="number"
+                    type="text"
                     name="expectedSalary"
-                    value={formData.expectedSalary}
-                    onChange={handleInputChange}
-                    className="form-control pl-8"
+                    value={formData.expectedSalary ? '$' + formData.expectedSalary.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}
+                    onChange={(e) => {
+                      // Remove all non-numeric characters
+                      const value = e.target.value.replace(/[^\d.]/g, '');
+                      setFormData(prev => ({
+                        ...prev,
+                        expectedSalary: value
+                      }));
+                    }}
+                    className={getInputClassName('expectedSalary')}
+                    placeholder="$0.00"
                     required
                   />
                 </div>
+                {stepErrors.expectedSalary && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.expectedSalary}</p>
+                )}
               </div>
             </div>
           </div>
@@ -1195,6 +1672,7 @@ const ApplicationForm = () => {
                       <option value="medicaid">Medicaid</option>
                       <option value="tricare">Tricare</option>
                       <option value="employer">Employer-based Insurance</option>
+                      <option value="different">Different Carrier</option>
                     </select>
                   )}
                 </div>
@@ -1254,7 +1732,7 @@ const ApplicationForm = () => {
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <FaFileSignature className="text-blue-600 text-xl" />
               </div>
-              <h2 className="text-2xl font-bold">Final Information</h2>
+              <h2 className="text-2xl font-bold">Final Steps</h2>
             </div>
 
             <div className="space-y-6">
@@ -1263,11 +1741,11 @@ const ApplicationForm = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    name="socialSecurityNumber"
-                    value={formData.socialSecurityNumber.length === 9 ? formatSSN(formData.socialSecurityNumber) : formData.socialSecurityNumber}
+                    name="ssn"
+                    value={formData.ssn.length === 9 ? formatSSN(formData.ssn) : formData.ssn}
                     onChange={handleSSNChange}
                     className={`form-control ${
-                      formData.socialSecurityNumber.length > 0
+                      formData.ssn.length > 0
                         ? ssnValidation.isValid
                           ? 'border-green-500 focus:border-green-500'
                           : 'border-red-500 focus:border-red-500'
@@ -1277,7 +1755,7 @@ const ApplicationForm = () => {
                     maxLength="11"
                     required
                   />
-                  {formData.socialSecurityNumber.length > 0 && (
+                  {formData.ssn.length > 0 && (
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                       {ssnValidation.isValid ? (
                         <FaCheckCircle className="text-green-500 text-xl" />
@@ -1287,7 +1765,7 @@ const ApplicationForm = () => {
                     </div>
                   )}
                 </div>
-                {formData.socialSecurityNumber.length > 0 && (
+                {formData.ssn.length > 0 && (
                   <p className={`text-sm mt-1 ${
                     ssnValidation.isValid ? 'text-green-500' : 'text-red-500'
                   }`}>
@@ -1296,74 +1774,95 @@ const ApplicationForm = () => {
                 )}
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Electronic Signature</label>
+              <div className="form-group mt-8">
+                <label className="form-label text-lg font-semibold">Electronic Signature</label>
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="form-group">
-                      <label className="form-label">First Name</label>
-                      <input
-                        type="text"
-                        name="signatureFirstName"
-                        value={formData.signatureFirstName || ''}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          setFormData(prev => ({ ...prev, signatureFirstName: value }));
-                          validateSignature(value, formData.signatureLastName || '');
-                        }}
-                        className={`form-control ${
-                          formData.signatureFirstName
-                            ? signatureValidation.isValid
-                              ? 'border-green-500 focus:border-green-500'
-                              : 'border-red-500 focus:border-red-500'
-                            : ''
-                        }`}
-                        required
-                      />
+                  {formData.signatureurl ? (
+                    <div className="border p-4 rounded-md bg-gray-50">
+                      <div className="flex justify-between items-center mb-3">
+                        <p className="text-md text-gray-700 font-medium">Your signature has been recorded:</p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            console.log("Change signature clicked");
+                            setShowSignatureModal(true);
+                          }}
+                          className="bg-gray-700 hover:bg-gray-800 text-white py-2 px-4 rounded-md text-sm font-medium"
+                        >
+                          Change Signature
+                        </button>
+                      </div>
+                      <div className="signature-preview p-4 border border-gray-300 rounded-md bg-white">
+                        <img 
+                          src={formData.signatureurl} 
+                          alt="Your signature" 
+                          className="mx-auto" 
+                          style={{
+                            maxHeight: '80px',
+                            maxWidth: '100%',
+                            objectFit: 'contain',
+                            display: 'block'
+                          }}
+                        />
+                      </div>
+                      <p className="mt-3 text-green-600 text-sm flex items-center">
+                        <FaCheckCircle className="mr-2" /> 
+                        Signature confirmed
+                      </p>
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Last Name</label>
-                      <input
-                        type="text"
-                        name="signatureLastName"
-                        value={formData.signatureLastName || ''}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          setFormData(prev => ({ ...prev, signatureLastName: value }));
-                          validateSignature(formData.signatureFirstName || '', value);
+                  ) : (
+                    <div className="border-2 border-dashed border-gray-300 rounded-md p-8 text-center">
+                      <p className="mb-4 text-gray-600">Click the button below to sign your application</p>
+                      
+                      {/* Main signature button with multiple styling approaches to ensure it's visible */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log("Sign button clicked");
+                          setShowSignatureModal(true);
                         }}
-                        className={`form-control ${
-                          formData.signatureLastName
-                            ? signatureValidation.isValid
-                              ? 'border-green-500 focus:border-green-500'
-                              : 'border-red-500 focus:border-red-500'
-                            : ''
-                        }`}
-                        required
-                      />
+                        style={{
+                          backgroundColor: '#2563eb',
+                          color: 'white',
+                          padding: '0.75rem 2rem',
+                          borderRadius: '0.375rem',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          alignItems: 'center',
+                          margin: '0 auto',
+                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                          cursor: 'pointer',
+                          border: 'none',
+                          fontSize: '1.125rem',
+                        }}
+                      >
+                        <FaFileSignature style={{marginRight: '0.5rem'}} />
+                        SIGN HERE
+                      </button>
+                      
+                      {!formData.signatureurl && stepErrors.signatureurl && (
+                        <div className="text-red-500 text-sm mt-3">{stepErrors.signatureurl}</div>
+                      )}
                     </div>
-                  </div>
-                  {formData.signatureFirstName && formData.signatureLastName && (
-                    <p className={`text-sm ${
-                      signatureValidation.isValid ? 'text-green-500' : 'text-red-500'
-                    }`}>
-                      {signatureValidation.message}
-                    </p>
                   )}
-                </div>
-                <div className="mt-4">
-                  <label className="flex items-center space-x-3">
+                  
+                  <div className="form-check mb-4 mt-6">
                     <input
                       type="checkbox"
+                      className="form-check-input"
+                      id="signatureConsent"
                       checked={formData.signatureConsent}
                       onChange={(e) => setFormData(prev => ({ ...prev, signatureConsent: e.target.checked }))}
-                      className="form-checkbox h-5 w-5 text-blue-600"
-                      required
                     />
-                    <span className="text-sm text-gray-700">
-                      I understand that typing my name above constitutes an electronic signature and verifies the accuracy of all information provided in this application.
-                    </span>
-                  </label>
+                    <label className="form-check-label" htmlFor="signatureConsent">
+                      I understand that my signature above constitutes an electronic signature and verifies the accuracy of all information provided in this application.
+                    </label>
+                    {stepErrors.signatureConsent && (
+                      <div className="text-red-500 text-sm mt-1">{stepErrors.signatureConsent}</div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1408,6 +1907,24 @@ const ApplicationForm = () => {
                       />
                     </div>
                   </div>
+                  
+                  {/* Test button row that's hard to miss */}
+                  {step === 8 && (
+                    <div className="mb-4 p-3 bg-red-500 text-white rounded-md">
+                      <p className="text-white font-bold mb-2">CLICK THIS RED BUTTON TO SIGN:</p>
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          console.log("EMERGENCY TEST BUTTON CLICKED");
+                          setShowSignatureModal(true);
+                        }}
+                        className="w-full bg-white text-red-600 font-bold py-3 px-4 rounded text-lg"
+                      >
+                        OPEN SIGNATURE MODAL
+                      </button>
+                    </div>
+                  )}
 
                   <form onSubmit={handleSubmit} className="enrollment-form">
                     {renderStep()}
@@ -1439,14 +1956,14 @@ const ApplicationForm = () => {
                       ) : (
                         <button
                           type="submit"
-                          disabled={!isFormValid || !ssnValidation.isValid || !signatureValidation.isValid || isSubmitting}
+                          disabled={isSubmitting}
                           className={`btn btn-success flex items-center ml-auto ${
-                            (!isFormValid || !ssnValidation.isValid || !signatureValidation.isValid || isSubmitting) ? 'opacity-50 cursor-not-allowed' : ''
+                            isSubmitting ? 'opacity-60 cursor-not-allowed' : ''
                           }`}
                         >
                           {isSubmitting ? (
                             <>
-                              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                              <div className="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-t-2 border-white mr-2"></div>
                               Submitting...
                             </>
                           ) : (
@@ -1462,6 +1979,135 @@ const ApplicationForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Signature Modal */}
+      {showSignatureModal && (
+        <div 
+          className="fixed inset-0 z-[9999] overflow-auto bg-black bg-opacity-75 flex items-center justify-center"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0}}
+          onClick={(e) => {
+            // Only close if clicking the backdrop
+            if (e.target === e.currentTarget) {
+              setShowSignatureModal(false);
+            }
+          }}
+        >
+          <div 
+            className="bg-white rounded-lg p-5 w-full max-w-sm mx-4 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+            style={{zIndex: 10000}}
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-semibold text-gray-800">Sign Here</h3>
+              <button 
+                type="button" 
+                onClick={() => setShowSignatureModal(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl focus:outline-none"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="signature-container bg-blue-50 p-3 rounded-md border border-blue-200">
+              <div className="signature-wrapper relative overflow-hidden" style={{ touchAction: 'none' }}>
+                <canvas 
+                  ref={signatureCanvasRef} 
+                  className="signature-canvas bg-white w-full cursor-crosshair"
+                  style={{
+                    border: '1px solid #ddd',
+                    borderRadius: '4px',
+                    width: '100%',
+                    height: '150px',
+                    touchAction: 'none',
+                  }}
+                ></canvas>
+              </div>
+              <p className="text-gray-500 text-xs mt-2 text-center">Use your finger or mouse to sign</p>
+            </div>
+            
+            <div className="flex mt-4 space-x-2">
+              <button 
+                type="button"
+                className="flex-1 py-2 px-3 bg-black text-white rounded-md hover:bg-gray-800 transition-colors text-sm font-medium"
+                onClick={() => clearSignature()}
+              >
+                Clear
+              </button>
+              <button 
+                type="button"
+                className="flex-1 py-2 px-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-bold"
+                style={{ backgroundColor: '#1d4ed8', fontWeight: 'bold' }}
+                onClick={() => {
+                  console.log("Save button clicked");
+                  const result = saveSignature();
+                  if (result) {
+                    console.log("Signature saved successfully, closing modal");
+                    setShowSignatureModal(false);
+                  } else {
+                    console.log("Signature save failed");
+                    alert('Please provide your signature before continuing.');
+                  }
+                }} 
+              >
+                Accept & Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Debug panel */}
+      {debugMode && (
+        <div style={{
+          position: 'fixed',
+          bottom: '0',
+          left: '0',
+          right: '0',
+          padding: '10px',
+          backgroundColor: 'rgba(255, 0, 0, 0.9)',
+          color: 'white',
+          zIndex: 99999,
+          textAlign: 'center',
+          boxShadow: '0 -4px 6px rgba(0, 0, 0, 0.1)'
+        }}>
+          <h3 style={{fontWeight: 'bold', marginBottom: '5px'}}>SIGNATURE DEBUG PANEL</h3>
+          <div style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '5px'}}>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                setShowSignatureModal(true);
+              }}
+              style={{
+                backgroundColor: 'white',
+                color: 'black',
+                padding: '8px 15px',
+                borderRadius: '4px',
+                fontWeight: 'bold',
+                border: 'none'
+              }}
+            >
+              OPEN SIGNATURE MODAL
+            </button>
+            <button 
+              onClick={toggleDebugMode}
+              style={{
+                backgroundColor: 'black',
+                color: 'white',
+                padding: '8px 15px',
+                borderRadius: '4px',
+                border: 'none'
+              }}
+            >
+              Hide Debug Panel
+            </button>
+          </div>
+          <div style={{fontSize: '14px'}}>
+            <p>Modal State: {showSignatureModal ? 'OPEN' : 'CLOSED'}</p>
+            <p>Canvas Ref: {signatureCanvasRef.current ? 'EXISTS' : 'NULL'}</p>
+          </div>
+        </div>
+      )}
     </PageTransition>
   );
 };
