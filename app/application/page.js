@@ -498,24 +498,32 @@ const ApplicationForm = () => {
         isValid = false;
       }
     } 
-    else if (step === 3 && formData.isMarried) {
+    else if (step === 2) {
+      // Tax filing status validation
+      if (!formData.taxFilingStatus) {
+        errors.taxFilingStatus = 'Tax filing status is required';
+        isValid = false;
+      }
+      
       // Spouse info validation (if married)
-      if (!formData.spouseinfo.firstname.trim()) {
-        errors['spouseinfo.firstname'] = 'Spouse first name is required';
-        isValid = false;
-      }
-      
-      if (!formData.spouseinfo.lastname.trim()) {
-        errors['spouseinfo.lastname'] = 'Spouse last name is required';
-        isValid = false;
-      }
-      
-      if (!formData.spouseinfo.dateofbirth) {
-        errors['spouseinfo.dateofbirth'] = 'Spouse date of birth is required';
-        isValid = false;
+      if (formData.isMarried) {
+        if (!formData.spouseinfo.firstname.trim()) {
+          errors['spouseinfo.firstname'] = 'Spouse first name is required';
+          isValid = false;
+        }
+        
+        if (!formData.spouseinfo.lastname.trim()) {
+          errors['spouseinfo.lastname'] = 'Spouse last name is required';
+          isValid = false;
+        }
+        
+        if (!formData.spouseinfo.dateofbirth) {
+          errors['spouseinfo.dateofbirth'] = 'Spouse date of birth is required';
+          isValid = false;
+        }
       }
     }
-    else if (step === 4) {
+    else if (step === 3) {
       // Residential address validation
       if (!formData.residentialaddress.streetaddress.trim()) {
         errors['residentialaddress.streetaddress'] = 'Street address is required';
@@ -542,37 +550,10 @@ const ApplicationForm = () => {
         isValid = false;
       }
     }
-    else if (step === 5 || step === 4) {
-      // Mailing address validation - only validate if not using residential address
-      if (!formData.sameAsResidential) {
-        if (!formData.mailingStreet.trim()) {
-          errors.mailingStreet = 'Mailing street address is required';
-          isValid = false;
-        }
-        
-        if (!formData.mailingCity.trim()) {
-          errors.mailingCity = 'Mailing city is required';
-          isValid = false;
-        }
-        
-        if (!formData.mailingState.trim()) {
-          errors.mailingState = 'Mailing state/province is required';
-          isValid = false;
-        }
-        
-        if (!formData.mailingZip.trim()) {
-          errors.mailingZip = 'Mailing ZIP code is required';
-          isValid = false;
-        }
-        
-        if (!formData.mailingCountry.trim()) {
-          errors.mailingCountry = 'Mailing country is required';
-          isValid = false;
-        }
-      }
-    }
-    else if (step === 6 || step === 5) {
-      // Origin information
+    else if (step === 4) {
+      // Origin information validation
+      console.log("Validating origin information");
+      
       if (!formData.countryOfOrigin) {
         errors.countryOfOrigin = 'Country of origin is required';
         isValid = false;
@@ -583,7 +564,43 @@ const ApplicationForm = () => {
         isValid = false;
       }
     }
-    else if (step === 7) {
+    else if (step === 5) {
+      // Mailing address validation - only validate if not using residential address
+      console.log("Validating mailing address, sameAsResidential:", formData.sameAsResidential);
+      
+      // If checkbox is checked, no validation needed
+      if (formData.sameAsResidential) {
+        console.log("Using residential address for mailing, no validation needed");
+        isValid = true;
+      } else {
+        // Only validate these fields if not using residential address
+        if (!formData.mailingStreet || !formData.mailingStreet.trim()) {
+          errors.mailingStreet = 'Mailing street address is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingCity || !formData.mailingCity.trim()) {
+          errors.mailingCity = 'Mailing city is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingState || !formData.mailingState.trim()) {
+          errors.mailingState = 'Mailing state/province is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingZip || !formData.mailingZip.trim()) {
+          errors.mailingZip = 'Mailing ZIP code is required';
+          isValid = false;
+        }
+        
+        if (!formData.mailingCountry || !formData.mailingCountry.trim()) {
+          errors.mailingCountry = 'Mailing country is required';
+          isValid = false;
+        }
+      }
+    }
+    else if (step === 6) {
       // Employment information
       if (!formData.occupation.trim()) {
         errors.occupation = 'Occupation is required';
@@ -592,6 +609,18 @@ const ApplicationForm = () => {
       
       if (!formData.expectedSalary) {
         errors.expectedSalary = 'Expected salary is required';
+        isValid = false;
+      }
+    }
+    else if (step === 7) {
+      // Insurance information validation
+      if (!formData.healthInsuranceProvider) {
+        errors.healthInsuranceProvider = 'Health insurance provider is required';
+        isValid = false;
+      }
+      
+      if (!formData.deductible) {
+        errors.deductible = 'Deductible preference is required';
         isValid = false;
       }
     }
@@ -1419,6 +1448,69 @@ const ApplicationForm = () => {
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <FaMapMarkerAlt className="text-blue-600 text-xl" />
               </div>
+              <h2 className="text-2xl font-bold">Origin Information</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-group">
+                  <label className="form-label">Country of Origin</label>
+                  <select
+                    name="countryOfOrigin"
+                    value={formData.countryOfOrigin}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                      setFormData(prev => ({ ...prev, stateoforigin: '' }));
+                    }}
+                    className={getInputClassName('countryOfOrigin')}
+                    required
+                  >
+                    <option value="">Select country</option>
+                    {countries.map(country => (
+                      <option key={country.value} value={country.value}>
+                        {country.label}
+                      </option>
+                    ))}
+                  </select>
+                  {stepErrors.countryOfOrigin && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.countryOfOrigin}</p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="form-label">State/Province of Origin</label>
+                  <select
+                    name="stateoforigin"
+                    value={formData.stateoforigin}
+                    onChange={handleInputChange}
+                    className={getInputClassName('stateoforigin')}
+                    required={formData.countryOfOrigin === 'US'}
+                    disabled={!formData.countryOfOrigin || formData.countryOfOrigin !== 'US'}
+                  >
+                    <option value="">Select state/province</option>
+                    {getStatesForCountry(formData.countryOfOrigin).map(state => (
+                      <option key={state.value} value={state.value}>
+                        {state.label}
+                      </option>
+                    ))}
+                  </select>
+                  {stepErrors.stateoforigin && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateoforigin}</p>
+                  )}
+                  {formData.countryOfOrigin && formData.countryOfOrigin !== 'US' && (
+                    <p className="text-sm text-gray-500 mt-1">State/Province selection is optional for non-US residents</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center mb-6">
+              <div className="bg-blue-100 p-3 rounded-full mr-4">
+                <FaMapMarkerAlt className="text-blue-600 text-xl" />
+              </div>
               <h2 className="text-2xl font-bold">Mailing Address</h2>
             </div>
 
@@ -1562,69 +1654,6 @@ const ApplicationForm = () => {
                 </div>
               </div>
             )}
-          </div>
-        );
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <FaMapMarkerAlt className="text-blue-600 text-xl" />
-              </div>
-              <h2 className="text-2xl font-bold">Origin Information</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="form-group">
-                  <label className="form-label">Country of Origin</label>
-                  <select
-                    name="countryOfOrigin"
-                    value={formData.countryOfOrigin}
-                    onChange={(e) => {
-                      handleInputChange(e);
-                      setFormData(prev => ({ ...prev, stateoforigin: '' }));
-                    }}
-                    className={getInputClassName('countryOfOrigin')}
-                    required
-                  >
-                    <option value="">Select country</option>
-                    {countries.map(country => (
-                      <option key={country.value} value={country.value}>
-                        {country.label}
-                      </option>
-                    ))}
-                  </select>
-                  {stepErrors.countryOfOrigin && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.countryOfOrigin}</p>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label className="form-label">State/Province of Origin</label>
-                  <select
-                    name="stateoforigin"
-                    value={formData.stateoforigin}
-                    onChange={handleInputChange}
-                    className={getInputClassName('stateoforigin')}
-                    required={formData.countryOfOrigin === 'US'}
-                    disabled={!formData.countryOfOrigin || formData.countryOfOrigin !== 'US'}
-                  >
-                    <option value="">Select state/province</option>
-                    {getStatesForCountry(formData.countryOfOrigin).map(state => (
-                      <option key={state.value} value={state.value}>
-                        {state.label}
-                      </option>
-                    ))}
-                  </select>
-                  {stepErrors.stateoforigin && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateoforigin}</p>
-                  )}
-                  {formData.countryOfOrigin && formData.countryOfOrigin !== 'US' && (
-                    <p className="text-sm text-gray-500 mt-1">State/Province selection is optional for non-US residents</p>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
         );
       case 6:
@@ -1973,8 +2002,15 @@ const ApplicationForm = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            if (validateStep()) {
+                            console.log(`Attempting to move from step ${step} to step ${step + 1}`);
+                            const isValid = validateStep();
+                            console.log(`Validation result for step ${step}: ${isValid ? 'VALID' : 'INVALID'}`);
+                            if (isValid) {
+                              console.log(`Advancing to step ${step + 1}`);
                               setStep(step + 1);
+                            } else {
+                              console.log('Validation failed, staying on current step');
+                              console.log('Current errors:', JSON.stringify(stepErrors));
                             }
                           }}
                           className="btn btn-primary flex items-center ml-auto"
