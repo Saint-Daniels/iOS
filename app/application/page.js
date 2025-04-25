@@ -542,7 +542,7 @@ const ApplicationForm = () => {
         isValid = false;
       }
     }
-    else if (step === 5) {
+    else if (step === 5 || step === 4) {
       // Mailing address validation - only validate if not using residential address
       if (!formData.sameAsResidential) {
         if (!formData.mailingStreet.trim()) {
@@ -571,7 +571,7 @@ const ApplicationForm = () => {
         }
       }
     }
-    else if (step === 6) {
+    else if (step === 6 || step === 5) {
       // Origin information
       if (!formData.countryOfOrigin) {
         errors.countryOfOrigin = 'Country of origin is required';
@@ -643,7 +643,7 @@ const ApplicationForm = () => {
         return;
       }
       
-      if (step < 9) {
+      if (step < 8) {
         // Move to the next step
         setStep(step + 1);
         return;
@@ -1438,6 +1438,15 @@ const ApplicationForm = () => {
                         mailingZip: prev.residentialaddress.zipcode,
                         mailingCountry: prev.residentialaddress.country
                       }));
+                      // Clear any mailing address errors when using residential address
+                      setStepErrors(prev => ({
+                        ...prev,
+                        mailingStreet: undefined,
+                        mailingCity: undefined,
+                        mailingState: undefined,
+                        mailingZip: undefined,
+                        mailingCountry: undefined
+                      }));
                     } else {
                       setFormData(prev => ({
                         ...prev,
@@ -1465,7 +1474,7 @@ const ApplicationForm = () => {
                     name="mailingStreet"
                     value={formData.mailingStreet}
                     onChange={handleInputChange}
-                    className="form-control"
+                    className={getInputClassName('mailingStreet')}
                     required
                   />
                   {stepErrors.mailingStreet && (
@@ -1480,7 +1489,7 @@ const ApplicationForm = () => {
                       name="mailingCity"
                       value={formData.mailingCity}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className={getInputClassName('mailingCity')}
                       required
                     />
                     {stepErrors.mailingCity && (
@@ -1493,7 +1502,7 @@ const ApplicationForm = () => {
                       name="mailingState"
                       value={formData.mailingState}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className={getInputClassName('mailingState')}
                       required
                       disabled={!formData.mailingCountry}
                     >
@@ -1517,7 +1526,7 @@ const ApplicationForm = () => {
                       name="mailingZip"
                       value={formData.mailingZip}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className={getInputClassName('mailingZip')}
                       required
                     />
                     {stepErrors.mailingZip && (
@@ -1536,7 +1545,7 @@ const ApplicationForm = () => {
                           mailingState: '' 
                         }));
                       }}
-                      className="form-control"
+                      className={getInputClassName('mailingCountry')}
                       required
                     >
                       <option value="">Select country</option>
@@ -1960,7 +1969,7 @@ const ApplicationForm = () => {
                           Previous
                         </button>
                       )}
-                      {step < 9 ? (
+                      {step < 8 ? (
                         <button
                           type="button"
                           onClick={() => {
