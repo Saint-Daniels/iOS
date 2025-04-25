@@ -7,6 +7,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
 import { extractMarketingID } from '../utils/leadTracking';
+import { storeClientData } from '../utils/clientUtils';
 import SignaturePad from 'signature_pad';
 
 const ApplicationForm = () => {
@@ -308,10 +309,31 @@ const ApplicationForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    console.log(`Input changed: ${name} = ${value}`);
+    
+    // Handle nested properties (e.g., residentialaddress.streetaddress)
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      console.log(`Updating nested property: ${parent}.${child}`);
+      setFormData(prev => {
+        const updated = {
+          ...prev,
+          [parent]: {
+            ...prev[parent],
+            [child]: value
+          }
+        };
+        console.log('Updated form data:', JSON.stringify(updated[parent]));
+        return updated;
+      });
+    } else {
+      // Handle regular properties
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleDependentAdd = () => {
@@ -422,12 +444,14 @@ const ApplicationForm = () => {
     }
 
     // Check signature
-    if (!formData.signatureData) {
-      errors.signatureData = 'Signature is required';
+    if (!formData.signatureurl) {
+      errors.signatureurl = 'Signature is required';
+      isValid = false;
     }
     
     if (!formData.signatureConsent) {
       errors.signatureConsent = 'You must consent to the electronic signature';
+      isValid = false;
     }
     
     setStepErrors(errors);
@@ -525,46 +549,39 @@ const ApplicationForm = () => {
     }
     else if (step === 3) {
       // Residential address validation
-      if (!formData.residentialaddress.streetaddress.trim()) {
+      console.log("Validating residential address fields");
+      
+      if (!formData.residentialaddress.streetaddress || !formData.residentialaddress.streetaddress.trim()) {
         errors['residentialaddress.streetaddress'] = 'Street address is required';
         isValid = false;
       }
       
-      if (!formData.residentialaddress.city.trim()) {
+      if (!formData.residentialaddress.city || !formData.residentialaddress.city.trim()) {
         errors['residentialaddress.city'] = 'City is required';
         isValid = false;
       }
       
-      if (!formData.residentialaddress.state.trim()) {
+      if (!formData.residentialaddress.state || !formData.residentialaddress.state.trim()) {
         errors['residentialaddress.state'] = 'State is required';
         isValid = false;
       }
       
-      if (!formData.residentialaddress.zipcode.trim()) {
+      if (!formData.residentialaddress.zipcode || !formData.residentialaddress.zipcode.trim()) {
         errors['residentialaddress.zipcode'] = 'ZIP code is required';
         isValid = false;
       }
       
-      if (!formData.residentialaddress.country.trim()) {
+      if (!formData.residentialaddress.country || !formData.residentialaddress.country.trim()) {
         errors['residentialaddress.country'] = 'Country is required';
         isValid = false;
       }
+      
+      console.log("Validation result for residential address:", isValid ? "VALID" : "INVALID");
+      if (!isValid) {
+        console.log("Validation errors:", JSON.stringify(errors));
+      }
     }
     else if (step === 4) {
-      // Origin information validation
-      console.log("Validating origin information");
-      
-      if (!formData.countryOfOrigin) {
-        errors.countryOfOrigin = 'Country of origin is required';
-        isValid = false;
-      }
-      
-      if (formData.countryOfOrigin === 'US' && !formData.stateoforigin) {
-        errors.stateoforigin = 'State of origin is required for US residents';
-        isValid = false;
-      }
-    }
-    else if (step === 5) {
       // Mailing address validation - only validate if not using residential address
       console.log("Validating mailing address, sameAsResidential:", formData.sameAsResidential);
       
@@ -598,6 +615,20 @@ const ApplicationForm = () => {
           errors.mailingCountry = 'Mailing country is required';
           isValid = false;
         }
+      }
+    }
+    else if (step === 5) {
+      // Origin information validation
+      console.log("Validating origin information");
+      
+      if (!formData.countryOfOrigin) {
+        errors.countryOfOrigin = 'Country of origin is required';
+        isValid = false;
+      }
+      
+      if (formData.countryOfOrigin === 'US' && !formData.stateoforigin) {
+        errors.stateoforigin = 'State of origin is required for US residents';
+        isValid = false;
       }
     }
     else if (step === 6) {
@@ -649,6 +680,7 @@ const ApplicationForm = () => {
 
   // Add getInputClassName function
   const getInputClassName = (fieldName) => {
+    // For nested fields, use the exact field name as the key in stepErrors
     return `form-control ${
       stepErrors[fieldName] ? 'border-red-500 focus:border-red-500' : ''
     }`;
@@ -674,6 +706,7 @@ const ApplicationForm = () => {
       
       if (step < 8) {
         // Move to the next step
+        console.log(`Moving from step ${step} to step ${step + 1}`);
         setStep(step + 1);
         return;
       }
@@ -688,6 +721,7 @@ const ApplicationForm = () => {
         return;
       }
       
+      console.log("All validations passed, submitting form...");
       setIsSubmitting(true);
       
       // Format the data for submission
@@ -700,10 +734,11 @@ const ApplicationForm = () => {
       };
       
       // For demo/dev purposes, log the data being submitted
-      console.log('Submitting application data:', JSON.stringify(submissionData).substring(0, 500) + '...');
+      console.log('Submitting application data to API');
       
       try {
         // Make the API call
+        console.log("Sending POST request to /api/submit-application");
         const response = await fetch('/api/submit-application', {
           method: 'POST',
           headers: {
@@ -713,23 +748,35 @@ const ApplicationForm = () => {
         });
         
         const result = await response.json();
+        console.log('API response received:', result);
         
         if (!response.ok) {
-          throw new Error(result.message || 'Failed to submit application');
+          throw new Error(result.error || 'Failed to submit application');
         }
         
-        console.log('Application submitted successfully:', result);
+        console.log('Application submitted successfully, redirecting to thank-you page');
+        
+        // Store client data using our utility function
+        storeClientData({
+          applicationId: result.applicationId,
+          clientId: result.clientId,
+          leadId: submissionData.marketingid
+        });
         
         // Redirect to thank you page
         router.push('/thank-you');
       } catch (error) {
         console.error('Error submitting application:', error);
         setIsSubmitting(false);
-        alert('There was an error submitting your application. Please try again.');
+        
+        // Provide a more user-friendly error message
+        const errorMessage = error.message || 'There was an error submitting your application. Please try again.';
+        alert(errorMessage);
       }
     } catch (error) {
       console.error('Unexpected error during submission:', error);
       setIsSubmitting(false);
+      alert('An unexpected error occurred. Please try again later.');
     }
   };
 
@@ -1352,8 +1399,8 @@ const ApplicationForm = () => {
                   className={getInputClassName('residentialaddress.streetaddress')}
                   required
                 />
-                {stepErrors.residentialaddress && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.streetaddress}</p>
+                {stepErrors['residentialaddress.streetaddress'] && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors['residentialaddress.streetaddress']}</p>
                 )}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1367,8 +1414,8 @@ const ApplicationForm = () => {
                     className={getInputClassName('residentialaddress.city')}
                     required
                   />
-                  {stepErrors.residentialaddress && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.city}</p>
+                  {stepErrors['residentialaddress.city'] && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors['residentialaddress.city']}</p>
                   )}
                 </div>
                 <div className="form-group">
@@ -1388,8 +1435,8 @@ const ApplicationForm = () => {
                       </option>
                     ))}
                   </select>
-                  {stepErrors.residentialaddress && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.state}</p>
+                  {stepErrors['residentialaddress.state'] && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors['residentialaddress.state']}</p>
                   )}
                 </div>
               </div>
@@ -1404,8 +1451,8 @@ const ApplicationForm = () => {
                     className={getInputClassName('residentialaddress.zipcode')}
                     required
                   />
-                  {stepErrors.residentialaddress && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.zipcode}</p>
+                  {stepErrors['residentialaddress.zipcode'] && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors['residentialaddress.zipcode']}</p>
                   )}
                 </div>
                 <div className="form-group">
@@ -1414,14 +1461,25 @@ const ApplicationForm = () => {
                     name="residentialaddress.country"
                     value={formData.residentialaddress.country}
                     onChange={(e) => {
-                      handleInputChange(e);
-                      setFormData(prev => ({ 
-                        ...prev, 
-                        residentialaddress: { 
-                          ...prev.residentialaddress, 
-                          state: '' 
-                        } 
-                      }));
+                      const { name, value } = e.target;
+                      console.log(`Country selection changed: ${value}`);
+                      
+                      // Split the name to get parent and child
+                      const [parent, child] = name.split('.');
+                      
+                      // Update the form data with the new country and reset state
+                      setFormData(prev => {
+                        const updated = {
+                          ...prev,
+                          [parent]: {
+                            ...prev[parent],
+                            [child]: value,
+                            state: '' // Clear state when country changes
+                          }
+                        };
+                        console.log('Updated country and reset state:', JSON.stringify(updated[parent]));
+                        return updated;
+                      });
                     }}
                     className={getInputClassName('residentialaddress.country')}
                     required
@@ -1433,8 +1491,8 @@ const ApplicationForm = () => {
                       </option>
                     ))}
                   </select>
-                  {stepErrors.residentialaddress && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.residentialaddress.country}</p>
+                  {stepErrors['residentialaddress.country'] && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors['residentialaddress.country']}</p>
                   )}
                 </div>
               </div>
@@ -1442,69 +1500,6 @@ const ApplicationForm = () => {
           </div>
         );
       case 4:
-        return (
-          <div className="space-y-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <FaMapMarkerAlt className="text-blue-600 text-xl" />
-              </div>
-              <h2 className="text-2xl font-bold">Origin Information</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="form-group">
-                  <label className="form-label">Country of Origin</label>
-                  <select
-                    name="countryOfOrigin"
-                    value={formData.countryOfOrigin}
-                    onChange={(e) => {
-                      handleInputChange(e);
-                      setFormData(prev => ({ ...prev, stateoforigin: '' }));
-                    }}
-                    className={getInputClassName('countryOfOrigin')}
-                    required
-                  >
-                    <option value="">Select country</option>
-                    {countries.map(country => (
-                      <option key={country.value} value={country.value}>
-                        {country.label}
-                      </option>
-                    ))}
-                  </select>
-                  {stepErrors.countryOfOrigin && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.countryOfOrigin}</p>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label className="form-label">State/Province of Origin</label>
-                  <select
-                    name="stateoforigin"
-                    value={formData.stateoforigin}
-                    onChange={handleInputChange}
-                    className={getInputClassName('stateoforigin')}
-                    required={formData.countryOfOrigin === 'US'}
-                    disabled={!formData.countryOfOrigin || formData.countryOfOrigin !== 'US'}
-                  >
-                    <option value="">Select state/province</option>
-                    {getStatesForCountry(formData.countryOfOrigin).map(state => (
-                      <option key={state.value} value={state.value}>
-                        {state.label}
-                      </option>
-                    ))}
-                  </select>
-                  {stepErrors.stateoforigin && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateoforigin}</p>
-                  )}
-                  {formData.countryOfOrigin && formData.countryOfOrigin !== 'US' && (
-                    <p className="text-sm text-gray-500 mt-1">State/Province selection is optional for non-US residents</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 5:
         return (
           <div className="space-y-6">
             <div className="flex items-center mb-6">
@@ -1632,6 +1627,7 @@ const ApplicationForm = () => {
                       value={formData.mailingCountry}
                       onChange={(e) => {
                         handleInputChange(e);
+                        // Also reset mailingState when country changes
                         setFormData(prev => ({ 
                           ...prev, 
                           mailingState: '' 
@@ -1654,6 +1650,70 @@ const ApplicationForm = () => {
                 </div>
               </div>
             )}
+          </div>
+        );
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center mb-6">
+              <div className="bg-blue-100 p-3 rounded-full mr-4">
+                <FaMapMarkerAlt className="text-blue-600 text-xl" />
+              </div>
+              <h2 className="text-2xl font-bold">Origin Information</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-group">
+                  <label className="form-label">Country of Origin</label>
+                  <select
+                    name="countryOfOrigin"
+                    value={formData.countryOfOrigin}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                      // Reset state of origin when country changes
+                      setFormData(prev => ({ ...prev, stateoforigin: '' }));
+                    }}
+                    className={getInputClassName('countryOfOrigin')}
+                    required
+                  >
+                    <option value="">Select country</option>
+                    {countries.map(country => (
+                      <option key={country.value} value={country.value}>
+                        {country.label}
+                      </option>
+                    ))}
+                  </select>
+                  {stepErrors.countryOfOrigin && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.countryOfOrigin}</p>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="form-label">State/Province of Origin</label>
+                  <select
+                    name="stateoforigin"
+                    value={formData.stateoforigin}
+                    onChange={handleInputChange}
+                    className={getInputClassName('stateoforigin')}
+                    required={formData.countryOfOrigin === 'US'}
+                    disabled={!formData.countryOfOrigin || formData.countryOfOrigin !== 'US'}
+                  >
+                    <option value="">Select state/province</option>
+                    {getStatesForCountry(formData.countryOfOrigin).map(state => (
+                      <option key={state.value} value={state.value}>
+                        {state.label}
+                      </option>
+                    ))}
+                  </select>
+                  {stepErrors.stateoforigin && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.stateoforigin}</p>
+                  )}
+                  {formData.countryOfOrigin && formData.countryOfOrigin !== 'US' && (
+                    <p className="text-sm text-gray-500 mt-1">State/Province selection is optional for non-US residents</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         );
       case 6:

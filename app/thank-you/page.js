@@ -1,21 +1,50 @@
 'use client';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaArrowRight } from 'react-icons/fa';
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
+import { getClientData } from '../utils/clientUtils';
 
 const ThankYou = () => {
   const router = useRouter();
+  const [countdown, setCountdown] = useState(10);
+  const [clientData, setClientData] = useState({
+    applicationId: null,
+    clientId: null,
+    timestamp: null
+  });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Get client data using the utility function
+    const data = getClientData();
+    setClientData(data);
+    
+    const redirectTimer = setTimeout(() => {
       router.push('/');
-    }, 5000); // Redirect to home after 5 seconds
+    }, 10000); // Redirect to home after 10 seconds
 
-    return () => clearTimeout(timer);
+    // Countdown timer
+    const countdownInterval = setInterval(() => {
+      setCountdown(prevCount => {
+        if (prevCount <= 1) {
+          clearInterval(countdownInterval);
+          return 0;
+        }
+        return prevCount - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearTimeout(redirectTimer);
+      clearInterval(countdownInterval);
+    };
   }, [router]);
+
+  // Format timestamp for display if available
+  const formattedDate = clientData.timestamp 
+    ? new Date(clientData.timestamp).toLocaleString() 
+    : null;
 
   return (
     <PageTransition>
@@ -30,23 +59,60 @@ const ThankYou = () => {
             </div>
             <div>
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Thank You for Your Application!
+                Welcome to Our Family!
               </h2>
               <p className="mt-2 text-sm text-gray-600">
-                Your health insurance application has been successfully submitted.
+                Your health insurance application has been successfully submitted and your client account has been created.
               </p>
             </div>
             <div className="mt-8 space-y-4">
-              <p className="text-gray-600">
-                We will review your application and contact you within 1-2 business days to discuss your coverage options.
-              </p>
-              <p className="text-sm text-gray-500">
-                You will be redirected to the home page in a few seconds...
-              </p>
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <h3 className="text-lg font-semibold text-blue-800">Next Steps:</h3>
+                <ul className="text-left text-sm text-gray-700 mt-2 space-y-2">
+                  <li className="flex items-start">
+                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
+                    <span>Our team will review your application within 1-2 business days</span>
+                  </li>
+                  <li className="flex items-start">
+                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
+                    <span>You'll receive a confirmation email with your application details</span>
+                  </li>
+                  <li className="flex items-start">
+                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
+                    <span>A representative will contact you to discuss your coverage options</span>
+                  </li>
+                </ul>
+              </div>
+              
+              {(clientData.applicationId || clientData.clientId) && (
+                <div className="text-sm text-gray-600 text-left p-3 bg-gray-50 rounded-md">
+                  <p className="font-medium">Your information:</p>
+                  {clientData.applicationId && (
+                    <p className="text-xs mt-1">Application ID: {clientData.applicationId}</p>
+                  )}
+                  {clientData.clientId && (
+                    <p className="text-xs">Client ID: {clientData.clientId}</p>
+                  )}
+                  {formattedDate && (
+                    <p className="text-xs mt-1">Submitted: {formattedDate}</p>
+                  )}
+                </div>
+              )}
+              
+              <div className="mt-6">
+                <p className="text-sm text-gray-500">
+                  You will be redirected to the home page in <span className="font-bold text-blue-600">{countdown}</span> seconds...
+                </p>
+                <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
+                  <div 
+                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-1000" 
+                    style={{ width: `${(countdown / 10) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </PageTransition>
   );

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getFirestore, collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getApp, initializeApp } from 'firebase/app';
 
 // Initialize Firebase (make sure this matches your firebase.ts file)
@@ -35,6 +35,7 @@ export async function POST(request) {
     
     // Get marketing ID or set default
     const marketingID = data.marketingID || 'UNKNOWN';
+    const leadId = data.marketingid || marketingID; // Use marketingid as the leadId
     
     // Initialize Firestore
     const db = getFirestore(app);
@@ -107,26 +108,85 @@ export async function POST(request) {
       
       // Additional tracking information
       status: data.status || "Application Submitted",
+      lead_id: leadId,
       marketingID: marketingID,
       timestamp: serverTimestamp(),
+      applicationDate: data.applicationDate || new Date().toISOString(),
       ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
       userAgent: request.headers.get('user-agent') || 'unknown'
     };
     
-    // Add to Firestore
-    const docRef = await addDoc(collection(db, 'applications'), applicationData);
+    // First, check if client exists with this lead_id
+    let clientId;
+    try {
+      // Create a reference to a document with the leadId as the document ID
+      const clientRef = doc(db, 'clients', leadId);
+      const clientDoc = await getDoc(clientRef);
+      
+      // Prepare client data
+      const clientData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        ssn: data.ssn,
+        residentialaddress: data.residentialaddress,
+        hasApplication: true,
+        lastUpdated: serverTimestamp(),
+        status: "Active Client",
+        marketingID: marketingID,
+        lead_id: leadId
+      };
+      
+      if (clientDoc.exists()) {
+        // Update existing client
+        console.log(`Updating existing client with lead_id: ${leadId}`);
+        await updateDoc(clientRef, clientData);
+        clientId = leadId;
+      } else {
+        // Create new client with leadId as the document ID
+        console.log(`Creating new client with lead_id: ${leadId}`);
+        await setDoc(clientRef, {
+          ...clientData,
+          createdAt: serverTimestamp()
+        });
+        clientId = leadId;
+      }
+    } catch (error) {
+      console.error('Error creating/updating client:', error);
+      return NextResponse.json(
+        { error: 'Failed to create/update client record' },
+        { status: 500 }
+      );
+    }
     
-    // Return success response with document ID
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Application successfully submitted',
-      applicationId: docRef.id
-    });
-    
+    // Now add the application to the applications collection
+    try {
+      // Add client_id to the application data
+      applicationData.client_id = clientId;
+      
+      // Add to applications collection
+      const appDocRef = await addDoc(collection(db, 'applications'), applicationData);
+      
+      // Return success response with document IDs
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Application successfully submitted',
+        applicationId: appDocRef.id,
+        clientId: clientId
+      });
+      
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      return NextResponse.json(
+        { error: 'Failed to submit application' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
-    console.error('Error submitting application:', error);
+    console.error('Unexpected error in submit-application route:', error);
     return NextResponse.json(
-      { error: 'Failed to submit application' },
+      { error: 'Failed to process application' },
       { status: 500 }
     );
   }

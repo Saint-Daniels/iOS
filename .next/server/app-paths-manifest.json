@@ -1,1 +1,5 @@
-{}
+{
+  "/api/submit-application/route": "app/api/submit-application/route.js",
+  "/signup/page": "app/signup/page.js",
+  "/application/page": "app/application/page.js"
+}
