@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
+import { Analytics } from "@vercel/analytics/react";
 
 // Import styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${inter.className} root-layout`}>
         {children}
+        <Analytics />
         <Script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" strategy="afterInteractive" />
         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" strategy="afterInteractive" />
       </body>
