@@ -4,7 +4,7 @@ services:
   github:
     branch: main
     deploy_on_push: true
-    repo: your-username/saint-daniels
+    repo: Saint-Daniels/Home
   build_command: npm run build
   run_command: npm start
   http_port: 3000
