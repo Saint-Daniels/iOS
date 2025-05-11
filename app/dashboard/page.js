@@ -974,7 +974,7 @@ export default function Dashboard() {
             <FaSignOutAlt size={48} className="text-warning mb-3" />
             <h5>Are you sure you want to log out?</h5>
             <p className="text-muted">You will need to log in again to access your dashboard.</p>
-          </div>
+        </div>
         </Modal.Body>
         <Modal.Footer>
           <Button 
@@ -1025,275 +1025,271 @@ export default function Dashboard() {
         </Toast.Body>
       </Toast>
 
-      <Container>
-        <div className="dashboard-header">
-          <h1>Welcome back, {userName}</h1>
-          <p className="text-muted">Here's your health coverage summary</p>
-        </div>
-
-        <Row className="g-4 mb-5">
-          <Col md={4}>
-            <Card className="dashboard-card h-100" onClick={() => setShowInsuranceModal(true)}>
-              <Card.Body>
-                <Card.Title className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex flex-column align-items-end">
-                    <span className={`coverage-status ${insurancePlan.status.toLowerCase()}`}>
-                      {insurancePlan.status}
-                    </span>
-                    <small className="text-muted agent-info">
-                      Agent of Record: {insurancePlan.agent.name} | NPN: {insurancePlan.agent.npn}
-                    </small>
+      <div className="dashboard-page">
+        <Container fluid className="px-0">
+          <div className="dashboard-header">
+            <h1>Welcome back, {userName}</h1>
+            <p className="text-muted">Here's your health coverage summary</p>
+          </div>
+          <Row className="g-0 justify-content-center">
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100" onClick={() => setShowInsuranceModal(true)}>
+                <Card.Body>
+                  <Card.Title className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-column align-items-end">
+                      <span className={`coverage-status ${insurancePlan.status.toLowerCase()}`}>
+                        {insurancePlan.status}
+                      </span>
+                      <small className="text-muted agent-info">
+                        Agent of Record: {insurancePlan.agent.name} | NPN: {insurancePlan.agent.npn}
+                      </small>
                     </div>
-                </Card.Title>
-                <div className="text-center">
-                  <div className="mb-3">
-                    <InsuranceProviderLogo size="large" className="mx-auto" />
+                  </Card.Title>
+                  <div className="text-center">
+                    <div className="mb-3">
+                      <InsuranceProviderLogo size="large" className="mx-auto" />
+                    </div>
+                    <h3 className="text-success mb-2">UnitedHealthcare Choice Plus</h3>
+                    <p className="text-muted mb-3">Active until {insurancePlan.expiryDate}</p>
+                    <div className="coverage-details">
+                      <div className="d-flex justify-content-between mb-2">
+                        <span>Deductible</span>
+                        <span className="text-success">{insurancePlan.coverage.deductible}</span>
+                      </div>
+                      <div className="d-flex justify-content-between mb-2">
+                        <span>Co-pay</span>
+                        <span className="text-success">{insurancePlan.coverage.copay}</span>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <span>Out-of-pocket Max</span>
+                        <span className="text-success">{insurancePlan.coverage.outOfPocketMax}</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-success mb-2">UnitedHealthcare Choice Plus</h3>
-                  <p className="text-muted mb-3">Active until {insurancePlan.expiryDate}</p>
-                  <div className="coverage-details">
-                    <div className="d-flex justify-content-between mb-2">
-                      <span>Deductible</span>
-                      <span className="text-success">{insurancePlan.coverage.deductible}</span>
-                </div>
-                    <div className="d-flex justify-content-between mb-2">
-                      <span>Co-pay</span>
-                      <span className="text-success">{insurancePlan.coverage.copay}</span>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <span>Out-of-pocket Max</span>
-                      <span className="text-success">{insurancePlan.coverage.outOfPocketMax}</span>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body>
+                  <Card.Title>Game Arcade</Card.Title>
+                  <div className="game-display">
+                    <FaGamepad size={48} className="text-primary mb-3" />
+                    <h3>Coming Soon</h3>
+                    <p className="text-muted mb-4">Exciting games and rewards are on the way!</p>
+                    <div className="d-flex justify-content-center">
+                      <Button 
+                        className="dashboard-btn" 
+                        onClick={handleGameStart}
+                      >
+                        Learn More
+                      </Button>
                     </div>
                   </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col md={4}>
-            <Card className="dashboard-card h-100">
-              <Card.Body>
-                <Card.Title>Game Arcade</Card.Title>
-                <div className="game-display">
-                  <FaGamepad size={48} className="text-primary mb-3" />
-                  <h3>Coming Soon</h3>
-                  <p className="text-muted mb-4">Exciting games and rewards are on the way!</p>
-                  <div className="d-flex justify-content-center">
-                  <Button 
-                    className="dashboard-btn" 
-                      onClick={handleGameStart}
-                  >
-                      Learn More
-                </Button>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col md={4}>
-            <Card className="dashboard-card h-100">
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>Snapchat</Card.Title>
-                <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
-                  <div className="snapchat-logo-container mb-4">
-                    <div className="snapchat-logo-circle">
-                      <FaSnapchatGhost size={80} className="text-warning" />
-                  </div>
-                    <div className="snapchat-username mt-3 text-center">
-                      <h4 className="mb-0">{snapchatUsername}</h4>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body>
+                  <Card.Title>Mailbox</Card.Title>
+                  <div className="mailbox-preview">
+                    <div className="mailbox-header">
+                      <FaEnvelope size={48} className="text-primary mb-3" />
+                      {inboxMessages.length > 0 && (
+                        <div className="unread-badge">
+                          {inboxMessages.filter(msg => !msg.read).length}
+                        </div>
+                      )}
                     </div>
+                    {inboxMessages.length > 0 ? (
+                      <div className="inbox-list">
+                        {inboxMessages.slice(0, 3).map(message => (
+                          <div 
+                            key={message.id} 
+                            className={`inbox-item ${!message.read ? 'unread' : ''}`}
+                            onClick={() => handleMessageClick(message)}
+                          >
+                            <div className="inbox-item-header">
+                              <span className="sender">{message.from}</span>
+                              <span className="date">{message.date}</span>
+                            </div>
+                            <div className="inbox-item-subject">{message.subject}</div>
+                            <div className="inbox-item-preview">{message.preview}</div>
+                            <div className="inbox-item-actions">
+                              <FaStar 
+                                className={`star-icon ${message.starred ? 'starred' : ''}`}
+                                onClick={(e) => handleStarMessage(message.id, e)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="empty-state">
+                        <p className="text-muted mb-3">No messages yet</p>
+                        <p className="text-muted small">Your important health updates will appear here</p>
+                      </div>
+                    )}
+                    <div className="d-flex flex-column gap-2 mt-3">
+                      <Button 
+                        className="dashboard-btn w-100"
+                        onClick={handleMailboxClick}
+                      >
+                        Messages
+                      </Button>
+                      <Button 
+                        className="dashboard-btn w-100"
+                        onClick={handleComposeClick}
+                      >
+                        <FaEnvelope className="me-1" />
+                        Compose
+                      </Button>
                     </div>
-                  {socialProfile.isConnected ? (
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body>
+                  <Card.Title>Snapchat</Card.Title>
+                  <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
+                    <div className="snapchat-logo-container mb-4">
+                      <div className="snapchat-logo-circle">
+                        <FaSnapchatGhost size={80} className="text-warning" />
+                      </div>
+                      <div className="snapchat-username mt-3 text-center">
+                        <h4 className="mb-0">{snapchatUsername}</h4>
+                      </div>
+                    </div>
+                    {socialProfile.isConnected ? (
+                      <>
+                        <div className="profile-display mb-4">
+                          <span className="profile-label">Username</span>
+                          <span className="profile-value">{socialProfile.username}</span>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                          <Button 
+                            className="dashboard-btn"
+                            onClick={handleSocialConnect}
+                          >
+                            <FaSnapchatGhost className="me-2" />
+                            Snapchat Profile
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="empty-state">
+                        <div className="d-flex justify-content-center">
+                          <Button 
+                            className="dashboard-btn" 
+                            onClick={handleSocialConnect}
+                          >
+                            <FaUserCog className="me-2" />
+                            Profile
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body>
+                  <Card.Title>Recent Activity</Card.Title>
+                  {activities.length > 0 ? (
                     <>
-                      <div className="profile-display mb-4">
-                        <span className="profile-label">Username</span>
-                        <span className="profile-value">{socialProfile.username}</span>
-                    </div>
-                      <div className="d-flex justify-content-center">
-                        <Button 
-                          className="dashboard-btn"
-                          onClick={handleSocialConnect}
-                        >
-                          <FaSnapchatGhost className="me-2" />
-                          Snapchat Profile
-                        </Button>
-                  </div>
+                      <ul className="activity-list">
+                        {activities.slice(0, 3).map((activity, index) => (
+                          <li key={index} className="activity-item">
+                            <div className="d-flex align-items-start">
+                              <div className="activity-icon me-3">
+                                {activity.icon && (
+                                  <activity.icon 
+                                    size={24} 
+                                    className={`text-${getActivityIconColor(activity.type)}`}
+                                  />
+                                )}
+                              </div>
+                              <div className="flex-grow-1">
+                                <div className="activity-date small text-muted">{activity.date}</div>
+                                <p className="activity-description mb-1 small">{activity.description}</p>
+                                {activity.reward && (
+                                  <div className="activity-reward small">
+                                    <span className={`badge bg-${activity.reward.status === 'earned' ? 'success' : 'warning'} me-2`}>
+                                      {activity.reward.days} days
+                                    </span>
+                                    <span className="text-muted">{activity.reward.provider}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button 
+                        className="dashboard-btn w-100 mt-3"
+                        onClick={() => setShowAllActivities(true)}
+                      >
+                        View All Activities
+                      </Button>
                     </>
                   ) : (
                     <div className="empty-state">
-                      <div className="d-flex justify-content-center">
-                        <Button 
-                          className="dashboard-btn" 
-                          onClick={handleSocialConnect}
-                        >
-                          <FaUserCog className="me-2" />
-                          Profile
-                </Button>
-                      </div>
+                      <p className="text-muted mb-3">No recent activity</p>
+                      <p className="text-muted small">Your health activities and achievements will appear here</p>
                     </div>
                   )}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col md={4}>
-            <Card className="dashboard-card h-100">
-              <Card.Body>
-                <Card.Title>Mailbox</Card.Title>
-                <div className="mailbox-preview">
-                  <div className="mailbox-header">
-                    <FaEnvelope size={48} className="text-primary mb-3" />
-                    {inboxMessages.length > 0 && (
-                      <div className="unread-badge">
-                        {inboxMessages.filter(msg => !msg.read).length}
-                  </div>
-                    )}
-                    </div>
-                  {inboxMessages.length > 0 ? (
-                    <div className="inbox-list">
-                      {inboxMessages.slice(0, 3).map(message => (
-                        <div 
-                          key={message.id} 
-                          className={`inbox-item ${!message.read ? 'unread' : ''}`}
-                          onClick={() => handleMessageClick(message)}
-                        >
-                          <div className="inbox-item-header">
-                            <span className="sender">{message.from}</span>
-                            <span className="date">{message.date}</span>
-                    </div>
-                          <div className="inbox-item-subject">{message.subject}</div>
-                          <div className="inbox-item-preview">{message.preview}</div>
-                          <div className="inbox-item-actions">
-                            <FaStar 
-                              className={`star-icon ${message.starred ? 'starred' : ''}`}
-                              onClick={(e) => handleStarMessage(message.id, e)}
-                            />
-                    </div>
-                  </div>
-                      ))}
-                </div>
-                  ) : (
-                    <div className="empty-state">
-                      <p className="text-muted mb-3">No messages yet</p>
-                      <p className="text-muted small">Your important health updates will appear here</p>
-                    </div>
-                  )}
-                  <div className="d-flex flex-column gap-2 mt-3">
-                  <Button 
-                      className="dashboard-btn w-100"
-                      onClick={handleMailboxClick}
-                    >
-                      Messages
-                </Button>
-                    <Button 
-                      className="dashboard-btn w-100"
-                      onClick={handleComposeClick}
-                  >
-                      <FaEnvelope className="me-1" />
-                      Compose
-                  </Button>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          
-          <Col md={4}>
-            <Card className="dashboard-card h-100">
-              <Card.Body>
-                <Card.Title>Recent Activity</Card.Title>
-                {activities.length > 0 ? (
-                  <>
-                    <ul className="activity-list">
-                      {activities.slice(0, 3).map((activity, index) => (
-                        <li key={index} className="activity-item">
-                          <div className="d-flex align-items-start">
-                            <div className="activity-icon me-3">
-                              {activity.icon && (
-                                <activity.icon 
-                                  size={24} 
-                                  className={`text-${getActivityIconColor(activity.type)}`}
-                                />
-                              )}
-                  </div>
-                            <div className="flex-grow-1">
-                              <div className="activity-date small text-muted">{activity.date}</div>
-                              <p className="activity-description mb-1 small">{activity.description}</p>
-                              {activity.reward && (
-                                <div className="activity-reward small">
-                                  <span className={`badge bg-${activity.reward.status === 'earned' ? 'success' : 'warning'} me-2`}>
-                                    {activity.reward.days} days
-                                  </span>
-                                  <span className="text-muted">{activity.reward.provider}</span>
-                                </div>
-                              )}
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body className="p-3">
+                  <Card.Title>Available Offers</Card.Title>
+                  {offers && offers.length > 0 ? (
+                    <div className="offers-list">
+                      {offers.slice(0, 3).map((offer, index) => (
+                        <div key={index} className="offer-item mb-2 p-2 border rounded">
+                          <div className="d-flex align-items-center">
+                            <div className="me-3">
+                              <div className="offer-icon">
+                                {offer.icon && (
+                                  <offer.icon 
+                                    size={32} 
+                                    className={`text-${getActivityIconColor(offer.type)}`}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                              <h5 className="mb-0">{offer.title}</h5>
+                              <Button 
+                                className="dashboard-btn ms-3"
+                                onClick={() => handleOfferClick(offer)}
+                              >
+                                Claim
+                              </Button>
                             </div>
                           </div>
-                        </li>
-                      ))}
-                    </ul>
-                  <Button 
-                      className="dashboard-btn w-100 mt-3"
-                      onClick={() => setShowAllActivities(true)}
-                  >
-                      View All Activities
-                  </Button>
-                  </>
-                ) : (
-                  <div className="empty-state">
-                    <p className="text-muted mb-3">No recent activity</p>
-                    <p className="text-muted small">Your health activities and achievements will appear here</p>
-                </div>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-          
-          <Col md={4}>
-            <Card className="dashboard-card h-100">
-              <Card.Body className="p-3">
-                <Card.Title>Available Offers</Card.Title>
-                {offers && offers.length > 0 ? (
-                <div className="offers-list">
-                    {offers.slice(0, 3).map((offer, index) => (
-                      <div key={index} className="offer-item mb-2 p-2 border rounded">
-                        <div className="d-flex align-items-center">
-                          <div className="me-3">
-                            <div className="offer-icon">
-                              {offer.icon && (
-                                <offer.icon 
-                                  size={32} 
-                                  className={`text-${getActivityIconColor(offer.type)}`}
-                                />
-                              )}
-                  </div>
-                          </div>
-                          <div className="flex-grow-1 d-flex justify-content-between align-items-center">
-                    <h5 className="mb-0">{offer.title}</h5>
-                    <Button 
-                      className="dashboard-btn ms-3"
-                      onClick={() => handleOfferClick(offer)}
-                    >
-                      Claim
-                    </Button>
-                  </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="empty-state">
-                    <p className="text-muted mb-3">No offers available</p>
-                    <p className="text-muted small">Check back later for new rewards and offers</p>
-                  </div>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <p className="text-muted mb-3">No offers available</p>
+                      <p className="text-muted small">Check back later for new rewards and offers</p>
+                    </div>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
       {/* Modals */}
       <ReceiptScanner 
@@ -1331,7 +1327,7 @@ export default function Dashboard() {
               <div className="game-card mb-4">
                 <div className="game-icon">
                   <FaSkull size={48} className="text-danger mb-3" />
-                </div>
+                  </div>
                 <h4>Zombie Survival Fitness</h4>
                 <p className="text-muted">
                   Run, dodge, and survive in this immersive fitness game. Complete daily challenges
@@ -1400,7 +1396,7 @@ export default function Dashboard() {
                       onChange={(e) => setNewUsername(e.target.value)}
                       placeholder="Enter username"
                     />
-                    <Button
+                  <Button 
                       variant="success"
                       onClick={handleUsernameSave}
                     >
@@ -1411,8 +1407,8 @@ export default function Dashboard() {
                       onClick={handleUsernameCancel}
                     >
                       <FaTimes />
-                    </Button>
-                  </div>
+                  </Button>
+                </div>
                 ) : (
                   <div className="d-flex align-items-center justify-content-center gap-2 mb-4">
                     <h3>{snapchatUsername}</h3>
@@ -1477,14 +1473,14 @@ export default function Dashboard() {
               <FaUserPlus size={48} className="text-primary mb-3" />
               <h5>Share Your Invite Link</h5>
               <p className="text-muted">Invite friends to join your gaming community</p>
-            </div>
+                  </div>
             
             <div className="invite-link-section mb-4">
               <div className="invite-link-display p-3 border rounded bg-light text-center">
                 <span className="text-primary">{inviteLink}</span>
               </div>
               <div className="d-flex justify-content-center mt-3">
-                <Button 
+                  <Button 
                   variant="outline-primary"
                   onClick={() => {
                     navigator.clipboard.writeText(inviteLink);
@@ -1493,8 +1489,8 @@ export default function Dashboard() {
                 >
                   <FaCopy className="me-2" />
                   Copy Link
-                </Button>
-              </div>
+                  </Button>
+                </div>
             </div>
 
             <div className="invite-benefits">
