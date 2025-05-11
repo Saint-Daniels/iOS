@@ -388,6 +388,14 @@ export default function Dashboard() {
 
   const handleDismissWarning = () => {
     setShowLogoutWarning(false);
+    if (warningTimer) {
+      clearTimeout(warningTimer);
+      setWarningTimer(null);
+    }
+    if (inactivityTimer) {
+      clearTimeout(inactivityTimer);
+      setInactivityTimer(null);
+    }
     resetTimers();
   };
 
@@ -1028,7 +1036,6 @@ export default function Dashboard() {
             <Card className="dashboard-card h-100" onClick={() => setShowInsuranceModal(true)}>
               <Card.Body>
                 <Card.Title className="d-flex justify-content-between align-items-center">
-                  Insurance Plan
                   <div className="d-flex flex-column align-items-end">
                     <span className={`coverage-status ${insurancePlan.status.toLowerCase()}`}>
                       {insurancePlan.status}
@@ -1263,19 +1270,14 @@ export default function Dashboard() {
                               )}
                   </div>
                           </div>
-                          <div className="flex-grow-1">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                                <h5 className="mb-1">{offer.title}</h5>
-                                <p className="text-muted mb-0 small">{offer.description}</p>
-                      </div>
-                      <Button 
-                        className="dashboard-btn"
-                                onClick={() => handleOfferClick(offer)}
-                      >
-                        Claim
-                      </Button>
-                    </div>
+                          <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                    <h5 className="mb-0">{offer.title}</h5>
+                    <Button 
+                      className="dashboard-btn ms-3"
+                      onClick={() => handleOfferClick(offer)}
+                    >
+                      Claim
+                    </Button>
                   </div>
                         </div>
                       </div>
@@ -1645,14 +1647,13 @@ export default function Dashboard() {
             <InsuranceProviderLogo size="small" className="me-2" />
             Insurance Coverage Details
           </Modal.Title>
-          <button 
-            type="button" 
-            className="btn-close-modal" 
-            onClick={() => setShowInsuranceModal(false)}
+          <Button 
+            variant="link" 
+            onClick={() => setShowInsuranceModal(false)} 
+            className="ms-auto p-0 btn-close"
             aria-label="Close"
-          >
-            <span>×</span>
-          </button>
+            style={{ boxShadow: 'none' }}
+          />
         </Modal.Header>
         <Modal.Body>
           <div className="insurance-modal-content">
@@ -1933,14 +1934,13 @@ export default function Dashboard() {
       >
         <Modal.Header>
           <Modal.Title>{selectedMessage?.subject}</Modal.Title>
-          <button 
-            type="button" 
-            className="btn-close-modal" 
-            onClick={() => setShowMessageModal(false)}
+          <Button 
+            variant="link" 
+            onClick={() => setShowMessageModal(false)} 
+            className="ms-auto p-0 btn-close"
             aria-label="Close"
-          >
-            <span>×</span>
-          </button>
+            style={{ boxShadow: 'none' }}
+          />
         </Modal.Header>
         <Modal.Body>
           {selectedMessage && (
@@ -2001,14 +2001,13 @@ export default function Dashboard() {
       >
         <Modal.Header>
           <Modal.Title>Claim Your Reward</Modal.Title>
-          <button 
-            type="button" 
-            className="btn-close-modal" 
-            onClick={() => setShowClaimModal(false)}
+          <Button 
+            variant="link" 
+            onClick={() => setShowClaimModal(false)} 
+            className="ms-auto p-0 btn-close"
             aria-label="Close"
-          >
-            <span>×</span>
-          </button>
+            style={{ boxShadow: 'none' }}
+          />
         </Modal.Header>
         <Modal.Body>
           {selectedOffer && (

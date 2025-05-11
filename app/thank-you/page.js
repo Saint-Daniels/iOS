@@ -8,7 +8,6 @@ import { getClientData } from '../utils/clientUtils';
 
 const ThankYou = () => {
   const router = useRouter();
-  const [countdown, setCountdown] = useState(10);
   const [clientData, setClientData] = useState({
     applicationId: null,
     clientId: null,
@@ -19,27 +18,7 @@ const ThankYou = () => {
     // Get client data using the utility function
     const data = getClientData();
     setClientData(data);
-    
-    const redirectTimer = setTimeout(() => {
-      router.push('/');
-    }, 10000); // Redirect to home after 10 seconds
-
-    // Countdown timer
-    const countdownInterval = setInterval(() => {
-      setCountdown(prevCount => {
-        if (prevCount <= 1) {
-          clearInterval(countdownInterval);
-          return 0;
-        }
-        return prevCount - 1;
-      });
-    }, 1000);
-
-    return () => {
-      clearTimeout(redirectTimer);
-      clearInterval(countdownInterval);
-    };
-  }, [router]);
+  }, []);
 
   // Format timestamp for display if available
   const formattedDate = clientData.timestamp 
@@ -98,18 +77,6 @@ const ThankYou = () => {
                   )}
                 </div>
               )}
-              
-              <div className="mt-6">
-                <p className="text-sm text-gray-500">
-                  You will be redirected to the home page in <span className="font-bold text-blue-600">{countdown}</span> seconds...
-                </p>
-                <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
-                  <div 
-                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-1000" 
-                    style={{ width: `${(countdown / 10) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
