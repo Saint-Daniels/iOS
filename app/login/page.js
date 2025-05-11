@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Container, Form, Button, Row, Col, Navbar, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Navbar, Alert, Modal } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { FaLock, FaCheckCircle } from 'react-icons/fa';
 
 // Dummy credentials - No longer required as we'll accept any input
 // const VALID_CREDENTIALS = {
@@ -19,20 +20,73 @@ export default function Login() {
     password: ''
   });
   const [error, setError] = useState('');
+  const [show2FAModal, setShow2FAModal] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationError, setVerificationError] = useState('');
+  const [codeSent, setCodeSent] = useState(false);
+  const [codeAttempts, setCodeAttempts] = useState(0);
+  const [lastCodeSent, setLastCodeSent] = useState(null);
 
-  const handleSubmit = (e) => {
+  const canSendCode = () => {
+    if (codeAttempts >= 3) {
+      const timeSinceLastCode = Date.now() - lastCodeSent;
+      return timeSinceLastCode >= 5 * 60 * 1000; // 5 minutes in milliseconds
+    }
+    return true;
+  };
+
+  const getTimeUntilNextCode = () => {
+    if (codeAttempts >= 3) {
+      const timeSinceLastCode = Date.now() - lastCodeSent;
+      const timeRemaining = 5 * 60 * 1000 - timeSinceLastCode;
+      if (timeRemaining > 0) {
+        const minutes = Math.ceil(timeRemaining / (60 * 1000));
+        return minutes;
+      }
+    }
+    return 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Accept any non-empty credentials
     if (formData.email.trim() && formData.password.trim()) {
-      // Set login status and redirect to dashboard
+      // Direct login without 2FA
       sessionStorage.setItem('isLoggedIn', 'true');
-      sessionStorage.setItem('userEmail', formData.email); // Store for personalization
+      sessionStorage.setItem('userEmail', formData.email);
       router.push('/dashboard');
     } else {
       setError('Please enter both email and password.');
     }
+  };
+
+  const handleSendVerificationCode = () => {
+    if (canSendCode()) {
+      // Here you would typically make an API call to send the verification code
+      setCodeSent(true);
+      setCodeAttempts(prev => prev + 1);
+      setLastCodeSent(Date.now());
+      setVerificationError('');
+    }
+  };
+
+  const handleVerifyCode = () => {
+    if (!verificationCode.trim()) {
+      setVerificationError('Please enter the verification code.');
+      return;
+    }
+
+    // Here you would typically verify the code with your backend
+    // For demo purposes, we'll assume any non-empty code is valid
+    setIsVerifying(false);
+    setShow2FAModal(false);
+    
+    // Set login status and redirect to dashboard
+    sessionStorage.setItem('isLoggedIn', 'true');
+    sessionStorage.setItem('userEmail', formData.email);
+    router.push('/dashboard');
   };
 
   const handleChange = (e) => {
@@ -121,8 +175,9 @@ export default function Login() {
                       variant="primary" 
                       type="submit" 
                       className="w-100 py-3 mb-4"
+                      disabled={isVerifying}
                     >
-                      Sign In
+                      {isVerifying ? 'Verifying...' : 'Sign In'}
                     </Button>
 
                     <div className="text-center">
@@ -140,6 +195,69 @@ export default function Login() {
           </Row>
         </Container>
       </div>
+
+      {/* 2FA Verification Modal */}
+      <Modal 
+        show={show2FAModal} 
+        onHide={() => setShow2FAModal(false)} 
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <FaLock className="me-2" />
+            Two-Factor Authentication
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="text-center mb-4">
+            <p className="text-muted">
+              A verification code has been sent to your registered phone number.
+              Please enter the code below to complete your login.
+            </p>
+          </div>
+          
+          <Form.Group className="mb-4">
+            <Form.Label>Verification Code</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter verification code"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              className="form-control-lg"
+            />
+            {verificationError && (
+              <Form.Text className="text-danger">
+                {verificationError}
+              </Form.Text>
+            )}
+          </Form.Group>
+
+          <div className="d-grid gap-2">
+            <Button 
+              variant="primary"
+              onClick={handleVerifyCode}
+              disabled={!verificationCode.trim()}
+            >
+              Verify & Login
+            </Button>
+            <Button 
+              variant="outline-secondary"
+              onClick={handleSendVerificationCode}
+              disabled={!canSendCode()}
+            >
+              Resend Code
+            </Button>
+          </div>
+
+          {!canSendCode() && (
+            <div className="text-center mt-3">
+              <small className="text-muted">
+                Please wait {getTimeUntilNextCode()} minutes before requesting another code
+              </small>
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 } 
