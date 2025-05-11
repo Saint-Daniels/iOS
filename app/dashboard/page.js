@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, Button, Navbar, ProgressBar, Modal, Toast, A
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, FaReply, FaUserPlus, FaGift, FaRunning, FaSkull, FaTrophy, FaTimes, FaExclamationTriangle, FaCheckCircle, FaUsers, FaMedal, FaReceipt, FaHeartbeat, FaCalendarCheck, FaMobileAlt, FaCookie, FaCopy, FaShare, FaCog, FaLock, FaUserCog } from 'react-icons/fa';
+import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, FaReply, FaUserPlus, FaGift, FaRunning, FaSkull, FaTrophy, FaTimes, FaExclamationTriangle, FaCheckCircle, FaUsers, FaMedal, FaReceipt, FaHeartbeat, FaCalendarCheck, FaMobileAlt, FaCookie, FaCopy, FaShare, FaCog, FaLock, FaUserCog, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import ReceiptScanner from '../components/ReceiptScanner';
 import { motion, AnimatePresence } from 'framer-motion';
 import InsuranceProviderLogo from '../components/InsuranceProviderLogo';
@@ -270,6 +270,7 @@ export default function Dashboard() {
   const [snapchatUsername, setSnapchatUsername] = useState('@health_warrior');
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [newUsername, setNewUsername] = useState('');
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // Reset timers on user activity
   const resetTimers = useCallback(() => {
@@ -367,9 +368,22 @@ export default function Dashboard() {
   }, [router]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('userEmail');
-    router.push('/');
+    // Clear all session storage
+    sessionStorage.clear();
+    // Clear any other auth-related items
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userEmail');
+    // Force redirect to homepage
+    window.location.href = '/';
+  };
+
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    setShowLogoutModal(false);
+    handleLogout();
   };
 
   const handleDismissWarning = () => {
@@ -931,12 +945,44 @@ export default function Dashboard() {
             >
               <FaCog size={20} />
             </Button>
-          <Button className="logout-btn" onClick={handleLogout}>
+            <Button className="logout-btn" onClick={handleLogoutClick}>
             Logout
           </Button>
           </div>
         </Container>
       </Navbar>
+
+      {/* Logout Confirmation Modal */}
+      <Modal 
+        show={showLogoutModal} 
+        onHide={() => setShowLogoutModal(false)} 
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Logout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="text-center">
+            <FaSignOutAlt size={48} className="text-warning mb-3" />
+            <h5>Are you sure you want to log out?</h5>
+            <p className="text-muted">You will need to log in again to access your dashboard.</p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button 
+            variant="secondary" 
+            onClick={() => setShowLogoutModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button 
+            variant="warning" 
+            onClick={handleLogoutConfirm}
+          >
+            Yes, Logout
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       {/* Logout Warning Toast */}
       <Toast 
@@ -1041,36 +1087,43 @@ export default function Dashboard() {
           <Col md={4}>
             <Card className="dashboard-card h-100">
               <Card.Body className="d-flex flex-column">
-                <Card.Title>Social Profile</Card.Title>
+                <Card.Title>Snapchat</Card.Title>
                 <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
-                  <div className="avatar-placeholder mx-auto mb-2">
-                    <FaUserPlus size={48} className="text-primary" />
+                  <div className="snapchat-logo-container mb-4">
+                    <div className="snapchat-logo-circle">
+                      <FaSnapchatGhost size={80} className="text-warning" />
                   </div>
+                    <div className="snapchat-username mt-3 text-center">
+                      <h4 className="mb-0">{snapchatUsername}</h4>
+                    </div>
+                    </div>
                   {socialProfile.isConnected ? (
                     <>
-                      <div className="profile-display mb-2">
+                      <div className="profile-display mb-4">
                         <span className="profile-label">Username</span>
                         <span className="profile-value">{socialProfile.username}</span>
-                      </div>
+                    </div>
                       <div className="d-flex justify-content-center">
                         <Button 
                           className="dashboard-btn"
                           onClick={handleSocialConnect}
                         >
-                          <FaUserPlus className="me-2" />
-                          Profile
+                          <FaSnapchatGhost className="me-2" />
+                          Snapchat Profile
                         </Button>
-                      </div>
+                  </div>
                     </>
                   ) : (
                     <div className="empty-state">
-                      <p className="text-muted mb-2">Connect your social profile to share your health journey</p>
-                      <Button 
-                        className="dashboard-btn" 
-                        onClick={handleSocialConnect}
-                      >
-                        Connect Profile
-                      </Button>
+                      <div className="d-flex justify-content-center">
+                        <Button 
+                          className="dashboard-btn" 
+                          onClick={handleSocialConnect}
+                        >
+                          <FaUserCog className="me-2" />
+                          Profile
+                </Button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -1130,7 +1183,7 @@ export default function Dashboard() {
                     <Button 
                       className="dashboard-btn w-100"
                       onClick={handleComposeClick}
-                    >
+                  >
                       <FaEnvelope className="me-1" />
                       Compose
                   </Button>
@@ -1139,7 +1192,7 @@ export default function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-
+          
           <Col md={4}>
             <Card className="dashboard-card h-100">
               <Card.Body>
@@ -1216,13 +1269,13 @@ export default function Dashboard() {
                                 <h5 className="mb-1">{offer.title}</h5>
                                 <p className="text-muted mb-0 small">{offer.description}</p>
                       </div>
-                  <Button 
-                    className="dashboard-btn" 
+                      <Button 
+                        className="dashboard-btn"
                                 onClick={() => handleOfferClick(offer)}
-                  >
+                      >
                         Claim
-                  </Button>
-                </div>
+                      </Button>
+                    </div>
                   </div>
                         </div>
                       </div>
@@ -1334,7 +1387,7 @@ export default function Dashboard() {
         <Modal.Body>
           <div className="snapchat-profile-modal">
             <div className="profile-header text-center">
-              <SnapchatAvatar size="large" className="mx-auto mb-4" />
+              <FaUserCircle size={80} className="mx-auto mb-4 text-royal-gold" />
               <div className="profile-info">
                 {isEditingUsername ? (
                   <div className="d-flex align-items-center justify-content-center gap-2 mb-4">
@@ -1481,32 +1534,12 @@ export default function Dashboard() {
         </Modal.Header>
         <Modal.Body>
           <div className="friends-book">
-            <div className="search-friends mb-4">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search friends..."
-                />
-                <button className="btn btn-primary">
-                  <FaUserPlus className="me-2" />
-                  Add Friend
-                </button>
-              </div>
-            </div>
-            
-            <div className="friends-list">
-              {snapchatFriends.map(friend => (
-                <div key={friend.id} className="friend-entry">
-                  <div className="friend-avatar">
-                    <FaSnapchatGhost size={24} />
-                  </div>
-                  <div className="friend-details">
-                    <span className="friend-username">@{friend.username}</span>
-                    <span className={`status-indicator ${friend.status}`}></span>
-                  </div>
-                </div>
-              ))}
+            <div className="text-center">
+              <FaUsers size={48} className="text-primary mb-3" />
+              <h4>Coming Soon</h4>
+              <p className="text-muted">
+                Social features are currently under development. Stay tuned for updates!
+              </p>
             </div>
           </div>
         </Modal.Body>
@@ -2127,7 +2160,7 @@ export default function Dashboard() {
                   }}
                 >
                   {twoFactorForm.enabled ? 'Manage 2FA' : 'Enable 2FA'}
-                </Button>
+                  </Button>
                 </div>
             </div>
           </div>
@@ -2227,8 +2260,8 @@ export default function Dashboard() {
                     value={twoFactorForm.phoneNumber}
                     onChange={handle2FAChange}
                     placeholder="Enter phone number"
-                  />
-                </div>
+      />
+    </div>
                 <div className="d-grid">
                   <Button 
                     variant="primary"

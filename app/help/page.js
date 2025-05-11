@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Container, Row, Col, Form, Button, Accordion } from 'react-bootstrap';
+import { FaPhone, FaEnvelope, FaBuilding } from 'react-icons/fa';
 import MainNavbar from '../../components/Navbar';
 import PageTransition from '../../components/PageTransition';
 
@@ -10,12 +11,12 @@ export default function HelpCenter() {
 
   const faqs = [
     {
-      question: "How do I earn points?",
-      answer: "You can earn points through various activities such as regular check-ups, completing health assessments, participating in wellness programs, and maintaining a healthy lifestyle."
+      question: "How do I track my health journey?",
+      answer: "You can track your health journey through our platform by logging your daily activities, health metrics, and wellness goals. Each day of consistent tracking contributes to your overall health score."
     },
     {
-      question: "How do I redeem my points?",
-      answer: "Points can be redeemed through our rewards portal for various health-related products and services, wellness programs, and medical service discounts."
+      question: "How do I earn health days?",
+      answer: "You can earn health days by maintaining consistent health tracking, completing wellness challenges, participating in health assessments, and achieving your wellness goals. Each activity contributes to your daily health score."
     },
     {
       question: "What healthcare services are covered?",
@@ -28,8 +29,26 @@ export default function HelpCenter() {
     {
       question: "How do I update my profile information?",
       answer: "Log in to your account, go to 'Profile Settings', and you can update your personal information, contact details, and communication preferences."
+    },
+    {
+      question: "What are the customer support hours?",
+      answer: "Our customer support team is available Monday through Friday, from 9am to 5pm CST. You can reach us by phone at 888-324-6642 or through our contact form."
+    },
+    {
+      question: "How do I connect my Snapchat account?",
+      answer: "To connect your Snapchat account, go to your profile settings and click on the 'Connect Snapchat' button. Follow the prompts to authorize the connection and start sharing your health journey."
     }
   ];
+
+  const filteredFaqs = useMemo(() => {
+    if (!searchQuery.trim()) return faqs;
+    
+    const query = searchQuery.toLowerCase();
+    return faqs.filter(faq => 
+      faq.question.toLowerCase().includes(query) || 
+      faq.answer.toLowerCase().includes(query)
+    );
+  }, [searchQuery, faqs]);
 
   return (
     <PageTransition>
@@ -62,39 +81,36 @@ export default function HelpCenter() {
           <Row className="justify-content-center mt-5">
             <Col md={8}>
               <Accordion className="faq-accordion">
-                {faqs.map((faq, index) => (
+                {filteredFaqs.map((faq, index) => (
                   <Accordion.Item eventKey={index.toString()} key={index}>
                     <Accordion.Header>{faq.question}</Accordion.Header>
                     <Accordion.Body>{faq.answer}</Accordion.Body>
                   </Accordion.Item>
                 ))}
               </Accordion>
+              {filteredFaqs.length === 0 && (
+                <div className="text-center mt-4">
+                  <p>No results found for "{searchQuery}". Try a different search term.</p>
+                </div>
+              )}
             </Col>
           </Row>
 
           <Row className="mt-5">
-            <Col md={4}>
+            <Col md={6}>
               <div className="help-option-card">
-                <div className="help-icon">📞</div>
+                <div className="help-icon"><FaPhone /></div>
                 <h3>Call Us</h3>
-                <p className="help-contact">1-800-HEALTH-CARE</p>
-                <p className="help-hours">Available 24/7</p>
+                <p className="help-contact">888-324-6642</p>
+                <p className="help-hours">Monday-Friday, 9am-5pm CST</p>
               </div>
             </Col>
-            <Col md={4}>
+            <Col md={6}>
               <div className="help-option-card">
-                <div className="help-icon">✉️</div>
+                <div className="help-icon"><FaEnvelope /></div>
                 <h3>Email Us</h3>
                 <p className="help-contact">support@saintdaniels.com</p>
                 <p className="help-hours">Response within 24 hours</p>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div className="help-option-card">
-                <div className="help-icon">💬</div>
-                <h3>Live Chat</h3>
-                <Button className="dashboard-btn mt-3">Start Chat</Button>
-                <p className="help-hours">Available 9 AM - 6 PM EST</p>
               </div>
             </Col>
           </Row>

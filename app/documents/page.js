@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { FaFileAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import MainNavbar from '../../components/Navbar';
 
@@ -60,7 +61,7 @@ export default function Documents() {
                     {category.items.map((item, idx) => (
                       <li key={idx}>
                         <Link href={item.link} className="document-link">
-                          <span className="document-icon">📄</span>
+                          <span className="document-icon"><FaFileAlt /></span>
                           {item.name}
                         </Link>
                       </li>
