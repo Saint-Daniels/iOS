@@ -423,58 +423,41 @@
 /* Dashboard Styles */
 .dashboard-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #E5DDD3 0%, #D3C4A9 100%);
-  position: relative;
-  padding-bottom: 2rem;
+  background-color: #f8f9fa;
+  padding: 1rem;
 }
 
-.dashboard-welcome {
-  position: relative;
-  z-index: 1;
-  padding: 1.5rem 0;
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.dashboard-welcome h1 {
-  font-family: 'Crimson Text', serif;
-  color: var(--royal-green);
+.dashboard-header h1 {
+  font-size: 1.75rem;
   margin-bottom: 0.5rem;
-  font-size: 2rem;
-  animation: slideDown 0.6s ease-out;
 }
 
-.dashboard-welcome p {
-  color: #666;
-  animation: slideDown 0.6s ease-out 0.1s backwards;
-}
-
-/* Dashboard Cards */
 .dashboard-card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor: default;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
   height: 100%;
-  max-height: 300px;
-  overflow: hidden;
 }
 
 .dashboard-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .dashboard-card .card-body {
-  padding: 0.75rem;
+  padding: 1.5rem;
 }
 
 .dashboard-card .card-title {
-  color: #2c3e50;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
 }
 
 /* Responsive Grid Layout */
@@ -495,127 +478,101 @@
 
 /* Mobile Layout */
 @media (max-width: 767px) {
-  .dashboard-page {
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     padding: 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
-  .dashboard-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .dashboard-page {
+    padding: 0.5rem;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 
-  .dashboard-header {
-    margin-top: 3.5rem;
-    padding: 0.75rem;
-    text-align: center;
-    position: sticky;
-    left: 0;
-    background: linear-gradient(135deg, #E5DDD3 0%, #D3C4A9 100%);
-    z-index: 1;
-  }
-
-  /* Mobile Grid Layout */
   .dashboard-page .row {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1rem;
     padding: 0.5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .dashboard-page .row::-webkit-scrollbar {
-    display: none;
+    width: 100%;
+    margin: 0;
+    max-width: 100%;
   }
 
   .dashboard-page .col-md-4 {
-    width: 85%;
-    min-width: 280px;
-    flex: 0 0 auto;
+    width: 100%;
     padding: 0;
-    scroll-snap-align: start;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    flex: 0 0 100%;
   }
 
-  /* Card Styling */
   .dashboard-card {
     margin: 0;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    max-height: 250px;
-    height: 100%;
+    border-radius: 0.75rem;
   }
 
-  /* Add scroll indicator */
-  .dashboard-page::after {
-    content: '';
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05));
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  /* Ensure content is visible when scrolling */
   .dashboard-card .card-body {
-    padding: 0.75rem;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 1rem;
   }
 
-  /* Activity List Mobile */
-  .activity-list {
-    margin: 0;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  /* Offers List Mobile */
-  .offers-list {
-    margin: 0;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  /* Mailbox Preview Mobile */
+  .activity-list,
+  .offers-list,
   .mailbox-preview {
     max-height: 200px;
     overflow-y: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-header {
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .row {
+    margin: 0;
+    padding: 0;
+  }
+
+  .col-md-4 {
+    padding: 0.5rem;
+  }
+
+  .dashboard-card {
+    margin-bottom: 1rem;
   }
 }
 
 /* Extra Small Devices */
 @media (max-width: 360px) {
-  .dashboard-page .col-md-4 {
-    min-width: 260px;
+  .dashboard-page {
+    padding: 0.25rem;
   }
 
-  .dashboard-header h1 {
-    font-size: 1.1rem;
+  .row {
+    padding: 0 0.25rem;
+  }
+
+  .col-md-4 {
+    padding: 0.25rem;
+  }
+
+  .dashboard-card {
+    margin: 0;
+    border-radius: 0.75rem;
   }
 
   .dashboard-card .card-body {
-    padding: 0.5rem;
-  }
-
-  .dashboard-btn {
-    padding: 0.2rem 0.4rem;
-    font-size: 0.65rem;
+    padding: 0.75rem;
   }
 
   .snapchat-logo-circle {
@@ -686,4 +643,77 @@
 
 .message-view .btn-close-modal:hover {
   color: #333;
+}
+
+/* Dashboard Mobile Layout */
+@media screen and (max-width: 767px) {
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dashboard-page {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .dashboard-page .container-fluid {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-page .row {
+    margin: 0;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-page .col-md-4 {
+    padding: 0.5rem;
+    margin: 0 auto 1rem auto;
+    width: 95%;
+    max-width: 95%;
+    flex: 0 0 95%;
+  }
+
+  .dashboard-card {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboard-card .card-body {
+    padding: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+  .dashboard-page .col-md-4 {
+    width: 90%;
+    max-width: 90%;
+    flex: 0 0 90%;
+    padding: 0.25rem;
+  }
+
+  .dashboard-card .card-body {
+    padding: 0.75rem;
+  }
+
+  .snapchat-logo-circle {
+    width: 50px;
+    height: 50px;
+  }
 } 
