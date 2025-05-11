@@ -271,8 +271,6 @@ export default function Dashboard() {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [isLandscape, setIsLandscape] = useState(true);
-  const [showOrientationWarning, setShowOrientationWarning] = useState(false);
 
   // Reset timers on user activity
   const resetTimers = useCallback(() => {
@@ -368,28 +366,6 @@ export default function Dashboard() {
 
       setLoading(false);
   }, [router]);
-
-  // Add orientation check
-  useEffect(() => {
-    const checkOrientation = () => {
-      const isMobile = window.innerWidth <= 767;
-      const isLandscapeMode = window.innerWidth > window.innerHeight;
-      setIsLandscape(isLandscapeMode);
-      setShowOrientationWarning(isMobile && !isLandscapeMode);
-    };
-
-    // Initial check
-    checkOrientation();
-
-    // Add event listeners
-    window.addEventListener('resize', checkOrientation);
-    window.addEventListener('orientationchange', checkOrientation);
-
-    return () => {
-      window.removeEventListener('resize', checkOrientation);
-      window.removeEventListener('orientationchange', checkOrientation);
-    };
-  }, []);
 
   const handleLogout = () => {
     // Clear all session storage
@@ -958,36 +934,6 @@ export default function Dashboard() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Orientation Warning Modal */}
-      <Modal 
-        show={showOrientationWarning} 
-        onHide={() => setShowOrientationWarning(false)}
-        centered
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Body className="text-center p-4">
-          <div className="orientation-warning">
-            <div className="rotate-icon mb-4">
-              <FaMobileAlt size={48} className="text-primary" />
-            </div>
-            <h4 className="mb-3">Please Rotate Your Device</h4>
-            <p className="text-muted mb-4">
-              For the best experience, please rotate your device to landscape mode.
-              The dashboard is optimized for landscape viewing on mobile devices.
-            </p>
-            <div className="d-grid">
-              <Button 
-                variant="primary"
-                onClick={() => setShowOrientationWarning(false)}
-              >
-                I Understand
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-
       <Navbar className="dashboard-navbar px-4 py-3">
         <Container>
           <div className="navbar-brand">
@@ -1080,98 +1026,273 @@ export default function Dashboard() {
       </Toast>
 
       <div className="dashboard-page">
-        <div className="dashboard-header">
-          <h1>Welcome Back, {userName}!</h1>
-          <p className="text-muted">Here's your health coverage summary</p>
-        </div>
-        <div className="container-fluid">
-          <Row className="g-4">
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
+        <Container fluid className="px-0">
+          <div className="dashboard-header">
+            <h1>Welcome back, {userName}</h1>
+            <p className="text-muted d-flex align-items-center justify-content-center mobile-only">
+              <FaMobileAlt className="me-2" />
+              ROTATE TO LANDSCAPE VIEW FOR MOBILE
+            </p>
+          </div>
+          <Row className="g-0 justify-content-center">
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100" onClick={() => setShowInsuranceModal(true)}>
                 <Card.Body>
-                  <Card.Title>Insurance Plan</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-shield-check text-primary me-2"></i>
-                    <span>Active Coverage</span>
+                  <Card.Title className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-column align-items-end">
+                      <span className={`coverage-status ${insurancePlan.status.toLowerCase()}`}>
+                        {insurancePlan.status}
+                      </span>
+                      <small className="text-muted agent-info">
+                        Agent of Record: {insurancePlan.agent.name} | NPN: {insurancePlan.agent.npn}
+                      </small>
+                    </div>
+                  </Card.Title>
+                  <div className="text-center">
+                    <div className="mb-3">
+                      <InsuranceProviderLogo size="large" className="mx-auto" />
+                    </div>
+                    <h3 className="text-success mb-2">UnitedHealthcare Choice Plus</h3>
+                    <p className="text-muted mb-3">Active until {insurancePlan.expiryDate}</p>
+                    <div className="coverage-details">
+                      <div className="d-flex justify-content-between mb-2">
+                        <span>Deductible</span>
+                        <span className="text-success">{insurancePlan.coverage.deductible}</span>
+                      </div>
+                      <div className="d-flex justify-content-between mb-2">
+                        <span>Co-pay</span>
+                        <span className="text-success">{insurancePlan.coverage.copay}</span>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <span>Out-of-pocket Max</span>
+                        <span className="text-success">{insurancePlan.coverage.outOfPocketMax}</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mb-3">Your health insurance plan is active and in good standing.</p>
-                  <Button variant="primary" className="w-100" onClick={() => setShowInsuranceModal(true)}>View Details</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
+              </Card.Body>
+            </Card>
+          </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+            <Card className="dashboard-card h-100">
               <Card.Body>
                   <Card.Title>Game Arcade</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-controller text-success me-2"></i>
-                    <span>Coming Soon</span>
+                  <div className="game-display">
+                    <FaGamepad size={48} className="text-primary mb-3" />
+                    <h3>Coming Soon</h3>
+                    <p className="text-muted mb-4">Exciting games and rewards are on the way!</p>
+                    <div className="d-flex justify-content-center">
+                      <Button 
+                        className="dashboard-btn" 
+                        onClick={handleGameStart}
+                      >
+                        Learn More
+                </Button>
                     </div>
-                  <p className="mb-3">Play games and earn rewards while learning about health insurance.</p>
-                  <Button variant="success" className="w-100" onClick={handleGameStart}>Learn More</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
-                <Card.Body>
+                  </div>
+              </Card.Body>
+            </Card>
+          </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+            <Card className="dashboard-card h-100">
+              <Card.Body>
                   <Card.Title>Mailbox</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-envelope text-warning me-2"></i>
-                    <span>{inboxMessages.filter(msg => !msg.read).length} Unread Messages</span>
+                  <div className="mailbox-preview">
+                    <div className="mailbox-header">
+                      <FaEnvelope size={48} className="text-primary mb-3" />
+                      {inboxMessages.length > 0 && (
+                        <div className="unread-badge">
+                          {inboxMessages.filter(msg => !msg.read).length}
                   </div>
-                  <p className="mb-3">You have new messages waiting for you.</p>
-                  <Button variant="warning" className="w-100" onClick={handleMailboxClick}>View Messages</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
-                <Card.Body>
-                  <Card.Title>Snapchat Profile</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-ghost text-primary me-2"></i>
-                    <span>{snapchatUsername}</span>
+                      )}
+                    </div>
+                    {inboxMessages.length > 0 ? (
+                      <div className="inbox-list">
+                        {inboxMessages.slice(0, 3).map(message => (
+                          <div 
+                            key={message.id} 
+                            className={`inbox-item ${!message.read ? 'unread' : ''}`}
+                            onClick={() => handleMessageClick(message)}
+                          >
+                            <div className="inbox-item-header">
+                              <span className="sender">{message.from}</span>
+                              <span className="date">{message.date}</span>
+                    </div>
+                            <div className="inbox-item-subject">{message.subject}</div>
+                            <div className="inbox-item-preview">{message.preview}</div>
+                            <div className="inbox-item-actions">
+                              <FaStar 
+                                className={`star-icon ${message.starred ? 'starred' : ''}`}
+                                onClick={(e) => handleStarMessage(message.id, e)}
+                              />
+                    </div>
+                  </div>
+                        ))}
                 </div>
-                  <p className="mb-3">Connect with us on Snapchat for exclusive content.</p>
-                  <Button variant="primary" className="w-100" onClick={handleSocialConnect}>View Profile</Button>
+                    ) : (
+                      <div className="empty-state">
+                        <p className="text-muted mb-3">No messages yet</p>
+                        <p className="text-muted small">Your important health updates will appear here</p>
+                      </div>
+                    )}
+                    <div className="d-flex flex-column gap-2 mt-3">
+                      <Button 
+                        className="dashboard-btn w-100"
+                        onClick={handleMailboxClick}
+                      >
+                        Messages
+                </Button>
+                      <Button 
+                        className="dashboard-btn w-100"
+                        onClick={handleComposeClick}
+                      >
+                        <FaEnvelope className="me-1" />
+                        Compose
+                      </Button>
+                    </div>
+                  </div>
               </Card.Body>
             </Card>
           </Col>
-
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
+            <Col xs={12} sm={10} md={4} className="mb-3">
+            <Card className="dashboard-card h-100">
               <Card.Body>
-                <Card.Title>Recent Activity</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-clock-history text-info me-2"></i>
-                    <span>Last 7 Days</span>
+                  <Card.Title>Snapchat</Card.Title>
+                  <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
+                    <div className="snapchat-logo-container mb-4">
+                      <div className="snapchat-logo-circle">
+                        <FaSnapchatGhost size={80} className="text-warning" />
                   </div>
-                  <p className="mb-3">View your recent interactions and rewards.</p>
-                  <Button variant="info" className="w-100" onClick={() => setShowAllActivities(true)}>View Activity</Button>
+                      <div className="snapchat-username mt-3 text-center">
+                        <h4 className="mb-0">{snapchatUsername}</h4>
+                      </div>
+                    </div>
+                    {socialProfile.isConnected ? (
+                      <>
+                        <div className="profile-display mb-4">
+                          <span className="profile-label">Username</span>
+                          <span className="profile-value">{socialProfile.username}</span>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                  <Button 
+                    className="dashboard-btn" 
+                            onClick={handleSocialConnect}
+                  >
+                            <FaSnapchatGhost className="me-2" />
+                            Snapchat Profile
+                  </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="empty-state">
+                        <div className="d-flex justify-content-center">
+                          <Button 
+                            className="dashboard-btn" 
+                            onClick={handleSocialConnect}
+                          >
+                            <FaUserCog className="me-2" />
+                            Profile
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                </div>
               </Card.Body>
             </Card>
           </Col>
-
-            <Col xs={12} md={4}>
-              <Card className="dashboard-card">
+            <Col xs={12} sm={10} md={4} className="mb-3">
+            <Card className="dashboard-card h-100">
               <Card.Body>
-                  <Card.Title>Available Offers</Card.Title>
-                  <div className="d-flex align-items-center mb-3">
-                    <i className="bi bi-gift text-danger me-2"></i>
-                    <span>{offers.length} New Offers</span>
+                  <Card.Title>Recent Activity</Card.Title>
+                  {activities.length > 0 ? (
+                    <>
+                      <ul className="activity-list">
+                        {activities.slice(0, 3).map((activity, index) => (
+                          <li key={index} className="activity-item">
+                            <div className="d-flex align-items-start">
+                              <div className="activity-icon me-3">
+                                {activity.icon && (
+                                  <activity.icon 
+                                    size={24} 
+                                    className={`text-${getActivityIconColor(activity.type)}`}
+                                  />
+                                )}
                   </div>
-                  <p className="mb-3">Check out exclusive rewards and discounts.</p>
-                  <Button variant="danger" className="w-100" onClick={() => handleOfferClick(offers[0])}>View Offers</Button>
+                              <div className="flex-grow-1">
+                                <div className="activity-date small text-muted">{activity.date}</div>
+                                <p className="activity-description mb-1 small">{activity.description}</p>
+                                {activity.reward && (
+                                  <div className="activity-reward small">
+                                    <span className={`badge bg-${activity.reward.status === 'earned' ? 'success' : 'warning'} me-2`}>
+                                      {activity.reward.days} days
+                                    </span>
+                                    <span className="text-muted">{activity.reward.provider}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                  <Button 
+                        className="dashboard-btn w-100 mt-3"
+                        onClick={() => setShowAllActivities(true)}
+                  >
+                        View All Activities
+                  </Button>
+                    </>
+                  ) : (
+                    <div className="empty-state">
+                      <p className="text-muted mb-3">No recent activity</p>
+                      <p className="text-muted small">Your health activities and achievements will appear here</p>
+                </div>
+                  )}
+              </Card.Body>
+            </Card>
+          </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100">
+                <Card.Body className="p-3">
+                <Card.Title>Available Offers</Card.Title>
+                  {offers && offers.length > 0 ? (
+                <div className="offers-list">
+                      {offers.slice(0, 3).map((offer, index) => (
+                        <div key={index} className="offer-item mb-2 p-2 border rounded">
+                          <div className="d-flex align-items-center">
+                            <div className="me-3">
+                              <div className="offer-icon">
+                                {offer.icon && (
+                                  <offer.icon 
+                                    size={32} 
+                                    className={`text-${getActivityIconColor(offer.type)}`}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                              <h5 className="mb-0">{offer.title}</h5>
+                              <Button 
+                                className="dashboard-btn ms-3"
+                                onClick={() => handleOfferClick(offer)}
+                              >
+                                Claim
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <p className="text-muted mb-3">No offers available</p>
+                      <p className="text-muted small">Check back later for new rewards and offers</p>
+                    </div>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
           </Row>
-                    </div>
-                    </div>
+        </Container>
+      </div>
 
       {/* Modals */}
       <ReceiptScanner 
@@ -1209,7 +1330,7 @@ export default function Dashboard() {
               <div className="game-card mb-4">
                 <div className="game-icon">
                   <FaSkull size={48} className="text-danger mb-3" />
-                    </div>
+                  </div>
                 <h4>Zombie Survival Fitness</h4>
                 <p className="text-muted">
                   Run, dodge, and survive in this immersive fitness game. Complete daily challenges
@@ -1223,7 +1344,7 @@ export default function Dashboard() {
                   <div className="feature">
                     <FaTrophy className="me-2" />
                     <span>Weekly Leaderboards</span>
-                </div>
+                  </div>
                 </div>
               </div>
 
@@ -1256,6 +1377,7 @@ export default function Dashboard() {
       </Modal>
 
       {/* Social Profile Modal */}
+      {/* Snapchat Profile Modal */}
       <Modal show={showSnapchatModal} onHide={() => setShowSnapchatModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -1277,19 +1399,19 @@ export default function Dashboard() {
                       onChange={(e) => setNewUsername(e.target.value)}
                       placeholder="Enter username"
                     />
-                    <Button 
+                  <Button 
                       variant="success"
                       onClick={handleUsernameSave}
                     >
                       <FaCheckCircle />
-                </Button>
+                    </Button>
                     <Button
                       variant="danger"
                       onClick={handleUsernameCancel}
                     >
                       <FaTimes />
-                    </Button>
-                  </div>
+                  </Button>
+                </div>
                 ) : (
                   <div className="d-flex align-items-center justify-content-center gap-2 mb-4">
                     <h3>{snapchatUsername}</h3>
@@ -1390,16 +1512,16 @@ export default function Dashboard() {
                   <span>Join team-based fitness competitions</span>
                 </li>
               </ul>
-                  </div>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-                  <Button 
+          <Button 
             variant="secondary" 
             onClick={() => setShowInviteModal(false)}
-                  >
+          >
             Close
-                  </Button>
+          </Button>
         </Modal.Footer>
       </Modal>
 
@@ -1419,7 +1541,7 @@ export default function Dashboard() {
               <p className="text-muted">
                 Social features are currently under development. Stay tuned for updates!
               </p>
-                </div>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
