@@ -484,6 +484,8 @@
     max-width: 100%;
     margin: 0;
     padding: 0;
+    transform: scale(0.7);
+    transform-origin: top center;
   }
 
   .dashboard-page {
@@ -492,6 +494,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
+    min-height: 140vh; /* Increased to account for scale */
   }
 
   .dashboard-page .row {
