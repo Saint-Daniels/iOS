@@ -4106,28 +4106,27 @@ html, body {
 
 /* Coverage Status Indicator */
 .coverage-status {
-  display: inline-block;
   padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  border-radius: 15px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .coverage-status.active {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
 }
 
 .coverage-status.pending {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
 }
 
 .coverage-status.expired {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
 }
 
 /* Empty States */
@@ -4548,667 +4547,57 @@ html, body {
   }
 }
 
-/* Modal Improvements */
-.modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-backdrop.show {
-  opacity: 0.7;
-}
-
-.modal-content {
-  border: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1rem 1.5rem;
-}
-
-.modal-header .btn-close {
-  padding: 0.5rem;
-  margin: -0.5rem -0.5rem -0.5rem auto;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
-}
-
-.modal-header .btn-close:hover {
-  opacity: 1;
-}
-
-.modal-body {
-  padding: 1.5rem;
-}
-
-/* Game Modal Specific */
-.game-card {
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.game-icon {
-  transition: transform 0.2s ease;
-}
-
-.game-card:hover .game-icon {
-  transform: scale(1.1);
-}
-
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-  .modal-dialog {
-    margin: 0.5rem;
-  }
-
-  .modal-content {
-    border-radius: 0.5rem;
-  }
-
-  .modal-header {
-    padding: 1rem;
-  }
-
-  .modal-body {
-    padding: 1rem;
-  }
-}
-
-/* Modal Close Button */
-.btn-close-modal {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  line-height: 1;
-  color: #6c757d;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  z-index: 1050;
-}
-
-.btn-close-modal:hover {
-  color: #dc3545;
-}
-
-.btn-close-modal span {
-  display: block;
-  width: 1.5rem;
-  height: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
-}
-
-/* Mobile Optimizations for Close Button */
-@media (max-width: 768px) {
-  .btn-close-modal {
-    right: 0.75rem;
-    top: 0.75rem;
-    font-size: 1.75rem;
-  }
-  
-  .btn-close-modal span {
-    width: 1.25rem;
-    height: 1.25rem;
-    line-height: 1.25rem;
-  }
-}
-
-/* Dashboard Animations */
-.dashboard-page {
-  min-height: 100vh;
-  background-color: #f8f9fa;
-}
-
-/* Card Animations */
-.dashboard-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Logout Warning Toast */
-.logout-warning-toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1060;
-  min-width: 300px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease-out;
-}
-
-.logout-warning-toast .toast-header {
-  background-color: #fff3cd;
-  color: #856404;
-  border-bottom: 1px solid #ffeeba;
-  padding: 0.75rem 1rem;
-}
-
-.logout-warning-toast .toast-body {
+/* Snapchat Profile Modal Styles */
+.snapchat-profile-modal {
   padding: 1rem;
-  color: #2c3e50;
 }
 
-.logout-warning-toast .btn-link {
-  color: var(--royal-gold);
+.snapchat-profile-modal .profile-header {
+  position: relative;
+}
+
+.snapchat-profile-modal .username-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.snapchat-profile-modal .username-section h4 {
+  color: #FFFC00;
   font-weight: 600;
 }
 
-.logout-warning-toast .btn-link:hover {
-  color: #c4a000;
-}
-
-/* Animation Keyframes */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-  .logout-warning-toast {
-    left: 20px;
-    right: 20px;
-    min-width: auto;
-    bottom: 10px;
-  }
-}
-
-.compose-btn {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-.compose-btn:hover {
-  color: var(--primary-color-dark);
-}
-
-.compose-message-form {
-  padding: 1rem;
-}
-
-.attachment-upload {
-  border: 2px dashed #ddd;
-  padding: 1rem;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-}
-
-.attachment-upload:hover {
-  border-color: var(--primary-color);
-}
-
-.attachment-list {
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.attachment-item {
-  background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
-}
-
-.attachment-item:hover {
-  background-color: #e9ecef;
-}
-
-.attachment-item .btn-link {
-  color: #dc3545;
-  text-decoration: none;
-}
-
-.attachment-item .btn-link:hover {
-  color: #bd2130;
-}
-
-/* Message limit warning modal styles */
-.message-limit-warning {
-  text-align: center;
-  padding: 2rem;
-}
-
-.message-limit-warning .warning-icon {
-  font-size: 3rem;
-  color: #dc3545;
-  margin-bottom: 1rem;
-}
-
-.message-limit-warning p {
-  color: #6c757d;
-  margin-bottom: 1.5rem;
-}
-
-.mailbox-container {
-  display: flex;
-  gap: 2rem;
-  height: 600px;
-}
-
-.mailbox-sidebar {
-  width: 250px;
-  border-right: 1px solid #dee2e6;
-  padding-right: 1rem;
-}
-
-.mailbox-categories {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.category-item {
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #6c757d;
-}
-
-.category-item:hover {
-  background-color: #f8f9fa;
-  color: var(--primary-color);
-}
-
-.category-item.active {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.category-item .badge {
-  margin-left: auto;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: inherit;
-}
-
-.compose-button-container {
-  padding: 0 1rem;
-}
-
-.compose-button {
-  background-color: var(--primary-color);
-  color: white;
+.snapchat-profile-modal .profile-action-btn {
+  background-color: #FFFC00;
+  color: #000;
   border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.compose-button:hover {
-  background-color: var(--primary-color-dark);
-  transform: translateY(-1px);
+.snapchat-profile-modal .profile-action-btn:hover {
+  background-color: #FFE600;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 252, 0, 0.2);
 }
 
-.mailbox-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.snapchat-profile-modal .profile-action-btn:active {
+  transform: translateY(0);
 }
 
-.search-box {
-  width: 300px;
+.snapchat-profile-modal .form-control:focus {
+  border-color: #FFFC00;
+  box-shadow: 0 0 0 0.2rem rgba(255, 252, 0, 0.25);
 }
 
-.search-box .form-control {
-  border-radius: 20px;
-  padding-left: 1rem;
-  padding-right: 1rem;
+.snapchat-profile-modal .btn-outline-primary {
+  color: #FFFC00;
+  border-color: #FFFC00;
 }
 
-.messages-list {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 1rem;
-}
-
-.message-item {
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid #dee2e6;
-}
-
-.message-item:hover {
-  background-color: #f8f9fa;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.message-item.unread {
-  background-color: #f0f7ff;
-  border-left: 3px solid var(--primary-color);
-}
-
-.message-item.sent {
-  background-color: #f8f9fa;
-}
-
-.message-item.received {
-  background-color: white;
-}
-
-.message-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.message-sender {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.sender-name {
-  font-weight: 500;
-}
-
-.sent-badge {
-  background-color: #e9ecef;
-  color: #6c757d;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-}
-
-.message-date {
-  color: #6c757d;
-  font-size: 0.875rem;
-}
-
-.message-subject {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.message-preview {
-  color: #6c757d;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
-
-.category-badge {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  background-color: #e9ecef;
-  color: #6c757d;
-}
-
-.category-badge.appointment {
-  background-color: #e3f2fd;
-  color: #0d6efd;
-}
-
-.category-badge.pharmacy {
-  background-color: #e8f5e9;
-  color: #198754;
-}
-
-.category-badge.insurance {
-  background-color: #fff3e0;
-  color: #fd7e14;
-}
-
-.category-badge.sent {
-  background-color: #f3e5f5;
-  color: #6f42c1;
-}
-
-.star-icon {
-  color: #ffc107;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.star-icon:hover {
-  transform: scale(1.1);
-}
-
-.star-icon.starred {
-  color: #ffc107;
-}
-
-.toolbar-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .mailbox-container {
-    flex-direction: column;
-    height: auto;
-    gap: 1rem;
-    padding: 0;
-  }
-
-  .mailbox-sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #dee2e6;
-    padding: 0 0 1rem 0;
-    margin-bottom: 1rem;
-  }
-
-  .mailbox-categories {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .category-item {
-    flex: 1;
-    min-width: 120px;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    justify-content: center;
-  }
-
-  .category-item .badge {
-    margin-left: 0.5rem;
-  }
-
-  .compose-button-container {
-    padding: 0;
-    margin-top: 1rem;
-  }
-
-  .compose-button {
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-  }
-
-  .mailbox-content {
-    padding: 0;
-  }
-
-  .search-box {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .search-box .form-control {
-    width: 100%;
-  }
-
-  .mailbox-toolbar {
-    padding: 0;
-  }
-
-  .toolbar-actions {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .toolbar-actions .btn {
-    flex: 1;
-    min-width: 100px;
-    font-size: 0.875rem;
-    padding: 0.375rem 0.75rem;
-  }
-
-  .messages-list {
-    padding: 0;
-  }
-
-  .message-item {
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .message-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .message-sender {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .message-date {
-    font-size: 0.75rem;
-  }
-
-  .message-subject {
-    font-size: 0.875rem;
-  }
-
-  .message-preview {
-    font-size: 0.75rem;
-  }
-
-  .category-badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-  }
-
-  .sent-badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-  }
-
-  .modal-dialog {
-    margin: 0.5rem;
-    max-width: calc(100% - 1rem);
-  }
-
-  .modal-content {
-    border-radius: 0.5rem;
-  }
-
-  .modal-body {
-    padding: 1rem;
-  }
-
-  .modal-header {
-    padding: 0.75rem 1rem;
-  }
-
-  .modal-title {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .mailbox-categories {
-    flex-direction: column;
-  }
-
-  .category-item {
-    width: 100%;
-  }
-
-  .toolbar-actions .btn {
-    width: 100%;
-  }
-
-  .message-sender {
-    flex-wrap: wrap;
-  }
-
-  .sender-name {
-    font-size: 0.875rem;
-  }
-}
-
-.agent-info {
-  font-size: 0.75rem;
-  color: #6c757d;
-  margin-top: 0.25rem;
-  opacity: 0.8;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-  display: inline-block;
-}
-
-.status-dot.active {
-  background-color: #28a745;
-  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
-}
-
-.status-dot.pending {
-  background-color: #ffc107;
-  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
-}
-
-.status-dot.expired {
-  background-color: #6c757d;
-  box-shadow: 0 0 0 2px rgba(108, 117, 125, 0.2);
-}
-
-.compose-message-form .agent-info {
-  font-size: 0.875rem;
-  color: #495057;
-  opacity: 1;
-}
-
-.compose-message-form .agent-info small {
-  font-size: 0.75rem;
+.snapchat-profile-modal .btn-outline-primary:hover {
+  background-color: #FFFC00;
+  color: #000;
 }

@@ -9,7 +9,6 @@ import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, F
 import ReceiptScanner from '../components/ReceiptScanner';
 import { motion, AnimatePresence } from 'framer-motion';
 import InsuranceProviderLogo from '../components/InsuranceProviderLogo';
-import SnapchatAvatar from '../components/SnapchatAvatar';
 import RewardLogo from '../components/RewardLogo';
 import SignaturePad from 'react-signature-canvas';
 import { updateUserEmail, updateUserPassword } from '../../lib/firebase';
@@ -45,11 +44,10 @@ export default function Dashboard() {
       email: 'john.cothran@healthcare.com'
     }
   });
-  const [snapchatFriends, setSnapchatFriends] = useState([
-    { id: 1, username: 'john_doe', status: 'online' },
-    { id: 2, username: 'jane_smith', status: 'offline' },
-    { id: 3, username: 'mike_wilson', status: 'online' }
-  ]);
+  const [socialProfile, setSocialProfile] = useState({
+    username: '@health_warrior',
+    isConnected: false
+  });
   const [offers, setOffers] = useState([
     {
       id: 1,
@@ -269,6 +267,9 @@ export default function Dashboard() {
   });
   const [emailChangeError, setEmailChangeError] = useState('');
   const [emailChangeSuccess, setEmailChangeSuccess] = useState(false);
+  const [snapchatUsername, setSnapchatUsername] = useState('@health_warrior');
+  const [isEditingUsername, setIsEditingUsername] = useState(false);
+  const [newUsername, setNewUsername] = useState('');
 
   // Reset timers on user activity
   const resetTimers = useCallback(() => {
@@ -362,7 +363,7 @@ export default function Dashboard() {
     // };
     // fetchUserData();
 
-    setLoading(false);
+      setLoading(false);
   }, [router]);
 
   const handleLogout = () => {
@@ -421,7 +422,7 @@ export default function Dashboard() {
     setShowGameModal(true);
   };
 
-  const handleSnapchatConnect = () => {
+  const handleSocialConnect = () => {
     setShowSnapchatModal(true);
   };
 
@@ -874,6 +875,23 @@ export default function Dashboard() {
     }
   };
 
+  const handleUsernameEdit = () => {
+    setIsEditingUsername(true);
+    setNewUsername(snapchatUsername.replace('@', ''));
+  };
+
+  const handleUsernameSave = () => {
+    if (newUsername.trim()) {
+      setSnapchatUsername(`@${newUsername.trim()}`);
+      setIsEditingUsername(false);
+    }
+  };
+
+  const handleUsernameCancel = () => {
+    setIsEditingUsername(false);
+    setNewUsername('');
+  };
+
   if (loading) {
     return (
       <div className="dashboard-page d-flex justify-content-center align-items-center">
@@ -1023,38 +1041,39 @@ export default function Dashboard() {
           <Col md={4}>
             <Card className="dashboard-card h-100">
               <Card.Body className="d-flex flex-column">
-                <Card.Title>Snapchat</Card.Title>
+                <Card.Title>Social Profile</Card.Title>
                 <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
-                  <SnapchatAvatar size="large" className="mx-auto mb-2" />
-                  {snapchatFriends.length > 0 ? (
-                    <>
-                      <h4 className="mb-2">Connected</h4>
-                      <div className="snapscore-display mb-2">
-                        <span className="snapscore-label">Username</span>
-                        <span className="snapscore-value">@health_warrior</span>
+                  <div className="avatar-placeholder mx-auto mb-2">
+                    <FaUserPlus size={48} className="text-primary" />
                   </div>
+                  {socialProfile.isConnected ? (
+                    <>
+                      <div className="profile-display mb-2">
+                        <span className="profile-label">Username</span>
+                        <span className="profile-value">{socialProfile.username}</span>
+                      </div>
                       <div className="d-flex justify-content-center">
                         <Button 
                           className="dashboard-btn"
-                          onClick={handleSnapchatConnect}
+                          onClick={handleSocialConnect}
                         >
                           <FaUserPlus className="me-2" />
                           Profile
                         </Button>
-                    </div>
+                      </div>
                     </>
                   ) : (
                     <div className="empty-state">
-                      <p className="text-muted mb-2">Connect your Snapchat to share your health journey with friends</p>
+                      <p className="text-muted mb-2">Connect your social profile to share your health journey</p>
                       <Button 
                         className="dashboard-btn" 
-                        onClick={handleSnapchatConnect}
+                        onClick={handleSocialConnect}
                       >
-                        Connect Snapchat
+                        Connect Profile
                       </Button>
                     </div>
                   )}
-                    </div>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -1071,7 +1090,7 @@ export default function Dashboard() {
                         {inboxMessages.filter(msg => !msg.read).length}
                   </div>
                     )}
-                  </div>
+                    </div>
                   {inboxMessages.length > 0 ? (
                     <div className="inbox-list">
                       {inboxMessages.slice(0, 3).map(message => (
@@ -1083,7 +1102,7 @@ export default function Dashboard() {
                           <div className="inbox-item-header">
                             <span className="sender">{message.from}</span>
                             <span className="date">{message.date}</span>
-                          </div>
+                    </div>
                           <div className="inbox-item-subject">{message.subject}</div>
                           <div className="inbox-item-preview">{message.preview}</div>
                           <div className="inbox-item-actions">
@@ -1091,10 +1110,10 @@ export default function Dashboard() {
                               className={`star-icon ${message.starred ? 'starred' : ''}`}
                               onClick={(e) => handleStarMessage(message.id, e)}
                             />
-                          </div>
-                      </div>
-                      ))}
                     </div>
+                  </div>
+                      ))}
+                </div>
                   ) : (
                     <div className="empty-state">
                       <p className="text-muted mb-3">No messages yet</p>
@@ -1107,7 +1126,7 @@ export default function Dashboard() {
                       onClick={handleMailboxClick}
                     >
                       Messages
-                    </Button>
+                </Button>
                     <Button 
                       className="dashboard-btn w-100"
                       onClick={handleComposeClick}
@@ -1120,7 +1139,7 @@ export default function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-          
+
           <Col md={4}>
             <Card className="dashboard-card h-100">
               <Card.Body>
@@ -1171,7 +1190,7 @@ export default function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-
+          
           <Col md={4}>
             <Card className="dashboard-card h-100">
               <Card.Body className="p-3">
@@ -1189,7 +1208,7 @@ export default function Dashboard() {
                                   className={`text-${getActivityIconColor(offer.type)}`}
                                 />
                               )}
-                            </div>
+                  </div>
                           </div>
                           <div className="flex-grow-1">
                     <div className="d-flex justify-content-between align-items-center">
@@ -1197,13 +1216,13 @@ export default function Dashboard() {
                                 <h5 className="mb-1">{offer.title}</h5>
                                 <p className="text-muted mb-0 small">{offer.description}</p>
                       </div>
-                      <Button 
-                        className="dashboard-btn"
+                  <Button 
+                    className="dashboard-btn" 
                                 onClick={() => handleOfferClick(offer)}
-                      >
+                  >
                         Claim
-                      </Button>
-                    </div>
+                  </Button>
+                </div>
                   </div>
                         </div>
                       </div>
@@ -1303,6 +1322,7 @@ export default function Dashboard() {
         </Modal.Body>
       </Modal>
 
+      {/* Social Profile Modal */}
       {/* Snapchat Profile Modal */}
       <Modal show={showSnapchatModal} onHide={() => setShowSnapchatModal(false)} centered>
         <Modal.Header closeButton>
@@ -1316,7 +1336,40 @@ export default function Dashboard() {
             <div className="profile-header text-center">
               <SnapchatAvatar size="large" className="mx-auto mb-4" />
               <div className="profile-info">
-                <h3 className="mb-4">@health_warrior</h3>
+                {isEditingUsername ? (
+                  <div className="d-flex align-items-center justify-content-center gap-2 mb-4">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                      placeholder="Enter username"
+                    />
+                    <Button
+                      variant="success"
+                      onClick={handleUsernameSave}
+                    >
+                      <FaCheckCircle />
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={handleUsernameCancel}
+                    >
+                      <FaTimes />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="d-flex align-items-center justify-content-center gap-2 mb-4">
+                    <h3>{snapchatUsername}</h3>
+                    <Button
+                      variant="link"
+                      className="p-0 text-muted"
+                      onClick={handleUsernameEdit}
+                    >
+                      <FaUserCog size={20} />
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="text-center mb-4">
@@ -1955,7 +2008,7 @@ export default function Dashboard() {
                       {offerProgress[selectedOffer.id].days}/{offerProgress[selectedOffer.id].total} days
                     </span>
                 </div>
-                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex justify-content-between align-items-center">
                     <span>Expires:</span>
                     <span className="text-muted">{selectedOffer.expiryDate}</span>
                   </div>
@@ -2316,7 +2369,7 @@ export default function Dashboard() {
               <div className="terms-acceptance-alert alert alert-warning mb-3">
                 <div className="d-flex align-items-center">
                   <FaExclamationTriangle className="me-2" />
-                  <div>
+                      <div>
                     <strong>Important:</strong> By entering your password and clicking "Continue", you are:
                     <ul className="mb-0 mt-2">
                       <li>Explicitly accepting all terms and conditions above</li>
@@ -2324,11 +2377,11 @@ export default function Dashboard() {
                       <li>Authorizing the processing of your reward claim</li>
                       <li>Confirming your identity and eligibility</li>
                     </ul>
-                  </div>
+                      </div>
                 </div>
               </div>
               <div className="d-grid gap-2">
-                <Button 
+                      <Button 
                   variant="primary"
                   disabled={!isPasswordValid}
                   onClick={() => {
@@ -2344,11 +2397,11 @@ export default function Dashboard() {
                 <Button 
                   variant="outline-secondary"
                   onClick={() => setShowVerificationModal(false)}
-                >
+                      >
                   Back to Offer
-                </Button>
-              </div>
-            </div>
+                      </Button>
+                    </div>
+                  </div>
           )}
 
           {verificationStep === 'address' && (
@@ -2359,7 +2412,7 @@ export default function Dashboard() {
                   <strong>Note:</strong> Your T-Mobile reward will be delivered to this address. 
                   Please ensure it is correct and up to date.
                 </small>
-              </div>
+                </div>
               <div className="mb-3">
                 <label className="form-label">Street Address</label>
                 <input
@@ -2414,13 +2467,13 @@ export default function Dashboard() {
                   }}
                 >
                   Verify Address
-                </Button>
+                  </Button>
                 <Button 
                   variant="outline-secondary"
                   onClick={() => setVerificationStep('password')}
                 >
                   Back
-                </Button>
+                  </Button>
               </div>
             </div>
           )}
@@ -2452,8 +2505,8 @@ export default function Dashboard() {
                       onClick={clearSignature}
                     >
                       Clear
-                    </Button>
-                  </div>
+                  </Button>
+                </div>
                 </div>
               </div>
               <div className="d-grid gap-2">
@@ -2620,7 +2673,7 @@ export default function Dashboard() {
                     ...prev,
                     newEmail: e.target.value
                   }))}
-                />
+      />
               </Form.Group>
 
               <Form.Group className="mb-4">
@@ -2653,7 +2706,7 @@ export default function Dashboard() {
                 >
                   Update Email
                 </Button>
-              </div>
+    </div>
             </>
           )}
         </Modal.Body>

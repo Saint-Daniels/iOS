@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import Image from 'next/image';
+import { FaMobileAlt, FaGift, FaLightbulb } from 'react-icons/fa';
 import Link from 'next/link';
 import MainNavbar from '../../components/Navbar';
 
@@ -82,21 +82,27 @@ export default function Newsletter() {
           <Row className="mt-5">
             <Col md={4}>
               <div className="newsletter-feature">
-                <div className="feature-icon">📱</div>
+                <div className="feature-icon">
+                  <FaMobileAlt size={32} />
+                </div>
                 <h4>Mobile Updates</h4>
                 <p>Get instant notifications about your rewards and points.</p>
               </div>
             </Col>
             <Col md={4}>
               <div className="newsletter-feature">
-                <div className="feature-icon">🎁</div>
+                <div className="feature-icon">
+                  <FaGift size={32} />
+                </div>
                 <h4>Exclusive Offers</h4>
                 <p>Access special rewards and limited-time promotions.</p>
               </div>
             </Col>
             <Col md={4}>
               <div className="newsletter-feature">
-                <div className="feature-icon">💡</div>
+                <div className="feature-icon">
+                  <FaLightbulb size={32} />
+                </div>
                 <h4>Health Tips</h4>
                 <p>Receive valuable healthcare tips and wellness advice.</p>
               </div>
