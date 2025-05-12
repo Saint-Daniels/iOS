@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
@@ -55,6 +57,7 @@ export default function Dashboard() {
   const { isOpen: isMailboxModalOpen, onOpen: onMailboxModalOpen, onClose: onMailboxModalClose } = useDisclosure();
   const { isOpen: isSnapchatModalOpen, onOpen: onSnapchatModalOpen, onClose: onSnapchatModalClose } = useDisclosure();
   const { isOpen: isLogoutModalOpen, onOpen: onLogoutModalOpen, onClose: onLogoutModalClose } = useDisclosure();
+  const { isOpen: isCoverageModalOpen, onOpen: onCoverageModalOpen, onClose: onCoverageModalClose } = useDisclosure();
 
   // Responsive values
   const gridColumns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
@@ -195,8 +198,9 @@ export default function Dashboard() {
                     colorScheme="blue"
                     size="lg"
                     width="full"
+                    onClick={onCoverageModalOpen}
                   >
-                    View Coverage Details
+                    View Coverage
                   </Button>
                 </VStack>
               </CardBody>
@@ -460,6 +464,88 @@ export default function Dashboard() {
                   Yes, Logout
                 </Button>
               </HStack>
+            </VStack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Coverage Details Modal */}
+      <Modal isOpen={isCoverageModalOpen} onClose={onCoverageModalClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Coverage Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <VStack spacing={6} align="stretch">
+              <Box>
+                <Heading size="md" mb={4}>Current Coverage</Heading>
+                <Card>
+                  <CardBody>
+                    <VStack spacing={4} align="stretch">
+                      <Flex justify="space-between">
+                        <Text fontWeight="bold">Plan Type:</Text>
+                        <Text>UnitedHealthcare Choice Plus</Text>
+                      </Flex>
+                      <Flex justify="space-between">
+                        <Text fontWeight="bold">Status:</Text>
+                        <Badge colorScheme="green">Active</Badge>
+                      </Flex>
+                      <Flex justify="space-between">
+                        <Text fontWeight="bold">Effective Date:</Text>
+                        <Text>January 1, 2024</Text>
+                      </Flex>
+                      <Flex justify="space-between">
+                        <Text fontWeight="bold">Expiration Date:</Text>
+                        <Text>December 31, 2024</Text>
+                      </Flex>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              </Box>
+
+              <Box>
+                <Heading size="md" mb={4}>Enrollment History</Heading>
+                <VStack spacing={4} align="stretch">
+                  <Card>
+                    <CardBody>
+                      <VStack spacing={3} align="stretch">
+                        <Flex justify="space-between">
+                          <Text fontWeight="bold">2024 Plan</Text>
+                          <Badge colorScheme="green">Current</Badge>
+                        </Flex>
+                        <Text fontSize="sm" color="gray.500">January 1, 2024 - December 31, 2024</Text>
+                        <Text fontSize="sm">UnitedHealthcare Choice Plus</Text>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+
+                  <Card>
+                    <CardBody>
+                      <VStack spacing={3} align="stretch">
+                        <Flex justify="space-between">
+                          <Text fontWeight="bold">2023 Plan</Text>
+                          <Badge colorScheme="gray">Expired</Badge>
+                        </Flex>
+                        <Text fontSize="sm" color="gray.500">January 1, 2023 - December 31, 2023</Text>
+                        <Text fontSize="sm">UnitedHealthcare Choice Plus</Text>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+
+                  <Card>
+                    <CardBody>
+                      <VStack spacing={3} align="stretch">
+                        <Flex justify="space-between">
+                          <Text fontWeight="bold">2022 Plan</Text>
+                          <Badge colorScheme="gray">Expired</Badge>
+                        </Flex>
+                        <Text fontSize="sm" color="gray.500">January 1, 2022 - December 31, 2022</Text>
+                        <Text fontSize="sm">UnitedHealthcare Choice Plus</Text>
+                      </VStack>
+                    </CardBody>
+                  </Card>
+                </VStack>
+              </Box>
             </VStack>
           </ModalBody>
         </ModalContent>
