@@ -11,6 +11,9 @@ const nextConfig = {
   compress: true,
   // Disable powered by header
   poweredByHeader: false,
+  experimental: {
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig; 
