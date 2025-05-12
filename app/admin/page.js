@@ -21,10 +21,18 @@ export default function AdminDashboard() {
   const [passwordForm, setPasswordForm] = useState({ newPassword: '' });
 
   useEffect(() => {
-    fetchUsers();
+    if (typeof window !== 'undefined') {
+      fetchUsers();
+    }
   }, []);
 
   const fetchUsers = async () => {
+    if (!db) {
+      setError('Firebase is not initialized');
+      setLoading(false);
+      return;
+    }
+
     try {
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('role', '!=', 'admin'));
