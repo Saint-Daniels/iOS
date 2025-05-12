@@ -77,6 +77,8 @@ export default function Dashboard() {
 
   // Handle user activity
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleActivity = () => {
       resetTimers();
     };
@@ -105,6 +107,22 @@ export default function Dashboard() {
     }
     resetTimers();
   };
+
+  useEffect(() => {
+    // Simulate loading user data
+    const loadUserData = async () => {
+      try {
+        // Add your user data loading logic here
+        setUserName('User');
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        setLoading(false);
+      }
+    };
+
+    loadUserData();
+  }, []);
 
   if (loading) {
     return (

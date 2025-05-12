@@ -12,7 +12,9 @@ const nextConfig = {
   // Disable powered by header
   poweredByHeader: false,
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'saintdanielshealthcare.com'],
+    },
   },
 };
 
