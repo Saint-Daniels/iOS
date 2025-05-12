@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, Button, Navbar, ProgressBar, Modal, Toast, A
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, FaReply, FaUserPlus, FaGift, FaRunning, FaSkull, FaTrophy, FaTimes, FaExclamationTriangle, FaCheckCircle, FaUsers, FaMedal, FaReceipt, FaHeartbeat, FaCalendarCheck, FaMobileAlt, FaCookie, FaCopy, FaShare, FaCog, FaLock, FaUserCog, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
+import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, FaReply, FaUserPlus, FaGift, FaRunning, FaSkull, FaTrophy, FaTimes, FaExclamationTriangle, FaCheckCircle, FaUsers, FaMedal, FaReceipt, FaHeartbeat, FaCalendarCheck, FaMobileAlt, FaCookie, FaCopy, FaShare, FaCog, FaLock, FaUserCog, FaUserCircle, FaSignOutAlt, FaHistory, FaUserMd, FaPrescriptionBottleAlt } from 'react-icons/fa';
 import ReceiptScanner from '../components/ReceiptScanner';
 import { motion, AnimatePresence } from 'framer-motion';
 import InsuranceProviderLogo from '../components/InsuranceProviderLogo';
@@ -275,18 +275,13 @@ export default function Dashboard() {
   // Reset timers on user activity
   const resetTimers = useCallback(() => {
     if (inactivityTimer) clearTimeout(inactivityTimer);
-    if (warningTimer) clearTimeout(warningTimer);
     
     const newInactivityTimer = setTimeout(() => {
       setShowLogoutWarning(true);
-      const newWarningTimer = setTimeout(() => {
-        handleLogout();
-      }, WARNING_TIMEOUT);
-      setWarningTimer(newWarningTimer);
     }, INACTIVITY_TIMEOUT);
     
     setInactivityTimer(newInactivityTimer);
-  }, [inactivityTimer, warningTimer]);
+  }, [inactivityTimer]);
 
   // Handle user activity
   useEffect(() => {
@@ -307,7 +302,6 @@ export default function Dashboard() {
       window.removeEventListener('click', handleActivity);
       window.removeEventListener('scroll', handleActivity);
       if (inactivityTimer) clearTimeout(inactivityTimer);
-      if (warningTimer) clearTimeout(warningTimer);
     };
   }, [resetTimers]);
 
@@ -388,10 +382,6 @@ export default function Dashboard() {
 
   const handleDismissWarning = () => {
     setShowLogoutWarning(false);
-    if (warningTimer) {
-      clearTimeout(warningTimer);
-      setWarningTimer(null);
-    }
     if (inactivityTimer) {
       clearTimeout(inactivityTimer);
       setInactivityTimer(null);
@@ -997,31 +987,24 @@ export default function Dashboard() {
         show={showLogoutWarning} 
         onClose={handleDismissWarning}
         className="logout-warning-toast"
-        delay={WARNING_TIMEOUT}
-        autohide
+        delay={null}
+        autohide={false}
       >
         <Toast.Header>
-          <strong className="me-auto">Session Timeout</strong>
+          <strong className="me-auto">Session Timeout Warning</strong>
         </Toast.Header>
         <Toast.Body>
           <div className="d-flex flex-column">
-            <p className="mb-3">You will be logged out in 30 seconds due to inactivity.</p>
-            <div className="d-flex justify-content-between">
+            <p className="mb-3">You've been inactive for 10 minutes. Your session will remain active, but please save any unsaved work.</p>
+            <div className="d-flex justify-content-end">
               <Button 
                 variant="primary" 
-                className="me-2"
                 onClick={handleDismissWarning}
               >
-                Stay Logged In
+                Dismiss
               </Button>
-              <Button 
-                variant="danger"
-                onClick={handleLogout}
-              >
-                Log Out Now
-              </Button>
-                    </div>
-                  </div>
+            </div>
+          </div>
         </Toast.Body>
       </Toast>
 
@@ -1033,11 +1016,11 @@ export default function Dashboard() {
               <FaMobileAlt className="me-2" />
               ROTATE TO LANDSCAPE VIEW FOR MOBILE
             </p>
-          </div>
+                </div>
           <Row className="g-0 justify-content-center">
             <Col xs={12} sm={10} md={4} className="mb-3">
-              <Card className="dashboard-card h-100" onClick={() => setShowInsuranceModal(true)}>
-                <Card.Body>
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
                   <Card.Title className="d-flex justify-content-between align-items-center">
                     <div className="d-flex flex-column align-items-end">
                       <span className={`coverage-status ${insurancePlan.status.toLowerCase()}`}>
@@ -1048,249 +1031,205 @@ export default function Dashboard() {
                       </small>
                     </div>
                   </Card.Title>
-                  <div className="text-center">
-                    <div className="mb-3">
-                      <InsuranceProviderLogo size="large" className="mx-auto" />
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="insurance-logo-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <InsuranceProviderLogo size="medium" />
+                      </div>
                     </div>
                     <h3 className="text-success mb-2">UnitedHealthcare Choice Plus</h3>
                     <p className="text-muted mb-3">Active until {insurancePlan.expiryDate}</p>
-                    <div className="coverage-details">
-                      <div className="d-flex justify-content-between mb-2">
-                        <span>Deductible</span>
-                        <span className="text-success">{insurancePlan.coverage.deductible}</span>
-                      </div>
-                      <div className="d-flex justify-content-between mb-2">
-                        <span>Co-pay</span>
-                        <span className="text-success">{insurancePlan.coverage.copay}</span>
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <span>Out-of-pocket Max</span>
-                        <span className="text-success">{insurancePlan.coverage.outOfPocketMax}</span>
-                      </div>
-                    </div>
+                    <p className="text-muted small">View your complete coverage details and benefits</p>
+                  </div>
+                  <div className="mt-auto">
+                    <Button className="dashboard-btn w-100">
+                      View Coverage Details
+                </Button>
                   </div>
               </Card.Body>
             </Card>
           </Col>
             <Col xs={12} sm={10} md={4} className="mb-3">
-            <Card className="dashboard-card h-100">
-              <Card.Body>
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
                   <Card.Title>Game Arcade</Card.Title>
-                  <div className="game-display">
-                    <FaGamepad size={48} className="text-primary mb-3" />
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="icon-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <FaGamepad size={48} className="text-purple" />
+                      </div>
+                    </div>
                     <h3>Coming Soon</h3>
-                    <p className="text-muted mb-4">Exciting games and rewards are on the way!</p>
-                    <div className="d-flex justify-content-center">
-                      <Button 
-                        className="dashboard-btn" 
-                        onClick={handleGameStart}
-                      >
-                        Learn More
+                    <p className="text-muted mb-2">Exciting games and rewards are on the way!</p>
+                    <p className="text-muted small">Earn rewards while having fun with fitness games</p>
+                  </div>
+                  <div className="mt-auto">
+                    <Button 
+                      className="dashboard-btn w-100" 
+                      onClick={handleGameStart}
+                    >
+                      Learn More
                 </Button>
-                    </div>
                   </div>
               </Card.Body>
             </Card>
           </Col>
             <Col xs={12} sm={10} md={4} className="mb-3">
-            <Card className="dashboard-card h-100">
-              <Card.Body>
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
                   <Card.Title>Mailbox</Card.Title>
-                  <div className="mailbox-preview">
-                    <div className="mailbox-header">
-                      <FaEnvelope size={48} className="text-primary mb-3" />
-                      {inboxMessages.length > 0 && (
-                        <div className="unread-badge">
-                          {inboxMessages.filter(msg => !msg.read).length}
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="icon-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <FaEnvelope size={48} className="text-info" />
                   </div>
-                      )}
                     </div>
-                    {inboxMessages.length > 0 ? (
-                      <div className="inbox-list">
-                        {inboxMessages.slice(0, 3).map(message => (
-                          <div 
-                            key={message.id} 
-                            className={`inbox-item ${!message.read ? 'unread' : ''}`}
-                            onClick={() => handleMessageClick(message)}
-                          >
-                            <div className="inbox-item-header">
-                              <span className="sender">{message.from}</span>
-                              <span className="date">{message.date}</span>
+                    {inboxMessages.length > 0 && (
+                      <div className="unread-badge mb-3">
+                        {inboxMessages.filter(msg => !msg.read).length} Unread Messages
                     </div>
-                            <div className="inbox-item-subject">{message.subject}</div>
-                            <div className="inbox-item-preview">{message.preview}</div>
-                            <div className="inbox-item-actions">
-                              <FaStar 
-                                className={`star-icon ${message.starred ? 'starred' : ''}`}
-                                onClick={(e) => handleStarMessage(message.id, e)}
-                              />
-                    </div>
-                  </div>
-                        ))}
-                </div>
-                    ) : (
-                      <div className="empty-state">
-                        <p className="text-muted mb-3">No messages yet</p>
-                        <p className="text-muted small">Your important health updates will appear here</p>
-                      </div>
                     )}
-                    <div className="d-flex flex-column gap-2 mt-3">
-                      <Button 
-                        className="dashboard-btn w-100"
-                        onClick={handleMailboxClick}
-                      >
-                        Messages
-                </Button>
-                      <Button 
-                        className="dashboard-btn w-100"
-                        onClick={handleComposeClick}
-                      >
-                        <FaEnvelope className="me-1" />
-                        Compose
-                      </Button>
+                    <p className="text-muted small">Check your messages and notifications</p>
                     </div>
+                  <div className="mt-auto">
+                    <Button 
+                      className="dashboard-btn w-100"
+                      onClick={handleMailboxClick}
+                    >
+                      View Messages
+                    </Button>
                   </div>
-              </Card.Body>
-            </Card>
-          </Col>
-            <Col xs={12} sm={10} md={4} className="mb-3">
-            <Card className="dashboard-card h-100">
-              <Card.Body>
-                  <Card.Title>Snapchat</Card.Title>
-                  <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
-                    <div className="snapchat-logo-container mb-4">
-                      <div className="snapchat-logo-circle">
-                        <FaSnapchatGhost size={80} className="text-warning" />
-                  </div>
-                      <div className="snapchat-username mt-3 text-center">
-                        <h4 className="mb-0">{snapchatUsername}</h4>
-                      </div>
-                    </div>
-                    {socialProfile.isConnected ? (
-                      <>
-                        <div className="profile-display mb-4">
-                          <span className="profile-label">Username</span>
-                          <span className="profile-value">{socialProfile.username}</span>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                  <Button 
-                    className="dashboard-btn" 
-                            onClick={handleSocialConnect}
-                  >
-                            <FaSnapchatGhost className="me-2" />
-                            Snapchat Profile
-                  </Button>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="empty-state">
-                        <div className="d-flex justify-content-center">
-                          <Button 
-                            className="dashboard-btn" 
-                            onClick={handleSocialConnect}
-                          >
-                            <FaUserCog className="me-2" />
-                            Profile
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-            <Col xs={12} sm={10} md={4} className="mb-3">
-            <Card className="dashboard-card h-100">
-              <Card.Body>
-                  <Card.Title>Recent Activity</Card.Title>
-                  {activities.length > 0 ? (
-                    <>
-                      <ul className="activity-list">
-                        {activities.slice(0, 3).map((activity, index) => (
-                          <li key={index} className="activity-item">
-                            <div className="d-flex align-items-start">
-                              <div className="activity-icon me-3">
-                                {activity.icon && (
-                                  <activity.icon 
-                                    size={24} 
-                                    className={`text-${getActivityIconColor(activity.type)}`}
-                                  />
-                                )}
-                  </div>
-                              <div className="flex-grow-1">
-                                <div className="activity-date small text-muted">{activity.date}</div>
-                                <p className="activity-description mb-1 small">{activity.description}</p>
-                                {activity.reward && (
-                                  <div className="activity-reward small">
-                                    <span className={`badge bg-${activity.reward.status === 'earned' ? 'success' : 'warning'} me-2`}>
-                                      {activity.reward.days} days
-                                    </span>
-                                    <span className="text-muted">{activity.reward.provider}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                  <Button 
-                        className="dashboard-btn w-100 mt-3"
-                        onClick={() => setShowAllActivities(true)}
-                  >
-                        View All Activities
-                  </Button>
-                    </>
-                  ) : (
-                    <div className="empty-state">
-                      <p className="text-muted mb-3">No recent activity</p>
-                      <p className="text-muted small">Your health activities and achievements will appear here</p>
-                </div>
-                  )}
-              </Card.Body>
-            </Card>
-          </Col>
-            <Col xs={12} sm={10} md={4} className="mb-3">
-              <Card className="dashboard-card h-100">
-                <Card.Body className="p-3">
-                <Card.Title>Available Offers</Card.Title>
-                  {offers && offers.length > 0 ? (
-                <div className="offers-list">
-                      {offers.slice(0, 3).map((offer, index) => (
-                        <div key={index} className="offer-item mb-2 p-2 border rounded">
-                          <div className="d-flex align-items-center">
-                            <div className="me-3">
-                              <div className="offer-icon">
-                                {offer.icon && (
-                                  <offer.icon 
-                                    size={32} 
-                                    className={`text-${getActivityIconColor(offer.type)}`}
-                                  />
-                                )}
-                              </div>
-                            </div>
-                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
-                              <h5 className="mb-0">{offer.title}</h5>
-                              <Button 
-                                className="dashboard-btn ms-3"
-                                onClick={() => handleOfferClick(offer)}
-                              >
-                                Claim
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="empty-state">
-                      <p className="text-muted mb-3">No offers available</p>
-                      <p className="text-muted small">Check back later for new rewards and offers</p>
-                    </div>
-                  )}
                 </Card.Body>
               </Card>
             </Col>
-          </Row>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title>Snapchat</Card.Title>
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="icon-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <FaSnapchatGhost size={48} className="text-warning" />
+                </div>
+                    </div>
+                    <div className="snapchat-username mb-3">
+                      <h4 className="mb-0">{snapchatUsername}</h4>
+                    </div>
+                    <p className="text-muted small">Connect with friends and share your fitness journey</p>
+                  </div>
+                  <div className="mt-auto">
+                    <Button 
+                      className="dashboard-btn w-100" 
+                      onClick={handleSocialConnect}
+                    >
+                      <FaSnapchatGhost className="me-2" />
+                      View Profile
+                </Button>
+                  </div>
+              </Card.Body>
+            </Card>
+          </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title>Recent Activity</Card.Title>
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="icon-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <FaHistory size={48} className="text-success" />
+                  </div>
+                    </div>
+                    <p className="text-muted small">Track your recent actions and rewards earned</p>
+                  </div>
+                  <div className="mt-auto">
+                  <Button 
+                      className="dashboard-btn w-100"
+                      onClick={() => setShowAllActivities(true)}
+                  >
+                      View All Activities
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+            <Col xs={12} sm={10} md={4} className="mb-3">
+              <Card className="dashboard-card h-100 d-flex flex-column">
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title>Available Offers</Card.Title>
+                  <div className="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+                    <div className="icon-container mb-4">
+                      <div className="icon-circle" style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '50%',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                      }}>
+                        <FaGift size={48} className="text-danger" />
+                  </div>
+                    </div>
+                    <p className="text-muted small">Discover and claim your available rewards</p>
+                  </div>
+                  <div className="mt-auto">
+                  <Button 
+                      className="dashboard-btn w-100"
+                      onClick={() => setShowClaimModal(true)}
+                  >
+                      View All Offers
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
         </Container>
       </div>
 
@@ -1310,19 +1249,11 @@ export default function Dashboard() {
         backdrop="static"
         keyboard={true}
       >
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>
             <FaGamepad className="me-2" />
             Coming Soon: Fitness Games
           </Modal.Title>
-          <button 
-            type="button" 
-            className="btn-close-modal" 
-            onClick={() => setShowGameModal(false)}
-            aria-label="Close"
-          >
-            <span>×</span>
-          </button>
         </Modal.Header>
         <Modal.Body>
           <div className="upcoming-games">
@@ -1330,7 +1261,7 @@ export default function Dashboard() {
               <div className="game-card mb-4">
                 <div className="game-icon">
                   <FaSkull size={48} className="text-danger mb-3" />
-                  </div>
+                </div>
                 <h4>Zombie Survival Fitness</h4>
                 <p className="text-muted">
                   Run, dodge, and survive in this immersive fitness game. Complete daily challenges
@@ -1581,29 +1512,42 @@ export default function Dashboard() {
               <div className="messages-list">
                 {filteredMessages
                   .slice((currentMailboxPage - 1) * messagesPerPage, currentMailboxPage * messagesPerPage)
-                  .map(message => (
+                  .map((message, index) => (
                     <div 
                       key={message.id} 
                       className={`message-item ${!message.read ? 'unread' : ''} ${message.from === 'You' ? 'sent' : 'received'}`}
                       onClick={() => handleMessageClick(message)}
                       style={{ cursor: 'pointer' }}
                     >
-                      <div className="message-header">
-                        <div className="message-sender">
-                          <span className="sender-name">{message.from}</span>
-                          {message.from === 'You' && (
-                            <span className="sent-badge">Sent</span>
-                          )}
+                      <div className="message-header d-flex justify-content-between align-items-center mb-2">
+                        <div className="d-flex align-items-center">
+                          <div className="sender-avatar me-3">
+                            {message.from === 'Dr. Smith' ? (
+                              <FaUserMd size={24} className="text-primary" />
+                            ) : message.from === 'Pharmacy' ? (
+                              <FaPrescriptionBottleAlt size={24} className="text-success" />
+                            ) : (
+                              <FaShieldAlt size={24} className="text-info" />
+                            )}
+                          </div>
+                          <div>
+                            <h6 className="mb-0">{message.from}</h6>
+                            <small className="text-muted">{message.date}</small>
+                          </div>
                         </div>
-                        <span className="message-date">{message.date}</span>
+                        <div className="message-category">
+                          <span className={`category-badge ${message.category}`}>
+                            {message.category}
+                          </span>
+                        </div>
                       </div>
-                      <div className="message-subject">{message.subject}</div>
-                      <div className="message-preview">{message.preview}</div>
-                      <div className="message-category">
-                        <span className={`category-badge ${message.category}`}>
-                          {message.category}
-                        </span>
+                      <div className="message-content p-3 bg-light rounded mb-2">
+                        <h6 className="mb-2">{message.subject}</h6>
+                        <p className="mb-0 text-muted">{message.preview}</p>
                       </div>
+                      {index < filteredMessages.length - 1 && (
+                        <hr className="message-divider" />
+                      )}
                     </div>
                   ))}
               </div>
@@ -1997,33 +1941,32 @@ export default function Dashboard() {
         show={showClaimModal} 
         onHide={() => setShowClaimModal(false)} 
         centered
+        size="lg"
       >
-        <Modal.Header>
-          <Modal.Title>Claim Your Reward</Modal.Title>
-          <Button 
-            variant="link" 
-            onClick={() => setShowClaimModal(false)} 
-            className="ms-auto p-0 btn-close"
-            aria-label="Close"
-            style={{ boxShadow: 'none' }}
-          />
+        <Modal.Header closeButton>
+          <Modal.Title>Available Rewards</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedOffer && (
-            <div className="claim-reward-content">
-              <div className="text-center mb-4">
-                {selectedOffer.icon && (
-                  <selectedOffer.icon 
-                    size={48} 
-                    className={`text-${getActivityIconColor(selectedOffer.type)} mb-3`}
-                  />
-                )}
-                <h4 className="mb-3">{selectedOffer.title}</h4>
-                <div className="reward-details p-3 bg-light rounded mb-4">
+          <div className="rewards-grid">
+            {offers.map((offer, index) => (
+              <div key={index} className="reward-card mb-4 p-4 border rounded">
+                <div className="d-flex align-items-center mb-3">
+                  {offer.icon && (
+                    <offer.icon 
+                      size={48} 
+                      className={`text-${getActivityIconColor(offer.type)} me-3`}
+                    />
+                  )}
+                  <div>
+                    <h4 className="mb-1">{offer.title}</h4>
+                    <p className="text-muted mb-0">{offer.description}</p>
+                    </div>
+                  </div>
+                <div className="reward-details p-3 bg-light rounded mb-3">
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <span>Days of Coverage:</span>
-                    <span className="text-success fw-bold">{selectedOffer.days} days</span>
-                    </div>
+                    <span className="text-success fw-bold">{offer.days} days</span>
+                  </div>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <span>Progress:</span>
                     <div className="progress flex-grow-1 mx-3" style={{ height: '8px' }}>
@@ -2031,84 +1974,46 @@ export default function Dashboard() {
                         className="progress-bar bg-success" 
                         role="progressbar" 
                         style={{ 
-                          width: `${(offerProgress[selectedOffer.id].days / offerProgress[selectedOffer.id].total) * 100}%` 
+                          width: `${(offerProgress[offer.id].days / offerProgress[offer.id].total) * 100}%` 
                         }}
                       />
-                  </div>
+                    </div>
                     <span className="text-muted">
-                      {offerProgress[selectedOffer.id].days}/{offerProgress[selectedOffer.id].total} days
+                      {offerProgress[offer.id].days}/{offerProgress[offer.id].total} days
                     </span>
-                </div>
+                  </div>
                     <div className="d-flex justify-content-between align-items-center">
                     <span>Expires:</span>
-                    <span className="text-muted">{selectedOffer.expiryDate}</span>
+                    <span className="text-muted">{offer.expiryDate}</span>
                   </div>
                 </div>
-                <p className="text-muted mb-4">{selectedOffer.description}</p>
-                {selectedOffer.requirements && (
-                  <div className="requirements-info p-3 bg-light rounded mb-4">
+                {offer.requirements && (
+                  <div className="requirements-info p-3 bg-light rounded mb-3">
                     <h6 className="mb-2">Requirements:</h6>
                     <ul className="list-unstyled mb-0">
-                      {selectedOffer.requirements.coverageDuration && (
+                      {offer.requirements.coverageDuration && (
                         <li className="mb-1">
-                          <small>• Minimum coverage duration: {selectedOffer.requirements.coverageDuration}</small>
+                          <small>• Minimum coverage duration: {offer.requirements.coverageDuration}</small>
                         </li>
                       )}
-                      {selectedOffer.requirements.deliveryMethod && (
+                      {offer.requirements.deliveryMethod && (
                         <li>
-                          <small>• Delivery method: {selectedOffer.requirements.deliveryMethod}</small>
+                          <small>• Delivery method: {offer.requirements.deliveryMethod}</small>
                         </li>
                       )}
                     </ul>
                   </div>
                 )}
+                <Button 
+                  variant="primary" 
+                  className="w-100"
+                  onClick={() => handleOfferClick(offer)}
+                >
+                  Claim Reward
+                </Button>
               </div>
-
-              <div className="claim-steps">
-                <h6 className="mb-3">Verification Required:</h6>
-                <ol className="ps-3">
-                  {getVerificationSteps(selectedOffer.type).map((step, index) => (
-                    <li key={index} className="mb-2">{step}</li>
-                  ))}
-                </ol>
-                {selectedOffer.type === 'mobile' && (
-                  <div className="alert alert-info mt-3">
-                    <small>
-                      <strong>Note:</strong> You'll need to verify your mailing address to receive this reward. 
-                      This helps us ensure secure delivery of your reward. The reward will be delivered after 
-                      maintaining 6 months of active coverage with T-Mobile.
-                    </small>
-                  </div>
-                )}
-                {(selectedOffer.type === 'food' || selectedOffer.type === 'health') && (
-                  <div className="alert alert-info mt-3">
-                    <small>
-                      <strong>Note:</strong> You'll need to connect your Cash App account to receive this reward. 
-                      This allows us to securely transfer your reward directly to your account.
-                    </small>
-                  </div>
-                )}
-              </div>
-
-              <div className="claim-actions mt-4">
-                <div className="d-grid gap-2">
-                  <Button 
-                    variant="primary" 
-                    size="lg"
-                    onClick={handleStartVerification}
-                  >
-                    Start Verification
-                  </Button>
-                  <Button 
-                    variant="outline-secondary"
-                    onClick={() => setShowClaimModal(false)}
-                  >
-                    Maybe Later
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
+            ))}
+          </div>
         </Modal.Body>
       </Modal>
 
