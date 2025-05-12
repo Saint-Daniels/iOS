@@ -122,7 +122,6 @@ export default function Login() {
                   <div className="text-center mb-4">
                     <h2>Welcome Back</h2>
                     <p className="text-muted">Please sign in to your account</p>
-                    <p className="text-success small">For testing: Any email and password will work</p>
                   </div>
                   
                   {error && (

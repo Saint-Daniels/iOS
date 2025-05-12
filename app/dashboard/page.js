@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { FaGamepad, FaSnapchatGhost, FaShieldAlt, FaEnvelope, FaStar, FaTrash, FaReply, FaUserPlus, FaGift, FaRunning, FaSkull, FaTrophy, FaTimes, FaExclamationTriangle, FaCheckCircle, FaUsers, FaMedal, FaReceipt, FaHeartbeat, FaCalendarCheck, FaMobileAlt, FaCookie, FaCopy, FaShare, FaCog, FaLock, FaUserCog, FaUserCircle, FaSignOutAlt, FaHistory, FaUserMd, FaPrescriptionBottleAlt, FaPaperclip, FaPaperPlane, FaPencilAlt } from 'react-icons/fa';
 import InsuranceProviderLogo from '../components/InsuranceProviderLogo';
 import '../styles/dashboard.css';
@@ -11,6 +12,7 @@ import '../styles/dashboard.css';
 const MotionBox = motion.div;
 
 export default function Dashboard() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('User');
   const [showLogoutWarning, setShowLogoutWarning] = useState(false);
@@ -230,6 +232,35 @@ export default function Dashboard() {
     }
   }, [authSettings.sessionTimeout]);
 
+  // Handle page refresh and back button
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Don't clear session on refresh
+      return;
+    };
+
+    const handlePopState = () => {
+      // Only redirect to login if going back from dashboard
+      if (window.location.pathname === '/dashboard') {
+        router.push('/login');
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+
+    // Check if user is logged in
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [router]);
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -247,7 +278,7 @@ export default function Dashboard() {
       className="dashboard"
     >
       {/* Header */}
-      <header className="header">
+      <header className="header" style={{ backgroundColor: '#1B392F' }}>
         <div className="container">
           <div className="header-content">
             <img 
@@ -263,11 +294,11 @@ export default function Dashboard() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem'
+                    gap: '0.5rem',
+                    color: '#C0C0C0'
                   }}
                 >
                   <FaCog className="icon" />
-                  Settings
                 </button>
                 {isSettingsOpen && (
                   <div style={{
@@ -294,7 +325,11 @@ export default function Dashboard() {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
-                          color: '#000000'
+                          color: '#000000',
+                          transition: 'background-color 0.2s',
+                          ':hover': {
+                            backgroundColor: '#f7fafc'
+                          }
                         }}
                         onClick={() => {
                           setIsChangeEmailModalOpen(true);
@@ -313,7 +348,11 @@ export default function Dashboard() {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
-                          color: '#000000'
+                          color: '#000000',
+                          transition: 'background-color 0.2s',
+                          ':hover': {
+                            backgroundColor: '#f7fafc'
+                          }
                         }}
                         onClick={() => {
                           setIsChangePasswordModalOpen(true);
@@ -332,7 +371,11 @@ export default function Dashboard() {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
-                          color: '#000000'
+                          color: '#000000',
+                          transition: 'background-color 0.2s',
+                          ':hover': {
+                            backgroundColor: '#f7fafc'
+                          }
                         }}
                         onClick={() => {
                           setIsAuthSettingsModalOpen(true);
