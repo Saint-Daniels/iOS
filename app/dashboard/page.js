@@ -235,15 +235,16 @@ export default function Dashboard() {
   // Handle page refresh and back button
   useEffect(() => {
     const handleBeforeUnload = (e) => {
-      // Don't clear session on refresh
-      return;
+      // Clear session on refresh
+      sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('userEmail');
     };
 
     const handlePopState = () => {
-      // Only redirect to login if going back from dashboard
-      if (window.location.pathname === '/dashboard') {
-        router.push('/login');
-      }
+      // End session and redirect to login when going back
+      sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('userEmail');
+      router.push('/login');
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -295,7 +296,11 @@ export default function Dashboard() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    color: '#C0C0C0'
+                    color: '#C0C0C0',
+                    transition: 'color 0.2s ease',
+                    ':hover': {
+                      color: '#808080'
+                    }
                   }}
                 >
                   <FaCog className="icon" />
@@ -418,7 +423,7 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="icon-container">
-                    <InsuranceProviderLogo size="medium" />
+                      <InsuranceProviderLogo size="medium" />
                   </div>
 
                   <div className="card-details">
@@ -736,7 +741,7 @@ export default function Dashboard() {
                 <FaSignOutAlt style={{ fontSize: '3rem', color: '#e53e3e' }} />
                 <p style={{ margin: 0, color: '#4a5568' }}>Are you sure you want to log out?</p>
                 <p style={{ margin: 0, color: '#718096', fontSize: '0.875rem' }}>
-                  You will need to log in again to access your dashboard.
+                You will need to log in again to access your dashboard.
                 </p>
                 <div style={{
                   display: 'flex',
@@ -746,18 +751,18 @@ export default function Dashboard() {
                   <button
                     className="btn btn-gold"
                     onClick={() => setIsLogoutModalOpen(false)}
-                  >
-                    Cancel
+                >
+                  Cancel
                   </button>
                   <button
                     className="btn btn-danger"
-                    onClick={() => {
+                  onClick={() => {
                       setIsLogoutModalOpen(false);
-                      // Handle logout
+                    // Handle logout
                       window.location.href = '/';
-                    }}
-                  >
-                    Yes, Logout
+                  }}
+                >
+                  Yes, Logout
                   </button>
                 </div>
               </div>

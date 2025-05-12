@@ -29,11 +29,11 @@ const Footer = () => {
           <div className="footer-column">
             <h3 className="footer-title">SAINT DANIELS</h3>
             <div className="social-icons">
-              <a href="#" className="social-icon" aria-label="Facebook">FB</a>
-              <a href="#" className="social-icon" aria-label="LinkedIn">IN</a>
-              <a href="#" className="social-icon" aria-label="Snapchat">SC</a>
-              <a href="#" className="social-icon" aria-label="Twitter">TT</a>
-              <a href="#" className="social-icon" aria-label="Instagram">IG</a>
+              <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook">FB</a>
+              <a href="https://linkedin.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">IN</a>
+              <a href="https://snapchat.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Snapchat">SC</a>
+              <a href="https://x.com/bridgeobserver" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="X">X</a>
+              <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">IG</a>
             </div>
           </div>
           
