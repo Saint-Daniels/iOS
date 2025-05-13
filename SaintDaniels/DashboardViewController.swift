@@ -13,6 +13,14 @@ class DashboardViewController: UIViewController {
         return view
     }()
     
+    private let logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "saintdanielslogo")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "Welcome to Saint Daniels"
@@ -95,6 +103,7 @@ class DashboardViewController: UIViewController {
         
         // Add header
         view.addSubview(headerView)
+        headerView.addSubview(logoImageView)
         headerView.addSubview(welcomeLabel)
         headerView.addSubview(dateLabel)
         headerView.addSubview(logoutButton)
@@ -123,13 +132,18 @@ class DashboardViewController: UIViewController {
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 120),
+            headerView.heightAnchor.constraint(equalToConstant: 140),
             
-            welcomeLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            welcomeLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
+            logoImageView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
+            logoImageView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 120),
+            logoImageView.heightAnchor.constraint(equalToConstant: 60),
             
-            dateLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            dateLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 8),
+            welcomeLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 8),
+            welcomeLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            
+            dateLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 4),
+            dateLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
             
             logoutButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
             logoutButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
