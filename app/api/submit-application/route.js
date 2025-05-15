@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getApp, initializeApp } from 'firebase/app';
 import { getClient } from '@vercel/postgres';
-import { validateApplicationSubmission } from '../../../utils/applicationValidation';
+import { validateApplicationSubmission } from '@/app/utils/applicationValidation';
 
 // Initialize Firebase (make sure this matches your firebase.ts file)
 let app;
