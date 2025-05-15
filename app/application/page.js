@@ -91,6 +91,21 @@ const ApplicationForm = () => {
   const [stepErrors, setStepErrors] = useState({});
   const [marketingID, setMarketingID] = useState('UNKNOWN');
 
+  // Add phone number formatting function
+  const formatPhoneNumber = (value) => {
+    // Remove all non-numeric characters
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Format the phone number as (XXX) XXX-XXXX
+    if (phoneNumber.length <= 3) {
+      return phoneNumber;
+    } else if (phoneNumber.length <= 6) {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    } else {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    }
+  };
+
   const signatureCanvasRef = useRef(null);
   const signaturePadRef = useRef(null);
 
@@ -308,30 +323,30 @@ const ApplicationForm = () => {
   }, []);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     
-    console.log(`Input changed: ${name} = ${value}`);
-    
-    // Handle nested properties (e.g., residentialaddress.streetaddress)
-    if (name.includes('.')) {
+    if (name === 'phone') {
+      // Format phone number as user types
+      const formattedNumber = formatPhoneNumber(value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedNumber
+      }));
+    } else if (name.includes('.')) {
+      // Handle nested properties (e.g., residentialaddress.streetaddress)
       const [parent, child] = name.split('.');
-      console.log(`Updating nested property: ${parent}.${child}`);
-      setFormData(prev => {
-        const updated = {
-          ...prev,
-          [parent]: {
-            ...prev[parent],
-            [child]: value
-          }
-        };
-        console.log('Updated form data:', JSON.stringify(updated[parent]));
-        return updated;
-      });
+      setFormData(prev => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: value
+        }
+      }));
     } else {
       // Handle regular properties
       setFormData(prev => ({
         ...prev,
-        [name]: value
+        [name]: type === 'checkbox' ? checked : value
       }));
     }
   };
@@ -408,13 +423,33 @@ const ApplicationForm = () => {
   const validateForm = () => {
     const errors = {};
     
+    // Personal Information Validation
+    if (!formData.firstName.trim()) {
+      errors.firstName = 'First name is required';
+    }
+    if (!formData.lastName.trim()) {
+      errors.lastName = 'Last name is required';
+    }
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    // Validate phone number format
+    const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+    if (!formData.phone) {
+      errors.phone = 'Phone number is required';
+    } else if (!phoneRegex.test(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number';
+    }
+    
+    if (!formData.dateOfBirth) {
+      errors.dateOfBirth = 'Date of birth is required';
+    }
+    
     // Check required fields
     const requiredFields = {
-      firstName: 'First Name',
-      lastName: 'Last Name',
-      email: 'Email',
-      phone: 'Phone',
-      dateOfBirth: 'Date of Birth',
       taxFilingStatus: 'Tax Filing Status',
       residentialaddress: 'Residential Address',
       countryOfOrigin: 'Country of Origin',
@@ -733,9 +768,6 @@ const ApplicationForm = () => {
         marketingid: marketingID || 'UNKNOWN'
       };
       
-      // For demo/dev purposes, log the data being submitted
-      console.log('Submitting application data to API');
-      
       try {
         // Make the API call
         console.log("Sending POST request to /api/submit-application");
@@ -769,14 +801,30 @@ const ApplicationForm = () => {
         console.error('Error submitting application:', error);
         setIsSubmitting(false);
         
-        // Provide a more user-friendly error message
+        // Display the error message in a more user-friendly way
         const errorMessage = error.message || 'There was an error submitting your application. Please try again.';
-        alert(errorMessage);
+        
+        // Add the error to the form's error state
+        setStepErrors(prev => ({
+          ...prev,
+          submission: errorMessage
+        }));
+        
+        // Scroll to the error message
+        setTimeout(() => {
+          const errorEl = document.querySelector('.text-red-500');
+          if (errorEl) {
+            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
       }
     } catch (error) {
       console.error('Unexpected error during submission:', error);
       setIsSubmitting(false);
-      alert('An unexpected error occurred. Please try again later.');
+      setStepErrors(prev => ({
+        ...prev,
+        submission: 'An unexpected error occurred. Please try again later.'
+      }));
     }
   };
 
@@ -1158,26 +1206,38 @@ const ApplicationForm = () => {
               <h2 className="text-2xl font-bold">Family & Tax Information</h2>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-3">
               <div className="form-group">
-                <label className="form-label">Marital Status</label>
-                <div className="space-y-4">
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="checkbox"
-                      checked={formData.isMarried}
-                      onChange={(e) => setFormData(prev => ({ ...prev, isMarried: e.target.checked }))}
-                      className="form-checkbox h-5 w-5 text-blue-600"
-                    />
-                    <span>I am married</span>
-                  </label>
+                <label className="form-label mb-2">Family Information</label>
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label className="flex items-center space-x-3 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={formData.isMarried}
+                        onChange={(e) => setFormData(prev => ({ ...prev, isMarried: e.target.checked }))}
+                        className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                      />
+                      <span className="text-gray-700 font-medium">I am married</span>
+                    </label>
+
+                    <label className="flex items-center space-x-3 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={formData.hasChildren}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hasChildren: e.target.checked }))}
+                        className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                      />
+                      <span className="text-gray-700 font-medium">I have children</span>
+                    </label>
+                  </div>
                 </div>
               </div>
 
               {formData.isMarried && (
-                <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-                  <h3 className="text-lg font-semibold">Spouse Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Spouse Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="form-group">
                       <label className="form-label">Spouse's First Name</label>
                       <input
@@ -1245,24 +1305,9 @@ const ApplicationForm = () => {
                 </div>
               )}
 
-              <div className="form-group">
-                <label className="form-label">Children</label>
-                <div className="space-y-4">
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasChildren}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hasChildren: e.target.checked }))}
-                      className="form-checkbox h-5 w-5 text-blue-600"
-                    />
-                    <span>I have children</span>
-                  </label>
-                </div>
-              </div>
-
               {formData.hasChildren && (
-                <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-                  <h3 className="text-lg font-semibold">Children Information</h3>
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Children Information</h3>
                   {formData.dependents.map((dependent, index) => (
                     <div key={index} className="border-b border-gray-200 pb-4 mb-4">
                       <div className="flex justify-between items-center mb-4">
@@ -1342,19 +1387,19 @@ const ApplicationForm = () => {
               )}
 
               <div className="form-group">
-                <label className="form-label">Tax Information</label>
-                <div className="space-y-4">
-                  <label className="flex items-center space-x-3">
+                <label className="form-label mb-2">Tax Information</label>
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <label className="flex items-center space-x-3 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
                     <input
                       type="checkbox"
                       checked={formData.isClaimedOnTaxes}
                       onChange={(e) => setFormData(prev => ({ ...prev, isClaimedOnTaxes: e.target.checked }))}
-                      className="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                     />
-                    <span>I will be claimed on someone else's taxes</span>
+                    <span className="text-gray-700 font-medium">I will be claimed on someone else's taxes</span>
                   </label>
 
-                  <div className="form-group">
+                  <div className="form-group mt-3">
                     <label className="form-label">Tax Filing Status</label>
                     <select
                       name="taxFilingStatus"
@@ -2043,6 +2088,12 @@ const ApplicationForm = () => {
                       />
                     </div>
                   </div>
+                  
+                  {stepErrors.submission && (
+                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
+                      <p className="text-red-600 font-medium">{stepErrors.submission}</p>
+                    </div>
+                  )}
                   
                   <form onSubmit={handleSubmit} className="enrollment-form">
                     {renderStep()}

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getApp, initializeApp } from 'firebase/app';
+import { getClient } from '@vercel/postgres';
+import { validateApplicationSubmission } from '../../../utils/applicationValidation';
 
 // Initialize Firebase (make sure this matches your firebase.ts file)
 let app;
@@ -22,172 +24,92 @@ try {
 
 export async function POST(request) {
   try {
-    // Parse the request body
     const data = await request.json();
+    const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip');
     
-    // Validate required fields
-    const { firstName, lastName, email, phone, ssn } = data;
-    if (!firstName || !lastName || !email || !phone || !ssn) {
+    // Validate submission
+    const validation = await validateApplicationSubmission(
+      data.email,
+      data.phone,
+      ipAddress
+    );
+    
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: validation.error },
         { status: 400 }
       );
     }
     
-    // Get marketing ID or set default
-    const marketingID = data.marketingID || 'UNKNOWN';
-    const leadId = data.marketingid || marketingID; // Use marketingid as the leadId
+    const client = await getClient();
     
-    // Initialize Firestore
-    const db = getFirestore(app);
-    
-    // Prepare application data with the correct structure for Firestore
-    const applicationData = {
-      // Personal information
-      firstName: data.firstName,
-      middleName: data.middleName || "",
-      lastName: data.lastName,
-      suffix: data.suffix || "",
-      email: data.email,
-      phone: data.phone,
-      dateOfBirth: data.dateOfBirth,
-      ssn: data.ssn,
-      stateoforigin: data.stateoforigin || "",
-      
-      // Family information
-      isMarried: data.isMarried || false,
-      hasChildren: data.hasChildren || false,
-      isClaimedOnTaxes: data.isClaimedOnTaxes || false,
-      taxFilingStatus: data.taxFilingStatus || "",
-      
-      // Spouse information
-      spouseinfo: data.spouseinfo || {
-        firstname: "",
-        lastname: "",
-        dateofbirth: "",
-        ssn: ""
-      },
-      
-      // Dependents
-      dependents: data.dependents || [],
-      
-      // Residential address
-      residentialaddress: data.residentialaddress || {
-        streetaddress: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        country: ""
-      },
-      
-      // Mailing address
-      sameAsResidential: data.sameAsResidential || true,
-      mailingStreet: data.mailingStreet || "",
-      mailingCity: data.mailingCity || "",
-      mailingState: data.mailingState || "",
-      mailingZip: data.mailingZip || "",
-      mailingCountry: data.mailingCountry || "",
-      
-      // Origin and occupation
-      countryOfOrigin: data.countryOfOrigin || "",
-      occupation: data.occupation || "",
-      expectedSalary: data.expectedSalary || "",
-      
-      // Insurance information
-      hasExistingInsurance: data.hasExistingInsurance || false,
-      existingInsuranceType: data.existingInsuranceType || "",
-      healthInsuranceProvider: data.healthInsuranceProvider || "",
-      oscar: data.oscar || "",
-      unitedhealthcare: data.unitedhealthcare || "",
-      wellcare: data.wellcare || "",
-      deductible: data.deductible || "",
-      
-      // Signature information
-      signature: data.signature || false,
-      signatureurl: data.signatureurl || "",
-      signatureConsent: data.signatureConsent || false,
-      
-      // Additional tracking information
-      status: data.status || "Application Submitted",
-      lead_id: leadId,
-      marketingID: marketingID,
-      timestamp: serverTimestamp(),
-      applicationDate: data.applicationDate || new Date().toISOString(),
-      ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
-      userAgent: request.headers.get('user-agent') || 'unknown'
-    };
-    
-    // First, check if client exists with this lead_id
-    let clientId;
     try {
-      // Create a reference to a document with the leadId as the document ID
-      const clientRef = doc(db, 'clients', leadId);
-      const clientDoc = await getDoc(clientRef);
-      
-      // Prepare client data
-      const clientData = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        ssn: data.ssn,
-        residentialaddress: data.residentialaddress,
-        hasApplication: true,
-        lastUpdated: serverTimestamp(),
-        status: "Active Client",
-        marketingID: marketingID,
-        lead_id: leadId
-      };
-      
-      if (clientDoc.exists()) {
-        // Update existing client
-        console.log(`Updating existing client with lead_id: ${leadId}`);
-        await updateDoc(clientRef, clientData);
-        clientId = leadId;
-      } else {
-        // Create new client with leadId as the document ID
-        console.log(`Creating new client with lead_id: ${leadId}`);
-        await setDoc(clientRef, {
-          ...clientData,
-          createdAt: serverTimestamp()
-        });
-        clientId = leadId;
-      }
-    } catch (error) {
-      console.error('Error creating/updating client:', error);
-      return NextResponse.json(
-        { error: 'Failed to create/update client record' },
-        { status: 500 }
+      // Insert the application with IP address
+      const result = await client.query(
+        `INSERT INTO applications (
+          first_name, middle_name, last_name, suffix,
+          email, phone, date_of_birth, ssn,
+          is_married, has_children, is_claimed_on_taxes,
+          tax_filing_status, spouse_info, dependents,
+          residential_address, mailing_address,
+          country_of_origin, state_of_origin,
+          occupation, expected_salary,
+          has_existing_insurance, existing_insurance_type,
+          health_insurance_provider, deductible,
+          signature_url, signature_consent,
+          ip_address, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, NOW())
+        RETURNING id`,
+        [
+          data.firstName,
+          data.middleName,
+          data.lastName,
+          data.suffix,
+          data.email,
+          data.phone,
+          data.dateOfBirth,
+          data.ssn,
+          data.isMarried,
+          data.hasChildren,
+          data.isClaimedOnTaxes,
+          data.taxFilingStatus,
+          JSON.stringify(data.spouseinfo),
+          JSON.stringify(data.dependents),
+          JSON.stringify(data.residentialaddress),
+          JSON.stringify({
+            street: data.mailingStreet,
+            city: data.mailingCity,
+            state: data.mailingState,
+            zip: data.mailingZip,
+            country: data.mailingCountry
+          }),
+          data.countryOfOrigin,
+          data.stateoforigin,
+          data.occupation,
+          data.expectedSalary,
+          data.hasExistingInsurance,
+          data.existingInsuranceType,
+          data.healthInsuranceProvider,
+          data.deductible,
+          data.signatureurl,
+          data.signatureConsent,
+          ipAddress
+        ]
       );
-    }
-    
-    // Now add the application to the applications collection
-    try {
-      // Add client_id to the application data
-      applicationData.client_id = clientId;
       
-      // Add to applications collection
-      const appDocRef = await addDoc(collection(db, 'applications'), applicationData);
-      
-      // Return success response with document IDs
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Application successfully submitted',
-        applicationId: appDocRef.id,
-        clientId: clientId
+      return NextResponse.json({
+        success: true,
+        applicationId: result.rows[0].id
       });
       
-    } catch (error) {
-      console.error('Error submitting application:', error);
-      return NextResponse.json(
-        { error: 'Failed to submit application' },
-        { status: 500 }
-      );
+    } finally {
+      client.release();
     }
+    
   } catch (error) {
-    console.error('Unexpected error in submit-application route:', error);
+    console.error('Error submitting application:', error);
     return NextResponse.json(
-      { error: 'Failed to process application' },
+      { error: 'Failed to submit application' },
       { status: 500 }
     );
   }
