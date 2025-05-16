@@ -46,9 +46,9 @@ export default function Home() {
               <Col md={4}>
                 <div className="step-card text-center">
                   <h3 className="step-number">2</h3>
-                  <h4>Earn Consecutive Days</h4>
+                  <h4>Months of Coverage</h4>
                   <p>
-                    Build your streak of consecutive health days through daily check-ins, wellness activities, and healthy choices.
+                    Every month you stay active qualifies you for new rewards and benefits.
                   </p>
                 </div>
               </Col>
@@ -58,7 +58,7 @@ export default function Home() {
                   <h3 className="step-number">3</h3>
                   <h4>Claim Your Royal Rewards</h4>
                   <p>
-                    Unlock contingent coverage rewards and exclusive benefits as you maintain your health streak and reach new milestones.
+                    Unlock coverage rewards and exclusive benefits as you maintain your health streak and reach new milestones.
                   </p>
                 </div>
               </Col>
