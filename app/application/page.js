@@ -97,6 +97,7 @@ const ApplicationForm = () => {
   const [stepErrors, setStepErrors] = useState({});
   const [marketingID, setMarketingID] = useState('UNKNOWN');
   const [userAgent, setUserAgent] = useState('');
+  const [ipAddress, setIpAddress] = useState('');
 
   // Add phone number formatting function
   const formatPhoneNumber = (value) => {
@@ -178,6 +179,17 @@ const ApplicationForm = () => {
     const extractedID = extractMarketingID();
     setMarketingID(extractedID);
     setUserAgent(navigator.userAgent);
+    
+    // Fetch IP address
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        setIpAddress(data.ip);
+      })
+      .catch(error => {
+        console.error('Error fetching IP address:', error);
+        setIpAddress('unknown');
+      });
   }, []);
 
   // Add country and state options
@@ -938,12 +950,18 @@ const ApplicationForm = () => {
         updatedAt: new Date().toISOString(),
         marketingID: marketingID,
         userAgent: userAgent,
+        ipAddress: ipAddress,
         deviceInfo: {
           platform: navigator.platform,
           language: navigator.language,
           screenWidth: window.screen.width,
           screenHeight: window.screen.height,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          connection: navigator.connection ? {
+            effectiveType: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt
+          } : null
         }
       };
 
