@@ -1,31 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { getApp, initializeApp } from 'firebase/app';
-import { getClient } from '@vercel/postgres';
+import { collection, addDoc } from 'firebase/firestore';
 import { validateApplicationSubmission } from '@/app/utils/applicationValidation';
-
-// Initialize Firebase (make sure this matches your firebase.ts file)
-let app;
-try {
-  app = getApp();
-} catch (error) {
-  const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY || "AIzaSyDr7bC7uZCSllzpz0QF6DVnylrLprwYd84",
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN || "saintdaniels-6144c.firebaseapp.com",
-    projectId: process.env.FIREBASE_PROJECT_ID || "saintdaniels-6144c",
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "saintdaniels-6144c.firebasestorage.app",
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "99705276201",
-    appId: process.env.FIREBASE_APP_ID || "1:99705276201:web:6695bbbc70012e92071938",
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID || "G-1CPD7FC0RZ"
-  };
-  console.log("API route initializing Firebase with config for project:", firebaseConfig.projectId);
-  app = initializeApp(firebaseConfig);
-}
+import { db } from '@/app/lib/firebase';
 
 export async function POST(request) {
   try {
     const data = await request.json();
     const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip');
+    
+    console.log('Received application submission request:', {
+      email: data.email,
+      phone: data.phone,
+      ipAddress
+    });
     
     // Validate submission
     const validation = await validateApplicationSubmission(
@@ -35,81 +22,98 @@ export async function POST(request) {
     );
     
     if (!validation.isValid) {
+      console.log('Validation failed:', validation.error);
       return NextResponse.json(
         { error: validation.error },
         { status: 400 }
       );
     }
     
-    const client = await getClient();
+    console.log('Validation passed, proceeding with submission');
     
-    try {
-      // Insert the application with IP address
-      const result = await client.query(
-        `INSERT INTO applications (
-          first_name, middle_name, last_name, suffix,
-          email, phone, date_of_birth, ssn,
-          is_married, has_children, is_claimed_on_taxes,
-          tax_filing_status, spouse_info, dependents,
-          residential_address, mailing_address,
-          country_of_origin, state_of_origin,
-          occupation, expected_salary,
-          has_existing_insurance, existing_insurance_type,
-          health_insurance_provider, deductible,
-          signature_url, signature_consent,
-          ip_address, created_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, NOW())
-        RETURNING id`,
-        [
-          data.firstName,
-          data.middleName,
-          data.lastName,
-          data.suffix,
-          data.email,
-          data.phone,
-          data.dateOfBirth,
-          data.ssn,
-          data.isMarried,
-          data.hasChildren,
-          data.isClaimedOnTaxes,
-          data.taxFilingStatus,
-          JSON.stringify(data.spouseinfo),
-          JSON.stringify(data.dependents),
-          JSON.stringify(data.residentialaddress),
-          JSON.stringify({
-            street: data.mailingStreet,
-            city: data.mailingCity,
-            state: data.mailingState,
-            zip: data.mailingZip,
-            country: data.mailingCountry
-          }),
-          data.countryOfOrigin,
-          data.stateoforigin,
-          data.occupation,
-          data.expectedSalary,
-          data.hasExistingInsurance,
-          data.existingInsuranceType,
-          data.healthInsuranceProvider,
-          data.deductible,
-          data.signatureurl,
-          data.signatureConsent,
-          ipAddress
-        ]
-      );
+    // Generate client ID
+    const clientId = `CLT-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    // Prepare application data for Firestore
+    const applicationData = {
+      // Basic Information
+      clientId,
+      firstName: data.firstName || '',
+      middleName: data.middleName || '',
+      lastName: data.lastName || '',
+      email: data.email || '',
+      phone: data.phone || '',
+      dateOfBirth: data.dateOfBirth || '',
+      ssn: data.ssn || '',
       
-      return NextResponse.json({
-        success: true,
-        applicationId: result.rows[0].id
-      });
+      // Address Information
+      address: data.residentialaddress?.streetaddress || '',
+      city: data.residentialaddress?.city || '',
+      state: data.residentialaddress?.state || '',
+      zipCode: data.residentialaddress?.zipcode || '',
       
-    } finally {
-      client.release();
-    }
+      // Mailing Address
+      mailingAddress: data.mailingStreet || '',
+      mailingCity: data.mailingCity || '',
+      mailingState: data.mailingState || '',
+      mailingZipCode: data.mailingZip || '',
+      
+      // Origin Information
+      countryOfOrigin: data.countryOfOrigin || '',
+      stateOfOrigin: data.stateoforigin || '',
+      
+      // Employment Information
+      occupation: data.occupation || '',
+      annualSalary: data.expectedSalary || '',
+      
+      // Family Information
+      maritalStatus: data.isMarried ? 'Married' : 'Single',
+      spouseFirstName: data.spouseinfo?.firstname || '',
+      spouseLastName: data.spouseinfo?.lastname || '',
+      spouseDateOfBirth: data.spouseinfo?.dateofbirth || '',
+      spouseSSN: data.spouseinfo?.ssn || '',
+      willBeClaimedOnTaxes: data.isClaimedOnTaxes ? 'Yes' : 'No',
+      taxFilingStatus: data.taxFilingStatus || '',
+      
+      // Insurance Information
+      coverageType: data.existingInsuranceType || '',
+      planName: data.healthInsuranceProvider || '',
+      deductible: data.deductible || '',
+      premium: '0', // Zero dollar premium plan
+      
+      // Signature Information
+      hasESignature: !!data.signatureurl,
+      hasRecording: false,
+      hasVoiceRecording: false,
+      
+      // Metadata
+      isWebLead: true,
+      status: 'Submitted',
+      submissionDate: new Date().toISOString(),
+      effectiveDate: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    
+    console.log('Attempting to add document to Firestore');
+    
+    // Add to Firestore
+    const docRef = await addDoc(collection(db, 'applications'), applicationData);
+    
+    console.log('Document added successfully with ID:', docRef.id);
+    
+    // Return success response with document ID
+    return NextResponse.json({
+      success: true,
+      message: 'Application successfully submitted',
+      applicationId: docRef.id,
+      clientId: clientId
+    });
     
   } catch (error) {
     console.error('Error submitting application:', error);
     return NextResponse.json(
-      { error: 'Failed to submit application' },
+      { error: error.message || 'Failed to submit application' },
       { status: 500 }
     );
   }

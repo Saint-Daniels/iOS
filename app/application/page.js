@@ -9,11 +9,18 @@ import PageTransition from '../../components/PageTransition';
 import { extractMarketingID } from '../utils/leadTracking';
 import { storeClientData } from '../utils/clientUtils';
 import SignaturePad from 'signature_pad';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/app/lib/firebase';
 
 const ApplicationForm = () => {
   const router = useRouter();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [step, setStep] = useState(1);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorModalMessage, setErrorModalMessage] = useState('');
   const [formData, setFormData] = useState({
     // Personal information
     firstName: '',
@@ -78,7 +85,6 @@ const ApplicationForm = () => {
     // Status for tracking
     status: 'Application Submitted'
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [ssnValidation, setSsnValidation] = useState({
     isValid: false,
     message: ''
@@ -721,329 +727,203 @@ const ApplicationForm = () => {
     }`;
   };
 
-  // Handle form submission with updated signature handling
+  // Handle form submission with direct Firestore integration
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Form submission started');
     
+    // Clear any existing errors and modals
+    setError(null);
+    setShowErrorModal(false);
+    setErrorModalMessage('');
+    
+    // Validate form
+    const isValid = validateForm();
+    console.log('Form validation result:', isValid);
+    
+    if (!isValid) {
+      console.log('Form validation failed');
+      setError('Please fill in all required fields correctly');
+      return;
+    }
+
+    // Validate SSN
+    const ssnValid = validateSSN(formData.ssn);
+    console.log('SSN validation result:', ssnValid);
+    
+    if (!ssnValid) {
+      console.log('SSN validation failed');
+      setError('Please enter a valid SSN');
+      return;
+    }
+
+    // Validate signature
+    if (!formData.signatureurl) {
+      console.log('Signature validation failed');
+      setError('Please provide a valid signature');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      console.log('Attempting to submit application form');
-      
-      // Final validation
-      if (!validateStep()) {
-        console.error('Form validation failed on submit');
-        // Scroll to the first error
-        const firstErrorEl = document.querySelector('.text-red-500');
-        if (firstErrorEl) {
-          firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        return;
-      }
-      
-      if (step < 8) {
-        // Move to the next step
-        console.log(`Moving from step ${step} to step ${step + 1}`);
-        setStep(step + 1);
-        return;
-      }
-      
-      // Verify signature exists before submitting
-      if (!formData.signatureurl || formData.signatureurl.length < 100) {
-        console.error('Missing signature on final submission');
-        setStepErrors(prev => ({
-          ...prev,
-          signatureurl: 'A valid signature is required to submit your application'
-        }));
-        return;
-      }
-      
-      console.log("All validations passed, submitting form...");
-      setIsSubmitting(true);
-      
-      // Format the data for submission
-      const submissionData = {
-        ...formData,
-        // Format the date properly
-        applicationDate: new Date().toISOString(),
-        // Add marketing ID if present
-        marketingid: marketingID || 'UNKNOWN'
+      console.log('Preparing application data');
+      const applicationData = {
+        // Personal Information
+        firstName: formData.firstName,
+        middleName: formData.middleName || '',
+        lastName: formData.lastName,
+        suffix: formData.suffix || '',
+        email: formData.email,
+        phone: formData.phone,
+        dateOfBirth: formData.dateOfBirth,
+        ssn: formData.ssn,
+        
+        // Family Information
+        isMarried: formData.isMarried,
+        hasChildren: formData.hasChildren,
+        isClaimedOnTaxes: formData.isClaimedOnTaxes,
+        taxFilingStatus: formData.taxFilingStatus,
+        spouseInfo: formData.spouseinfo,
+        dependents: formData.dependents,
+        
+        // Address Information
+        residentialAddress: formData.residentialaddress,
+        sameAsResidential: formData.sameAsResidential,
+        mailingAddress: formData.sameAsResidential ? formData.residentialaddress : {
+          street: formData.mailingStreet,
+          city: formData.mailingCity,
+          state: formData.mailingState,
+          zipCode: formData.mailingZip,
+          country: formData.mailingCountry
+        },
+        
+        // Origin Information
+        countryOfOrigin: formData.countryOfOrigin,
+        stateOfOrigin: formData.stateoforigin,
+        
+        // Employment Information
+        occupation: formData.occupation,
+        expectedSalary: formData.expectedSalary,
+        
+        // Insurance Information
+        hasExistingInsurance: formData.hasExistingInsurance,
+        existingInsuranceType: formData.existingInsuranceType,
+        healthInsuranceProvider: formData.healthInsuranceProvider,
+        deductible: formData.deductible,
+        
+        // Signature Information
+        signatureUrl: formData.signatureurl,
+        signatureConsent: formData.signatureConsent,
+        
+        // Metadata
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
+
+      console.log('Checking for duplicate applications');
+      // Check for duplicate email
+      const emailQuery = query(
+        collection(db, 'applications'),
+        where('email', '==', formData.email)
+      );
+      const emailSnapshot = await getDocs(emailQuery);
       
-      try {
-        // Make the API call
-        console.log("Sending POST request to /api/submit-application");
-        const response = await fetch('/api/submit-application', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(submissionData),
-        });
-        
-        const result = await response.json();
-        console.log('API response received:', result);
-        
-        if (!response.ok) {
-          throw new Error(result.error || 'Failed to submit application');
-        }
-        
-        console.log('Application submitted successfully, redirecting to thank-you page');
-        
-        // Store client data using our utility function
-        storeClientData({
-          applicationId: result.applicationId,
-          clientId: result.clientId,
-          leadId: submissionData.marketingid
-        });
-        
-        // Redirect to thank you page
-        router.push('/thank-you');
-      } catch (error) {
-        console.error('Error submitting application:', error);
+      if (!emailSnapshot.empty) {
+        console.log('Duplicate email found');
+        setErrorModalMessage('An application with this email already exists. Please use a different email address.');
+        setShowErrorModal(true);
         setIsSubmitting(false);
-        
-        // Display the error message in a more user-friendly way
-        const errorMessage = error.message || 'There was an error submitting your application. Please try again.';
-        
-        // Add the error to the form's error state
-        setStepErrors(prev => ({
-          ...prev,
-          submission: errorMessage
-        }));
-        
-        // Scroll to the error message
-        setTimeout(() => {
-          const errorEl = document.querySelector('.text-red-500');
-          if (errorEl) {
-            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 100);
+        return;
       }
-    } catch (error) {
-      console.error('Unexpected error during submission:', error);
+
+      // Check for duplicate phone
+      const phoneQuery = query(
+        collection(db, 'applications'),
+        where('phone', '==', formData.phone)
+      );
+      const phoneSnapshot = await getDocs(phoneQuery);
+      
+      if (!phoneSnapshot.empty) {
+        console.log('Duplicate phone found');
+        setErrorModalMessage('An application with this phone number already exists. Please use a different phone number.');
+        setShowErrorModal(true);
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log('Submitting application to Firestore');
+      const docRef = await addDoc(collection(db, 'applications'), applicationData);
+      console.log('Application submitted successfully with ID:', docRef.id);
+
+      setSuccess(true);
       setIsSubmitting(false);
-      setStepErrors(prev => ({
-        ...prev,
-        submission: 'An unexpected error occurred. Please try again later.'
-      }));
-    }
-  };
 
-  // Update SSN input to show masked value
-  const formatSSN = (value) => {
-    const ssn = value.replace(/\D/g, '');
-    if (ssn.length < 9) {
-      return ssn;
-    }
-    return '•••-••-' + ssn.slice(-4);
-  };
-
-  const handleSSNChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 9);
-    setFormData(prev => ({
-      ...prev,
-      ssn: value
-    }));
-    validateSSN(value);
-  };
-
-  const clearSignature = () => {
-    if (signaturePadRef.current) {
-      signaturePadRef.current.clear();
-      setFormData(prev => ({ 
-        ...prev, 
+      // Clear form data
+      setFormData({
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        suffix: '',
+        email: '',
+        phone: '',
+        dateOfBirth: '',
+        ssn: '',
+        isMarried: false,
+        hasChildren: false,
+        isClaimedOnTaxes: false,
+        taxFilingStatus: '',
+        spouseinfo: {
+          firstname: '',
+          lastname: '',
+          dateofbirth: '',
+          ssn: ''
+        },
+        dependents: [],
+        residentialaddress: {
+          streetaddress: '',
+          city: '',
+          state: '',
+          zipcode: '',
+          country: ''
+        },
+        sameAsResidential: true,
+        mailingStreet: '',
+        mailingCity: '',
+        mailingState: '',
+        mailingZip: '',
+        mailingCountry: '',
+        countryOfOrigin: '',
+        stateoforigin: '',
+        occupation: '',
+        expectedSalary: '',
+        hasExistingInsurance: false,
+        existingInsuranceType: '',
+        healthInsuranceProvider: '',
+        deductible: '',
         signatureurl: '',
-        signature: false
-      }));
-      setSignatureValidation({
-        isValid: false,
-        message: 'Signature cleared'
+        signatureConsent: false
       });
-    }
-  };
-  
-  const saveSignature = () => {
-    if (!signaturePadRef.current) {
-      return false;
-    }
-    
-    if (signaturePadRef.current.isEmpty()) {
-      setSignatureValidation({
-        isValid: false,
-        message: 'Please provide a signature'
-      });
-      
-      // Update step errors
-      setStepErrors(prev => ({
-        ...prev,
-        signatureurl: 'Signature is required'
-      }));
-      
-      return false;
-    }
-    
-    try {
-      // Use higher quality PNG format with better resolution
-      const dataURL = signaturePadRef.current.toDataURL('image/png', 1.0);
-      
-      if (!dataURL || dataURL.length < 100) {
-        return false;
-      }
-      
-      // Update form data with signature
-      setFormData(prev => ({ 
-        ...prev, 
-        signatureurl: dataURL,
-        signature: true 
-      }));
-      
-      // Update validation state
-      setSignatureValidation({
-        isValid: true,
-        message: 'Signature provided'
-      });
-      
-      // Clear any signature errors
-      setStepErrors(prev => ({
-        ...prev,
-        signatureurl: undefined
-      }));
-      
-      return true;
+
+      // Reset validation states
+      setSsnValidation({ isValid: false, message: '' });
+      setSignatureValidation({ isValid: false, message: '' });
+      setIsFormValid(false);
+      setStepErrors({});
+
+      // Redirect to success page after 2 seconds
+      setTimeout(() => {
+        router.push('/application/success');
+      }, 2000);
+
     } catch (error) {
-      return false;
+      console.error('Error submitting application:', error);
+      setErrorModalMessage('Failed to submit application. Please try again.');
+      setShowErrorModal(true);
+      setIsSubmitting(false);
     }
   };
-  
-  // Initialize signature pad
-  const initializeSignaturePad = () => {
-    if (!signatureCanvasRef.current) {
-      return null;
-    }
-    
-    try {
-      // Clear any existing instance
-      if (signaturePadRef.current) {
-        signaturePadRef.current.off();
-      }
-      
-      // Set canvas dimensions
-      const canvas = signatureCanvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      
-      const ratio = Math.max(window.devicePixelRatio || 1, 1);
-      
-      // Set canvas dimensions properly based on display size
-      canvas.width = rect.width * ratio;
-      canvas.height = rect.height * ratio;
-      canvas.getContext("2d").scale(ratio, ratio);
-
-      // Add touch event handlers to prevent scrolling while signing on mobile
-      const handleTouchStart = (e) => {
-        // Prevent scroll/zoom during signature
-        e.preventDefault();
-      };
-      
-      const handleTouchMove = (e) => {
-        // Prevent scroll/zoom during signature
-        e.preventDefault();
-      };
-      
-      canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
-      canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-      
-      // Create new SignaturePad instance with improved settings
-      signaturePadRef.current = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(255, 255, 255)',
-        penColor: 'rgb(0, 0, 0)',
-        velocityFilterWeight: 0.5,
-        minWidth: 0.6,
-        maxWidth: 2.8,
-        throttle: 10, // More responsive
-        dotSize: 2,   // Better for touch
-      });
-      
-      return () => {
-        if (signaturePadRef.current) {
-          signaturePadRef.current.off();
-        }
-        // Remove event listeners
-        canvas.removeEventListener('touchstart', handleTouchStart);
-        canvas.removeEventListener('touchmove', handleTouchMove);
-      };
-    } catch (err) {
-      return null;
-    }
-  };
-  
-  // Initialize signature pad on component mount
-  useEffect(() => {
-    // Skip initialization during server-side rendering
-    if (typeof window !== 'undefined') {
-      try {
-        const cleanup = initializeSignaturePad();
-        return () => cleanup && cleanup();
-      } catch (err) {
-        console.error('Error in initial signature pad setup:', err);
-      }
-    }
-  }, []);
-
-  // Re-initialize when modal opens with a more reliable approach
-  useEffect(() => {
-    if (showSignatureModal) {
-      // Clear previous signature data when opening modal
-      if (signaturePadRef.current) {
-        signaturePadRef.current.clear();
-      }
-      
-      // Delay to ensure DOM is ready and modal is visible
-      const timer = setTimeout(() => {
-        try {
-          const canvas = signatureCanvasRef.current;
-          if (!canvas) {
-            return;
-          }
-          
-          const cleanup = initializeSignaturePad();
-          
-          // Handle window resize for responsive canvas
-          const handleResize = () => {
-            try {
-              initializeSignaturePad();
-            } catch (err) {
-              // Silent error handling
-            }
-          };
-          
-          // Handle orientation change on mobile
-          const handleOrientationChange = () => {
-            try {
-              setTimeout(() => {
-                initializeSignaturePad();
-              }, 200);
-            } catch (err) {
-              // Silent error handling
-            }
-          };
-          
-          window.addEventListener('resize', handleResize);
-          window.addEventListener('orientationchange', handleOrientationChange);
-          
-          return () => {
-            window.removeEventListener('resize', handleResize);
-            window.removeEventListener('orientationchange', handleOrientationChange);
-            if (cleanup) {
-              cleanup();
-            }
-          };
-        } catch (err) {
-          // Silent error handling
-        }
-      }, 300); // Increased delay for better reliability
-      
-      return () => clearTimeout(timer);
-    }
-  }, [showSignatureModal]);
 
   // Add useEffect to handle proper display formatting of salary on input change
   useEffect(() => {
@@ -1919,6 +1799,21 @@ const ApplicationForm = () => {
             </div>
 
             <div className="space-y-6">
+              <div className="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Important Notice</h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  By submitting this application, you acknowledge and agree to the following:
+                </p>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
+                  <li>All information provided in this application is true, accurate, and complete to the best of your knowledge.</li>
+                  <li>You understand that providing false or misleading information may result in the rejection of your application and potential legal consequences.</li>
+                  <li>You consent to the processing of your personal information for the purpose of evaluating your application and providing healthcare services.</li>
+                  <li>You authorize us to verify the information provided, including but not limited to your identity, employment, and insurance status.</li>
+                  <li>You understand that submission of this application does not guarantee approval or coverage.</li>
+                  <li>You agree to receive communications regarding your application status and related healthcare services.</li>
+                </ul>
+              </div>
+
               <div className="form-group">
                 <label className="form-label">Social Security Number</label>
                 <div className="relative">
@@ -2054,6 +1949,36 @@ const ApplicationForm = () => {
     }
   };
 
+  // Add error modal component
+  const ErrorModal = ({ message, onClose }) => {
+    return (
+      <div className="fixed inset-0 z-[9999] overflow-auto bg-black bg-opacity-75 flex items-center justify-center">
+        <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-2xl">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold text-red-600">Error</h3>
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="mb-6">
+            <p className="text-gray-700">{message}</p>
+          </div>
+          <div className="flex justify-end">
+            <button
+              onClick={onClose}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (showDisclaimer) {
     return (
       <PageTransition>
@@ -2089,9 +2014,15 @@ const ApplicationForm = () => {
                     </div>
                   </div>
                   
-                  {stepErrors.submission && (
+                  {error && (
                     <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                      <p className="text-red-600 font-medium">{stepErrors.submission}</p>
+                      <p className="text-red-600 font-medium">{error}</p>
+                    </div>
+                  )}
+                  
+                  {success && (
+                    <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                      <p className="text-green-600 font-medium">Application submitted successfully!</p>
                     </div>
                   )}
                   
@@ -2133,6 +2064,11 @@ const ApplicationForm = () => {
                         <button
                           type="submit"
                           disabled={isSubmitting}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            console.log('Submit button clicked');
+                            handleSubmit(e);
+                          }}
                           className={`btn btn-success flex items-center ml-auto ${
                             isSubmitting ? 'opacity-60 cursor-not-allowed' : ''
                           }`}
@@ -2155,6 +2091,18 @@ const ApplicationForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <ErrorModal
+          message={errorModalMessage}
+          onClose={() => {
+            setShowErrorModal(false);
+            setErrorModalMessage('');
+            setIsSubmitting(false);
+          }}
+        />
+      )}
 
       {/* Signature Modal */}
       {showSignatureModal && (

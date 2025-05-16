@@ -1,88 +1,71 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { FaCheckCircle, FaArrowRight } from 'react-icons/fa';
+
+import { useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FaCheckCircle, FaEnvelope, FaPhone } from 'react-icons/fa';
+import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import PageTransition from '../../components/PageTransition';
-import { getClientData } from '../utils/clientUtils';
+import Footer from '../../components/Footer';
 
-const ThankYou = () => {
-  const router = useRouter();
-  const [clientData, setClientData] = useState({
-    applicationId: null,
-    clientId: null,
-    timestamp: null
-  });
-
+export default function ThankYouPage() {
   useEffect(() => {
-    // Get client data using the utility function
-    const data = getClientData();
-    setClientData(data);
+    // Scroll to top when page loads
+    window.scrollTo(0, 0);
   }, []);
 
-  // Format timestamp for display if available
-  const formattedDate = clientData.timestamp 
-    ? new Date(clientData.timestamp).toLocaleString() 
-    : null;
-
   return (
-    <PageTransition>
-      <div className="page-content">
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md w-full space-y-8 text-center">
-            <div className="flex justify-center">
-              <div className="bg-green-100 p-4 rounded-full">
-                <FaCheckCircle className="text-green-500 text-6xl" />
+    <div className="page-content">
+      <Navbar />
+      <div className="thank-you-page py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col md={8} lg={6}>
+              <div className="text-center mb-5">
+                <FaCheckCircle className="text-success mb-4" style={{ fontSize: '4rem' }} />
+                <h1 className="display-4 mb-3">Thank You!</h1>
+                <p className="lead text-muted">
+                  Your application has been successfully submitted. We appreciate your interest in our healthcare rewards program.
+                </p>
               </div>
-            </div>
-            <div>
-              <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Welcome to Our Family!
-              </h2>
-              <p className="mt-2 text-sm text-gray-600">
-                Your health insurance application has been successfully submitted and your client account has been created.
-              </p>
-            </div>
-            <div className="mt-8 space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                <h3 className="text-lg font-semibold text-blue-800">Next Steps:</h3>
-                <ul className="text-left text-sm text-gray-700 mt-2 space-y-2">
-                  <li className="flex items-start">
-                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>Our team will review your application within 1-2 business days</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>You'll receive a confirmation email with your application details</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FaArrowRight className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>A representative will contact you to discuss your coverage options</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {(clientData.applicationId || clientData.clientId) && (
-                <div className="text-sm text-gray-600 text-left p-3 bg-gray-50 rounded-md">
-                  <p className="font-medium">Your information:</p>
-                  {clientData.applicationId && (
-                    <p className="text-xs mt-1">Application ID: {clientData.applicationId}</p>
-                  )}
-                  {clientData.clientId && (
-                    <p className="text-xs">Client ID: {clientData.clientId}</p>
-                  )}
-                  {formattedDate && (
-                    <p className="text-xs mt-1">Submitted: {formattedDate}</p>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </PageTransition>
-  );
-};
 
-export default ThankYou; 
+              <div className="next-steps-card p-4 mb-4 bg-light rounded-lg">
+                <h2 className="h4 mb-4">What's Next?</h2>
+                <div className="steps-list">
+                  <div className="step-item d-flex align-items-start mb-4">
+                    <FaEnvelope className="text-primary mt-1 me-3" />
+                    <div>
+                      <h3 className="h5 mb-2">Email Confirmation</h3>
+                      <p className="text-muted mb-0">
+                        You will receive an email confirmation with your application details and next steps.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="step-item d-flex align-items-start mb-4">
+                    <FaPhone className="text-primary mt-1 me-3" />
+                    <div>
+                      <h3 className="h5 mb-2">Application Review</h3>
+                      <p className="text-muted mb-0">
+                        Our team will review your application within 1-2 business days. We'll contact you if we need any additional information.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <Link href="/dashboard" className="btn btn-primary btn-lg me-3">
+                  Go to Dashboard
+                </Link>
+                <Link href="/" className="btn btn-outline-secondary btn-lg">
+                  Return Home
+                </Link>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      <Footer />
+    </div>
+  );
+} 
