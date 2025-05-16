@@ -85,7 +85,7 @@ const ApplicationForm = () => {
     // Status for tracking
     status: 'Application Submitted'
   });
-  const [ssnValidation, setSsnValidation] = useState({
+  const [ssnValidation, setSSNValidation] = useState({
     isValid: false,
     message: ''
   });
@@ -117,6 +117,60 @@ const ApplicationForm = () => {
 
   // Add a modal state
   const [showSignatureModal, setShowSignatureModal] = useState(false);
+
+  // Initialize signature pad
+  useEffect(() => {
+    if (signatureCanvasRef.current && !signaturePadRef.current) {
+      const canvas = signatureCanvasRef.current;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      
+      signaturePadRef.current = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(0, 0, 0)',
+        velocityFilterWeight: 0.7,
+        minWidth: 0.5,
+        maxWidth: 2.5,
+        throttle: 16
+      });
+    }
+  }, [showSignatureModal]);
+
+  // Clear signature function
+  const clearSignature = () => {
+    if (signaturePadRef.current) {
+      signaturePadRef.current.clear();
+    }
+  };
+
+  // Save signature function
+  const saveSignature = () => {
+    if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
+      const signatureData = signaturePadRef.current.toDataURL();
+      setFormData(prev => ({
+        ...prev,
+        signatureurl: signatureData
+      }));
+      return true;
+    }
+    return false;
+  };
+
+  // Handle window resize for signature pad
+  useEffect(() => {
+    const handleResize = () => {
+      if (signatureCanvasRef.current && signaturePadRef.current) {
+        const canvas = signatureCanvasRef.current;
+        const data = signaturePadRef.current.toData();
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        signaturePadRef.current.fromData(data);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Extract marketing ID from URL when component mounts
   useEffect(() => {
@@ -373,27 +427,38 @@ const ApplicationForm = () => {
     }));
   };
 
-  const validateSSN = (value) => {
-    const ssn = value.replace(/\D/g, '');
-    if (ssn.length === 9) {
-      setSsnValidation({
-        isValid: true,
-        message: 'Valid SSN'
-      });
-      return true;
-    } else if (ssn.length > 9) {
-      setSsnValidation({
-        isValid: false,
-        message: 'SSN must be exactly 9 digits'
-      });
-      return false;
-    } else {
-      setSsnValidation({
-        isValid: false,
-        message: 'SSN must be 9 digits'
-      });
-      return false;
-    }
+  const handleSSNChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+    setFormData(prev => ({
+      ...prev,
+      ssn: value
+    }));
+    
+    // Validate SSN
+    const isValid = validateSSN(value);
+    setSSNValidation({
+      isValid,
+      message: isValid ? '' : 'Please enter a valid 9-digit SSN'
+    });
+  };
+
+  const formatSSN = (ssn) => {
+    return ssn.replace(/(\d{3})(\d{2})(\d{4})/, '$1-$2-$3');
+  };
+
+  const validateSSN = (ssn) => {
+    // Basic SSN validation
+    if (ssn.length !== 9) return false;
+    
+    // Check for invalid SSN patterns
+    const invalidPatterns = [
+      /^000/, // Cannot start with 000
+      /^666/, // Cannot start with 666
+      /^9/,   // Cannot start with 9
+      /^(\d)\1{8}$/ // Cannot be all same digits
+    ];
+    
+    return !invalidPatterns.some(pattern => pattern.test(ssn));
   };
 
   // Validate signature
@@ -744,26 +809,26 @@ const ApplicationForm = () => {
     if (!isValid) {
       console.log('Form validation failed');
       setError('Please fill in all required fields correctly');
-      return;
-    }
-
-    // Validate SSN
+        return;
+      }
+      
+      // Validate SSN
     const ssnValid = validateSSN(formData.ssn);
     console.log('SSN validation result:', ssnValid);
     
     if (!ssnValid) {
       console.log('SSN validation failed');
       setError('Please enter a valid SSN');
-      return;
-    }
-
-    // Validate signature
+        return;
+      }
+      
+      // Validate signature
     if (!formData.signatureurl) {
       console.log('Signature validation failed');
       setError('Please provide a valid signature');
-      return;
-    }
-
+        return;
+      }
+      
     setIsSubmitting(true);
 
     try {
@@ -907,15 +972,18 @@ const ApplicationForm = () => {
       });
 
       // Reset validation states
-      setSsnValidation({ isValid: false, message: '' });
+      setSSNValidation({ isValid: false, message: '' });
       setSignatureValidation({ isValid: false, message: '' });
       setIsFormValid(false);
       setStepErrors({});
 
-      // Redirect to success page after 2 seconds
+      // Show success message and redirect
+      setSuccess(true);
+      
+      // Redirect after a short delay
       setTimeout(() => {
-        router.push('/application/success');
-      }, 2000);
+        router.push('/thank-you');
+      }, 1000);
 
     } catch (error) {
       console.error('Error submitting application:', error);
