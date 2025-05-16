@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { Container, Row, Col, Form, Button, Accordion } from 'react-bootstrap';
+import React from 'react';
+import { Container, Row, Col, Accordion } from 'react-bootstrap';
 import { FaPhone, FaEnvelope, FaBuilding } from 'react-icons/fa';
 import MainNavbar from '../../components/Navbar';
 import PageTransition from '../../components/PageTransition';
 
 export default function HelpCenter() {
-  const [searchQuery, setSearchQuery] = useState('');
-
   const faqs = [
     {
       question: "How do I track my health journey?",
@@ -40,16 +38,6 @@ export default function HelpCenter() {
     }
   ];
 
-  const filteredFaqs = useMemo(() => {
-    if (!searchQuery.trim()) return faqs;
-    
-    const query = searchQuery.toLowerCase();
-    return faqs.filter(faq => 
-      faq.question.toLowerCase().includes(query) || 
-      faq.answer.toLowerCase().includes(query)
-    );
-  }, [searchQuery, faqs]);
-
   return (
     <PageTransition>
       <MainNavbar />
@@ -64,35 +52,16 @@ export default function HelpCenter() {
             </Col>
           </Row>
 
-          <Row className="justify-content-center mt-4">
-            <Col md={8}>
-              <div className="search-box">
-                <Form.Control
-                  type="text"
-                  placeholder="Search for help..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="help-search"
-                />
-              </div>
-            </Col>
-          </Row>
-
           <Row className="justify-content-center mt-5">
             <Col md={8}>
               <Accordion className="faq-accordion">
-                {filteredFaqs.map((faq, index) => (
+                {faqs.map((faq, index) => (
                   <Accordion.Item eventKey={index.toString()} key={index}>
                     <Accordion.Header>{faq.question}</Accordion.Header>
                     <Accordion.Body>{faq.answer}</Accordion.Body>
                   </Accordion.Item>
                 ))}
               </Accordion>
-              {filteredFaqs.length === 0 && (
-                <div className="text-center mt-4">
-                  <p>No results found for "{searchQuery}". Try a different search term.</p>
-                </div>
-              )}
             </Col>
           </Row>
 
