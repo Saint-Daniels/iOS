@@ -2,14 +2,7 @@
 import { useState } from 'react';
 
 const LegalDisclaimer = ({ onAccept }) => {
-  const [attempts, setAttempts] = useState(0);
-
   const handleAccept = () => {
-    if (attempts >= 3) {
-      alert('You have exceeded the maximum number of attempts. Please contact our hotline for assistance.');
-      return;
-    }
-    setAttempts(prev => prev + 1);
     onAccept();
   };
 
