@@ -29,16 +29,10 @@ const LegalDisclaimer = ({ onAccept }) => {
                 </p>
 
                 <ul className="list-disc pl-6 mb-6 space-y-2">
-                  <li>You have a maximum of three attempts to complete this application successfully.</li>
-                  <li>After three failed attempts, you must contact our hotline for assistance.</li>
-                  <li>All information provided must be accurate and complete.</li>
-                  <li>Your application will be reviewed and processed according to our standard procedures.</li>
-                  <li>We reserve the right to request additional documentation or information.</li>
-                  <li>Your application does not guarantee approval of health insurance coverage.</li>
-                  <li>All information provided is subject to verification.</li>
-                  <li>You consent to the collection and processing of your personal information.</li>
-                  <li>You understand that providing false information may result in application denial.</li>
-                  <li>You agree to comply with all applicable laws and regulations.</li>
+                  <li>You are limited to one application submission per day.</li>
+                  <li>If you need to submit another application, please wait 24 hours or contact our hotline for assistance.</li>
+                  <li>All information provided must be accurate and truthful.</li>
+                  <li>Your application will be reviewed within 24-48 business hours.</li>
                 </ul>
 
                 <div className="alert alert-warning mb-6">
