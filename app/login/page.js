@@ -1,20 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Form, Button, Row, Col, Navbar, Alert, Modal } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaLock, FaCheckCircle } from 'react-icons/fa';
-
-// Dummy credentials - No longer required as we'll accept any input
-// const VALID_CREDENTIALS = {
-//   email: 'user@example.com',
-//   password: 'password123'
-// };
+import Cookies from 'js-cookie';
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -27,6 +23,15 @@ export default function Login() {
   const [codeSent, setCodeSent] = useState(false);
   const [codeAttempts, setCodeAttempts] = useState(0);
   const [lastCodeSent, setLastCodeSent] = useState(null);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const isLoggedIn = Cookies.get('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      const redirectPath = searchParams.get('from') || '/dashboard';
+      router.push(redirectPath);
+    }
+  }, [router, searchParams]);
 
   const canSendCode = () => {
     if (codeAttempts >= 3) {
@@ -50,16 +55,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    if (formData.email.trim() && formData.password.trim()) {
-      // Direct login without 2FA
-      sessionStorage.setItem('isLoggedIn', 'true');
-      sessionStorage.setItem('userEmail', formData.email);
-      router.push('/dashboard');
-    } else {
-      setError('Please enter both email and password.');
-    }
+    setError('Login functionality is currently disabled. Please check back later.');
   };
 
   const handleSendVerificationCode = () => {
@@ -83,10 +79,13 @@ export default function Login() {
     setIsVerifying(false);
     setShow2FAModal(false);
     
-    // Set login status and redirect to dashboard
-    sessionStorage.setItem('isLoggedIn', 'true');
-    sessionStorage.setItem('userEmail', formData.email);
-    router.push('/dashboard');
+    // Set cookies for authentication
+    Cookies.set('isLoggedIn', 'true', { expires: 1 }); // Expires in 1 day
+    Cookies.set('userEmail', formData.email, { expires: 1 });
+    
+    // Redirect to the original requested page or dashboard
+    const redirectPath = searchParams.get('from') || '/dashboard';
+    router.push(redirectPath);
   };
 
   const handleChange = (e) => {
