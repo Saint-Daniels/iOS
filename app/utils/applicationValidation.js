@@ -42,7 +42,7 @@ export async function validateApplicationSubmission(email, phone, ipAddress) {
       
       return {
         isValid: false,
-        error: `You have already submitted an application. Please wait ${hoursRemaining} hours before submitting another one.`
+        error: `You have already submitted an application today. Please wait ${hoursRemaining} hours before submitting another one. If you need immediate assistance, please contact our hotline at 1-800-XXX-XXXX.`
       };
     }
     
