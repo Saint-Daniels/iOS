@@ -29,14 +29,22 @@ if (typeof window !== 'undefined') {
   }
 } else {
   // Server-side initialization
-  if (!getApps().length) {
-    app = initializeApp(firebaseConfig, 'server-app');
-  } else {
-    app = getApp('server-app');
+  try {
+    if (!getApps().length) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApp();
+    }
+  } catch (error) {
+    console.error('Firebase initialization error:', error);
   }
 }
 
 // Initialize Firestore
-db = getFirestore(app);
+try {
+  db = getFirestore(app);
+} catch (error) {
+  console.error('Firestore initialization error:', error);
+}
 
 export { app, analytics, db }; 

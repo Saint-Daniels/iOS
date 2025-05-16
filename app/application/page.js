@@ -96,6 +96,7 @@ const ApplicationForm = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [stepErrors, setStepErrors] = useState({});
   const [marketingID, setMarketingID] = useState('UNKNOWN');
+  const [userAgent, setUserAgent] = useState('');
 
   // Add phone number formatting function
   const formatPhoneNumber = (value) => {
@@ -172,10 +173,11 @@ const ApplicationForm = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Extract marketing ID from URL when component mounts
+  // Extract marketing ID and user agent when component mounts
   useEffect(() => {
     const extractedID = extractMarketingID();
     setMarketingID(extractedID);
+    setUserAgent(navigator.userAgent);
   }, []);
 
   // Add country and state options
@@ -933,7 +935,16 @@ const ApplicationForm = () => {
         // Metadata
         status: 'pending',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        marketingID: marketingID,
+        userAgent: userAgent,
+        deviceInfo: {
+          platform: navigator.platform,
+          language: navigator.language,
+          screenWidth: window.screen.width,
+          screenHeight: window.screen.height,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        }
       };
 
       console.log('Checking for duplicate applications');
