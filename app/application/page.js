@@ -809,13 +809,13 @@ const ApplicationForm = () => {
   // Add error modal component
   const ErrorModal = ({ message, onClose }) => {
     return (
-      <div className="fixed inset-0 z-[9999] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div className="fixed inset-0 z-[99999] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div className="flex min-h-screen items-center justify-center p-4 text-center">
           {/* Background overlay */}
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
           {/* Modal panel */}
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg z-[999999]">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -973,8 +973,7 @@ const ApplicationForm = () => {
       
       if (!emailSnapshot.empty) {
         console.log('Duplicate email found');
-        setErrorModalMessage('An application with this email already exists. Please use a different email address.');
-        setShowErrorModal(true);
+        alert('An application with this email already exists. Please use a different email address.');
         setIsSubmitting(false);
         return;
       }
@@ -988,8 +987,7 @@ const ApplicationForm = () => {
       
       if (!phoneSnapshot.empty) {
         console.log('Duplicate phone found');
-        setErrorModalMessage('An application with this phone number already exists. Please use a different phone number.');
-        setShowErrorModal(true);
+        alert('An application with this phone number already exists. Please use a different phone number.');
         setIsSubmitting(false);
         return;
       }
