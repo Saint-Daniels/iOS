@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaArrowLeft, FaArrowRight, FaUser, FaMapMarkerAlt, FaBriefcase, FaShieldAlt, FaFileSignature, FaTrash, FaCopy, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import LegalDisclaimer from '../../components/LegalDisclaimer';
 import Navbar from '../../components/Navbar';
@@ -9,11 +9,19 @@ import PageTransition from '../../components/PageTransition';
 import { extractMarketingID } from '../utils/leadTracking';
 import { storeClientData } from '../utils/clientUtils';
 import SignaturePad from 'signature_pad';
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, doc, setDoc } from 'firebase/firestore';
 import { db } from '@/app/lib/firebase';
+
+// Add function to generate unique lead ID
+const generateLeadId = () => {
+  const timestamp = Date.now().toString();
+  const random = Math.random().toString(36).substring(2, 8);
+  return `LEAD-${timestamp}-${random}`;
+};
 
 const ApplicationForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
@@ -21,6 +29,8 @@ const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorModalMessage, setErrorModalMessage] = useState('');
+  const [leadId, setLeadId] = useState('');
+  const [campaignId, setCampaignId] = useState('');
   const [formData, setFormData] = useState({
     // Personal information
     firstName: '',
@@ -191,6 +201,13 @@ const ApplicationForm = () => {
         setIpAddress('unknown');
       });
   }, []);
+
+  // Extract campaign ID and generate lead ID when component mounts
+  useEffect(() => {
+    const campaignId = searchParams.get('campaign_id') || 'default';
+    setCampaignId(campaignId);
+    setLeadId(generateLeadId());
+  }, [searchParams]);
 
   // Add country and state options
   const countries = [
@@ -611,7 +628,6 @@ const ApplicationForm = () => {
     
     console.log(`Validating step ${step}`);
     
-    // Common validation for step 1-8
     if (step === 1) {
       // Personal info validation
       if (!formData.firstName.trim()) {
@@ -636,10 +652,10 @@ const ApplicationForm = () => {
         errors.phone = 'Phone number is required';
         isValid = false;
       }
-      
-      if (!formData.dateOfBirth) {
-        errors.dateOfBirth = 'Date of birth is required';
-        isValid = false;
+
+      if (isValid) {
+        // Store initial lead data when moving from step 1
+        storeInitialLeadData(formData);
       }
     } 
     else if (step === 2) {
@@ -850,6 +866,43 @@ const ApplicationForm = () => {
     );
   };
 
+  // Add function to store initial lead data
+  const storeInitialLeadData = async (data) => {
+    try {
+      const leadData = {
+        leadId: leadId,
+        campaignId: campaignId,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        status: 'Initial Lead',
+        createdAt: new Date().toISOString(),
+        marketingID: marketingID,
+        userAgent: userAgent,
+        ipAddress: ipAddress,
+        deviceInfo: {
+          platform: navigator.platform,
+          language: navigator.language,
+          screenWidth: window.screen.width,
+          screenHeight: window.screen.height,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          connection: navigator.connection ? {
+            effectiveType: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt
+          } : null
+        }
+      };
+
+      // Store in leads collection
+      await setDoc(doc(db, 'leads', leadId), leadData);
+      console.log('Initial lead data stored successfully');
+    } catch (error) {
+      console.error('Error storing initial lead data:', error);
+    }
+  };
+
   // Update handleSubmit to use the error modal
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -871,30 +924,15 @@ const ApplicationForm = () => {
       return;
     }
 
-    // Validate SSN
-    const ssnValid = validateSSN(formData.ssn);
-    console.log('SSN validation result:', ssnValid);
-    
-    if (!ssnValid) {
-      console.log('SSN validation failed');
-      setErrorModalMessage('Please enter a valid SSN');
-      setShowErrorModal(true);
-      return;
-    }
-
-    // Validate signature
-    if (!formData.signatureurl) {
-      console.log('Signature validation failed');
-      setErrorModalMessage('Please provide a valid signature');
-      setShowErrorModal(true);
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
       console.log('Preparing application data');
       const applicationData = {
+        // Add lead and campaign tracking
+        leadId: leadId,
+        campaignId: campaignId,
+        
         // Personal Information
         firstName: formData.firstName,
         middleName: formData.middleName || '',
