@@ -35,12 +35,20 @@ export default function Hero() {
                 Take control of your healthcare journey with rewards fit for royalty. 
                 Sign up today and begin earning points towards a healthier, more rewarding future.
               </p>
-              <button 
-                className="btn-royal-gold"
-                onClick={() => router.push('/signup')}
-              >
-                BEGIN YOUR ROYAL JOURNEY
-              </button>
+              <div className="hero-buttons">
+                <button 
+                  className="btn-royal-gold"
+                  onClick={() => router.push('/signup')}
+                >
+                  BEGIN YOUR ROYAL JOURNEY
+                </button>
+                <button 
+                  className="btn-download-app"
+                  onClick={() => router.push('/download')}
+                >
+                  DOWNLOAD APP
+                </button>
+              </div>
             </div>
           </Col>
         </Row>

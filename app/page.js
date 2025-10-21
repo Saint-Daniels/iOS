@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaArrowRight, FaMobileAlt, FaGift, FaShoppingBag } from 'react-icons/fa';
+import { FaArrowRight, FaDollarSign, FaClipboardList, FaBullseye, FaGamepad, FaTrophy, FaGift, FaBook, FaLightbulb, FaBullseye as FaTarget, FaMobile, FaGamepad as FaGames, FaListUl } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
 import Benefits from '../components/Benefits';
-import Rewards from '../components/Rewards';
-import Testimonials from '../components/Testimonials';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
@@ -18,101 +17,172 @@ export default function Home() {
       <Navbar />
       <div className="home-page">
         <Hero />
-        <Benefits />
-        
-        {/* How It Works Section */}
-        <section className="how-it-works py-5">
+        {/* Premium Rewards Section */}
+        <section className="premium-rewards-section">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col md={8} className="text-center">
-                <h2 className="section-title">ROYAL DECREE: HOW IT WORKS</h2>
-                <p className="section-subtitle">
-                  Join our kingdom of health and wellness, where your daily dedication leads to royal rewards.
-                </p>
-              </Col>
-            </Row>
-
-            <Row className="g-4">
-              <Col md={4}>
-                <div className="step-card text-center">
-                  <h3 className="step-number">1</h3>
-                  <h4>Join The Kingdom</h4>
-                  <p>
-                    Register for a Saint Daniels account and link your healthcare providers to begin your journey to wellness.
+            <Row className="align-items-center min-vh-100">
+              <Col lg={6}>
+                <div className="section-content">
+                  <h1 className="section-title-large">Premium Rewards</h1>
+                  <p className="section-description">
+                    Get paid to watch ads and take surveys. Earn money while you browse and share your opinions.
                   </p>
+                  <div className="feature-list">
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaDollarSign size={32} />
+                      </div>
+                      <div>
+                        <h4>Watch Ads & Earn</h4>
+                        <p>Get paid for watching targeted advertisements that match your interests</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaClipboardList size={32} />
+                      </div>
+                      <div>
+                        <h4>Take Surveys</h4>
+                        <p>Share your opinions and earn rewards for valuable feedback</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaTarget size={32} />
+                      </div>
+                      <div>
+                        <h4>Personalized Content</h4>
+                        <p>Receive ads and surveys tailored to your preferences and lifestyle</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Col>
-
-              <Col md={4}>
-                <div className="step-card text-center">
-                  <h3 className="step-number">2</h3>
-                  <h4>Months of Coverage</h4>
-                  <p>
-                    Every month you stay active qualifies you for new rewards and benefits.
-                  </p>
-                </div>
-              </Col>
-
-              <Col md={4}>
-                <div className="step-card text-center">
-                  <h3 className="step-number">3</h3>
-                  <h4>Claim Your Royal Rewards</h4>
-                  <p>
-                    Unlock coverage rewards and exclusive benefits as you maintain your health streak and reach new milestones.
-                  </p>
+              <Col lg={6}>
+                <div className="section-visual">
+                  <div className="visual-placeholder">
+                    <div className="visual-icon">
+                      <FaMobile size={64} />
+                    </div>
+                    <p>Premium Rewards Dashboard</p>
+                  </div>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Rewards Section */}
-        <section className="rewards-section py-5">
+        {/* Royal Treatment Section */}
+        <section className="royal-treatment-section">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col md={8} className="text-center">
-                <h2 className="section-title">ROYAL TREASURES</h2>
-                <p className="section-subtitle">
-                  Unlock these exclusive rewards through your health journey.
-                </p>
-              </Col>
-            </Row>
-
-            <Row className="g-4">
-              <Col md={4}>
-                <div className="reward-card text-center">
-                  <div className="reward-icon" style={{ fontSize: '5rem' }}>
-                    <FaMobileAlt />
+            <Row className="align-items-center min-vh-100">
+              <Col lg={6} className="order-lg-2">
+                <div className="section-content">
+                  <h1 className="section-title-large">Royal Treatment</h1>
+                  <p className="section-description">
+                    Discover exciting games available on the app. Play, compete, and earn rewards while having fun.
+                  </p>
+                  <div className="feature-list">
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaGamepad size={32} />
+                      </div>
+                      <div>
+                        <h4>Casual Games</h4>
+                        <p>Enjoy relaxing puzzle games, trivia, and brain teasers</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaTrophy size={32} />
+                      </div>
+                      <div>
+                        <h4>Competitions</h4>
+                        <p>Compete with other members in tournaments and leaderboards</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaGift size={32} />
+                      </div>
+                      <div>
+                        <h4>Game Rewards</h4>
+                        <p>Earn bonus points and exclusive prizes for gameplay achievements</p>
+                      </div>
+                    </div>
                   </div>
-                  <h4>Phone</h4>
-                  <p>Get a new phone as you maintain your health journey streak.</p>
                 </div>
               </Col>
-
-              <Col md={4}>
-                <div className="reward-card text-center">
-                  <div className="reward-icon" style={{ fontSize: '5rem' }}>
-                    <FaGift />
+              <Col lg={6} className="order-lg-1">
+                <div className="section-visual">
+                  <div className="visual-placeholder">
+                    <div className="visual-icon">
+                      <FaGames size={64} />
+                    </div>
+                    <p>Games Collection</p>
                   </div>
-                  <h4>Krispy Kreme</h4>
-                  <p>Enjoy sweet rewards with Krispy Kreme gift cards for maintaining your health streak.</p>
-                </div>
-              </Col>
-
-              <Col md={4}>
-                <div className="reward-card text-center">
-                  <div className="reward-icon" style={{ fontSize: '5rem' }}>
-                    <FaShoppingBag />
-                  </div>
-                  <h4>Walgreens</h4>
-                  <p>Redeem for Walgreens gift cards to use on health and wellness products.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        <Testimonials />
+        {/* Wellness Incentives Section */}
+        <section className="wellness-incentives-section">
+          <Container>
+            <Row className="align-items-center min-vh-100">
+              <Col lg={6}>
+                <div className="section-content">
+                  <h1 className="section-title-large">Wellness Incentives</h1>
+                  <p className="section-description">
+                    Explore your personalized For You feed featuring curated content, health tips, and exclusive offers.
+                  </p>
+                  <div className="feature-list">
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaBook size={32} />
+                      </div>
+                      <div>
+                        <h4>Health Articles</h4>
+                        <p>Read expert-curated articles on wellness, nutrition, and fitness</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaLightbulb size={32} />
+                      </div>
+                      <div>
+                        <h4>Personalized Tips</h4>
+                        <p>Receive customized health and wellness recommendations</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaTarget size={32} />
+                      </div>
+                      <div>
+                        <h4>Exclusive Offers</h4>
+                        <p>Access special deals on health products and services</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="section-visual">
+                  <div className="visual-placeholder">
+                    <div className="visual-icon">
+                      <FaListUl size={64} />
+                    </div>
+                    <p>For You Feed</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+
       </div>
       <Footer>
         <div className="footer-links">

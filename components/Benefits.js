@@ -7,17 +7,17 @@ export default function Benefits() {
   const benefits = [
     {
       title: "Premium Rewards",
-      description: "Unlock exclusive healthcare services, products, and experiences with your earned points.",
+      description: "Get paid to watch ads and take surveys. Earn money while you browse and share your opinions.",
       icon: "/images/crown-silhouette.svg"
     },
     {
       title: "Royal Treatment",
-      description: "Priority scheduling, personalized care plans, and VIP healthcare experiences await you.",
+      description: "Discover exciting games available on the app. Play, compete, and earn rewards while having fun.",
       icon: "/images/shield-silhouette.svg"
     },
     {
       title: "Wellness Incentives",
-      description: "Earn points for maintaining your health through preventive care and healthy lifestyle choices.",
+      description: "Explore your personalized For You feed featuring curated content, health tips, and exclusive offers.",
       icon: "/images/heart-silhouette.svg"
     }
   ];
