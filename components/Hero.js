@@ -9,46 +9,46 @@ export default function Hero() {
   const router = useRouter();
 
   return (
-    <section className="hero-section">
+    <section className="hero-section-lonestar">
       <Container>
-        <Row className="align-items-center g-0">
-          <Col lg={6} className="order-lg-1">
-            <div className="hero-image-container">
-              <Image 
-                src="/images/Poland.jpeg"
-                alt="Royal Healthcare"
-                width={500}
-                height={500}
-                className="hero-image"
-                priority
-              />
-            </div>
-          </Col>
-          <Col lg={6} className="order-lg-2">
-            <div className="hero-content">
-              <h1 className="hero-title">
-                <span className="royal-text">ROYAL</span>
-                <br />
-                <span className="royal-text">HEALTHCARE</span>
+        <Row className="align-items-center">
+          <Col lg={6}>
+            <div className="hero-content-lonestar">
+              <h1 className="hero-title-lonestar">
+                Mental Health Treatment in Texas: Comprehensive Care Approaches
               </h1>
-              <p className="lead mb-3">
-                Take control of your healthcare journey with rewards fit for royalty. 
-                Sign up today and begin earning points towards a healthier, more rewarding future.
+              <p className="hero-description-lonestar">
+                At Saint Daniels Healthcare, we believe in a life full of hope, health, and happiness for all. 
+                Our mission is to continue our empathetic services of mental health care with the purpose of 
+                helping our residents get back to living independently. From evidence-based therapies to 
+                professional support from our multidisciplinary team, we're by your side in every way.
               </p>
-              <div className="hero-buttons">
+              <div className="hero-buttons-lonestar">
                 <button 
-                  className="btn-royal-gold"
-                  onClick={() => router.push('/signup')}
+                  className="btn-primary-lonestar"
+                  onClick={() => router.push('/contact')}
                 >
-                  BEGIN YOUR ROYAL JOURNEY
+                  Contact Us
                 </button>
                 <button 
-                  className="btn-download-app"
-                  onClick={() => router.push('/download')}
+                  className="btn-secondary-lonestar"
+                  onClick={() => router.push('/insurance')}
                 >
-                  DOWNLOAD APP
+                  Verify Insurance
                 </button>
               </div>
+            </div>
+          </Col>
+          <Col lg={6}>
+            <div className="hero-image-lonestar">
+              <Image 
+                src="/images/Poland.jpeg"
+                alt="Saint Daniels Healthcare"
+                width={600}
+                height={400}
+                className="hero-image-main"
+                priority
+              />
             </div>
           </Col>
         </Row>

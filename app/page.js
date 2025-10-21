@@ -17,168 +17,216 @@ export default function Home() {
       <Navbar />
       <div className="home-page">
         <Hero />
-        {/* Purpose Section */}
-        <section className="purpose-section">
+        {/* Mission Section */}
+        <section className="mission-section-lonestar">
           <Container>
-            <Row className="align-items-center min-vh-100">
+            <Row className="justify-content-center">
+              <Col lg={8} className="text-center">
+                <h2 className="section-title-lonestar">Our Mission</h2>
+                <p className="mission-description-lonestar">
+                  Saint Daniels Healthcare is committed to providing holistic and compassionate support in mental health 
+                  for the empowerment of individuals toward lifelong wellness. We believe in personalized attention, 
+                  evidence-based practice, and creating a warm atmosphere where recovery actually starts. Let us help 
+                  our clients navigate life's challenges, build resilience, and enjoy life in balance. Empathy, trust, 
+                  and great respect for the individual mind guide us at every interaction and each step of our process.
+                </p>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+        {/* Who Are We Section */}
+        <section className="who-we-are-section-lonestar">
+          <Container>
+            <Row className="align-items-center">
               <Col lg={6}>
-                <div className="section-content">
-                  <h1 className="section-title-large">Our Purpose</h1>
-                  <p className="section-description">
-                    Cognitive health, placement, and agency services for individuals in need. 
-                    We focus on crisis management, nutrition, housing, and life coaching.
+                <div className="who-we-content">
+                  <h2 className="section-title-lonestar">Who Are We?</h2>
+                  <p className="who-we-description">
+                    Saint Daniels Healthcare is a source of trust and safety regarding mental health treatment. 
+                    We offer individualized attention and care for our patients in need of help with their mental health. 
+                    Anchor the evidence-based treatment program with compassion, holistic care, and individualized attention. 
+                    From therapy to wellness programs, we nurture growth and healing toward empowerment.
                   </p>
-                  <div className="feature-list">
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaTarget size={32} />
-                      </div>
-                      <div>
-                        <h4>Crisis Management</h4>
-                        <p>Immediate support and intervention during critical life situations</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaBook size={32} />
-                      </div>
-                      <div>
-                        <h4>Nutrition Services</h4>
-                        <p>Comprehensive nutritional guidance and meal planning support</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaMobile size={32} />
-                      </div>
-                      <div>
-                        <h4>Housing Assistance</h4>
-                        <p>Housing placement and support services for stable living</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="section-visual">
-                  <div className="visual-placeholder">
-                    <div className="visual-icon">
-                      <FaTrophy size={64} />
-                    </div>
-                    <p>Comprehensive Care</p>
-                  </div>
+                <div className="team-content">
+                  <h3 className="team-title">About Our Team</h3>
+                  <p className="team-description">
+                    With over 10 years of experience, the team at Saint Daniels Healthcare aims at care with compassion, 
+                    tailored to the peculiar journey of each individual. We have licensed therapists, counselors, and 
+                    mental health specialists collectively working to help deliver Evidence-Based Treatment. We are driven 
+                    by one goal: to inspire growth, healing, and lasting wellness for every individual we are privileged to serve.
+                  </p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Core Features Section */}
-        <section className="core-features-section">
+        {/* Services Section */}
+        <section className="services-section-lonestar">
           <Container>
-            <Row className="align-items-center min-vh-100">
-              <Col lg={6} className="order-lg-2">
-                <div className="section-content">
-                  <h1 className="section-title-large">Core Features</h1>
-                  <p className="section-description">
-                    Professional-grade platform with HIPAA-compliant security, comprehensive case management, 
-                    and seamless integration for all your service needs.
-                  </p>
-                  <div className="feature-list">
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaClipboardList size={32} />
-                      </div>
-                      <div>
-                        <h4>HIPAA-Compliant Login</h4>
-                        <p>Secure user authentication with full privacy protection for sensitive information</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaGift size={32} />
-                      </div>
-                      <div>
-                        <h4>Profile & Dashboard</h4>
-                        <p>Comprehensive profile management and personalized service dashboard</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaGamepad size={32} />
-                      </div>
-                      <div>
-                        <h4>Case Management</h4>
-                        <p>Integrated tracking for life coaching, nutrition, and housing assistance</p>
-                      </div>
-                    </div>
+            <Row className="justify-content-center mb-5">
+              <Col lg={8} className="text-center">
+                <h2 className="section-title-lonestar">Comprehensive Mental Health Services</h2>
+              </Col>
+            </Row>
+            
+            <Row className="g-4">
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaGamepad size={48} />
                   </div>
+                  <h4 className="service-title">Group Therapy</h4>
+                  <p className="service-description">
+                    Connect with others and draw support from a similar journey. Group Therapy with our Licensed Therapist 
+                    allows experiences to be exchanged in a safe environment.
+                  </p>
                 </div>
               </Col>
-              <Col lg={6} className="order-lg-1">
-                <div className="section-visual">
-                  <div className="visual-placeholder">
-                    <div className="visual-icon">
-                      <FaListUl size={64} />
-                    </div>
-                    <p>Service Platform</p>
+              
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaClipboardList size={48} />
                   </div>
+                  <h4 className="service-title">Individual Therapy</h4>
+                  <p className="service-description">
+                    Personalized one-on-one therapy sessions tailored to your unique challenges and goals. Our licensed 
+                    therapists provide a confidential, supportive space for self-reflection, healing, and growth.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaGift size={48} />
+                  </div>
+                  <h4 className="service-title">Family Counseling</h4>
+                  <p className="service-description">
+                    Problems in mental health can impact the entire family, not just one person. Family therapy aims 
+                    to restore family harmony, rebuild trust, and strengthen family relationships.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaMobile size={48} />
+                  </div>
+                  <h4 className="service-title">Residential Treatment</h4>
+                  <p className="service-description">
+                    A structured and immersive program offering 24/7 care in a safe, supportive environment. 
+                    Residential treatment focuses on intensive therapy and holistic healing.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaBook size={48} />
+                  </div>
+                  <h4 className="service-title">Cognitive Behavioral Therapy</h4>
+                  <p className="service-description">
+                    CBT is a proven methodology for changing negative thought patterns and behaviors. Our therapists 
+                    skillfully guide our clients through evidence-based techniques.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="service-card-lonestar">
+                  <div className="service-icon">
+                    <FaTarget size={48} />
+                  </div>
+                  <h4 className="service-title">Trauma-Focused Therapy</h4>
+                  <p className="service-description">
+                    Overcoming past trauma can lead to profound emotional healing. Our trauma-focused therapy covers 
+                    PTSD, childhood traumas, and other emotional scars from the past.
+                  </p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Membership Tiers Section */}
-        <section className="membership-section">
+        {/* Why Choose Us Section */}
+        <section className="why-choose-section-lonestar">
           <Container>
-            <Row className="align-items-center min-vh-100">
-              <Col lg={6}>
-                <div className="section-content">
-                  <h1 className="section-title-large">Membership Tiers</h1>
-                  <p className="section-description">
-                    Flexible access to our services with tiered membership options. 
-                    General access is free, while premium one-on-one services require insurance or out-of-pocket payment.
+            <Row className="justify-content-center mb-5">
+              <Col lg={8} className="text-center">
+                <h2 className="section-title-lonestar">Why Choose Saint Daniels Healthcare?</h2>
+                <p className="why-choose-subtitle">
+                  Sometimes, all it takes is the proper setting and support. Saint Daniels Healthcare takes a holistic 
+                  path to healing: mind, body, and spirit in one inclusive treatment approach.
+                </p>
+              </Col>
+            </Row>
+            
+            <Row className="g-4">
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Holistic Approach to Recovery</h4>
+                  <p className="why-choose-description">
+                    We firmly believe in caring for the whole person: mind, body, and spirit. Our holistic approach 
+                    to care gets to the root of mental health challenges and empowers clients to achieve balance and well-being.
                   </p>
-                  <div className="feature-list">
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaDollarSign size={32} />
-                      </div>
-                      <div>
-                        <h4>Free General Access</h4>
-                        <p>Basic platform features and resources available at no cost</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaLightbulb size={32} />
-                      </div>
-                      <div>
-                        <h4>Premium Services</h4>
-                        <p>One-on-one coaching and consultations with insurance or direct payment</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaTarget size={32} />
-                      </div>
-                      <div>
-                        <h4>Secure Document Upload</h4>
-                        <p>Box.com integration for secure document tracking and audit trails</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </Col>
-              <Col lg={6}>
-                <div className="section-visual">
-                  <div className="visual-placeholder">
-                    <div className="visual-icon">
-                      <FaGames size={64} />
-                    </div>
-                    <p>Membership Options</p>
-                  </div>
+              
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Safe and Secure Environment</h4>
+                  <p className="why-choose-description">
+                    We value the privacy and safety of every individual. Our facility is designed to provide a safe, 
+                    confidential environment where one can work on recovery without bias or pressure from the outside world.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Licensed Medical Staff</h4>
+                  <p className="why-choose-description">
+                    Our licensed therapists and medical professionals have specialized training and many years of 
+                    experience, so that each treatment session is held with concern and attention during the process.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Insurance and Cost Management</h4>
+                  <p className="why-choose-description">
+                    We know that care can be expensive. Our team can help guide you through your options for insurance, 
+                    explaining what may be covered, while developing a cost plan that will work for you.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Personalized Treatment</h4>
+                  <p className="why-choose-description">
+                    Your path to mental health is unique, and your treatment plan is designed with that in mind. 
+                    Our personalized approach to care ensures that everyone gets exactly what they need to heal long-term.
+                  </p>
+                </div>
+              </Col>
+              
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <h4 className="why-choose-title">Medication Management</h4>
+                  <p className="why-choose-description">
+                    Medications may have an important place in your treatment with regard to your mental health. 
+                    They can be prescribed and monitored by our medical professionals throughout the course of your treatment.
+                  </p>
                 </div>
               </Col>
             </Row>
