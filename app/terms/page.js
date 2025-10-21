@@ -13,7 +13,7 @@ export default function TermsOfService() {
           <div className="terms-content">
             <section className="terms-section">
               <h2>1. Acceptance of Terms</h2>
-              <p>By accessing or using Saint Daniels Healthcare Rewards services ("Services"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our Services.</p>
+              <p>By accessing or using Saint Daniels Healthcare services ("Services"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our Services.</p>
             </section>
 
             <section className="terms-section">
@@ -125,7 +125,7 @@ export default function TermsOfService() {
 
             <div className="terms-footer">
               <p>Last Updated: March 2024</p>
-              <p>© 2024 Saint Daniels Healthcare Rewards. All rights reserved.</p>
+              <p>© 2024 Saint Daniels Healthcare. All rights reserved.</p>
             </div>
           </div>
         </Container>

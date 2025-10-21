@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
             <section className="privacy-section">
               <h2>Our Commitment to Your Privacy</h2>
               <p>
-                At Saint Daniels Healthcare Rewards, we take the privacy and security of your personal health information extremely seriously. As a healthcare rewards platform, we understand the sensitive nature of the information you share with us and are committed to protecting it in accordance with all applicable laws and regulations, including the Health Insurance Portability and Accountability Act (HIPAA).
+                At Saint Daniels Healthcare, we take the privacy and security of your personal health information extremely seriously. As a healthcare services platform, we understand the sensitive nature of the information you share with us and are committed to protecting it in accordance with all applicable laws and regulations, including the Health Insurance Portability and Accountability Act (HIPAA).
               </p>
             </section>
 

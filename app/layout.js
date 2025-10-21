@@ -13,14 +13,14 @@ const inter = Inter({
 
 export const metadata = {
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
-  title: 'Saint Daniels Healthcare Rewards',
-  description: 'Empowering healthcare professionals with exclusive rewards and benefits. Join Saint Daniels Healthcare Rewards for premium healthcare career opportunities and financial solutions.',
+  title: 'Saint Daniels Healthcare',
+  description: 'Empowering healthcare professionals with comprehensive services and support. Join Saint Daniels Healthcare for premium healthcare career opportunities and comprehensive care solutions.',
   keywords: 'healthcare rewards, medical professionals, healthcare benefits, medical career opportunities, Saint Daniels Healthcare',
   openGraph: {
-    title: 'Saint Daniels Healthcare Rewards',
-    description: 'Empowering healthcare professionals with exclusive rewards and benefits.',
+    title: 'Saint Daniels Healthcare',
+    description: 'Empowering healthcare professionals with comprehensive services and support.',
     url: 'https://saintdanielshealthcare.com',
-    siteName: 'Saint Daniels Healthcare Rewards',
+    siteName: 'Saint Daniels Healthcare',
     type: 'website',
   },
 }

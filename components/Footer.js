@@ -65,7 +65,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>© 2025 Saint Daniels Healthcare Rewards. All rights reserved.</p>
+          <p>© 2025 Saint Daniels Healthcare. All rights reserved.</p>
         </div>
       </div>
     </footer>
