@@ -44,8 +44,8 @@ export default function Hero() {
               <Image 
                 src="/images/Poland.jpeg"
                 alt="Saint Daniels Healthcare"
-                width={600}
-                height={400}
+                width={800}
+                height={500}
                 className="hero-image-main"
                 priority
               />
