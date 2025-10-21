@@ -17,42 +17,43 @@ export default function Home() {
       <Navbar />
       <div className="home-page">
         <Hero />
-        {/* Premium Rewards Section */}
-        <section className="premium-rewards-section">
+        {/* Purpose Section */}
+        <section className="purpose-section">
           <Container>
             <Row className="align-items-center min-vh-100">
               <Col lg={6}>
                 <div className="section-content">
-                  <h1 className="section-title-large">Premium Rewards</h1>
+                  <h1 className="section-title-large">Our Purpose</h1>
                   <p className="section-description">
-                    Get paid to watch ads and take surveys. Earn money while you browse and share your opinions.
+                    Cognitive health, placement, and agency services for individuals in need. 
+                    We focus on crisis management, nutrition, housing, and life coaching.
                   </p>
                   <div className="feature-list">
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaDollarSign size={32} />
-                      </div>
-                      <div>
-                        <h4>Watch Ads & Earn</h4>
-                        <p>Get paid for watching targeted advertisements that match your interests</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaClipboardList size={32} />
-                      </div>
-                      <div>
-                        <h4>Take Surveys</h4>
-                        <p>Share your opinions and earn rewards for valuable feedback</p>
-                      </div>
-                    </div>
                     <div className="feature-item">
                       <div className="feature-icon">
                         <FaTarget size={32} />
                       </div>
                       <div>
-                        <h4>Personalized Content</h4>
-                        <p>Receive ads and surveys tailored to your preferences and lifestyle</p>
+                        <h4>Crisis Management</h4>
+                        <p>Immediate support and intervention during critical life situations</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaBook size={32} />
+                      </div>
+                      <div>
+                        <h4>Nutrition Services</h4>
+                        <p>Comprehensive nutritional guidance and meal planning support</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaMobile size={32} />
+                      </div>
+                      <div>
+                        <h4>Housing Assistance</h4>
+                        <p>Housing placement and support services for stable living</p>
                       </div>
                     </div>
                   </div>
@@ -62,9 +63,9 @@ export default function Home() {
                 <div className="section-visual">
                   <div className="visual-placeholder">
                     <div className="visual-icon">
-                      <FaMobile size={64} />
+                      <FaTrophy size={64} />
                     </div>
-                    <p>Premium Rewards Dashboard</p>
+                    <p>Comprehensive Care</p>
                   </div>
                 </div>
               </Col>
@@ -72,33 +73,25 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Royal Treatment Section */}
-        <section className="royal-treatment-section">
+        {/* Core Features Section */}
+        <section className="core-features-section">
           <Container>
             <Row className="align-items-center min-vh-100">
               <Col lg={6} className="order-lg-2">
                 <div className="section-content">
-                  <h1 className="section-title-large">Royal Treatment</h1>
+                  <h1 className="section-title-large">Core Features</h1>
                   <p className="section-description">
-                    Discover exciting games available on the app. Play, compete, and earn rewards while having fun.
+                    Professional-grade platform with HIPAA-compliant security, comprehensive case management, 
+                    and seamless integration for all your service needs.
                   </p>
                   <div className="feature-list">
                     <div className="feature-item">
                       <div className="feature-icon">
-                        <FaGamepad size={32} />
+                        <FaClipboardList size={32} />
                       </div>
                       <div>
-                        <h4>Casual Games</h4>
-                        <p>Enjoy relaxing puzzle games, trivia, and brain teasers</p>
-                      </div>
-                    </div>
-                    <div className="feature-item">
-                      <div className="feature-icon">
-                        <FaTrophy size={32} />
-                      </div>
-                      <div>
-                        <h4>Competitions</h4>
-                        <p>Compete with other members in tournaments and leaderboards</p>
+                        <h4>HIPAA-Compliant Login</h4>
+                        <p>Secure user authentication with full privacy protection for sensitive information</p>
                       </div>
                     </div>
                     <div className="feature-item">
@@ -106,8 +99,17 @@ export default function Home() {
                         <FaGift size={32} />
                       </div>
                       <div>
-                        <h4>Game Rewards</h4>
-                        <p>Earn bonus points and exclusive prizes for gameplay achievements</p>
+                        <h4>Profile & Dashboard</h4>
+                        <p>Comprehensive profile management and personalized service dashboard</p>
+                      </div>
+                    </div>
+                    <div className="feature-item">
+                      <div className="feature-icon">
+                        <FaGamepad size={32} />
+                      </div>
+                      <div>
+                        <h4>Case Management</h4>
+                        <p>Integrated tracking for life coaching, nutrition, and housing assistance</p>
                       </div>
                     </div>
                   </div>
@@ -117,9 +119,9 @@ export default function Home() {
                 <div className="section-visual">
                   <div className="visual-placeholder">
                     <div className="visual-icon">
-                      <FaGames size={64} />
+                      <FaListUl size={64} />
                     </div>
-                    <p>Games Collection</p>
+                    <p>Service Platform</p>
                   </div>
                 </div>
               </Col>
@@ -127,24 +129,25 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Wellness Incentives Section */}
-        <section className="wellness-incentives-section">
+        {/* Membership Tiers Section */}
+        <section className="membership-section">
           <Container>
             <Row className="align-items-center min-vh-100">
               <Col lg={6}>
                 <div className="section-content">
-                  <h1 className="section-title-large">Wellness Incentives</h1>
+                  <h1 className="section-title-large">Membership Tiers</h1>
                   <p className="section-description">
-                    Explore your personalized For You feed featuring curated content, health tips, and exclusive offers.
+                    Flexible access to our services with tiered membership options. 
+                    General access is free, while premium one-on-one services require insurance or out-of-pocket payment.
                   </p>
                   <div className="feature-list">
                     <div className="feature-item">
                       <div className="feature-icon">
-                        <FaBook size={32} />
+                        <FaDollarSign size={32} />
                       </div>
                       <div>
-                        <h4>Health Articles</h4>
-                        <p>Read expert-curated articles on wellness, nutrition, and fitness</p>
+                        <h4>Free General Access</h4>
+                        <p>Basic platform features and resources available at no cost</p>
                       </div>
                     </div>
                     <div className="feature-item">
@@ -152,8 +155,8 @@ export default function Home() {
                         <FaLightbulb size={32} />
                       </div>
                       <div>
-                        <h4>Personalized Tips</h4>
-                        <p>Receive customized health and wellness recommendations</p>
+                        <h4>Premium Services</h4>
+                        <p>One-on-one coaching and consultations with insurance or direct payment</p>
                       </div>
                     </div>
                     <div className="feature-item">
@@ -161,8 +164,8 @@ export default function Home() {
                         <FaTarget size={32} />
                       </div>
                       <div>
-                        <h4>Exclusive Offers</h4>
-                        <p>Access special deals on health products and services</p>
+                        <h4>Secure Document Upload</h4>
+                        <p>Box.com integration for secure document tracking and audit trails</p>
                       </div>
                     </div>
                   </div>
@@ -172,9 +175,9 @@ export default function Home() {
                 <div className="section-visual">
                   <div className="visual-placeholder">
                     <div className="visual-icon">
-                      <FaListUl size={64} />
+                      <FaGames size={64} />
                     </div>
-                    <p>For You Feed</p>
+                    <p>Membership Options</p>
                   </div>
                 </div>
               </Col>

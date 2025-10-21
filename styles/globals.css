@@ -4638,17 +4638,17 @@ html, body {
 }
 
 /* New Full-Screen Section Styles */
-.premium-rewards-section {
+.purpose-section {
   background: linear-gradient(135deg, var(--royal-cream) 0%, #f0ebe1 100%);
   padding: 0;
 }
 
-.royal-treatment-section {
+.core-features-section {
   background: linear-gradient(135deg, var(--royal-brown) 0%, #e6d5b8 100%);
   padding: 0;
 }
 
-.wellness-incentives-section {
+.membership-section {
   background: linear-gradient(135deg, var(--royal-cream) 0%, #f0ebe1 100%);
   padding: 0;
 }
