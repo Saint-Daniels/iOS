@@ -37,13 +37,13 @@ export default function PrivacyPolicy() {
             <section className="privacy-section">
               <h2>Information We Collect</h2>
               <p>
-                We only collect information that is necessary to provide our healthcare rewards services:
+                We only collect information that is necessary to provide our career development and healthcare services:
               </p>
               <ul>
                 <li>Basic personal information (name, contact details)</li>
                 <li>Health insurance information</li>
-                <li>Healthcare activity data related to rewards program participation</li>
-                <li>Program participation and rewards history</li>
+                <li>Career development activity data related to program participation</li>
+                <li>Program participation and career advancement history</li>
                 <li>Information required for health insurance enrollment and management</li>
               </ul>
             </section>
@@ -54,9 +54,9 @@ export default function PrivacyPolicy() {
                 Your information is used exclusively for:
               </p>
               <ul>
-                <li>Processing and managing your healthcare rewards program participation</li>
+                <li>Processing and managing your career development program participation</li>
                 <li>Facilitating health insurance enrollment and coverage</li>
-                <li>Verifying eligibility for specific rewards and programs</li>
+                <li>Verifying eligibility for specific career development programs</li>
                 <li>Improving our services and user experience</li>
                 <li>Maintaining HIPAA compliance and regulatory requirements</li>
               </ul>
@@ -100,7 +100,7 @@ export default function PrivacyPolicy() {
                 We retain your information only for as long as necessary to:
               </p>
               <ul>
-                <li>Provide our services and maintain your rewards program participation</li>
+                <li>Provide our services and maintain your career development program participation</li>
                 <li>Comply with legal and regulatory requirements</li>
                 <li>Resolve any disputes or issues that may arise</li>
                 <li>Maintain accurate business and health records as required by law</li>

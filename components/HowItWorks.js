@@ -6,18 +6,18 @@ export default function HowItWorks() {
   const steps = [
     {
       number: "1",
-      title: "Join The Kingdom",
-      description: "Register for a Saint Daniels account and link your healthcare providers."
+      title: "Join Saint Daniels Healthcare",
+      description: "Register for your Saint Daniels Healthcare account and connect with our professional development network."
     },
     {
       number: "2",
-      title: "Earn Royal Points",
-      description: "Collect points for healthcare visits, wellness activities, and healthy choices."
+      title: "Access Career Resources",
+      description: "Explore our comprehensive career coaching, workplace wellness programs, and public health education resources."
     },
     {
       number: "3",
-      title: "Claim Your Treasures",
-      description: "Redeem your points for healthcare rewards and exclusive benefits."
+      title: "Advance Your Career",
+      description: "Leverage our expert guidance and community support to achieve your professional goals and career advancement."
     }
   ];
 

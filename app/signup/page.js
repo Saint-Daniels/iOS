@@ -153,7 +153,7 @@ export default function SignupPage() {
               <div className="col-lg-8">
                 <div className="enrollment-card">
                   <h1 className="enrollment-title">Create Your Royal Account</h1>
-                  <p className="enrollment-subtitle">Join our exclusive healthcare rewards program</p>
+                  <p className="enrollment-subtitle">Join our exclusive career development and healthcare program</p>
                   
                   {error && (
                     <div className="alert alert-danger mb-4" role="alert">

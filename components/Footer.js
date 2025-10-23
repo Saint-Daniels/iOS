@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FaYoutube, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
   const pathname = usePathname();
@@ -39,19 +40,20 @@ const Footer = () => {
           <div className="footer-column">
             <h3 className="footer-title">SAINT DANIELS</h3>
             <div className="social-icons">
-              <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook">FB</a>
-              <a href="https://linkedin.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">IN</a>
-              <a href="https://snapchat.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Snapchat">SC</a>
-              <a href="https://x.com/bridgeobserver" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="X">X</a>
-              <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">IG</a>
+              <a href="https://youtube.com/@saintdaniels" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="YouTube">
+                <FaYoutube />
+              </a>
+              <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">
+                <FaInstagram />
+              </a>
             </div>
           </div>
           
           <div className="footer-column">
             <h4 className="footer-title">MEMBERS</h4>
             <ul className="footer-links">
+              <li><Link href="/resources">Library</Link></li>
               <li><Link href="/newsletter">Newsletter</Link></li>
-              <li><Link href="/resources">Resources</Link></li>
               <li><Link href="/help">Help Center</Link></li>
             </ul>
           </div>
@@ -59,7 +61,6 @@ const Footer = () => {
           <div className="footer-column">
             <h4 className="footer-title">RESOURCES</h4>
             <ul className="footer-links">
-              <li><Link href="/documents">Documents</Link></li>
               <li><Link href="/privacy">Privacy Policy</Link></li>
               <li><Link href="/terms">Terms of Service</Link></li>
             </ul>

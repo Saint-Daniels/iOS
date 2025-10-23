@@ -55,7 +55,19 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('Login functionality is currently disabled. Please check back later.');
+    
+    // Accept any email/password combination
+    if (formData.email && formData.password) {
+      // Set cookies for authentication
+      Cookies.set('isLoggedIn', 'true', { expires: 1 }); // Expires in 1 day
+      Cookies.set('userEmail', formData.email, { expires: 1 });
+      
+      // Redirect to dashboard
+      const redirectPath = searchParams.get('from') || '/dashboard';
+      router.push(redirectPath);
+    } else {
+      setError('Please enter both email and password.');
+    }
   };
 
   const handleSendVerificationCode = () => {

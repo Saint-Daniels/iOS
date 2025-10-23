@@ -10,7 +10,7 @@ export default function AboutUs() {
   const values = [
     {
       title: "Excellence in Healthcare",
-      description: "We strive to provide the highest quality healthcare services and rewards program to enhance your well-being.",
+      description: "We strive to provide the highest quality healthcare services and professional development programs to enhance your well-being.",
       icon: "★"
     },
     {
@@ -47,7 +47,7 @@ export default function AboutUs() {
           <div className="about-hero text-center">
             <h1 className="about-title">About Saint Daniels</h1>
             <p className="about-subtitle">
-              Revolutionizing healthcare through innovation and member-focused rewards
+              Revolutionizing healthcare through innovation and member-focused professional development
             </p>
           </div>
 
@@ -56,10 +56,10 @@ export default function AboutUs() {
               <Col lg={6}>
                 <h2 className="section-title">Our Story</h2>
                 <p className="section-text">
-                  Named in honor of Saint Daniel, known for his wisdom and healing, our company embodies these same principles in a modern context. We recognized that the key to better healthcare wasn't just in treatment, but in motivation and engagement. This insight led to the development of our innovative rewards program.
+                  Named in honor of Saint Daniel, known for his wisdom and healing, our company embodies these same principles in a modern context. We recognized that the key to better healthcare wasn't just in treatment, but in professional development and career advancement. This insight led to the development of our innovative career coaching and workplace wellness programs.
                 </p>
                 <p className="section-text">
-                  Today, Saint Daniels stands at the forefront of healthcare innovation, transforming the way people think about and engage with their health. Our rewards program doesn't just incentivize healthy choices – it creates a community of empowered individuals taking control of their healthcare journey. Through technology, compassion, and innovation, we're building a future where healthcare is more accessible, engaging, and rewarding for everyone.
+                  Today, Saint Daniels Healthcare stands at the forefront of healthcare innovation, transforming the way professionals think about and engage with their career development. Our comprehensive programs don't just support career growth – they create a community of empowered professionals taking control of their healthcare and career journey. Through technology, compassion, and innovation, we're building a future where healthcare and career development are more accessible, engaging, and successful for everyone.
                 </p>
               </Col>
               <Col lg={6}>
@@ -118,7 +118,7 @@ export default function AboutUs() {
           <div className="mission-section text-center">
             <h2 className="section-title">Our Mission</h2>
             <p className="mission-text">
-              To empower individuals to take control of their health journey through innovative rewards and comprehensive healthcare solutions.
+              To empower professionals to take control of their career journey through innovative career coaching and comprehensive healthcare solutions.
             </p>
             <div className="mission-stats">
               <Row className="g-4">
@@ -137,7 +137,7 @@ export default function AboutUs() {
                 <Col md={4}>
                   <div className="stat-item">
                     <div className="stat-number">1M+</div>
-                    <div className="stat-label">Rewards Earned</div>
+                    <div className="stat-label">Career Milestones</div>
                   </div>
                 </Col>
               </Row>

@@ -6,18 +6,18 @@ import Image from 'next/image';
 export default function Benefits() {
   const benefits = [
     {
-      title: "Premium Rewards",
-      description: "Get paid to watch ads and take surveys. Earn money while you browse and share your opinions.",
+      title: "Premium Healthcare",
+      description: "Access comprehensive healthcare services and wellness programs designed for your professional success.",
       icon: "/images/crown-silhouette.svg"
     },
     {
-      title: "Royal Treatment",
-      description: "Discover exciting games available on the app. Play, compete, and earn rewards while having fun.",
+      title: "Career Development",
+      description: "Discover personalized career coaching and professional development opportunities to advance your career.",
       icon: "/images/shield-silhouette.svg"
     },
     {
-      title: "Wellness Incentives",
-      description: "Explore your personalized For You feed featuring curated content, health tips, and exclusive offers.",
+      title: "Wellness Programs",
+      description: "Explore evidence-based wellness programs and public health education tailored to your professional needs.",
       icon: "/images/heart-silhouette.svg"
     }
   ];

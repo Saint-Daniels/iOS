@@ -24,7 +24,7 @@ export default function ThankYouPage() {
                 <FaCheckCircle className="text-success mb-4" style={{ fontSize: '4rem' }} />
                 <h1 className="display-4 mb-3">Thank You!</h1>
                 <p className="lead text-muted">
-                  Your application has been successfully submitted. We appreciate your interest in our healthcare rewards program.
+                  Your application has been successfully submitted. We appreciate your interest in our career development and healthcare programs.
                 </p>
               </div>
 

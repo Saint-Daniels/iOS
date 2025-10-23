@@ -14,11 +14,11 @@ const inter = Inter({
 export const metadata = {
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
   title: 'Saint Daniels Healthcare - Career Coaching & Workplace Solutions',
-  description: 'Empowering professionals through comprehensive career coaching and workplace solutions. Join Saint Daniels Healthcare for career development, public health education, and community support.',
+  description: 'Transform your career with Saint Daniels Healthcare. Expert career coaching, workplace wellness programs, and public health education for professional success.',
   keywords: 'career coaching, workplace solutions, public health education, professional development, career advancement, workplace wellness, Saint Daniels Healthcare',
   openGraph: {
     title: 'Saint Daniels Healthcare - Career Coaching & Workplace Solutions',
-    description: 'Empowering professionals through comprehensive career coaching and workplace solutions.',
+    description: 'Transform your career with Saint Daniels Healthcare. Expert career coaching, workplace wellness programs, and public health education for professional success.',
     url: 'https://saintdanielshealthcare.com',
     siteName: 'Saint Daniels Healthcare',
     type: 'website',

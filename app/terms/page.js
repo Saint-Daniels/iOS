@@ -23,14 +23,14 @@ export default function TermsOfService() {
                 <li>Be at least 18 years of age</li>
                 <li>Enroll in a qualifying health insurance plan through our authorized brokerage partner, Sendtoreach Mutual LLC</li>
                 <li>Provide accurate and complete information during registration</li>
-                <li>Maintain active health insurance coverage throughout your participation in the rewards program</li>
+                <li>Maintain active health insurance coverage throughout your participation in our career development programs</li>
                 <li>Be a resident of a state where our Services are legally available</li>
               </ul>
             </section>
 
             <section className="terms-section">
               <h2>3. Legal Review and Compliance</h2>
-              <p>All offers and rewards provided through our Services are subject to:</p>
+              <p>All career development programs and benefits provided through our Services are subject to:</p>
               <ul>
                 <li>Legal review by our retained law firm</li>
                 <li>Compliance with federal, state, and local regulations</li>
@@ -46,10 +46,10 @@ export default function TermsOfService() {
               <ul>
                 <li>Creating multiple accounts or sharing accounts</li>
                 <li>Manipulating or falsifying health-related data or activities</li>
-                <li>Gaming or exploiting the rewards system</li>
-                <li>Selling, trading, or transferring rewards</li>
+                <li>Gaming or exploiting the career development system</li>
+                <li>Selling, trading, or transferring career development benefits</li>
                 <li>Using automated systems or bots to interact with the Services</li>
-                <li>Attempting to defraud or abuse the rewards program</li>
+                <li>Attempting to defraud or abuse the career development program</li>
                 <li>Engaging in any activity that violates healthcare laws or regulations</li>
               </ul>
             </section>
@@ -68,7 +68,7 @@ export default function TermsOfService() {
 
             <section className="terms-section">
               <h2>6. Insurance Requirement</h2>
-              <p>Participation in our rewards program requires:</p>
+              <p>Participation in our career development programs requires:</p>
               <ul>
                 <li>Active enrollment through Sendtoreach Mutual LLC</li>
                 <li>Maintenance of qualifying health insurance coverage</li>
@@ -78,14 +78,14 @@ export default function TermsOfService() {
             </section>
 
             <section className="terms-section">
-              <h2>7. Rewards and Offers</h2>
-              <p>Understanding our rewards program:</p>
+              <h2>7. Career Development Benefits</h2>
+              <p>Understanding our career development programs:</p>
               <ul>
-                <li>All rewards are subject to availability and legal review</li>
-                <li>Rewards may vary by location and jurisdiction</li>
-                <li>Rewards have no cash value and are non-transferable</li>
-                <li>We reserve the right to modify or cancel rewards at any time</li>
-                <li>Rewards may be subject to expiration dates</li>
+                <li>All career development benefits are subject to availability and legal review</li>
+                <li>Benefits may vary by location and jurisdiction</li>
+                <li>Career development benefits are non-transferable</li>
+                <li>We reserve the right to modify or cancel benefits at any time</li>
+                <li>Benefits may be subject to expiration dates</li>
                 <li>Participation may be limited based on health plan type</li>
               </ul>
             </section>
@@ -97,7 +97,7 @@ export default function TermsOfService() {
                 <li>Violation of these terms</li>
                 <li>Fraudulent activity</li>
                 <li>Non-compliance with insurance requirements</li>
-                <li>Abuse of the rewards program</li>
+                <li>Abuse of the career development program</li>
                 <li>Extended periods of inactivity</li>
               </ul>
             </section>

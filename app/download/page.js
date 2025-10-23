@@ -75,8 +75,7 @@ export default function DownloadPage() {
                 <h2 className="features-title">Experience the Royal Treatment</h2>
                 <p className="features-subtitle">
                   Our mobile app brings the full Saint Daniels experience to your fingertips. 
-                  Track your health journey, earn rewards, play games, and access your personalized 
-                  For You feed wherever you go.
+                  Track your career development journey, access career coaching, and connect with our professional community wherever you go.
                 </p>
               </Col>
             </Row>
@@ -111,7 +110,7 @@ export default function DownloadPage() {
                       <div className="app-interface">
                         <div className="app-header">Saint Daniels</div>
                         <div className="app-content">
-                          <div className="app-section">Premium Rewards</div>
+                          <div className="app-section">Career Development</div>
                           <div className="app-section">Games</div>
                           <div className="app-section">For You Feed</div>
                         </div>

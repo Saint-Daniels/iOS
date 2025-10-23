@@ -10,24 +10,24 @@ import Link from 'next/link';
 export default function ResourcesPage() {
   const resourceCategories = [
     {
-      title: "Mental Health Guides",
+      title: "Career Development Guides",
       icon: <FaBook size={32} />,
       resources: [
         {
-          title: "Understanding Depression",
-          description: "Comprehensive guide to recognizing and managing depression symptoms",
+          title: "Career Assessment Tools",
+          description: "Comprehensive tools to evaluate your skills, interests, and career goals",
           type: "PDF Guide",
           link: "#"
         },
         {
-          title: "Anxiety Management Techniques",
-          description: "Evidence-based strategies for managing anxiety and panic attacks",
+          title: "Resume & Cover Letter Templates",
+          description: "Professional templates and strategies for job applications",
           type: "PDF Guide",
           link: "#"
         },
         {
-          title: "Trauma Recovery Workbook",
-          description: "Step-by-step workbook for trauma healing and recovery",
+          title: "Interview Preparation Workbook",
+          description: "Step-by-step guide to excel in job interviews and career conversations",
           type: "PDF Guide",
           link: "#"
         }
@@ -38,20 +38,20 @@ export default function ResourcesPage() {
       icon: <FaVideo size={32} />,
       resources: [
         {
-          title: "Introduction to CBT",
-          description: "Learn the basics of Cognitive Behavioral Therapy",
+          title: "Career Coaching Fundamentals",
+          description: "Learn the basics of professional development and career advancement",
           type: "Video Series",
           link: "#"
         },
         {
-          title: "Mindfulness Meditation",
-          description: "Guided meditation sessions for stress relief",
+          title: "Workplace Wellness Techniques",
+          description: "Guided sessions for stress management and workplace productivity",
           type: "Video Series",
           link: "#"
         },
         {
-          title: "Family Therapy Sessions",
-          description: "Educational content about family counseling approaches",
+          title: "Public Health Education",
+          description: "Educational content about workplace health and safety practices",
           type: "Video Series",
           link: "#"
         }
@@ -62,20 +62,20 @@ export default function ResourcesPage() {
       icon: <FaFilePdf size={32} />,
       resources: [
         {
-          title: "Intake Forms",
-          description: "Required forms for new patient registration",
+          title: "Career Development Application",
+          description: "Required forms for career coaching program registration",
           type: "PDF Form",
           link: "#"
         },
         {
           title: "Insurance Verification",
-          description: "Forms to verify your insurance coverage",
+          description: "Forms to verify your health insurance coverage",
           type: "PDF Form",
           link: "#"
         },
         {
-          title: "Consent Forms",
-          description: "HIPAA-compliant consent and authorization forms",
+          title: "Program Consent Forms",
+          description: "HIPAA-compliant consent and authorization forms for career services",
           type: "PDF Form",
           link: "#"
         }
@@ -85,26 +85,26 @@ export default function ResourcesPage() {
 
   const quickLinks = [
     {
-      title: "Crisis Resources",
-      description: "24/7 crisis support and emergency contacts",
+      title: "Career Support",
+      description: "24/7 career coaching and professional development support",
       icon: <FaPhone size={24} />,
       link: "/contact"
     },
     {
       title: "Insurance Information",
-      description: "Learn about accepted insurance plans",
+      description: "Learn about accepted health insurance plans",
       icon: <FaFilePdf size={24} />,
       link: "/insurance"
     },
     {
-      title: "Treatment Options",
-      description: "Explore our comprehensive treatment services",
+      title: "Program Options",
+      description: "Explore our comprehensive career development services",
       icon: <FaBook size={24} />,
       link: "/services"
     },
     {
       title: "Contact Us",
-      description: "Get in touch with our team",
+      description: "Get in touch with our career development team",
       icon: <FaEnvelope size={24} />,
       link: "/contact"
     }
@@ -119,10 +119,10 @@ export default function ResourcesPage() {
           <Container>
             <Row className="justify-content-center text-center">
               <Col lg={8}>
-                <h1 className="resources-title">Mental Health Resources</h1>
+                <h1 className="resources-title">Library</h1>
                 <p className="resources-subtitle">
-                  Access comprehensive mental health resources, educational materials, and support tools 
-                  to help you on your journey to wellness and recovery.
+                  Explore our comprehensive digital library of career development resources, workplace wellness materials, and professional support tools 
+                  to help you advance your career and improve your workplace health.
                 </p>
               </Col>
             </Row>
@@ -171,9 +171,9 @@ export default function ResourcesPage() {
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
-                <h2 className="section-title">Quick Access</h2>
+                <h2 className="section-title">Library Services</h2>
                 <p className="section-subtitle">
-                  Get quick access to important information and services
+                  Access our library services and professional support
                 </p>
               </Col>
             </Row>
@@ -202,9 +202,9 @@ export default function ResourcesPage() {
           <Container>
             <Row className="justify-content-center">
               <Col lg={8} className="text-center">
-                <h2 className="section-title">Need More Resources?</h2>
+                <h2 className="section-title">Need More Library Resources?</h2>
                 <p className="section-subtitle">
-                  Our team is here to help you find the resources you need for your mental health journey.
+                  Our library team is here to help you find the resources you need for your career development and workplace wellness journey.
                 </p>
                 <div className="contact-info">
                   <div className="contact-item">
@@ -233,7 +233,15 @@ export default function ResourcesPage() {
           </Container>
         </section>
       </div>
-      <Footer />
+      
+      {/* Custom Footer with only copyright */}
+      <footer className="footer-minimal">
+        <div className="container">
+          <div className="footer-bottom">
+            <p>© 2025 Saint Daniels Healthcare. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </PageTransition>
   );
 }

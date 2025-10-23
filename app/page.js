@@ -166,9 +166,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaGamepad size={80} />
-                  </div>
                   <h2 className="service-title-large">Career Development Workshops</h2>
                   <div className="service-divider"></div>
                 </div>
@@ -241,9 +238,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaClipboardList size={80} />
-                  </div>
                   <h2 className="service-title-large">One-on-One Career Coaching</h2>
                   <div className="service-divider"></div>
                 </div>
@@ -316,9 +310,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaGift size={80} />
-                  </div>
                   <h2 className="service-title-large">Workplace Wellness Programs</h2>
                   <div className="service-divider"></div>
                 </div>
@@ -391,9 +382,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaMobile size={80} />
-                  </div>
                   <h2 className="service-title-large">Intensive Career Development Programs</h2>
                   <div className="service-divider"></div>
                 </div>
@@ -466,9 +454,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaBook size={80} />
-                  </div>
                   <h2 className="service-title-large">Public Health Education</h2>
                   <div className="service-divider"></div>
                 </div>
@@ -541,9 +526,6 @@ export default function Home() {
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <div className="service-icon-large">
-                    <FaTarget size={80} />
-                  </div>
                   <h2 className="service-title-large">Community-Based Career Support</h2>
                   <div className="service-divider"></div>
                 </div>

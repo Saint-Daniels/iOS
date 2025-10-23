@@ -108,7 +108,7 @@ const SnapchatProfileModal = ({ show, onHide, onConnect }) => {
             <h5 className="text-primary mb-3">Coming Soon: Exciting Gaming Features!</h5>
             <p className="text-muted mb-4">
               Connect your Snapchat account to be among the first to experience our upcoming fitness gaming platform.
-              Get ready for team challenges, multiplayer games, and exclusive rewards!
+              Get ready for team challenges, multiplayer games, and exclusive career development benefits!
             </p>
           </div>
 
