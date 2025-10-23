@@ -15,26 +15,27 @@ export default function Hero() {
           <Col lg={6}>
             <div className="hero-content-lonestar">
               <h1 className="hero-title-lonestar">
-                Mental Health Treatment in Texas: Comprehensive Care Approaches
+                Health Consultation: Empowering Your Career
               </h1>
               <p className="hero-description-lonestar">
-                At Saint Daniels Healthcare, we believe in a life full of hope, health, and happiness for all. 
-                Our mission is to continue our empathetic services of mental health care with the purpose of 
-                helping our residents get back to living independently. From evidence-based therapies to 
-                professional support from our multidisciplinary team, we're by your side in every way.
+                At Saint Daniels Healthcare, we believe in empowering professionals through comprehensive health consultation 
+                services that enhance your career potential. Our mission is to provide personalized health and wellness 
+                guidance combined with career-focused consultation to help you achieve peak professional performance. 
+                From individual health assessments to workplace wellness strategies, we're committed to your career 
+                success through optimal health and well-being.
               </p>
               <div className="hero-buttons-lonestar">
                 <button 
                   className="btn-primary-lonestar"
-                  onClick={() => router.push('/contact')}
+                  onClick={() => router.push('/download')}
                 >
-                  Contact Us
+                  Download App
                 </button>
                 <button 
                   className="btn-secondary-lonestar"
-                  onClick={() => router.push('/insurance')}
+                  onClick={() => router.push('/learn-more')}
                 >
-                  Verify Insurance
+                  Learn More
                 </button>
               </div>
             </div>

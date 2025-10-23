@@ -3,13 +3,17 @@
 import { Container } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
+  const isLearnMorePage = pathname === '/learn-more';
+
   return (
     <div className="top-header">
       <Container>
         <div className="header-content">
-          <div className="logo-container">
+          <Link href="/" className="logo-container">
             <Image 
               src="/images/saintdanielslogo.jpeg" 
               alt="Saint Daniels Logo" 
@@ -18,10 +22,12 @@ export default function Header() {
               className="header-logo"
             />
             <span className="brand-text">SAINT DANIELS</span>
-          </div>
-          <Link href="/login">
-            <button className="login-button">Login</button>
           </Link>
+          {!isLearnMorePage && (
+            <Link href="/login">
+              <button className="login-button">Login</button>
+            </Link>
+          )}
         </div>
       </Container>
     </div>

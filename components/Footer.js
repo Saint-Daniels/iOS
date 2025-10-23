@@ -16,10 +16,20 @@ const Footer = () => {
                          pathname === '/privacy' ||
                          pathname === '/terms' ||
                          pathname === '/about' ||
-                         pathname === '/contact';
+                         pathname === '/contact' ||
+                         pathname === '/download' ||
+                         pathname === '/learn-more';
 
   if (isMinimalFooter) {
-    return null;
+    return (
+      <footer className="footer-minimal">
+        <div className="container">
+          <div className="footer-bottom">
+            <p>© 2025 Saint Daniels Healthcare. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    );
   }
 
   return (

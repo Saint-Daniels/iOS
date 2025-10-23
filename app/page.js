@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaArrowRight, FaDollarSign, FaClipboardList, FaBullseye, FaGamepad, FaTrophy, FaGift, FaBook, FaLightbulb, FaBullseye as FaTarget, FaMobile, FaGamepad as FaGames, FaListUl } from 'react-icons/fa';
+import { FaArrowRight, FaDollarSign, FaClipboardList, FaBullseye, FaGamepad, FaTrophy, FaGift, FaBook, FaLightbulb, FaBullseye as FaTarget, FaMobile, FaGamepad as FaGames, FaListUl, FaHandshake, FaUsers, FaBookOpen, FaChartLine } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
@@ -18,47 +18,148 @@ export default function Home() {
       <div className="home-page">
         <Hero />
         {/* Mission Section */}
-        <section className="mission-section-lonestar">
+        <section className="mission-section-professional">
           <Container>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
-                <h2 className="section-title-lonestar">Our Mission</h2>
-                <p className="mission-description-lonestar">
-                  Saint Daniels Healthcare is committed to providing holistic and compassionate support in mental health 
-                  for the empowerment of individuals toward lifelong wellness. We believe in personalized attention, 
-                  evidence-based practice, and creating a warm atmosphere where recovery actually starts. Let us help 
-                  our clients navigate life's challenges, build resilience, and enjoy life in balance. Empathy, trust, 
-                  and great respect for the individual mind guide us at every interaction and each step of our process.
-                </p>
+                <div className="mission-header">
+                  <div className="mission-icon">
+                    <FaBullseye size={60} />
+                  </div>
+                  <h2 className="mission-title-professional">Our Mission</h2>
+                  <div className="mission-divider"></div>
+                </div>
+              </Col>
+            </Row>
+            
+            <Row className="align-items-center">
+              <Col lg={6}>
+                <div className="mission-image-wrapper-professional">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    alt="Professional team meeting and collaboration"
+                    width={600}
+                    height={450}
+                    className="mission-image-professional"
+                  />
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="mission-content-professional">
+                  <p className="mission-description-professional">
+                    Saint Daniels Healthcare is committed to providing comprehensive career coaching and workplace solutions 
+                    through public health educational resources and community support. We believe in personalized career 
+                    development, evidence-based coaching practices, and creating a supportive environment where professional 
+                    growth thrives.
+                  </p>
+                  
+                  <div className="mission-highlights-professional">
+                    <div className="highlight-card">
+                      <div className="highlight-icon-wrapper">
+                        <FaBullseye className="highlight-icon" />
+                      </div>
+                      <div className="highlight-content">
+                        <h4>Personalized Development</h4>
+                        <p>Tailored coaching programs designed for your unique career goals and professional aspirations.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="highlight-card">
+                      <div className="highlight-icon-wrapper">
+                        <FaUsers className="highlight-icon" />
+                      </div>
+                      <div className="highlight-content">
+                        <h4>Community Support</h4>
+                        <p>Access to a network of professionals and resources that enhance your career development journey.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="highlight-card">
+                      <div className="highlight-icon-wrapper">
+                        <FaChartLine className="highlight-icon" />
+                      </div>
+                      <div className="highlight-content">
+                        <h4>Professional Growth</h4>
+                        <p>Evidence-based strategies and continuous support to accelerate your career advancement.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Col>
             </Row>
           </Container>
         </section>
 
         {/* Who Are We Section */}
-        <section className="who-we-are-section-lonestar">
+        <section className="who-we-section-professional">
           <Container>
+            <Row className="justify-content-center mb-5">
+              <Col lg={8} className="text-center">
+                <div className="section-header-professional">
+                  <div className="section-icon">
+                    <FaUsers size={60} />
+                  </div>
+                  <h2 className="section-title-professional">Who Are We?</h2>
+                  <div className="section-divider"></div>
+                </div>
+              </Col>
+            </Row>
+            
             <Row className="align-items-center">
               <Col lg={6}>
-                <div className="who-we-content">
-                  <h2 className="section-title-lonestar">Who Are We?</h2>
-                  <p className="who-we-description">
-                    Saint Daniels Healthcare is a source of trust and safety regarding mental health treatment. 
-                    We offer individualized attention and care for our patients in need of help with their mental health. 
-                    Anchor the evidence-based treatment program with compassion, holistic care, and individualized attention. 
-                    From therapy to wellness programs, we nurture growth and healing toward empowerment.
-                  </p>
+                <div className="team-image-wrapper-professional">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80&crop=top"
+                    alt="Professional healthcare team consultation"
+                    width={600}
+                    height={450}
+                    className="team-image-professional"
+                  />
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="team-content">
-                  <h3 className="team-title">About Our Team</h3>
-                  <p className="team-description">
-                    With over 10 years of experience, the team at Saint Daniels Healthcare aims at care with compassion, 
-                    tailored to the peculiar journey of each individual. We have licensed therapists, counselors, and 
-                    mental health specialists collectively working to help deliver Evidence-Based Treatment. We are driven 
-                    by one goal: to inspire growth, healing, and lasting wellness for every individual we are privileged to serve.
-                  </p>
+                <div className="team-content-professional">
+                  <div className="team-description-professional">
+                    <p>With over 10 years of experience, the team at Saint Daniels Healthcare provides career coaching 
+                    with compassion, tailored to the unique professional journey of each individual.</p>
+                  </div>
+                  
+                  <div className="team-stats-professional">
+                    <div className="stat-card">
+                      <div className="stat-number">10+</div>
+                      <div className="stat-label">Years Experience</div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-number">500+</div>
+                      <div className="stat-label">Professionals Served</div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-number">95%</div>
+                      <div className="stat-label">Success Rate</div>
+                    </div>
+                  </div>
+                  
+                  <div className="team-expertise-professional">
+                    <h4>Our Expertise</h4>
+                    <div className="expertise-grid">
+                      <div className="expertise-item">
+                        <FaBullseye className="expertise-icon" />
+                        <span>Certified Career Coaches</span>
+                      </div>
+                      <div className="expertise-item">
+                        <FaHandshake className="expertise-icon" />
+                        <span>Workplace Wellness Specialists</span>
+                      </div>
+                      <div className="expertise-item">
+                        <FaBookOpen className="expertise-icon" />
+                        <span>Public Health Educators</span>
+                      </div>
+                      <div className="expertise-item">
+                        <FaChartLine className="expertise-icon" />
+                        <span>Evidence-Based Programs</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Col>
             </Row>
@@ -70,20 +171,20 @@ export default function Home() {
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
-                <h2 className="section-title-lonestar">Comprehensive Mental Health Services</h2>
+                <h2 className="section-title-lonestar">Comprehensive Career Coaching Services</h2>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4} md={6}>
                 <div className="service-card-lonestar">
                   <div className="service-icon">
                     <FaGamepad size={48} />
                   </div>
-                  <h4 className="service-title">Group Therapy</h4>
+                  <h4 className="service-title">Career Development Workshops</h4>
                   <p className="service-description">
-                    Connect with others and draw support from a similar journey. Group Therapy with our Licensed Therapist 
-                    allows experiences to be exchanged in a safe environment.
+                    Connect with other professionals and draw support from similar career journeys. Our career development 
+                    workshops allow experiences to be exchanged in a collaborative learning environment.
                   </p>
                 </div>
               </Col>
@@ -93,10 +194,10 @@ export default function Home() {
                   <div className="service-icon">
                     <FaClipboardList size={48} />
                   </div>
-                  <h4 className="service-title">Individual Therapy</h4>
+                  <h4 className="service-title">One-on-One Career Coaching</h4>
                   <p className="service-description">
-                    Personalized one-on-one therapy sessions tailored to your unique challenges and goals. Our licensed 
-                    therapists provide a confidential, supportive space for self-reflection, healing, and growth.
+                    Personalized career coaching sessions tailored to your unique professional challenges and goals. Our certified 
+                    career coaches provide a confidential, supportive space for career reflection, development, and growth.
                   </p>
                 </div>
               </Col>
@@ -106,10 +207,10 @@ export default function Home() {
                   <div className="service-icon">
                     <FaGift size={48} />
                   </div>
-                  <h4 className="service-title">Family Counseling</h4>
+                  <h4 className="service-title">Workplace Wellness Programs</h4>
                   <p className="service-description">
-                    Problems in mental health can impact the entire family, not just one person. Family therapy aims 
-                    to restore family harmony, rebuild trust, and strengthen family relationships.
+                    Workplace challenges can impact entire teams and organizations. Our workplace wellness programs aim 
+                    to restore team harmony, rebuild workplace trust, and strengthen professional relationships.
                   </p>
                 </div>
               </Col>
@@ -119,36 +220,36 @@ export default function Home() {
                   <div className="service-icon">
                     <FaMobile size={48} />
                   </div>
-                  <h4 className="service-title">Residential Treatment</h4>
+                  <h4 className="service-title">Intensive Career Development Programs</h4>
                   <p className="service-description">
-                    A structured and immersive program offering 24/7 care in a safe, supportive environment. 
-                    Residential treatment focuses on intensive therapy and holistic healing.
+                    A structured and immersive program offering comprehensive career coaching in a supportive environment. 
+                    Our intensive programs focus on career transformation and professional development.
                   </p>
                 </div>
               </Col>
-              
+
               <Col lg={4} md={6}>
                 <div className="service-card-lonestar">
                   <div className="service-icon">
                     <FaBook size={48} />
                   </div>
-                  <h4 className="service-title">Cognitive Behavioral Therapy</h4>
+                  <h4 className="service-title">Public Health Education</h4>
                   <p className="service-description">
-                    CBT is a proven methodology for changing negative thought patterns and behaviors. Our therapists 
-                    skillfully guide our clients through evidence-based techniques.
+                    Evidence-based public health education is a proven methodology for improving workplace wellness and 
+                    professional development. Our educators skillfully guide professionals through evidence-based techniques.
                   </p>
                 </div>
               </Col>
-              
+
               <Col lg={4} md={6}>
                 <div className="service-card-lonestar">
                   <div className="service-icon">
                     <FaTarget size={48} />
                   </div>
-                  <h4 className="service-title">Trauma-Focused Therapy</h4>
+                  <h4 className="service-title">Community-Based Career Support</h4>
                   <p className="service-description">
-                    Overcoming past trauma can lead to profound emotional healing. Our trauma-focused therapy covers 
-                    PTSD, childhood traumas, and other emotional scars from the past.
+                    Building professional networks can lead to profound career growth. Our community-based career support 
+                    covers networking, mentorship, and professional development through community resources.
                   </p>
                 </div>
               </Col>
@@ -163,70 +264,179 @@ export default function Home() {
               <Col lg={8} className="text-center">
                 <h2 className="section-title-lonestar">Why Choose Saint Daniels Healthcare?</h2>
                 <p className="why-choose-subtitle">
-                  Sometimes, all it takes is the proper setting and support. Saint Daniels Healthcare takes a holistic 
-                  path to healing: mind, body, and spirit in one inclusive treatment approach.
+                  Sometimes, all it takes is the right guidance and support. Saint Daniels Healthcare takes a comprehensive 
+                  approach to career development: professional growth, workplace wellness, and community resources in one 
+                  inclusive coaching approach.
                 </p>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4} md={6}>
                 <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Holistic Approach to Recovery</h4>
+                  <div className="why-choose-icon">
+                    <FaTarget size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Comprehensive Approach to Career Development</h4>
                   <p className="why-choose-description">
-                    We firmly believe in caring for the whole person: mind, body, and spirit. Our holistic approach 
-                    to care gets to the root of mental health challenges and empowers clients to achieve balance and well-being.
+                    We firmly believe in supporting the whole professional: career goals, workplace wellness, and community 
+                    connections. Our comprehensive approach gets to the root of career challenges and empowers professionals 
+                    to achieve success and workplace well-being.
                   </p>
-                </div>
+                  </div>
               </Col>
               
               <Col lg={4} md={6}>
                 <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Safe and Secure Environment</h4>
+                  <div className="why-choose-icon">
+                    <FaUsers size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Professional and Confidential Coaching</h4>
                   <p className="why-choose-description">
-                    We value the privacy and safety of every individual. Our facility is designed to provide a safe, 
-                    confidential environment where one can work on recovery without bias or pressure from the outside world.
+                    We value the privacy and confidentiality of every professional. Our coaching environment is designed 
+                    to provide a safe, confidential space where professionals can work on career development without 
+                    bias or pressure from workplace politics.
                   </p>
                 </div>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <div className="why-choose-icon">
+                    <FaTrophy size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Certified Career Coaches</h4>
+                  <p className="why-choose-description">
+                    Our certified career coaches and workplace wellness specialists have specialized training and many years of 
+                    experience, so that each coaching session is held with expertise and attention during the process.
+                  </p>
+                  </div>
               </Col>
               
               <Col lg={4} md={6}>
                 <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Licensed Medical Staff</h4>
+                  <div className="why-choose-icon">
+                    <FaDollarSign size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Flexible Coaching Options</h4>
                   <p className="why-choose-description">
-                    Our licensed therapists and medical professionals have specialized training and many years of 
-                    experience, so that each treatment session is held with concern and attention during the process.
+                    We know that career coaching can be an investment. Our team can help guide you through various coaching 
+                    options, explaining what may be covered by employer benefits, while developing a coaching plan that 
+                    works for your budget and schedule.
                   </p>
                 </div>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <div className="why-choose-card-lonestar">
+                  <div className="why-choose-icon">
+                    <FaLightbulb size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Personalized Career Development</h4>
+                  <p className="why-choose-description">
+                    Your career path is unique, and your coaching plan is designed with that in mind. 
+                    Our personalized approach to career development ensures that every professional gets exactly what 
+                    they need to succeed long-term.
+                  </p>
+                  </div>
               </Col>
               
               <Col lg={4} md={6}>
                 <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Insurance and Cost Management</h4>
+                  <div className="why-choose-icon">
+                    <FaBook size={48} />
+                  </div>
+                  <h4 className="why-choose-title">Public Health Education Resources</h4>
                   <p className="why-choose-description">
-                    We know that care can be expensive. Our team can help guide you through your options for insurance, 
-                    explaining what may be covered, while developing a cost plan that will work for you.
+                    Public health education may have an important place in your career development and workplace wellness. 
+                    Our educational resources can be integrated and monitored by our public health educators throughout 
+                    the course of your professional development.
                   </p>
                 </div>
               </Col>
-              
-              <Col lg={4} md={6}>
-                <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Personalized Treatment</h4>
-                  <p className="why-choose-description">
-                    Your path to mental health is unique, and your treatment plan is designed with that in mind. 
-                    Our personalized approach to care ensures that everyone gets exactly what they need to heal long-term.
+            </Row>
+          </Container>
+        </section>
+
+        {/* Premium Network Section */}
+        <section className="premium-network-section">
+          <Container>
+            <Row className="align-items-center">
+              <Col lg={6}>
+                <div className="premium-cta-content">
+                  <h2 className="premium-cta-title">Join Our Premium Network</h2>
+                  <p className="premium-cta-description">
+                    Connect with elite professionals, access exclusive resources, and accelerate your career development through our comprehensive coaching programs.
                   </p>
+                  <div className="premium-cta-buttons">
+                    <button className="btn-premium-primary" onClick={() => window.location.href = '/download'}>
+                      Download App
+                    </button>
+                    <button className="btn-premium-secondary" onClick={() => window.location.href = '/learn-more'}>
+                      Learn More
+                    </button>
+                  </div>
                 </div>
               </Col>
               
-              <Col lg={4} md={6}>
-                <div className="why-choose-card-lonestar">
-                  <h4 className="why-choose-title">Medication Management</h4>
-                  <p className="why-choose-description">
-                    Medications may have an important place in your treatment with regard to your mental health. 
-                    They can be prescribed and monitored by our medical professionals throughout the course of your treatment.
-                  </p>
+              <Col lg={6}>
+                <div className="network-cards-vertical">
+                  <div className="network-card-horizontal">
+                    <div className="network-card-content">
+                      <div className="network-icon">
+                        <FaUsers size={48} />
+                      </div>
+                      <div className="network-text">
+                        <h4 className="network-title">Elite Professional Network</h4>
+                        <p className="network-description">
+                          Connect with top-tier professionals across various industries who have successfully advanced their careers through our programs.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="network-cta">
+                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="network-card-horizontal">
+                    <div className="network-card-content">
+                      <div className="network-icon">
+                        <FaTrophy size={48} />
+                      </div>
+                      <div className="network-text">
+                        <h4 className="network-title">Success Stories</h4>
+                        <p className="network-description">
+                          Access to exclusive case studies and success stories from professionals who have achieved significant career milestones.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="network-cta">
+                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="network-card-horizontal">
+                    <div className="network-card-content">
+                      <div className="network-icon">
+                        <FaHandshake size={48} />
+                      </div>
+                      <div className="network-text">
+                        <h4 className="network-title">Exclusive Events</h4>
+                        <p className="network-description">
+                          Invitation-only networking events, workshops, and masterclasses with industry leaders and career development experts.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="network-cta">
+                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </Col>
             </Row>
