@@ -12,7 +12,7 @@ export default function Hero() {
     <section className="hero-section-lonestar">
       <Container>
         <Row className="align-items-center">
-          <Col lg={6}>
+          <Col lg={6} className="order-2 order-lg-1">
             <div className="hero-content-lonestar">
               <h1 className="hero-title-lonestar">
                 Health Consultation: Empowering Your Career
@@ -40,7 +40,7 @@ export default function Hero() {
               </div>
             </div>
           </Col>
-          <Col lg={6}>
+          <Col lg={6} className="order-1 order-lg-2">
             <div className="hero-image-lonestar">
               <Image 
                 src="/images/Poland.jpeg"
