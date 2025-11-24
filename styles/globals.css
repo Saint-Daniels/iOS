@@ -5118,6 +5118,11 @@ html, body {
   color: white;
 }
 
+.team-stats-professional .stat-number,
+.team-stats-professional .stat-label {
+  color: #fff;
+}
+
 .team-expertise-professional h4 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -6327,6 +6332,15 @@ html, body {
   font-size: 1.8rem;
   flex-shrink: 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--royal-gold);
+}
+
+.benefit-icon-3d svg {
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 .benefit-card span {
@@ -6771,6 +6785,7 @@ html, body {
   max-width: 600px;
   height: auto;
   object-fit: cover;
+  object-position: top;
 }
 
 .mission-section-lonestar {
@@ -6901,7 +6916,7 @@ html, body {
     max-width: 700px;
     height: 500px;
     object-fit: cover;
-    object-position: center;
+    object-position: top;
   }
   
   .hero-image-lonestar {
@@ -7739,14 +7754,14 @@ html, body {
 .stat-number {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: white !important;
   display: block;
   margin-bottom: 0.25rem;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: white !important;
   font-weight: 500;
 }
 

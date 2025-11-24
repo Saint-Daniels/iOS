@@ -15,14 +15,13 @@ export default function Hero() {
           <Col lg={6} className="order-2 order-lg-1">
             <div className="hero-content-lonestar">
               <h1 className="hero-title-lonestar">
-                Health Consultation: Empowering Your Career
+                Healthcare Rewards: Earn Well. Live Well
               </h1>
               <p className="hero-description-lonestar">
-                At Saint Daniels Healthcare, we believe in empowering professionals through comprehensive health consultation 
-                services that enhance your career potential. Our mission is to provide personalized health and wellness 
-                guidance combined with career-focused consultation to help you achieve peak professional performance. 
-                From individual health assessments to workplace wellness strategies, we're committed to your career 
-                success through optimal health and well-being.
+                Saint Daniels Healthcare Rewards converts every qualified sponsor interaction into a private subsidy you can
+                deploy at trusted pharmacies or allow to grow through our compound network. Download the app to track each
+                reward, authorize spending with a secure virtual card, and build a long-term wellness balance with complete
+                transparency.
               </p>
               <div className="hero-buttons-lonestar">
                 <button 
@@ -31,9 +30,9 @@ export default function Hero() {
                 >
                   Download App
                 </button>
-                <button 
+                <button
                   className="btn-secondary-lonestar"
-                  onClick={() => router.push('/learn-more')}
+                  onClick={() => router.push('/learnmore')}
                 >
                   Learn More
                 </button>

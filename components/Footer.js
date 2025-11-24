@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaYoutube, FaInstagram } from 'react-icons/fa';
+import { FaYoutube, FaInstagram, FaTiktok } from 'react-icons/fa';
 
 const Footer = () => {
   const pathname = usePathname();
@@ -19,7 +19,7 @@ const Footer = () => {
                          pathname === '/about' ||
                          pathname === '/contact' ||
                          pathname === '/download' ||
-                         pathname === '/learn-more';
+                         pathname === '/learnmore';
 
   if (isMinimalFooter) {
     return (
@@ -45,6 +45,9 @@ const Footer = () => {
               </a>
               <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">
                 <FaInstagram />
+              </a>
+              <a href="https://tiktok.com/@_saintdaniels" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="TikTok">
+                <FaTiktok />
               </a>
             </div>
           </div>

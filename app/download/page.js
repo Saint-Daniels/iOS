@@ -1,7 +1,29 @@
 'use client';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaApple, FaGooglePlay } from 'react-icons/fa';
+import {
+  FaApple,
+  FaGooglePlay,
+  FaHospital,
+  FaCreditCard,
+  FaMobileAlt,
+  FaSearch,
+  FaChartLine,
+  FaDollarSign,
+  FaSync,
+  FaChartBar,
+  FaCalendarAlt,
+  FaClock,
+  FaBriefcase,
+  FaTrophy,
+  FaLock,
+  FaUserTie,
+  FaBullseye,
+  FaRocket,
+  FaFileAlt,
+  FaMapMarkerAlt,
+  FaComments,
+} from 'react-icons/fa';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
@@ -12,7 +34,7 @@ export default function DownloadPage() {
     {
       platform: 'iOS',
       icon: <FaApple size={48} />,
-      description: 'Download for iPhone and iPad',
+      description: 'Optimized for iPhone and iPad with Face ID ready checkout.',
       buttonText: 'Download on App Store',
       buttonClass: 'btn-ios',
       link: '#'
@@ -20,13 +42,12 @@ export default function DownloadPage() {
     {
       platform: 'Android',
       icon: <FaGooglePlay size={48} />,
-      description: 'Download for Android devices',
-      buttonText: 'Get it on Google Play',
+      description: 'Runs on every modern Android device with secure biometrics.',
+      buttonText: 'Download from Google Play',
       buttonClass: 'btn-android',
       link: '#'
     }
   ];
-
 
   return (
     <PageTransition>
@@ -72,10 +93,11 @@ export default function DownloadPage() {
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
-                <h2 className="features-title">Experience the Royal Treatment</h2>
+                <h2 className="features-title">Unlock Your Healthcare Rewards</h2>
                 <p className="features-subtitle">
-                  Our mobile app brings the full Saint Daniels experience to your fingertips. 
-                  Track your career development journey, access career coaching, and connect with our professional community wherever you go.
+                  The Saint Daniels app is the secure gateway to earning brand-funded healthcare rewards, redeeming them in
+                  pharmacies, and letting unused balances compound through the network treasury. Install it to manage
+                  wallets, verify pharmacies, and authorize payments with confidence.
                 </p>
               </Col>
             </Row>
@@ -86,19 +108,19 @@ export default function DownloadPage() {
                   <div className="app-features">
                     <div className="app-feature">
                       <span className="feature-check">✓</span>
-                      <span>Watch ads and take surveys to earn money</span>
+                      <span>Opt into sponsored health moments to earn private subsidies</span>
                     </div>
                     <div className="app-feature">
                       <span className="feature-check">✓</span>
-                      <span>Play engaging games and compete with others</span>
+                      <span>Unlock rewards instantly in your secure wallet</span>
                     </div>
                     <div className="app-feature">
                       <span className="feature-check">✓</span>
-                      <span>Access your personalized For You feed</span>
+                      <span>Spend at pharmacies with tap-to-pay virtual cards</span>
                     </div>
                     <div className="app-feature">
                       <span className="feature-check">✓</span>
-                      <span>Track your health and wellness progress</span>
+                      <span>Let unused balances compound daily in network vaults</span>
                     </div>
                   </div>
                 </div>
@@ -110,9 +132,9 @@ export default function DownloadPage() {
                       <div className="app-interface">
                         <div className="app-header">Saint Daniels</div>
                         <div className="app-content">
-                          <div className="app-section">Career Development</div>
-                          <div className="app-section">Games</div>
-                          <div className="app-section">For You Feed</div>
+                          <div className="app-section">Rewards Wallet</div>
+                          <div className="app-section">Pharmacy Network</div>
+                          <div className="app-section">Compound Vaults</div>
                         </div>
                       </div>
                     </div>
@@ -154,30 +176,37 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Social Network Integration</h2>
+                    <h2 className="feature-title-immersive">Pharmacy Network Integration</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Connect your social media accounts to build professional relationships and expand your career network. 
-                    Share your achievements, connect with industry professionals, and showcase your professional journey 
-                    through integrated social platforms. This feature helps you maintain professional connections while 
-                    building your personal brand in the healthcare industry.
+                    Connect with thousands of independent and national pharmacies that settle subsidies through our ledger every day.
+                    Show your virtual card at checkout, let the pharmacist process it, and watch your private subsidy cover prescriptions,
+                    OTC kits, and preventative devices in seconds. Every receipt shows which advertiser funded the purchase.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🌐</div>
-                      <span>Professional networking with industry peers</span>
+                      <div className="benefit-icon-3d">
+                        <FaHospital size={24} />
+                      </div>
+                      <span>Tap-to-pay wallet at partner pharmacies</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🏆</div>
-                      <span>Showcase your career achievements and milestones</span>
+                      <div className="benefit-icon-3d">
+                        <FaCreditCard size={24} />
+                      </div>
+                      <span>Benefit stacking with FSA/HSA cards</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">👥</div>
-                      <span>Connect with mentors and career coaches</span>
+                      <div className="benefit-icon-3d">
+                        <FaMobileAlt size={24} />
+                      </div>
+                      <span>Real-time settlement and receipts</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">⭐</div>
-                      <span>Build your professional brand and reputation</span>
+                      <div className="benefit-icon-3d">
+                        <FaSearch size={24} />
+                      </div>
+                      <span>Transparent brand funding visibility</span>
                     </div>
                   </div>
                 </div>
@@ -196,30 +225,37 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Interactive Learning & Development</h2>
+                    <h2 className="feature-title-immersive">Compound Growth Vaults</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Engage with interactive learning modules designed to enhance your professional skills and career development. 
-                    Track your progress through various educational games and assessments that help you master new healthcare concepts, 
-                    improve your communication skills, and stay current with industry best practices. Compete with other professionals 
-                    in friendly learning competitions while earning certifications and continuing education credits.
+                    When you let rewards sit, they join a diversified healthcare treasury that produces daily compound interest.
+                    Choose conservative, balanced, or accelerator tracks depending on how soon you plan to spend at the
+                    pharmacy. The dashboard shows projected growth so you can schedule refills with confidence.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📚</div>
-                      <span>Interactive learning modules for skill development</span>
+                      <div className="benefit-icon-3d">
+                        <FaChartLine size={24} />
+                      </div>
+                      <span>Goal-based vaults for different care needs</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📊</div>
-                      <span>Progress tracking and achievement milestones</span>
+                      <div className="benefit-icon-3d">
+                        <FaDollarSign size={24} />
+                      </div>
+                      <span>Transparent yield engine with daily statements</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🎓</div>
-                      <span>Continuing education credits and certifications</span>
+                      <div className="benefit-icon-3d">
+                        <FaSync size={24} />
+                      </div>
+                      <span>Automated rebalancing across tracks</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🔍</div>
-                      <span>Professional skill assessments and feedback</span>
+                      <div className="benefit-icon-3d">
+                        <FaChartBar size={24} />
+                      </div>
+                      <span>Live projections for future care planning</span>
                     </div>
                   </div>
                 </div>
@@ -287,30 +323,38 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Professional Development Calendar</h2>
+                    <h2 className="feature-title-immersive">Reward Activity Calendar</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Manage your professional development journey with our comprehensive calendar system that tracks your continuing education, 
-                    training sessions, certification deadlines, and career milestones. Stay organized with automated reminders for important 
-                    professional events, conference attendance, and skill development opportunities. Monitor your progress over time and 
-                    ensure you're meeting your professional goals with detailed analytics and reporting features.
+                    Track your subsidy earnings, pharmacy redemptions, and compound interest accrual with our comprehensive
+                    calendar system. Stay organized with automated reminders for refill schedules, vault rebalancing,
+                    and new advertiser opportunities. Monitor your healthcare budget over time and ensure you're maximizing
+                    your rewards potential with detailed analytics and reporting features.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📅</div>
-                      <span>Track continuing education and training sessions</span>
+                      <div className="benefit-icon-3d">
+                        <FaCalendarAlt size={24} />
+                      </div>
+                      <span>Track subsidy earnings and redemptions</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">⏰</div>
-                      <span>Automated reminders for certification deadlines</span>
+                      <div className="benefit-icon-3d">
+                        <FaClock size={24} />
+                      </div>
+                      <span>Automated reminders for refill schedules</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📈</div>
-                      <span>Monitor professional development progress</span>
+                      <div className="benefit-icon-3d">
+                        <FaChartLine size={24} />
+                      </div>
+                      <span>Monitor compound growth progress</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📊</div>
-                      <span>Detailed analytics and progress reporting</span>
+                      <div className="benefit-icon-3d">
+                        <FaChartBar size={24} />
+                      </div>
+                      <span>Detailed analytics and budget reporting</span>
                     </div>
                   </div>
                 </div>
@@ -329,30 +373,38 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Professional Profile Management</h2>
+                    <h2 className="feature-title-immersive">Secure Wallet Management</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Maintain a comprehensive digital portfolio that showcases your professional achievements, certifications, 
-                    continuing education credits, and career milestones. Your secure profile cloud serves as a centralized hub 
-                    for all your professional documentation, making it easy to share your credentials with employers, colleagues, 
-                    and professional organizations. Keep your professional information organized and up-to-date with automated 
-                    reminders and easy-to-use management tools.
+                    Maintain a comprehensive digital wallet that tracks your private subsidies, pharmacy redemptions,
+                    and compound interest earnings. Your secure wallet serves as a centralized hub for all your reward
+                    documentation, making it easy to verify transactions, share receipts with tax preparers, and keep
+                    your healthcare budget organized. Keep your reward information secure and up-to-date with encrypted
+                    storage and easy-to-use management tools.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">💼</div>
-                      <span>Centralized storage for all professional documents</span>
+                      <div className="benefit-icon-3d">
+                        <FaBriefcase size={24} />
+                      </div>
+                      <span>Centralized storage for all reward transactions</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🏆</div>
-                      <span>Showcase achievements and certifications</span>
+                      <div className="benefit-icon-3d">
+                        <FaTrophy size={24} />
+                      </div>
+                      <span>Showcase subsidy earnings and growth</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🔒</div>
-                      <span>Secure sharing with employers and colleagues</span>
+                      <div className="benefit-icon-3d">
+                        <FaLock size={24} />
+                      </div>
+                      <span>Secure sharing with tax preparers and advisors</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🔄</div>
+                      <div className="benefit-icon-3d">
+                        <FaSync size={24} />
+                      </div>
                       <span>Automated updates and maintenance reminders</span>
                     </div>
                   </div>
@@ -434,30 +486,39 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Personalized Career Consultation</h2>
+                    <h2 className="feature-title-immersive">Personalized Reward Coaching</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Work with certified career coaches who specialize in healthcare professional development to create a personalized 
-                    career advancement strategy. Our experienced consultants provide one-on-one guidance for career transitions, 
-                    salary negotiations, leadership development, and professional growth opportunities. Receive tailored advice 
-                    based on your unique background, goals, and the current healthcare job market to maximize your career potential.
+                    Work with reward specialists who understand the healthcare subsidy marketplace to create a personalized
+                    strategy for maximizing your earnings and compound growth. Our experienced consultants provide one-on-one
+                    guidance for timing redemptions, optimizing vault allocations, and identifying high-value advertiser
+                    opportunities. Receive tailored advice based on your unique care needs, pharmacy preferences, and
+                    long-term wellness goals to maximize your subsidy potential.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">👨‍💼</div>
-                      <span>One-on-one sessions with certified career coaches</span>
+                      <div className="benefit-icon-3d">
+                        <FaUserTie size={24} />
+                      </div>
+                      <span>One-on-one sessions with reward specialists</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🎯</div>
-                      <span>Personalized career advancement strategies</span>
+                      <div className="benefit-icon-3d">
+                        <FaBullseye size={24} />
+                      </div>
+                      <span>Personalized subsidy maximization strategies</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🚀</div>
-                      <span>Guidance for career transitions and leadership development</span>
+                      <div className="benefit-icon-3d">
+                        <FaRocket size={24} />
+                      </div>
+                      <span>Guidance for vault optimization and timing</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📈</div>
-                      <span>Industry-specific advice and market insights</span>
+                      <div className="benefit-icon-3d">
+                        <FaChartLine size={24} />
+                      </div>
+                      <span>Market-specific advice and advertiser insights</span>
                     </div>
                   </div>
                 </div>
@@ -476,31 +537,39 @@ export default function DownloadPage() {
                     <div className="feature-icon-immersive">
                       <span className="check-3d">✓</span>
                     </div>
-                    <h2 className="feature-title-immersive">Resume Optimization & Career Placement</h2>
+                    <h2 className="feature-title-immersive">Pharmacy Network & Redemption Support</h2>
                   </div>
                   <p className="feature-description-immersive">
-                    Get professional resume writing and optimization services tailored to the healthcare industry. Our expert team 
-                    helps you create compelling resumes, cover letters, and LinkedIn profiles that stand out to employers. We also 
-                    provide career placement assistance, connecting you with local healthcare opportunities based on your location, 
-                    experience level, and career preferences. Our comprehensive job search support includes interview preparation, 
-                    salary negotiation guidance, and networking opportunities in your area.
+                    Get professional assistance connecting with partner pharmacies and optimizing your redemption strategy.
+                    Our expert team helps you identify the best pharmacies for your location, understand benefit stacking
+                    opportunities, and troubleshoot any settlement issues. We also provide comprehensive support for
+                    understanding compound interest calculations, vault selection guidance, and maximizing your long-term
+                    care budget through strategic reward management.
                   </p>
                   <div className="benefits-grid">
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📝</div>
-                      <span>Professional resume writing and optimization</span>
+                      <div className="benefit-icon-3d">
+                        <FaFileAlt size={24} />
+                      </div>
+                      <span>Pharmacy network navigation and selection</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">📍</div>
-                      <span>Local job placement assistance and networking</span>
+                      <div className="benefit-icon-3d">
+                        <FaMapMarkerAlt size={24} />
+                      </div>
+                      <span>Local pharmacy recommendations and verification</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">💬</div>
-                      <span>Interview preparation and salary negotiation guidance</span>
+                      <div className="benefit-icon-3d">
+                        <FaComments size={24} />
+                      </div>
+                      <span>Redemption troubleshooting and support</span>
                     </div>
                     <div className="benefit-card">
-                      <div className="benefit-icon-3d">🔍</div>
-                      <span>Industry-specific job search strategies</span>
+                      <div className="benefit-icon-3d">
+                        <FaSearch size={24} />
+                      </div>
+                      <span>Compound interest and vault optimization strategies</span>
                     </div>
                   </div>
                 </div>
@@ -544,4 +613,3 @@ export default function DownloadPage() {
     </PageTransition>
   );
 }
-

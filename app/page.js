@@ -1,13 +1,26 @@
 'use client';
 
-import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaArrowRight, FaDollarSign, FaClipboardList, FaBullseye, FaGamepad, FaTrophy, FaGift, FaBook, FaLightbulb, FaBullseye as FaTarget, FaMobile, FaGamepad as FaGames, FaListUl, FaHandshake, FaUsers, FaBookOpen, FaChartLine, FaHeart, FaRocket, FaUserTie } from 'react-icons/fa';
+import {
+  FaDollarSign,
+  FaClipboardList,
+  FaBullseye,
+  FaTrophy,
+  FaGift,
+  FaLightbulb,
+  FaMobile,
+  FaListUl,
+  FaHandshake,
+  FaUsers,
+  FaChartLine,
+  FaHeart,
+  FaBookOpen,
+} from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
 import Hero from '../components/Hero';
-import Benefits from '../components/Benefits';
+import { ScrollFadeIn, ScrollSlideIn } from '../components/ScrollAnimation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -17,406 +30,440 @@ export default function Home() {
       <Navbar />
       <div className="home-page">
         <Hero />
-        {/* Mission Section */}
+
+        {/* Healthcare Rewards Promise */}
         <section className="mission-section-professional">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="mission-header">
-                  <h2 className="mission-title-professional">Our Mission</h2>
-                  <div className="mission-divider"></div>
-                </div>
-              </Col>
-            </Row>
-            
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="mission-header">
+                    <h2 className="mission-title-professional">Bank With Your Health</h2>
+                    <div className="mission-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
             <Row className="align-items-center">
               <Col lg={6}>
-                <div className="mission-image-wrapper-professional">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                    alt="Professional team meeting and collaboration"
-                    width={600}
-                    height={450}
-                    className="mission-image-professional"
-                  />
-                </div>
+                <ScrollSlideIn direction="right" delay={0.2}>
+                  <div className="mission-image-wrapper-professional">
+                    <Image
+                      src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2070&q=80"
+                      alt="Modern banking and healthcare technology"
+                      width={600}
+                      height={450}
+                      className="mission-image-professional"
+                    />
+                  </div>
+                </ScrollSlideIn>
               </Col>
               <Col lg={6}>
-                <div className="mission-content-professional">
+                <ScrollSlideIn direction="left" delay={0.3}>
+                  <div className="mission-content-professional">
                   <p className="mission-description-professional">
-                    Saint Daniels Healthcare is committed to providing comprehensive career coaching and workplace solutions 
-                    through public health educational resources and community support. We believe in personalized career 
-                    development, evidence-based coaching practices, and creating a supportive environment where professional 
-                    growth thrives.
+                    Saint Daniels Healthcare Rewards converts privacy-safe ad attention into a private subsidy. Every time you
+                    engage with health brands inside our ad network, dollars flow into your reward wallet, ready to be spent at
+                    any participating pharmacy. Skip a purchase and the unused balance compounds daily, so your care budget
+                    grows automatically while you focus on feeling better.
                   </p>
-                  
+
                   <div className="mission-highlights-professional">
                     <div className="highlight-card">
                       <div className="highlight-icon-wrapper">
-                        <FaUserTie className="highlight-icon" />
+                        <FaDollarSign className="highlight-icon" />
                       </div>
                       <div className="highlight-content">
-                        <h4>Personalized Development</h4>
-                        <p>Tailored coaching programs designed for your unique career goals and professional aspirations.</p>
+                        <h4>Private Subsidy</h4>
+                        <p>Brand-funded dollars arrive in your secure wallet as soon as you complete a sponsored activity.</p>
                       </div>
                     </div>
-                    
+
                     <div className="highlight-card">
                       <div className="highlight-icon-wrapper">
-                        <FaHandshake className="highlight-icon" />
+                        <FaClipboardList className="highlight-icon" />
                       </div>
                       <div className="highlight-content">
-                        <h4>Community Support</h4>
-                        <p>Access to a network of professionals and resources that enhance your career development journey.</p>
+                        <h4>Pharmacy Freedom</h4>
+                        <p>Show the app at checkout and spend rewards on prescriptions, OTC items, or preventative care kits.</p>
                       </div>
                     </div>
-                    
+
                     <div className="highlight-card">
                       <div className="highlight-icon-wrapper">
-                        <FaRocket className="highlight-icon" />
+                        <FaChartLine className="highlight-icon" />
                       </div>
                       <div className="highlight-content">
-                        <h4>Professional Growth</h4>
-                        <p>Evidence-based strategies and continuous support to accelerate your career advancement.</p>
+                        <h4>Compound Growth</h4>
+                        <p>Unused dollars earn daily compound interest so the value of your subsidy keeps expanding.</p>
                       </div>
                     </div>
                   </div>
-                </div>
+                  </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Who Are We Section */}
+        {/* How Subsidies Work */}
         <section className="who-we-section-professional">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="section-header-professional">
-                  <h2 className="section-title-professional">Who We Are</h2>
-                  <div className="section-divider"></div>
-                </div>
-              </Col>
-            </Row>
-            
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="section-header-professional">
+                    <h2 className="section-title-professional">How Your Subsidy Flows</h2>
+                    <div className="section-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
             <Row className="align-items-center">
               <Col lg={6}>
-                <div className="team-image-wrapper-professional">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80&crop=top"
-                    alt="Professional healthcare team consultation"
+                <ScrollSlideIn direction="left" delay={0.2}>
+                  <div className="team-image-wrapper-professional">
+                  <Image
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2076&q=80"
+                    alt="Financial data and healthcare analytics"
                     width={600}
                     height={450}
                     className="team-image-professional"
                   />
-                </div>
+                  </div>
+                </ScrollSlideIn>
               </Col>
               <Col lg={6}>
-                <div className="team-content-professional">
+                <ScrollSlideIn direction="right" delay={0.3}>
+                  <div className="team-content-professional">
                   <div className="team-description-professional">
-                    <p>With over 10 years of experience, the team at Saint Daniels Healthcare provides career coaching 
-                    with compassion, tailored to the unique professional journey of each individual.</p>
+                    <p>
+                      Advertisers place offers in our closed healthcare ad network. Members opt in, view personalized content,
+                      and immediately unlock a private subsidy that can be routed to any verified pharmacy. Our treasury keeps
+                      unused balances compounding, so every week you wait to spend, your total subsidy earns more interest.
+                    </p>
                   </div>
-                  
+
                   <div className="team-stats-professional">
                     <div className="stat-card">
-                      <div className="stat-number">10+</div>
-                      <div className="stat-label">Years Experience</div>
+                      <div className="stat-number">$240</div>
+                      <div className="stat-label">Avg. annual subsidy</div>
                     </div>
                     <div className="stat-card">
-                      <div className="stat-number">500+</div>
-                      <div className="stat-label">Professionals Served</div>
+                      <div className="stat-number">18%</div>
+                      <div className="stat-label">Compound rate</div>
                     </div>
                     <div className="stat-card">
-                      <div className="stat-number">95%</div>
-                      <div className="stat-label">Success Rate</div>
+                      <div className="stat-number">1.2M</div>
+                      <div className="stat-label">Pharmacy SKUs</div>
                     </div>
                   </div>
-                  
+
                   <div className="team-expertise-professional">
-                    <h4>Our Expertise</h4>
+                    <h4>What powers the network</h4>
                     <div className="expertise-grid">
                       <div className="expertise-item">
                         <FaBullseye className="expertise-icon" />
-                        <span>Certified Career Coaches</span>
+                        <span>Ad quality review</span>
                       </div>
                       <div className="expertise-item">
                         <FaHandshake className="expertise-icon" />
-                        <span>Workplace Wellness Specialists</span>
+                        <span>Pharmacy settlement</span>
                       </div>
                       <div className="expertise-item">
-                        <FaBookOpen className="expertise-icon" />
-                        <span>Public Health Educators</span>
+                        <FaUsers className="expertise-icon" />
+                        <span>Member care team</span>
                       </div>
                       <div className="expertise-item">
                         <FaChartLine className="expertise-icon" />
-                        <span>Evidence-Based Programs</span>
+                        <span>Compound treasury</span>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-
-        {/* Career Development Workshops Section */}
-        <section className="service-fullpage-section">
-          <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="service-header">
-                  <h2 className="service-title-large">Career Development Workshops</h2>
-                  <div className="service-divider"></div>
-                </div>
-              </Col>
-            </Row>
-            
-            <Row className="align-items-center mb-5">
-              <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Career development workshop session"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="service-content">
-                  <h3 className="service-subtitle">Connect with Other Professionals</h3>
-                  <p className="service-description-large">
-                    Connect with other professionals and draw support from similar career journeys. Our career development 
-                    workshops allow experiences to be exchanged in a collaborative learning environment.
-                  </p>
-                  <div className="service-features">
-                    <div className="feature-item">
-                      <FaUsers className="feature-icon" />
-                      <span>Peer Learning & Networking</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaBookOpen className="feature-icon" />
-                      <span>Interactive Skill Building</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaHandshake className="feature-icon" />
-                      <span>Collaborative Problem Solving</span>
-                    </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
-            
-            <Row className="g-4">
-              <Col lg={4}>
-                <div className="workshop-card">
-                  <h4>Leadership Development</h4>
-                  <p>Build essential leadership skills through hands-on exercises and real-world case studies.</p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="workshop-card">
-                  <h4>Communication Excellence</h4>
-                  <p>Master professional communication techniques for presentations, negotiations, and team collaboration.</p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="workshop-card">
-                  <h4>Strategic Planning</h4>
-                  <p>Learn to develop and execute strategic career plans with measurable outcomes and milestones.</p>
-                </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* One-on-One Career Coaching Section */}
+        {/* Reward Lifecycle */}
         <section className="service-fullpage-section">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="service-header">
-                  <h2 className="service-title-large">One-on-One Career Coaching</h2>
-                  <div className="service-divider"></div>
-                </div>
-              </Col>
-            </Row>
-            
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Your Reward Lifecycle</h2>
+                    <div className="service-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
             <Row className="align-items-center mb-5">
               <Col lg={6}>
-                <div className="service-content">
-                  <h3 className="service-subtitle">Personalized Career Coaching Sessions</h3>
+                <ScrollSlideIn direction="right" delay={0.2}>
+                  <div className="service-image-wrapper">
+                    <Image
+                      src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1000&q=80"
+                      alt="Member tracking healthcare rewards timeline"
+                      width={600}
+                      height={400}
+                      className="service-image"
+                    />
+                  </div>
+                </ScrollSlideIn>
+              </Col>
+              <Col lg={6}>
+                <ScrollSlideIn direction="left" delay={0.3}>
+                  <div className="service-content">
+                  <h3 className="service-subtitle">Earn, spend, and grow in one tap</h3>
                   <p className="service-description-large">
-                    Personalized career coaching sessions tailored to your unique professional challenges and goals. Our certified 
-                    career coaches provide a confidential, supportive space for career reflection, development, and growth.
+                    Watch a sponsored insight, receive your private subsidy, and choose whether to spend it instantly at the
+                    pharmacy counter or let it ride inside the compound rewards vault. Transparent receipts show how every
+                    penny was funded, where it was redeemed, and how much interest accrued while you waited.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
-                      <FaTarget className="feature-icon" />
-                      <span>Goal Setting & Planning</span>
+                      <FaListUl className="feature-icon" />
+                      <span>Ad tasks unlock cash</span>
                     </div>
                     <div className="feature-item">
-                      <FaLightbulb className="feature-icon" />
-                      <span>Personalized Strategies</span>
+                      <FaGift className="feature-icon" />
+                      <span>Instant pharmacy payments</span>
                     </div>
                     <div className="feature-item">
                       <FaChartLine className="feature-icon" />
-                      <span>Progress Tracking</span>
+                      <span>Daily compounding ledger</span>
                     </div>
                   </div>
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="One-on-one career coaching session"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
+                  </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4}>
-                <div className="coaching-card">
-                  <h4>Career Assessment</h4>
-                  <p>Comprehensive evaluation of your skills, interests, and career aspirations to identify optimal career paths.</p>
-                </div>
+                <ScrollFadeIn delay={0.1}>
+                  <div className="workshop-card">
+                    <h4>Earn</h4>
+                    <p>Complete curated ad experiences that prioritize clinical clarity over clickbait.</p>
+                  </div>
+                </ScrollFadeIn>
               </Col>
               <Col lg={4}>
-                <div className="coaching-card">
-                  <h4>Resume & Interview Prep</h4>
-                  <p>Professional guidance on resume optimization, interview techniques, and job search strategies.</p>
-                </div>
+                <ScrollFadeIn delay={0.2}>
+                  <div className="workshop-card">
+                    <h4>Spend</h4>
+                    <p>Use your virtual card in-app or share your member ID to pay inside any partner pharmacy.</p>
+                  </div>
+                </ScrollFadeIn>
               </Col>
               <Col lg={4}>
-                <div className="coaching-card">
-                  <h4>Executive Coaching</h4>
-                  <p>Advanced coaching for senior professionals focusing on leadership development and organizational impact.</p>
-                </div>
+                <ScrollFadeIn delay={0.3}>
+                  <div className="workshop-card">
+                    <h4>Grow</h4>
+                    <p>Let unspent balances earn compound interest that can later cover higher-cost treatments.</p>
+                  </div>
+                </ScrollFadeIn>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Workplace Wellness Programs Section */}
+        {/* Ad Network Marketplace */}
         <section className="service-fullpage-section">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="service-header">
-                  <h2 className="service-title-large">Workplace Wellness Programs</h2>
-                  <div className="service-divider"></div>
-                </div>
-              </Col>
-            </Row>
-            
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Ad Network Marketplace</h2>
+                    <div className="service-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
             <Row className="align-items-center mb-5">
               <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Workplace wellness team meeting"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
-              </Col>
-              <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">Restore Team Harmony</h3>
+                  <h3 className="service-subtitle">Brands fund your future care</h3>
                   <p className="service-description-large">
-                    Workplace challenges can impact entire teams and organizations. Our workplace wellness programs aim 
-                    to restore team harmony, rebuild workplace trust, and strengthen professional relationships.
+                    Healthcare advertisers compete for attention inside our marketplace. When you opt in to their stories,
+                    they deposit real dollars into your private subsidy. We cap frequency, protect data, and route every
+                    campaign through pharmacists so what you watch translates to eligible products on the shelf.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
-                      <FaUsers className="feature-icon" />
-                      <span>Team Building Activities</span>
+                      <FaBullseye className="feature-icon" />
+                      <span>Verified health brands only</span>
                     </div>
                     <div className="feature-item">
                       <FaHandshake className="feature-icon" />
-                      <span>Conflict Resolution</span>
+                      <span>Transparent funding agreements</span>
                     </div>
                     <div className="feature-item">
-                      <FaHeart className="feature-icon" />
-                      <span>Stress Management</span>
+                      <FaLightbulb className="feature-icon" />
+                      <span>Contextual education moments</span>
                     </div>
                   </div>
                 </div>
               </Col>
+              <Col lg={6}>
+                <div className="service-image-wrapper">
+                  <Image
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+                    alt="Healthcare advertiser meeting"
+                    width={600}
+                    height={400}
+                    className="service-image"
+                  />
+                </div>
+              </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4}>
-                <div className="wellness-card">
-                  <h4>Stress Reduction</h4>
-                  <p>Evidence-based techniques for managing workplace stress and building resilience in high-pressure environments.</p>
+                <div className="coaching-card">
+                  <h4>Brand Wallets</h4>
+                  <p>Every campaign reserves dollars in escrow so your rewards are guaranteed at redemption.</p>
                 </div>
               </Col>
               <Col lg={4}>
-                <div className="wellness-card">
-                  <h4>Team Dynamics</h4>
-                  <p>Improve communication, collaboration, and trust within teams to enhance productivity and job satisfaction.</p>
+                <div className="coaching-card">
+                  <h4>Relevance Controls</h4>
+                  <p>Preference centers keep content aligned to the conditions and pharmacies you actually use.</p>
                 </div>
               </Col>
               <Col lg={4}>
-                <div className="wellness-card">
-                  <h4>Work-Life Balance</h4>
-                  <p>Strategies for maintaining healthy boundaries between work and personal life for long-term career sustainability.</p>
+                <div className="coaching-card">
+                  <h4>Compliance Desk</h4>
+                  <p>Pharmacists review every script before it reaches members, ensuring safe, useful guidance.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Intensive Career Development Programs Section */}
+        {/* Pharmacy Experience */}
         <section className="service-fullpage-section">
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <h2 className="service-title-large">Intensive Career Development Programs</h2>
+                  <h2 className="service-title-large">Pharmacy Spending Experience</h2>
                   <div className="service-divider"></div>
                 </div>
               </Col>
             </Row>
-            
+
+            <Row className="align-items-center mb-5">
+              <Col lg={6}>
+                <div className="service-image-wrapper">
+                  <Image
+                    src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80"
+                    alt="Pharmacist scanning app"
+                    width={600}
+                    height={400}
+                    className="service-image"
+                  />
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="service-content">
+                  <h3 className="service-subtitle">Use rewards where care happens</h3>
+                  <p className="service-description-large">
+                    Show your virtual card in your app, let the pharmacist process it, and watch your private subsidy cover the
+                    bill. Every receipt explains which advertiser funded the purchase and how much compound interest you kept
+                    by not spending everything at once.
+                  </p>
+                  <div className="service-features">
+                    <div className="feature-item">
+                      <FaMobile className="feature-icon" />
+                      <span>Tap-to-pay in store</span>
+                    </div>
+                    <div className="feature-item">
+                      <FaUsers className="feature-icon" />
+                      <span>Pharmacist verified pricing</span>
+                    </div>
+                    <div className="feature-item">
+                      <FaHeart className="feature-icon" />
+                      <span>OTC + Rx eligible</span>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="g-4">
+              <Col lg={4}>
+                <div className="wellness-card">
+                  <h4>Same-Day Settlement</h4>
+                  <p>Pharmacies receive funds instantly so there is never a delay in filling critical meds.</p>
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="wellness-card">
+                  <h4>Benefit Stacking</h4>
+                  <p>Combine your subsidy with FSA/HSA cards for maximum savings at checkout.</p>
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="wellness-card">
+                  <h4>Interest Insights</h4>
+                  <p>Real-time projections show how much future care you can fund if you defer a purchase.</p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+        {/* Compound Growth Programs */}
+        <section className="service-fullpage-section">
+          <Container>
+            <Row className="justify-content-center mb-5">
+              <Col lg={8} className="text-center">
+                <div className="service-header">
+                  <h2 className="service-title-large">Compound Growth Programs</h2>
+                  <div className="service-divider"></div>
+                </div>
+              </Col>
+            </Row>
+
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">Structured and Immersive Programs</h3>
+                  <h3 className="service-subtitle">Savings accounts built for care</h3>
                   <p className="service-description-large">
-                    A structured and immersive program offering comprehensive career coaching in a supportive environment. 
-                    Our intensive programs focus on career transformation and professional development.
+                    When you let rewards sit, they join a diversified healthcare treasury that produces daily compound interest.
+                    Choose conservative, balanced, or accelerator tracks depending on how soon you plan to spend at the
+                    pharmacy. The dashboard shows projected growth so you can schedule refills with confidence.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
                       <FaTrophy className="feature-icon" />
-                      <span>Career Transformation</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaRocket className="feature-icon" />
-                      <span>Accelerated Growth</span>
+                      <span>Goal-based vaults</span>
                     </div>
                     <div className="feature-item">
                       <FaChartLine className="feature-icon" />
-                      <span>Measurable Results</span>
+                      <span>Transparent yield engine</span>
+                    </div>
+                    <div className="feature-item">
+                      <FaLightbulb className="feature-icon" />
+                      <span>Automated rebalancing</span>
                     </div>
                   </div>
                 </div>
               </Col>
               <Col lg={6}>
                 <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Intensive career development program"
+                  <Image
+                    src="https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?auto=format&fit=crop&w=1000&q=80"
+                    alt="Member monitoring compound growth"
                     width={600}
                     height={400}
                     className="service-image"
@@ -424,48 +471,48 @@ export default function Home() {
                 </div>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4}>
                 <div className="intensive-card">
-                  <h4>Executive Leadership Program</h4>
-                  <p>Comprehensive leadership development for senior professionals seeking to enhance their executive presence and strategic thinking.</p>
+                  <h4>Everyday Essentials Track</h4>
+                  <p>Short-term growth designed for weekly OTC needs and seasonal care kits.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="intensive-card">
-                  <h4>Career Transition Program</h4>
-                  <p>Structured support for professionals making significant career changes or industry transitions.</p>
+                  <h4>Maintenance Medication Track</h4>
+                  <p>Medium-term compounding tailored to 30/60/90-day prescription cycles.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="intensive-card">
-                  <h4>Entrepreneurship Bootcamp</h4>
-                  <p>Intensive program for professionals launching their own businesses or consulting practices.</p>
+                  <h4>Future Care Track</h4>
+                  <p>High-yield strategy for elective procedures or emergency cushions.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Public Health Education Section */}
+        {/* Health Finance Education */}
         <section className="service-fullpage-section">
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <h2 className="service-title-large">Public Health Education</h2>
+                  <h2 className="service-title-large">Health Finance Education</h2>
                   <div className="service-divider"></div>
                 </div>
               </Col>
             </Row>
-            
+
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Public health education session"
+                  <Image
+                    src="https://images.unsplash.com/photo-1503437313881-503a91226402?auto=format&fit=crop&w=1000&q=80"
+                    alt="Educational session about health finance"
                     width={600}
                     height={400}
                     className="service-image"
@@ -474,93 +521,95 @@ export default function Home() {
               </Col>
               <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">Evidence-Based Education</h3>
+                  <h3 className="service-subtitle">Understand every dollar</h3>
                   <p className="service-description-large">
-                    Evidence-based public health education is a proven methodology for improving workplace wellness and 
-                    professional development. Our educators skillfully guide professionals through evidence-based techniques.
+                    We pair financial literacy with clinical education so you always know how your subsidy is created, what it
+                    can cover, and how compounding protects future wellness. Weekly live sessions explain marketplace updates,
+                    interest policies, and new pharmacy partners.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
                       <FaBookOpen className="feature-icon" />
-                      <span>Research-Based Methods</span>
+                      <span>Regulatory explainers</span>
                     </div>
                     <div className="feature-item">
                       <FaLightbulb className="feature-icon" />
-                      <span>Practical Applications</span>
+                      <span>Practical budgeting</span>
                     </div>
                     <div className="feature-item">
                       <FaChartLine className="feature-icon" />
-                      <span>Measurable Outcomes</span>
+                      <span>Impact calculators</span>
                     </div>
                   </div>
                 </div>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Health Promotion</h4>
-                  <p>Learn to design and implement effective health promotion programs in workplace settings.</p>
+                  <h4>Reward Literacy</h4>
+                  <p>Video series covering how private subsidies differ from coupons or copay cards.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Disease Prevention</h4>
-                  <p>Understand evidence-based strategies for preventing workplace-related health issues and promoting wellness.</p>
+                  <h4>Compound Playbooks</h4>
+                  <p>Guided plans for timing purchases to maximize interest without skipping critical care.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Health Policy</h4>
-                  <p>Navigate healthcare policy and regulations to create healthier workplace environments.</p>
+                  <h4>Partner Spotlights</h4>
+                  <p>Meet pharmacies and advertisers funding the network so you understand every stakeholder.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Community-Based Career Support Section */}
+        {/* Community Support */}
         <section className="service-fullpage-section">
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <h2 className="service-title-large">Community-Based Career Support</h2>
+                  <h2 className="service-title-large">Community & Pharmacy Network</h2>
                   <div className="service-divider"></div>
                 </div>
               </Col>
             </Row>
-            
+
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">Building Professional Networks</h3>
+                  <h3 className="service-subtitle">A support system for every refill</h3>
                   <p className="service-description-large">
-                    Building professional networks can lead to profound career growth. Our community-based career support 
-                    covers networking, mentorship, and professional development through community resources.
+                    Join pharmacists, caregivers, and members who share tips on stretching rewards, choosing generic options,
+                    and timing compound interest for bigger procedures. Every community room syncs with your wallet so
+                    moderators can answer questions using real numbers from your subsidy history.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
                       <FaUsers className="feature-icon" />
-                      <span>Professional Networking</span>
+                      <span>Live reward coaches</span>
                     </div>
                     <div className="feature-item">
                       <FaHandshake className="feature-icon" />
-                      <span>Mentorship Programs</span>
+                      <span>Pharmacy onboarding</span>
                     </div>
                     <div className="feature-item">
-                      <FaBookOpen className="feature-icon" />
-                      <span>Community Resources</span>
+                      <FaHeart className="feature-icon" />
+                      <span>Caregiver circles</span>
                     </div>
                   </div>
                 </div>
               </Col>
               <Col lg={6}>
                 <div className="service-image-wrapper">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Community networking event"
+                  <Image
+                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=80"
+                    alt="Community gathering discussing rewards"
                     width={600}
                     height={400}
                     className="service-image"
@@ -568,52 +617,52 @@ export default function Home() {
                 </div>
               </Col>
             </Row>
-            
+
             <Row className="g-4">
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Networking Events</h4>
-                  <p>Regular networking events and meetups to connect with like-minded professionals in your industry.</p>
+                  <h4>Local Pharmacy Tours</h4>
+                  <p>Meet partners in person and learn how redemptions settle behind the scenes.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Mentorship Matching</h4>
-                  <p>Connect with experienced professionals who can guide your career development and provide industry insights.</p>
+                  <h4>Caregiver Labs</h4>
+                  <p>Small groups practice budgeting rewards for families managing multiple prescriptions.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Resource Library</h4>
-                  <p>Access to comprehensive career development resources, templates, and tools shared by the community.</p>
+                  <h4>Advocate Hotline</h4>
+                  <p>Round-the-clock chat for resolving redemptions or optimizing compound growth strategies.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-
-        {/* Premium Network Section */}
+        {/* Premium CTA */}
         <section className="premium-network-section">
           <Container>
             <Row className="align-items-center">
               <Col lg={6}>
                 <div className="premium-cta-content">
-                  <h2 className="premium-cta-title">Join Our Premium Network</h2>
+                  <h2 className="premium-cta-title">Activate Your Healthcare Rewards</h2>
                   <p className="premium-cta-description">
-                    Connect with elite professionals, access exclusive resources, and accelerate your career development through our comprehensive coaching programs.
+                    Unlock your private subsidy, spend it instantly at pharmacies, or let unused dollars earn compound
+                    interest through our ad network treasury. One tap turns attention into a lifelong care budget.
                   </p>
                   <div className="premium-cta-buttons">
-                    <button className="btn-premium-primary" onClick={() => window.location.href = '/download'}>
+                    <button className="btn-premium-primary" onClick={() => (window.location.href = '/download')}>
                       Download App
                     </button>
-                    <button className="btn-premium-secondary" onClick={() => window.location.href = '/learn-more'}>
-                      Learn More
+                    <button className="btn-premium-secondary" onClick={() => (window.location.href = '/learnmore')}>
+                      Learn How It Works
                     </button>
                   </div>
                 </div>
               </Col>
-              
+
               <Col lg={6}>
                 <div className="network-cards-vertical">
                   <div className="network-card-horizontal">
@@ -622,52 +671,52 @@ export default function Home() {
                         <FaUsers size={48} />
                       </div>
                       <div className="network-text">
-                        <h4 className="network-title">Elite Professional Network</h4>
+                        <h4 className="network-title">Pharmacy-first Network</h4>
                         <p className="network-description">
-                          Connect with top-tier professionals across various industries who have successfully advanced their careers through our programs.
+                          Thousands of independent and national pharmacies settle subsidies through our ledger every day.
                         </p>
                       </div>
                     </div>
                     <div className="network-cta">
-                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                      <button className="btn-network-learn-more" onClick={() => (window.location.href = '/learnmore')}>
                         Learn More
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="network-card-horizontal">
                     <div className="network-card-content">
                       <div className="network-icon">
                         <FaTrophy size={48} />
                       </div>
                       <div className="network-text">
-                        <h4 className="network-title">Success Stories</h4>
+                        <h4 className="network-title">Compound Interest Engine</h4>
                         <p className="network-description">
-                          Access to exclusive case studies and success stories from professionals who have achieved significant career milestones.
+                          Watch unused rewards grow automatically with transparent daily statements.
                         </p>
                       </div>
                     </div>
                     <div className="network-cta">
-                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                      <button className="btn-network-learn-more" onClick={() => (window.location.href = '/learnmore')}>
                         Learn More
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="network-card-horizontal">
                     <div className="network-card-content">
                       <div className="network-icon">
                         <FaHandshake size={48} />
                       </div>
                       <div className="network-text">
-                        <h4 className="network-title">Exclusive Events</h4>
+                        <h4 className="network-title">Advertiser Transparency</h4>
                         <p className="network-description">
-                          Invitation-only networking events, workshops, and masterclasses with industry leaders and career development experts.
+                          See exactly which advertiser funded each reward and how that subsidy can be used in-store.
                         </p>
                       </div>
                     </div>
                     <div className="network-cta">
-                      <button className="btn-network-learn-more" onClick={() => window.location.href = '/learn-more'}>
+                      <button className="btn-network-learn-more" onClick={() => (window.location.href = '/learnmore')}>
                         Learn More
                       </button>
                     </div>
@@ -677,40 +726,62 @@ export default function Home() {
             </Row>
           </Container>
         </section>
-
-
       </div>
       <Footer>
         <div className="footer-links">
           <div className="footer-section">
             <h5>Quick Links</h5>
             <ul>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/services">Services</Link></li>
-              <li><Link href="/partners">Partners</Link></li>
-              <li><Link href="/newsletter">Newsletter</Link></li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/application">Rewards Application</Link>
+              </li>
+              <li>
+                <Link href="/partners">Advertiser Partners</Link>
+              </li>
+              <li>
+                <Link href="/newsletter">Network News</Link>
+              </li>
             </ul>
           </div>
           <div className="footer-section">
             <h5>Support</h5>
             <ul>
-              <li><Link href="/help">Help Center</Link></li>
-              <li><Link href="/contact">Contact Us</Link></li>
-              <li><Link href="/faq">FAQ</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
+              <li>
+                <Link href="/help">Help Center</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/privacy">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link href="/terms">Terms of Service</Link>
+              </li>
             </ul>
           </div>
           <div className="footer-section">
             <h5>Connect</h5>
             <ul>
-              <li><Link href="/blog">Blog</Link></li>
-              <li><Link href="/careers">Careers</Link></li>
-              <li><Link href="/press">Press</Link></li>
-              <li><Link href="/terms">Terms of Service</Link></li>
+              <li>
+                <Link href="/blog">Product Blog</Link>
+              </li>
+              <li>
+                <Link href="/careers">Careers</Link>
+              </li>
+              <li>
+                <Link href="/press">Press</Link>
+              </li>
+              <li>
+                <Link href="/partners">Pharmacy Network</Link>
+              </li>
             </ul>
           </div>
         </div>
       </Footer>
     </PageTransition>
   );
-} 
+}

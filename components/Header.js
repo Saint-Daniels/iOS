@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
-  const isLearnMorePage = pathname === '/learn-more';
+  const isLearnMorePage = pathname === '/learnmore';
 
   return (
     <div className="top-header">
