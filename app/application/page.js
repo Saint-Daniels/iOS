@@ -1,11 +1,13 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Container, Row, Col } from 'react-bootstrap';
 import { FaArrowLeft, FaArrowRight, FaUser, FaMapMarkerAlt, FaBriefcase, FaShieldAlt, FaFileSignature, FaTrash, FaCopy, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import LegalDisclaimer from '../../components/LegalDisclaimer';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
+import { ScrollFadeIn } from '../../components/ScrollAnimation';
 import { extractMarketingID } from '../utils/leadTracking';
 import { storeClientData } from '../utils/clientUtils';
 import SignaturePad from 'signature_pad';
@@ -2142,105 +2144,177 @@ const ApplicationForm = () => {
 
   return (
     <PageTransition>
-      <div className="page-content min-h-screen">
-        <Navbar />
-        <div className="enrollment-page py-8">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <div className="enrollment-card">
-                  <div className="mb-8">
-                    <div className="flex justify-between items-center mb-4">
-                      <h1 className="enrollment-title">Health Insurance Application</h1>
-                      <div className="text-sm text-gray-500">
-                        Step {step} of 8
+      <Navbar />
+      <div className="home-page">
+        {/* Application Hero Section */}
+        <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '2rem' }}>
+          <Container>
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-4">
+                <Col lg={10} className="text-center">
+                  <h1 className="mission-title-professional">Healthcare Rewards Application</h1>
+                  <div className="mission-divider"></div>
+                  <p className="mission-description-professional" style={{ marginTop: '1.5rem' }}>
+                    Complete your enrollment to start earning private subsidies and accessing our pharmacy network. 
+                    Your information is secure and will only be used to process your rewards application.
+                  </p>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+          </Container>
+        </section>
+
+        {/* Application Form Section */}
+        <section className="service-fullpage-section">
+          <Container>
+            <Row className="justify-content-center">
+              <Col lg={10} xl={9}>
+                <ScrollFadeIn>
+                  <div className="enrollment-card" style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '20px',
+                    padding: '3rem',
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                    marginBottom: '3rem'
+                  }}>
+                    <div className="mb-4">
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h2 className="section-title-professional" style={{ marginBottom: 0, fontSize: '1.75rem' }}>
+                          Application Form
+                        </h2>
+                        <div className="text-muted" style={{ fontSize: '0.9rem' }}>
+                          Step {step} of 8
+                        </div>
+                      </div>
+                      <div className="w-100" style={{ 
+                        background: '#e9ecef', 
+                        borderRadius: '10px', 
+                        height: '8px',
+                        overflow: 'hidden'
+                      }}>
+                        <div
+                          style={{ 
+                            background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                            height: '100%',
+                            borderRadius: '10px',
+                            transition: 'width 0.3s ease',
+                            width: `${(step / 8) * 100}%`
+                          }}
+                        />
                       </div>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${(step / 8) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                  
-                  {error && (
-                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                      <p className="text-red-600 font-medium">{error}</p>
-                    </div>
-                  )}
-                  
-                  {success && (
-                    <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-md">
-                      <p className="text-green-600 font-medium">Application submitted successfully!</p>
-                    </div>
-                  )}
-                  
-                  <form onSubmit={handleSubmit} className="enrollment-form">
-                    {renderStep()}
+                    
+                    {error && (
+                      <div className="mb-4 p-3" style={{
+                        background: '#fee',
+                        border: '1px solid #fcc',
+                        borderRadius: '10px'
+                      }}>
+                        <p className="text-danger mb-0" style={{ fontWeight: 500 }}>{error}</p>
+                      </div>
+                    )}
+                    
+                    {success && (
+                      <div className="mb-4 p-3" style={{
+                        background: '#efe',
+                        border: '1px solid #cfc',
+                        borderRadius: '10px'
+                      }}>
+                        <p className="text-success mb-0" style={{ fontWeight: 500 }}>Application submitted successfully!</p>
+                      </div>
+                    )}
+                    
+                    <form onSubmit={handleSubmit} className="enrollment-form">
+                      {renderStep()}
 
-                    <div className="mt-8 flex justify-between items-center">
-                      {step > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => setStep(step - 1)}
-                          className="btn btn-outline-primary flex items-center"
-                        >
-                          <FaArrowLeft className="mr-2" />
-                          Previous
-                        </button>
-                      )}
-                      {step < 8 ? (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            console.log(`Attempting to move from step ${step} to step ${step + 1}`);
-                            const isValid = validateStep();
-                            console.log(`Validation result for step ${step}: ${isValid ? 'VALID' : 'INVALID'}`);
-                            if (isValid) {
-                              console.log(`Advancing to step ${step + 1}`);
-                              setStep(step + 1);
-                            } else {
-                              console.log('Validation failed, staying on current step');
-                              console.log('Current errors:', JSON.stringify(stepErrors));
-                            }
-                          }}
-                          className="btn btn-primary flex items-center ml-auto"
-                        >
-                          Next
-                          <FaArrowRight className="ml-2" />
-                        </button>
-                      ) : (
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            console.log('Submit button clicked');
-                            handleSubmit(e);
-                          }}
-                          className={`btn btn-success flex items-center ml-auto ${
-                            isSubmitting ? 'opacity-60 cursor-not-allowed' : ''
-                          }`}
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <div className="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-t-2 border-white mr-2"></div>
-                              Submitting...
-                            </>
-                          ) : (
-                            'Submit Application'
-                          )}
-                        </button>
-                      )}
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                      <div className="mt-5 d-flex justify-content-between align-items-center">
+                        {step > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => setStep(step - 1)}
+                            className="btn btn-outline-secondary d-flex align-items-center"
+                            style={{
+                              padding: '0.75rem 1.5rem',
+                              borderRadius: '8px',
+                              borderColor: '#2c5530',
+                              color: '#2c5530',
+                              fontWeight: 500
+                            }}
+                          >
+                            <FaArrowLeft className="me-2" />
+                            Previous
+                          </button>
+                        )}
+                        {step < 8 ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              console.log(`Attempting to move from step ${step} to step ${step + 1}`);
+                              const isValid = validateStep();
+                              console.log(`Validation result for step ${step}: ${isValid ? 'VALID' : 'INVALID'}`);
+                              if (isValid) {
+                                console.log(`Advancing to step ${step + 1}`);
+                                setStep(step + 1);
+                              } else {
+                                console.log('Validation failed, staying on current step');
+                                console.log('Current errors:', JSON.stringify(stepErrors));
+                              }
+                            }}
+                            className="btn btn-primary d-flex align-items-center ms-auto"
+                            style={{
+                              padding: '0.75rem 2rem',
+                              borderRadius: '8px',
+                              background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                              border: 'none',
+                              fontWeight: 600
+                            }}
+                          >
+                            Next
+                            <FaArrowRight className="ms-2" />
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              console.log('Submit button clicked');
+                              handleSubmit(e);
+                            }}
+                            className={`btn btn-success d-flex align-items-center ms-auto ${
+                              isSubmitting ? 'opacity-60' : ''
+                            }`}
+                            style={{
+                              padding: '0.75rem 2rem',
+                              borderRadius: '8px',
+                              background: isSubmitting ? '#6c757d' : 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                              border: 'none',
+                              fontWeight: 600,
+                              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                            }}
+                          >
+                            {isSubmitting ? (
+                              <>
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Submitting...
+                              </>
+                            ) : (
+                              'Submit Application'
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </form>
+                  </div>
+                </ScrollFadeIn>
+              </Col>
+            </Row>
+          </Container>
+        </section>
       </div>
+      <Footer />
 
       {/* Error Modal */}
       {showErrorModal && (

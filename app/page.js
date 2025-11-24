@@ -15,6 +15,9 @@ import {
   FaChartLine,
   FaHeart,
   FaBookOpen,
+  FaShieldAlt,
+  FaLock,
+  FaEye,
 } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -495,13 +498,13 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Health Finance Education */}
+        {/* Eligibility & Enrollment */}
         <section className="service-fullpage-section">
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <h2 className="service-title-large">Health Finance Education</h2>
+                  <h2 className="service-title-large">Eligibility & Enrollment</h2>
                   <div className="service-divider"></div>
                 </div>
               </Col>
@@ -511,8 +514,8 @@ export default function Home() {
               <Col lg={6}>
                 <div className="service-image-wrapper">
                   <Image
-                    src="https://images.unsplash.com/photo-1503437313881-503a91226402?auto=format&fit=crop&w=1000&q=80"
-                    alt="Educational session about health finance"
+                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1000&q=80"
+                    alt="Simple enrollment process"
                     width={600}
                     height={400}
                     className="service-image"
@@ -521,24 +524,24 @@ export default function Home() {
               </Col>
               <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">Understand every dollar</h3>
+                  <h3 className="service-subtitle">Who Can Join</h3>
                   <p className="service-description-large">
-                    We pair financial literacy with clinical education so you always know how your subsidy is created, what it
-                    can cover, and how compounding protects future wellness. Weekly live sessions explain marketplace updates,
-                    interest policies, and new pharmacy partners.
+                    Any U.S. adult with a phone number and pharmacy of choice can enroll. No insurance required. Create your
+                    account, connect your preferred pharmacy, and begin earning within minutes. There are no fees—your subsidy
+                    is 100% brand-funded and member-owned.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
-                      <FaBookOpen className="feature-icon" />
-                      <span>Regulatory explainers</span>
+                      <FaUsers className="feature-icon" />
+                      <span>Open to all U.S. adults</span>
                     </div>
                     <div className="feature-item">
-                      <FaLightbulb className="feature-icon" />
-                      <span>Practical budgeting</span>
+                      <FaMobile className="feature-icon" />
+                      <span>Instant setup in minutes</span>
                     </div>
                     <div className="feature-item">
-                      <FaChartLine className="feature-icon" />
-                      <span>Impact calculators</span>
+                      <FaDollarSign className="feature-icon" />
+                      <span>Zero-cost membership</span>
                     </div>
                   </div>
                 </div>
@@ -548,33 +551,33 @@ export default function Home() {
             <Row className="g-4">
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Reward Literacy</h4>
-                  <p>Video series covering how private subsidies differ from coupons or copay cards.</p>
+                  <h4>Who Can Join</h4>
+                  <p>Any U.S. adult with a phone number and pharmacy of choice can enroll. No insurance required.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Compound Playbooks</h4>
-                  <p>Guided plans for timing purchases to maximize interest without skipping critical care.</p>
+                  <h4>Instant Setup</h4>
+                  <p>Create your account, connect your preferred pharmacy, and begin earning within minutes.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="education-card">
-                  <h4>Partner Spotlights</h4>
-                  <p>Meet pharmacies and advertisers funding the network so you understand every stakeholder.</p>
+                  <h4>Zero-Cost Membership</h4>
+                  <p>There are no fees. Your subsidy is 100% brand-funded and member-owned.</p>
                 </div>
               </Col>
             </Row>
           </Container>
         </section>
 
-        {/* Community Support */}
+        {/* Privacy & Data Protections */}
         <section className="service-fullpage-section">
           <Container>
             <Row className="justify-content-center mb-5">
               <Col lg={8} className="text-center">
                 <div className="service-header">
-                  <h2 className="service-title-large">Community & Pharmacy Network</h2>
+                  <h2 className="service-title-large">Privacy & Data Protections</h2>
                   <div className="service-divider"></div>
                 </div>
               </Col>
@@ -583,24 +586,25 @@ export default function Home() {
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <div className="service-content">
-                  <h3 className="service-subtitle">A support system for every refill</h3>
+                  <h3 className="service-subtitle">Privacy First</h3>
                   <p className="service-description-large">
-                    Join pharmacists, caregivers, and members who share tips on stretching rewards, choosing generic options,
-                    and timing compound interest for bigger procedures. Every community room syncs with your wallet so
-                    moderators can answer questions using real numbers from your subsidy history.
+                    We never sell your health data or share your identity with advertisers. All insights are anonymized and
+                    aggregated before campaigns run. Your prescription information stays encrypted on your device and is never
+                    transmitted without explicit consent. See exactly which offers you viewed, what they funded, and how they
+                    influenced your wallet.
                   </p>
                   <div className="service-features">
                     <div className="feature-item">
-                      <FaUsers className="feature-icon" />
-                      <span>Live reward coaches</span>
+                      <FaShieldAlt className="feature-icon" />
+                      <span>Privacy first architecture</span>
                     </div>
                     <div className="feature-item">
-                      <FaHandshake className="feature-icon" />
-                      <span>Pharmacy onboarding</span>
+                      <FaLock className="feature-icon" />
+                      <span>HIPAA-safe encryption</span>
                     </div>
                     <div className="feature-item">
-                      <FaHeart className="feature-icon" />
-                      <span>Caregiver circles</span>
+                      <FaEye className="feature-icon" />
+                      <span>Full ad transparency</span>
                     </div>
                   </div>
                 </div>
@@ -608,8 +612,8 @@ export default function Home() {
               <Col lg={6}>
                 <div className="service-image-wrapper">
                   <Image
-                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=80"
-                    alt="Community gathering discussing rewards"
+                    src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1000&q=80"
+                    alt="Data security and privacy protection"
                     width={600}
                     height={400}
                     className="service-image"
@@ -621,20 +625,20 @@ export default function Home() {
             <Row className="g-4">
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Local Pharmacy Tours</h4>
-                  <p>Meet partners in person and learn how redemptions settle behind the scenes.</p>
+                  <h4>Privacy First</h4>
+                  <p>We never sell your health data or share your identity with advertisers. All insights are anonymized and aggregated before campaigns run.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Caregiver Labs</h4>
-                  <p>Small groups practice budgeting rewards for families managing multiple prescriptions.</p>
+                  <h4>HIPAA-Safe Architecture</h4>
+                  <p>Your prescription information stays encrypted on your device and is never transmitted without explicit consent.</p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="community-card">
-                  <h4>Advocate Hotline</h4>
-                  <p>Round-the-clock chat for resolving redemptions or optimizing compound growth strategies.</p>
+                  <h4>Ad Transparency</h4>
+                  <p>See exactly which offers you viewed, what they funded, and how they influenced your wallet.</p>
                 </div>
               </Col>
             </Row>
@@ -656,8 +660,8 @@ export default function Home() {
                     <button className="btn-premium-primary" onClick={() => (window.location.href = '/download')}>
                       Download App
                     </button>
-                    <button className="btn-premium-secondary" onClick={() => (window.location.href = '/learnmore')}>
-                      Learn How It Works
+                    <button className="btn-premium-secondary" onClick={() => (window.location.href = '/application')}>
+                      Start Application
                     </button>
                   </div>
                 </div>

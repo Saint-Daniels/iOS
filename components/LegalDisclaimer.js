@@ -47,6 +47,18 @@ const LegalDisclaimer = ({ onAccept }) => {
                   <button
                     onClick={handleAccept}
                     className="btn btn-primary"
+                    style={{
+                      backgroundColor: '#2c5530',
+                      color: 'white',
+                      border: 'none',
+                      padding: '0.75rem 2rem',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#4a7c59'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#2c5530'}
                   >
                     I Accept
                   </button>
