@@ -425,79 +425,6 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Compound Growth Programs */}
-        <section className="service-fullpage-section">
-          <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <div className="service-header">
-                  <h2 className="service-title-large">Compound Growth Programs</h2>
-                  <div className="service-divider"></div>
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center mb-5">
-              <Col lg={6}>
-                <div className="service-content">
-                  <h3 className="service-subtitle">Savings accounts built for care</h3>
-                  <p className="service-description-large">
-                    When you let rewards sit, they join a diversified healthcare treasury that produces daily compound interest.
-                    Choose conservative, balanced, or accelerator tracks depending on how soon you plan to spend at the
-                    pharmacy. The dashboard shows projected growth so you can schedule refills with confidence.
-                  </p>
-                  <div className="service-features">
-                    <div className="feature-item">
-                      <FaTrophy className="feature-icon" />
-                      <span>Goal-based vaults</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaChartLine className="feature-icon" />
-                      <span>Transparent yield engine</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaLightbulb className="feature-icon" />
-                      <span>Automated rebalancing</span>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image
-                    src="https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?auto=format&fit=crop&w=1000&q=80"
-                    alt="Member monitoring compound growth"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="g-4">
-              <Col lg={4}>
-                <div className="intensive-card">
-                  <h4>Everyday Essentials Track</h4>
-                  <p>Short-term growth designed for weekly OTC needs and seasonal care kits.</p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="intensive-card">
-                  <h4>Maintenance Medication Track</h4>
-                  <p>Medium-term compounding tailored to 30/60/90-day prescription cycles.</p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="intensive-card">
-                  <h4>Future Care Track</h4>
-                  <p>High-yield strategy for elective procedures or emergency cushions.</p>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-
         {/* Eligibility & Enrollment */}
         <section className="service-fullpage-section">
           <Container>
@@ -512,39 +439,43 @@ export default function Home() {
 
             <Row className="align-items-center mb-5">
               <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image
-                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1000&q=80"
-                    alt="Simple enrollment process"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="service-content">
-                  <h3 className="service-subtitle">Who Can Join</h3>
-                  <p className="service-description-large">
-                    Any U.S. adult with a phone number and pharmacy of choice can enroll. No insurance required. Create your
-                    account, connect your preferred pharmacy, and begin earning within minutes. There are no fees—your subsidy
-                    is 100% brand-funded and member-owned.
-                  </p>
-                  <div className="service-features">
-                    <div className="feature-item">
-                      <FaUsers className="feature-icon" />
-                      <span>Open to all U.S. adults</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaMobile className="feature-icon" />
-                      <span>Instant setup in minutes</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaDollarSign className="feature-icon" />
-                      <span>Zero-cost membership</span>
+                <ScrollSlideIn direction="left">
+                  <div className="service-content">
+                    <h3 className="service-subtitle">Who Can Join</h3>
+                    <p className="service-description-large">
+                      Any U.S. adult with a phone number and pharmacy of choice can enroll. No insurance required. Create your
+                      account, connect your preferred pharmacy, and begin earning within minutes. There are no fees—your subsidy
+                      is 100% brand-funded and member-owned.
+                    </p>
+                    <div className="service-features">
+                      <div className="feature-item">
+                        <FaUsers className="feature-icon" />
+                        <span>Open to all U.S. adults</span>
+                      </div>
+                      <div className="feature-item">
+                        <FaMobile className="feature-icon" />
+                        <span>Instant setup in minutes</span>
+                      </div>
+                      <div className="feature-item">
+                        <FaDollarSign className="feature-icon" />
+                        <span>Zero-cost membership</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ScrollSlideIn>
+              </Col>
+              <Col lg={6}>
+                <ScrollSlideIn direction="right">
+                  <div className="service-image-wrapper">
+                    <Image
+                      src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1000&q=80"
+                      alt="Simple enrollment process"
+                      width={600}
+                      height={400}
+                      className="service-image"
+                    />
+                  </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
 
@@ -585,40 +516,44 @@ export default function Home() {
 
             <Row className="align-items-center mb-5">
               <Col lg={6}>
-                <div className="service-content">
-                  <h3 className="service-subtitle">Privacy First</h3>
-                  <p className="service-description-large">
-                    We never sell your health data or share your identity with advertisers. All insights are anonymized and
-                    aggregated before campaigns run. Your prescription information stays encrypted on your device and is never
-                    transmitted without explicit consent. See exactly which offers you viewed, what they funded, and how they
-                    influenced your wallet.
-                  </p>
-                  <div className="service-features">
-                    <div className="feature-item">
-                      <FaShieldAlt className="feature-icon" />
-                      <span>Privacy first architecture</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaLock className="feature-icon" />
-                      <span>HIPAA-safe encryption</span>
-                    </div>
-                    <div className="feature-item">
-                      <FaEye className="feature-icon" />
-                      <span>Full ad transparency</span>
-                    </div>
+                <ScrollSlideIn direction="left">
+                  <div className="service-image-wrapper">
+                    <Image
+                      src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1000&q=80"
+                      alt="Data security and privacy protection"
+                      width={600}
+                      height={400}
+                      className="service-image"
+                    />
                   </div>
-                </div>
+                </ScrollSlideIn>
               </Col>
               <Col lg={6}>
-                <div className="service-image-wrapper">
-                  <Image
-                    src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1000&q=80"
-                    alt="Data security and privacy protection"
-                    width={600}
-                    height={400}
-                    className="service-image"
-                  />
-                </div>
+                <ScrollSlideIn direction="right">
+                  <div className="service-content">
+                    <h3 className="service-subtitle">Privacy First</h3>
+                    <p className="service-description-large">
+                      We never sell your health data or share your identity with advertisers. All insights are anonymized and
+                      aggregated before campaigns run. Your prescription information stays encrypted on your device and is never
+                      transmitted without explicit consent. See exactly which offers you viewed, what they funded, and how they
+                      influenced your wallet.
+                    </p>
+                    <div className="service-features">
+                      <div className="feature-item">
+                        <FaShieldAlt className="feature-icon" />
+                        <span>Privacy first architecture</span>
+                      </div>
+                      <div className="feature-item">
+                        <FaLock className="feature-icon" />
+                        <span>HIPAA-safe encryption</span>
+                      </div>
+                      <div className="feature-item">
+                        <FaEye className="feature-icon" />
+                        <span>Full ad transparency</span>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
 
