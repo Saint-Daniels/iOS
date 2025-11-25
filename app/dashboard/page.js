@@ -239,8 +239,8 @@ export default function Dashboard() {
                 <Tab eventKey="balance" title={
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
-                  <Row className="justify-content-center">
-                    <Col lg={8} md={10}>
+                  <Row>
+                    <Col lg={8}>
                       <div style={{
                         background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)',
                         borderRadius: '16px',
@@ -249,7 +249,8 @@ export default function Dashboard() {
                         textAlign: 'center',
                         border: 'none',
                         position: 'relative',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        marginBottom: '2rem'
                       }}>
                         <div style={{
                           fontSize: '0.75rem',
@@ -278,11 +279,85 @@ export default function Dashboard() {
                           color: '#8e8e93',
                           fontWeight: 400,
                           letterSpacing: '0.2px',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          marginBottom: '3rem'
                         }}>
                           Available to spend at participating pharmacies
                         </div>
                       </div>
+                    </Col>
+                    <Col lg={4}>
+                      <Card style={{
+                        border: 'none',
+                        borderRadius: '16px',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                        marginBottom: '1.5rem'
+                      }}>
+                        <Card.Body style={{ padding: '2rem' }}>
+                          <div style={{
+                            fontSize: '0.75rem',
+                            color: '#8e8e93',
+                            fontWeight: 500,
+                            letterSpacing: '1px',
+                            marginBottom: '1rem',
+                            textTransform: 'uppercase',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            Interest Rate
+                          </div>
+                          <div style={{
+                            fontSize: '2.5rem',
+                            fontWeight: 700,
+                            color: '#000000',
+                            marginBottom: '1.5rem',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            {compoundInterest}%
+                          </div>
+                          <div style={{
+                            fontSize: '0.875rem',
+                            color: '#8e8e93',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            Daily compound rate
+                          </div>
+                        </Card.Body>
+                      </Card>
+                      <Card style={{
+                        border: 'none',
+                        borderRadius: '16px',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+                      }}>
+                        <Card.Body style={{ padding: '2rem' }}>
+                          <div style={{
+                            fontSize: '0.75rem',
+                            color: '#8e8e93',
+                            fontWeight: 500,
+                            letterSpacing: '1px',
+                            marginBottom: '1rem',
+                            textTransform: 'uppercase',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            Monthly Earnings
+                          </div>
+                          <div style={{
+                            fontSize: '2.5rem',
+                            fontWeight: 700,
+                            color: '#000000',
+                            marginBottom: '1.5rem',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            ${monthlyEarnings.toFixed(2)}
+                          </div>
+                          <div style={{
+                            fontSize: '0.875rem',
+                            color: '#8e8e93',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          }}>
+                            This month
+                          </div>
+                        </Card.Body>
+                      </Card>
                     </Col>
                   </Row>
                 </Tab>
