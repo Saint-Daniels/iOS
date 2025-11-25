@@ -53,7 +53,7 @@ export default function Home() {
                 <ScrollSlideIn direction="right" delay={0.2}>
                   <div className="mission-image-wrapper-professional">
                     <Image
-                      src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2070&q=80"
+                      src="/images/broker.jpeg"
                       alt="Modern banking and healthcare technology"
                       width={600}
                       height={450}
