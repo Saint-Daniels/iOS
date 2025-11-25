@@ -807,9 +807,13 @@ export default function Dashboard() {
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.background = '#fff5f5'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={() => {
-                          handleLogout();
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                           setShowAccountDropdown(false);
+                          setTimeout(() => {
+                            handleLogout();
+                          }, 100);
                         }}
                       >
                         <FaSignOutAlt style={{ fontSize: '0.9rem' }} />
