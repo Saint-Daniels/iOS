@@ -240,40 +240,45 @@ export default function Dashboard() {
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
                   <Row className="justify-content-center">
-                    <Col lg={6} md={8}>
+                    <Col lg={8} md={10}>
                       <div style={{
-                        background: 'white',
-                        borderRadius: '12px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
-                        padding: '4rem 2rem',
+                        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)',
+                        borderRadius: '16px',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                        padding: '5rem 3rem',
                         textAlign: 'center',
-                        border: '1px solid #f0f0f0'
+                        border: 'none',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}>
                         <div style={{
-                          fontSize: '0.875rem',
-                          color: '#666',
+                          fontSize: '0.75rem',
+                          color: '#8e8e93',
                           fontWeight: 500,
-                          letterSpacing: '0.5px',
-                          marginBottom: '1rem',
-                          textTransform: 'uppercase'
+                          letterSpacing: '1px',
+                          marginBottom: '1.5rem',
+                          textTransform: 'uppercase',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                         }}>
                           Private Subsidy Balance
                         </div>
                         <div style={{
-                          fontSize: '5rem',
+                          fontSize: '6rem',
                           fontWeight: 700,
-                          color: '#1B392F',
-                          lineHeight: '1.1',
-                          marginBottom: '1.5rem',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                          color: '#000000',
+                          lineHeight: '1',
+                          marginBottom: '2rem',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          letterSpacing: '-0.02em'
                         }}>
                           ${subsidyBalance.toFixed(2)}
                         </div>
                         <div style={{
-                          fontSize: '0.875rem',
-                          color: '#999',
+                          fontSize: '0.9375rem',
+                          color: '#8e8e93',
                           fontWeight: 400,
-                          letterSpacing: '0.3px'
+                          letterSpacing: '0.2px',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                         }}>
                           Available to spend at participating pharmacies
                         </div>
