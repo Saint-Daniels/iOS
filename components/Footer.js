@@ -14,6 +14,7 @@ const Footer = () => {
                          pathname === '/partners' || 
                          pathname === '/help' ||
                          pathname === '/documents' ||
+                         pathname === '/resources' ||
                          pathname === '/privacy' ||
                          pathname === '/terms' ||
                          pathname === '/about' ||

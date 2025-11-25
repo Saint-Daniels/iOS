@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaFilePdf, FaDownload, FaExternalLinkAlt, FaPhone, FaEnvelope, FaShieldAlt, FaFileAlt, FaClipboardList } from 'react-icons/fa';
+import { FaDownload, FaFileAlt, FaClipboardList, FaShieldAlt } from 'react-icons/fa';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
@@ -84,32 +84,6 @@ export default function ResourcesPage() {
     }
   ];
 
-  const quickLinks = [
-    {
-      title: "Start Application",
-      description: "Begin your healthcare rewards enrollment process",
-      icon: <FaFileAlt size={24} />,
-      link: "/application"
-    },
-    {
-      title: "Learn More",
-      description: "Understand how the private subsidy program works",
-      icon: <FaFilePdf size={24} />,
-      link: "/learnmore"
-    },
-    {
-      title: "Privacy Policy",
-      description: "Review our privacy and data protection policies",
-      icon: <FaShieldAlt size={24} />,
-      link: "/privacy"
-    },
-    {
-      title: "Contact Support",
-      description: "Get help with documents or program questions",
-      icon: <FaEnvelope size={24} />,
-      link: "/contact"
-    }
-  ];
 
   return (
     <PageTransition>
@@ -212,18 +186,10 @@ export default function ResourcesPage() {
                               }}>{resource.description}</p>
                               <div className="resource-item-footer" style={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
+                                justifyContent: 'flex-end',
                                 alignItems: 'center',
                                 marginTop: 'auto'
                               }}>
-                                <span className="resource-type" style={{
-                                  fontSize: '0.875rem',
-                                  color: '#888',
-                                  fontWeight: 500,
-                                  padding: '0.375rem 0.875rem',
-                                  background: '#f8f9fa',
-                                  borderRadius: '20px'
-                                }}>{resource.type}</span>
                                 <a href={resource.link} className="resource-link" style={{
                                   display: 'flex',
                                   alignItems: 'center',
@@ -255,89 +221,6 @@ export default function ResourcesPage() {
                         </div>
                       </Card.Body>
                     </Card>
-                  </ScrollFadeIn>
-                </Col>
-              ))}
-            </Row>
-          </Container>
-        </section>
-
-        {/* Quick Links Section */}
-        <section className="service-fullpage-section" style={{ background: '#f8f9fa' }}>
-          <Container>
-            <ScrollFadeIn>
-              <Row className="justify-content-center mb-5">
-                <Col lg={8} className="text-center">
-                  <div className="service-header">
-                    <h2 className="service-title-large">Quick Access</h2>
-                    <div className="service-divider"></div>
-                  </div>
-                </Col>
-              </Row>
-            </ScrollFadeIn>
-            
-            <Row className="g-4">
-              {quickLinks.map((link, index) => (
-                <Col lg={3} md={6} key={index}>
-                  <ScrollFadeIn delay={index * 0.15}>
-                    <Link href={link.link} className="quick-link-card" style={{
-                      display: 'block',
-                      background: 'white',
-                      borderRadius: '12px',
-                      padding: '2rem',
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                      color: 'inherit',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
-                      transition: 'all 0.3s ease',
-                      height: '100%',
-                      border: '1px solid #e9ecef'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
-                    }}
-                    >
-                      <div className="quick-link-icon" style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '60px',
-                        height: '60px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                        color: 'white',
-                        marginBottom: '1rem'
-                      }}>
-                        {link.icon}
-                      </div>
-                      <h4 className="quick-link-title" style={{
-                        fontSize: '1.2rem',
-                        fontWeight: 600,
-                        marginBottom: '0.75rem',
-                        color: '#2c5530'
-                      }}>{link.title}</h4>
-                      <p className="quick-link-description" style={{
-                        fontSize: '0.9rem',
-                        color: '#666',
-                        marginBottom: '1rem',
-                        lineHeight: '1.5'
-                      }}>{link.description}</p>
-                      <div className="quick-link-arrow" style={{
-                        color: '#2c5530',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        fontWeight: 500,
-                        fontSize: '0.9rem'
-                      }}>
-                        View <FaExternalLinkAlt size={14} />
-                      </div>
-                    </Link>
                   </ScrollFadeIn>
                 </Col>
               ))}

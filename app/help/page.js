@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Accordion, Card, Button, Form, Modal, Alert } from 'react-bootstrap';
-import { FaPhone, FaEnvelope, FaGraduationCap, FaUsers, FaBook, FaChartLine, FaHeart, FaRocket, FaUserTie, FaLightbulb, FaHandshake, FaExclamationTriangle, FaSearch, FaFileAlt, FaVideo, FaDownload, FaCalendar, FaClock, FaMapMarkerAlt, FaShieldAlt, FaQuestionCircle, FaComments, FaBullhorn } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaDollarSign, FaChartLine, FaLightbulb, FaExclamationTriangle, FaSearch, FaFileAlt, FaDownload, FaComments, FaMobile, FaHospital } from 'react-icons/fa';
 import MainNavbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
+import { ScrollFadeIn, ScrollSlideIn } from '../../components/ScrollAnimation';
 import Image from 'next/image';
 
 export default function HelpCenter() {
@@ -28,132 +29,90 @@ export default function HelpCenter() {
   });
   const faqs = [
     {
-      question: "How do I track my career development progress?",
-      answer: "You can track your career development through our platform by logging your professional goals, skill development activities, and career milestones. Each achievement contributes to your overall career advancement score.",
-      category: "Career Development"
+      question: "How do I earn private subsidies?",
+      answer: "You earn private subsidies by engaging with verified health brands in our ad network. When you opt in to sponsored health content and complete activities, advertisers deposit real dollars into your private subsidy wallet instantly.",
+      category: "Earning Rewards"
     },
     {
-      question: "How do I access career coaching sessions?",
-      answer: "You can schedule one-on-one career coaching sessions through your dashboard. Our certified career coaches are available to help you develop strategies for professional growth and career advancement.",
-      category: "Career Development"
+      question: "Where can I spend my private subsidy?",
+      answer: "You can spend your private subsidy at thousands of participating pharmacies nationwide. Simply show your virtual card at checkout, and your subsidy is instantly applied to eligible prescriptions, OTC items, or preventative care products.",
+      category: "Spending Rewards"
     },
     {
-      question: "What career development services are available?",
-      answer: "We offer comprehensive career development services including one-on-one coaching, workplace wellness programs, public health education, intensive career development programs, and community-based career support.",
-      category: "Services"
+      question: "How does compound interest work on unused rewards?",
+      answer: "Unused private subsidies automatically earn daily compound interest through our healthcare treasury. You can choose from different vault strategies (Essentials, Maintenance, or Future Care) to align with your health goals and watch your balance grow over time.",
+      category: "Compound Interest"
     },
     {
-      question: "How do I find career development resources?",
-      answer: "You can access our extensive documents library through the Documents section, including healthcare rewards guides, application forms, privacy policies, and program documentation.",
+      question: "How do I access program documents?",
+      answer: "You can access all program documentation through the Documents section, including healthcare rewards guides, application forms, privacy policies, and program documentation.",
       category: "Resources"
     },
     {
-      question: "How do I update my professional profile?",
-      answer: "Log in to your account, go to 'Profile Settings', and you can update your professional information, career goals, skills, and communication preferences to better match our career development services.",
+      question: "How do I update my account information?",
+      answer: "Log in to your account, go to 'Account Settings', and you can update your personal information, pharmacy preferences, vault settings, and communication preferences.",
       category: "Account"
     },
     {
       question: "What are the customer support hours?",
-      answer: "Our career development support team is available Monday through Friday, from 9am to 5pm CST. You can reach us by phone at 888-324-6642 or through our contact form.",
+      answer: "Our healthcare rewards support team is available Monday through Friday, from 9am to 5pm CST. You can reach us by phone at 888-324-6642 or through our contact form.",
       category: "Support"
     },
     {
-      question: "How do I connect with the professional community?",
-      answer: "You can connect with our professional community through our networking events, mentorship programs, and community-based career support groups. Access these features through your dashboard.",
-      category: "Community"
+      question: "How do I connect my preferred pharmacy?",
+      answer: "You can connect your preferred pharmacy through the application form or by updating your account settings. Once connected, you can use your virtual card at that pharmacy location.",
+      category: "Pharmacy Network"
     },
     {
-      question: "What is the cost of career coaching sessions?",
-      answer: "Career coaching sessions are included in your membership. Premium members get unlimited sessions, while basic members receive 2 sessions per month. Additional sessions can be purchased.",
+      question: "Is there a cost to join the healthcare rewards program?",
+      answer: "No, membership is completely free. Your private subsidy is 100% brand-funded and member-owned. There are no fees, premiums, or hidden costs.",
       category: "Billing"
     },
     {
       question: "How do I report a concern or issue?",
-      answer: "You can report concerns through our secure reporting system. Click the 'Report Concern' button above to submit your issue. All reports are confidential and reviewed within 24 hours.",
+      answer: "You can report concerns through our secure reporting system. Click the 'Report Issue' button above to submit your issue. All reports are confidential and reviewed within 24 hours.",
       category: "Support"
     },
     {
-      question: "Can I get more information about specific programs?",
-      answer: "Yes! Use our 'Get More Information' form above to request detailed information about any of our career development programs. We'll provide comprehensive details within 24 hours.",
+      question: "Can I get more information about the program?",
+      answer: "Yes! Visit our Learn More page for comprehensive details about how the private subsidy program works, or contact our support team for personalized assistance.",
       category: "Information"
     }
   ];
 
-  const specificHelpSections = [
-    {
-      title: "Career Assessment & Planning",
-      icon: <FaChartLine size={24} />,
-      description: "Get personalized career assessments and development plans",
-      resources: [
-        { name: "Career Assessment Tool", type: "Interactive Tool", link: "#" },
-        { name: "Skills Gap Analysis", type: "PDF Report", link: "#" },
-        { name: "Career Planning Worksheet", type: "Template", link: "#" }
-      ]
-    },
-    {
-      title: "Resume & Interview Prep",
-      icon: <FaFileAlt size={24} />,
-      description: "Professional resume building and interview preparation",
-      resources: [
-        { name: "Resume Builder Tool", type: "Interactive Tool", link: "#" },
-        { name: "Interview Question Bank", type: "PDF Guide", link: "#" },
-        { name: "Salary Negotiation Guide", type: "Video Series", link: "#" }
-      ]
-    },
-    {
-      title: "Workplace Wellness",
-      icon: <FaHeart size={24} />,
-      description: "Stress management and workplace productivity tools",
-      resources: [
-        { name: "Stress Assessment", type: "Interactive Tool", link: "#" },
-        { name: "Mindfulness Exercises", type: "Audio Guide", link: "#" },
-        { name: "Work-Life Balance Planner", type: "Template", link: "#" }
-      ]
-    },
-    {
-      title: "Professional Development",
-      icon: <FaGraduationCap size={24} />,
-      description: "Skills development and continuing education",
-      resources: [
-        { name: "Skill Development Tracker", type: "Interactive Tool", link: "#" },
-        { name: "Learning Path Creator", type: "PDF Guide", link: "#" },
-        { name: "Certification Prep Materials", type: "Study Guide", link: "#" }
-      ]
-    }
-  ];
 
   const quickActions = [
     {
-      title: "Schedule Coaching Session",
-      icon: <FaCalendar size={20} />,
-      description: "Book a one-on-one career coaching session",
-      action: "Schedule Now",
+      title: "Start Application",
+      icon: <FaFileAlt size={20} />,
+      description: "Begin your healthcare rewards enrollment",
+      action: "Apply Now",
       color: "#2c5530",
-      link: "/contact"
+      link: "/application"
     },
     {
-      title: "Download Resources",
+      title: "Browse Documents",
       icon: <FaDownload size={20} />,
-      description: "Access our documents library",
-      action: "Browse Documents",
-      color: "#3498db",
+      description: "Access program documentation and forms",
+      action: "View Documents",
+      color: "#C4A962",
       link: "/resources"
     },
     {
-      title: "Join Community",
-      icon: <FaUsers size={20} />,
-      description: "Connect with other professionals in your field",
-      action: "Join Network",
-      color: "#9b59b6",
-      link: "/join-network"
+      title: "Learn More",
+      icon: <FaLightbulb size={20} />,
+      description: "Understand how the program works",
+      action: "Learn More",
+      color: "#2c5530",
+      link: "/learnmore"
     },
     {
-      title: "Report Issue",
-      icon: <FaExclamationTriangle size={20} />,
-      description: "Report concerns or technical issues",
-      action: "Report Issue",
-      color: "#e74c3c",
-      link: "/report-issue"
+      question: "Contact Support",
+      icon: <FaComments size={20} />,
+      description: "Get help with your account or questions",
+      action: "Contact Us",
+      color: "#C4A962",
+      link: "/contact"
     }
   ];
 
@@ -181,28 +140,28 @@ export default function HelpCenter() {
 
   const helpCategories = [
     {
-      title: "Career Development",
-      icon: <FaGraduationCap size={32} />,
-      description: "Get help with career coaching, professional development, and career advancement strategies.",
+      title: "Earning Rewards",
+      icon: <FaDollarSign size={32} />,
+      description: "Learn how to earn private subsidies through our ad network and sponsored content.",
       color: "#2c5530"
     },
     {
-      title: "Workplace Wellness",
-      icon: <FaHeart size={32} />,
-      description: "Learn about workplace wellness programs and stress management techniques.",
-      color: "#e74c3c"
+      title: "Pharmacy Network",
+      icon: <FaHospital size={32} />,
+      description: "Find participating pharmacies and learn how to redeem your private subsidy.",
+      color: "#C4A962"
     },
     {
-      title: "Public Health Education",
-      icon: <FaBook size={32} />,
-      description: "Access educational resources and public health information for professionals.",
-      color: "#3498db"
+      title: "Compound Interest",
+      icon: <FaChartLine size={32} />,
+      description: "Understand how unused rewards grow through our compound network treasury.",
+      color: "#2c5530"
     },
     {
-      title: "Community Support",
-      icon: <FaUsers size={32} />,
-      description: "Connect with our professional community and networking opportunities.",
-      color: "#9b59b6"
+      title: "Account Management",
+      icon: <FaMobile size={32} />,
+      description: "Manage your account, update preferences, and track your subsidy balance.",
+      color: "#C4A962"
     }
   ];
 
@@ -211,100 +170,295 @@ export default function HelpCenter() {
       <MainNavbar />
       <div className="help-center-page">
         {/* Hero Section */}
-        <section className="help-hero-section">
+        <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem' }}>
           <Container>
-            <Row className="justify-content-center text-center">
-              <Col lg={10}>
-                <h1 className="help-hero-title">Help Center</h1>
-                <p className="help-hero-subtitle">
-                  Your comprehensive resource for career development support, guidance, and assistance
-                </p>
-                
-                {/* Search Bar */}
-                <div className="help-search-container mb-4">
-                  <div className="search-input-wrapper">
-                    <FaSearch className="search-icon" />
-                    <Form.Control
-                      type="text"
-                      placeholder="Search for help topics, questions, or resources..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="help-search-input"
-                    />
-                  </div>
-                </div>
-
-                {/* Quick Actions */}
-                <Row className="g-3 mb-5">
-                  {quickActions.map((action, index) => (
-                    <Col lg={3} md={6} key={index}>
-                      <Button 
-                        className="quick-action-btn w-100"
-                        style={{ backgroundColor: action.color, borderColor: action.color }}
-                        onClick={() => {
-                          if (action.title === "Report Issue") window.location.href = action.link;
-                          if (action.title === "Download Resources") window.location.href = action.link;
-                          if (action.title === "Join Community") window.location.href = action.link;
-                          if (action.title === "Schedule Coaching Session") window.location.href = action.link;
+            <ScrollFadeIn>
+              <Row className="justify-content-center text-center">
+                <Col lg={10}>
+                  <h1 className="mission-title-professional">Help Center</h1>
+                  <div className="mission-divider" style={{ margin: '1.5rem auto' }}></div>
+                  <p className="mission-description-professional" style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto 2rem' }}>
+                    Your comprehensive resource for healthcare rewards support, guidance, and assistance
+                  </p>
+                  
+                  {/* Search Bar */}
+                  <div className="help-search-container mb-5" style={{ maxWidth: '600px', margin: '0 auto' }}>
+                    <div className="search-input-wrapper" style={{ position: 'relative' }}>
+                      <FaSearch style={{
+                        position: 'absolute',
+                        left: '1rem',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: '#C4A962',
+                        fontSize: '1.2rem',
+                        zIndex: 10
+                      }} />
+                      <Form.Control
+                        type="text"
+                        placeholder="Search for help topics, questions, or resources..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="help-search-input"
+                        style={{
+                          paddingLeft: '3rem',
+                          borderRadius: '12px',
+                          border: '2px solid #C4A962',
+                          fontSize: '1rem',
+                          padding: '0.75rem 1rem 0.75rem 3rem',
+                          height: '50px'
                         }}
-                      >
-                        <div className="d-flex align-items-center justify-content-center">
-                          {action.icon}
-                          <span className="ms-2">{action.action}</span>
-                        </div>
-                      </Button>
-                    </Col>
-                  ))}
-                </Row>
-              </Col>
-            </Row>
+                      />
+                    </div>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <Row className="g-4 mb-5">
+                    {quickActions.map((action, index) => (
+                      <Col lg={3} md={6} key={index}>
+                        <ScrollFadeIn delay={index * 0.15}>
+                          <Button 
+                            className="quick-action-btn w-100"
+                            style={{ 
+                              background: `linear-gradient(135deg, ${action.color} 0%, ${action.color === '#2c5530' ? '#4a7c59' : '#b39855'} 100%)`,
+                              border: 'none',
+                              borderRadius: '12px',
+                              padding: '1.25rem',
+                              fontWeight: 600,
+                              fontSize: '1rem',
+                              height: '100%',
+                              minHeight: '80px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '0.75rem',
+                              transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.target.style.transform = 'translateY(-3px)';
+                              e.target.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.target.style.transform = 'translateY(0)';
+                              e.target.style.boxShadow = 'none';
+                            }}
+                            onClick={() => window.location.href = action.link}
+                          >
+                            <div style={{ fontSize: '1.5rem' }}>{action.icon}</div>
+                            <span>{action.action}</span>
+                          </Button>
+                        </ScrollFadeIn>
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
           </Container>
         </section>
 
 
 
-        {/* Contact Section */}
-        <section className="contact-section">
+        {/* FAQ Section */}
+        <section className="service-fullpage-section">
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <h2 className="section-title">Still Need Help?</h2>
-                <p className="section-subtitle">
-                  Our career development support team is here to assist you
-                </p>
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Frequently Asked Questions</h2>
+                    <div className="service-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
+            <Row className="justify-content-center">
+              <Col lg={10}>
+                <Accordion defaultActiveKey="0" className="faq-accordion">
+                  {filteredFAQs.map((faq, index) => (
+                    <Accordion.Item eventKey={index.toString()} key={index} style={{
+                      border: '1px solid #e9ecef',
+                      borderRadius: '12px',
+                      marginBottom: '1rem',
+                      overflow: 'hidden'
+                    }}>
+                      <Accordion.Header style={{
+                        background: '#f8f9fa',
+                        padding: '1.25rem',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        color: '#1B392F'
+                      }}>
+                        {faq.question}
+                      </Accordion.Header>
+                      <Accordion.Body style={{
+                        padding: '1.5rem',
+                        fontSize: '1rem',
+                        lineHeight: '1.7',
+                        color: '#666'
+                      }}>
+                        {faq.answer}
+                        <div style={{
+                          marginTop: '1rem',
+                          paddingTop: '1rem',
+                          borderTop: '1px solid #e9ecef',
+                          fontSize: '0.875rem',
+                          color: '#C4A962',
+                          fontWeight: 500
+                        }}>
+                          Category: {faq.category}
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+                </Accordion>
               </Col>
             </Row>
+          </Container>
+        </section>
+
+        {/* Contact Section */}
+        <section className="service-fullpage-section" style={{ background: '#f8f9fa' }}>
+          <Container>
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Still Need Help?</h2>
+                    <div className="service-divider"></div>
+                    <p className="mission-description-professional" style={{ marginTop: '1rem' }}>
+                      Our healthcare rewards support team is here to assist you
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
 
             <Row className="g-4">
               <Col lg={6}>
-                <Card className="contact-card">
-                  <Card.Body className="text-center">
-                    <div className="contact-icon">
-                      <FaPhone />
-                    </div>
-                    <h3 className="contact-title">Call Us</h3>
-                    <p className="contact-info">888-324-6642</p>
-                    <p className="contact-hours">Monday-Friday, 9am-5pm CST</p>
-                    <p className="contact-description">
-                      Speak directly with our career development specialists
-                    </p>
-                  </Card.Body>
-                </Card>
+                <ScrollSlideIn direction="left">
+                  <Card className="contact-card" style={{
+                    border: 'none',
+                    borderRadius: '15px',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                    height: '100%',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
+                  }}
+                  >
+                    <Card.Body className="text-center" style={{ padding: '3rem 2rem' }}>
+                      <div className="contact-icon" style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 1.5rem',
+                        fontSize: '2rem'
+                      }}>
+                        <FaPhone />
+                      </div>
+                      <h3 className="contact-title" style={{
+                        fontSize: '1.75rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '1rem'
+                      }}>Call Us</h3>
+                      <p className="contact-info" style={{
+                        fontSize: '1.5rem',
+                        fontWeight: 700,
+                        color: '#C4A962',
+                        marginBottom: '0.75rem'
+                      }}>888-324-6642</p>
+                      <p className="contact-hours" style={{
+                        fontSize: '1rem',
+                        color: '#666',
+                        marginBottom: '1rem',
+                        fontWeight: 500
+                      }}>Monday-Friday, 9am-5pm CST</p>
+                      <p className="contact-description" style={{
+                        fontSize: '1rem',
+                        color: '#666',
+                        lineHeight: '1.6'
+                      }}>
+                        Speak directly with our healthcare rewards specialists
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollSlideIn>
               </Col>
               <Col lg={6}>
-                <Card className="contact-card">
-                  <Card.Body className="text-center">
-                    <div className="contact-icon">
-                      <FaEnvelope />
-                    </div>
-                    <h3 className="contact-title">Email Us</h3>
-                    <p className="contact-info">support@saintdaniels.com</p>
-                    <p className="contact-hours">Response within 24 hours</p>
-                    <p className="contact-description">
-                      Get detailed assistance via email for complex inquiries
-                    </p>
-                  </Card.Body>
-                </Card>
+                <ScrollSlideIn direction="right">
+                  <Card className="contact-card" style={{
+                    border: 'none',
+                    borderRadius: '15px',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                    height: '100%',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
+                  }}
+                  >
+                    <Card.Body className="text-center" style={{ padding: '3rem 2rem' }}>
+                      <div className="contact-icon" style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                        color: '#1B392F',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 1.5rem',
+                        fontSize: '2rem'
+                      }}>
+                        <FaEnvelope />
+                      </div>
+                      <h3 className="contact-title" style={{
+                        fontSize: '1.75rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '1rem'
+                      }}>Email Us</h3>
+                      <p className="contact-info" style={{
+                        fontSize: '1.25rem',
+                        fontWeight: 600,
+                        color: '#2c5530',
+                        marginBottom: '0.75rem',
+                        wordBreak: 'break-word'
+                      }}>support@saintdaniels.com</p>
+                      <p className="contact-hours" style={{
+                        fontSize: '1rem',
+                        color: '#666',
+                        marginBottom: '1rem',
+                        fontWeight: 500
+                      }}>Response within 24 hours</p>
+                      <p className="contact-description" style={{
+                        fontSize: '1rem',
+                        color: '#666',
+                        lineHeight: '1.6'
+                      }}>
+                        Get detailed assistance via email for complex inquiries
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollSlideIn>
               </Col>
             </Row>
           </Container>
