@@ -1542,36 +1542,6 @@ export default function Dashboard() {
                     boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
                     background: 'white'
                   }}>
-                    <Card.Header style={{
-                      background: 'white',
-                      border: 'none',
-                      borderBottom: '1px solid #e8eaed',
-                      padding: '1rem 1.5rem',
-                      borderRadius: '8px 8px 0 0'
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                      }}>
-                        <h5 style={{
-                          margin: 0,
-                          fontSize: '1.25rem',
-                          fontWeight: 400,
-                          color: '#202124',
-                          fontFamily: 'Google Sans, Roboto, sans-serif'
-                        }}>
-                          All Transactions
-                        </h5>
-                        <div style={{
-                          fontSize: '0.875rem',
-                          color: '#5f6368',
-                          fontFamily: 'Roboto, sans-serif'
-                        }}>
-                          {allTransactions.length} transactions
-                        </div>
-                      </div>
-                    </Card.Header>
                     <Card.Body style={{ padding: 0 }}>
                       <div style={{
                         borderBottom: '1px solid #e8eaed',
