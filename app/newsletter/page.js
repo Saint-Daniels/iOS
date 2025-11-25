@@ -12,6 +12,13 @@ import { ScrollFadeIn, ScrollSlideIn } from '../../components/ScrollAnimation';
 export default function NewsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  // Get current date dynamically
+  const getCurrentDate = () => {
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return today.toLocaleDateString('en-US', options);
+  };
 
   const gameCategories = [
     { id: 'all', name: 'All Content', icon: <FaGamepad /> },
@@ -220,7 +227,7 @@ export default function NewsPage() {
           <ScrollFadeIn>
             <Row className="mb-4">
               <Col>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#030303', marginBottom: '0.5rem' }}>Featured</h2>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#030303', marginBottom: '0.5rem' }}>{getCurrentDate()}</h2>
               </Col>
             </Row>
           </ScrollFadeIn>
