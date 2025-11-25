@@ -558,8 +558,24 @@ export default function Dashboard() {
         fetchNearbyPharmacies(location);
       },
       (error) => {
-        setLocationError('Unable to retrieve your location. Please enable location services.');
-        console.error('Location error:', error);
+        let errorMessage = 'Unable to retrieve your location. Please enable location services.';
+        if (error.code) {
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = 'Location access denied. Please enable location permissions in your browser settings.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = 'Location information is unavailable.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = 'Location request timed out. Please try again.';
+              break;
+            default:
+              errorMessage = 'An unknown error occurred while retrieving your location.';
+              break;
+          }
+        }
+        setLocationError(errorMessage);
       }
     );
   };
@@ -1069,7 +1085,8 @@ export default function Dashboard() {
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1rem 1.5rem',
+                                padding: '1.25rem 1.5rem',
+                                paddingBottom: '1.5rem',
                                 borderBottom: index < seenAds.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
@@ -1144,10 +1161,11 @@ export default function Dashboard() {
                                   <div style={{
                                     fontSize: '0.8rem',
                                     color: '#666',
-                                    marginBottom: '0.5rem',
+                                    marginBottom: '0.75rem',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    lineHeight: '1.4'
                                   }}>
                                     {ad.preview}
                                   </div>
@@ -1156,7 +1174,9 @@ export default function Dashboard() {
                                     alignItems: 'center',
                                     gap: '0.75rem',
                                     fontSize: '0.75rem',
-                                    color: '#8e8e93'
+                                    color: '#8e8e93',
+                                    lineHeight: '1.4',
+                                    marginBottom: '0'
                                   }}>
                                     <span>{ad.date}</span>
                                     <span>•</span>
@@ -1216,7 +1236,8 @@ export default function Dashboard() {
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1rem 1.5rem',
+                                padding: '1.25rem 1.5rem',
+                                paddingBottom: '1.5rem',
                                 borderBottom: index < qualifiedAds.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
@@ -1283,10 +1304,11 @@ export default function Dashboard() {
                                   <div style={{
                                     fontSize: '0.8rem',
                                     color: '#666',
-                                    marginBottom: '0.5rem',
+                                    marginBottom: '0.75rem',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    lineHeight: '1.4'
                                   }}>
                                     {ad.preview}
                                   </div>
@@ -1295,7 +1317,9 @@ export default function Dashboard() {
                                     alignItems: 'center',
                                     gap: '0.75rem',
                                     fontSize: '0.75rem',
-                                    color: '#8e8e93'
+                                    color: '#8e8e93',
+                                    lineHeight: '1.4',
+                                    marginBottom: '0'
                                   }}>
                                     <FaTag style={{ fontSize: '0.7rem' }} />
                                     <span>{ad.category}</span>
