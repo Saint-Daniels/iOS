@@ -30,6 +30,17 @@ export default function Dashboard() {
   const totalSpent = 1209.30;
   const pharmacyCount = 3;
 
+  // Balance history for chart (last 7 days)
+  const balanceHistory = [
+    { day: 0, balance: 1100 },
+    { day: 1, balance: 1125 },
+    { day: 2, balance: 1150 },
+    { day: 3, balance: 1180 },
+    { day: 4, balance: 1200 },
+    { day: 5, balance: 1225 },
+    { day: 6, balance: 1247.50 }
+  ];
+
   const recentTransactions = [
     {
       id: 1,
@@ -299,27 +310,85 @@ export default function Dashboard() {
                             color: '#8e8e93',
                             fontWeight: 500,
                             letterSpacing: '1px',
-                            marginBottom: '1rem',
+                            marginBottom: '1.5rem',
                             textTransform: 'uppercase',
                             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                           }}>
-                            Interest Rate
+                            Balance Trend
                           </div>
-                          <div style={{
-                            fontSize: '2.5rem',
-                            fontWeight: 700,
-                            color: '#000000',
-                            marginBottom: '1.5rem',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                          }}>
-                            {compoundInterest}%
+                          <div style={{ width: '100%', height: '180px', position: 'relative' }}>
+                            <svg width="100%" height="100%" viewBox="0 0 300 180" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                              <defs>
+                                <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#2c5530" stopOpacity="0.2" />
+                                  <stop offset="100%" stopColor="#2c5530" stopOpacity="0" />
+                                </linearGradient>
+                              </defs>
+                              {/* Calculate chart points */}
+                              {(() => {
+                                const minBalance = Math.min(...balanceHistory.map(b => b.balance));
+                                const maxBalance = Math.max(...balanceHistory.map(b => b.balance));
+                                const range = maxBalance - minBalance || 100;
+                                const padding = range * 0.2;
+                                const chartHeight = 140;
+                                const chartWidth = 280;
+                                const stepX = chartWidth / (balanceHistory.length - 1);
+                                
+                                const points = balanceHistory.map((item, index) => {
+                                  const x = 10 + (index * stepX);
+                                  const y = 170 - ((item.balance - minBalance + padding) / (range + padding * 2)) * chartHeight;
+                                  return { x, y, balance: item.balance };
+                                });
+                                
+                                const pathData = points.map((p, i) => 
+                                  i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
+                                ).join(' ');
+                                
+                                const areaPath = `${pathData} L ${points[points.length - 1].x} 180 L ${points[0].x} 180 Z`;
+                                
+                                return (
+                                  <>
+                                    {/* Area fill */}
+                                    <path
+                                      d={areaPath}
+                                      fill="url(#balanceGradient)"
+                                    />
+                                    {/* Line */}
+                                    <path
+                                      d={pathData}
+                                      fill="none"
+                                      stroke="#2c5530"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    {/* Data points */}
+                                    {points.map((point, index) => (
+                                      <circle
+                                        key={index}
+                                        cx={point.x}
+                                        cy={point.y}
+                                        r="3"
+                                        fill="#2c5530"
+                                      />
+                                    ))}
+                                  </>
+                                );
+                              })()}
+                              {/* Grid lines */}
+                              <line x1="10" y1="180" x2="290" y2="180" stroke="#e5e5e5" strokeWidth="1" />
+                              <line x1="10" y1="140" x2="290" y2="140" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                              <line x1="10" y1="100" x2="290" y2="100" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                            </svg>
                           </div>
                           <div style={{
                             fontSize: '0.875rem',
                             color: '#8e8e93',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            marginTop: '1rem',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                            textAlign: 'center'
                           }}>
-                            Daily compound rate
+                            Last 7 days
                           </div>
                         </Card.Body>
                       </Card>
