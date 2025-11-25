@@ -13,8 +13,6 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
 
   // Check authentication
   useEffect(() => {
@@ -229,7 +227,7 @@ export default function Dashboard() {
           </Container>
         </header>
 
-        <Container fluid className="py-4">
+        <Container fluid style={{ padding: '1rem 0 2rem 0' }}>
           {/* Navigation Tabs */}
           <Row className="mb-4">
             <Col>
@@ -244,7 +242,7 @@ export default function Dashboard() {
                   <Row>
                     {/* Main Dashboard Stats */}
                     <Col lg={8}>
-                      <Card className="metrics-card mb-4" style={{
+                      <Card className="metrics-card mb-3" style={{
                         border: 'none',
                         borderRadius: '15px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
@@ -260,10 +258,10 @@ export default function Dashboard() {
                             <Badge bg="light" text="dark" style={{ fontSize: '0.9rem' }}>Live Data</Badge>
                           </div>
                         </Card.Header>
-                        <Card.Body style={{ padding: '2rem' }}>
+                        <Card.Body style={{ padding: '1.5rem' }}>
                           <Row>
                             {quickStats.map((stat, index) => (
-                              <Col md={6} lg={3} key={index} className="mb-3">
+                              <Col md={6} lg={3} key={index} className="mb-2">
                                 <div className="metric-item" style={{
                                   textAlign: 'center',
                                   padding: '1.5rem',
@@ -302,103 +300,12 @@ export default function Dashboard() {
                         </Card.Body>
                       </Card>
 
-                      {/* Recent Transactions */}
-                      <Card className="education-card" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'white',
-                          border: 'none',
-                          borderBottom: '2px solid #e9ecef',
-                          borderRadius: '15px 15px 0 0'
-                        }}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="mb-0">Recent Activity</h3>
-                            <Button variant="outline-primary" size="sm">
-                              View All
-                            </Button>
-                          </div>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          <div className="transactions-list">
-                            {recentTransactions
-                              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                              .map((transaction) => (
-                              <div key={transaction.id} className="transaction-item" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                padding: '1rem',
-                                marginBottom: '1rem',
-                                background: '#f8f9fa',
-                                borderRadius: '10px',
-                                border: '1px solid #e9ecef'
-                              }}>
-                                <div className="transaction-icon" style={{
-                                  width: '50px',
-                                  height: '50px',
-                                  borderRadius: '50%',
-                                  background: transaction.type === 'earned' ? 'rgba(44, 85, 48, 0.1)' : transaction.type === 'spent' ? 'rgba(231, 76, 60, 0.1)' : 'rgba(196, 169, 98, 0.1)',
-                                  color: transaction.type === 'earned' ? '#2c5530' : transaction.type === 'spent' ? '#e74c3c' : '#C4A962',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  marginRight: '1rem',
-                                  fontSize: '1.25rem'
-                                }}>
-                                  {transaction.icon}
-                                </div>
-                                <div className="flex-grow-1">
-                                  <h6 className="mb-1" style={{ fontSize: '1rem', fontWeight: 600 }}>{transaction.description}</h6>
-                                  <div className="d-flex align-items-center gap-3">
-                                    <Badge bg={transaction.category === 'Earning' ? 'success' : transaction.category === 'Pharmacy' ? 'primary' : 'warning'}>
-                                      {transaction.category}
-                                    </Badge>
-                                    <small className="text-muted">{transaction.date}</small>
-                                  </div>
-                                </div>
-                                <div className="transaction-amount" style={{
-                                  fontSize: '1.25rem',
-                                  fontWeight: 700,
-                                  color: transaction.type === 'earned' ? '#2c5530' : transaction.type === 'spent' ? '#e74c3c' : '#C4A962'
-                                }}>
-                                  {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                          {recentTransactions.length > itemsPerPage && (
-                            <div className="d-flex justify-content-center align-items-center gap-2 mt-3">
-                              <Button
-                                variant="outline-primary"
-                                size="sm"
-                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                                disabled={currentPage === 1}
-                              >
-                                Previous
-                              </Button>
-                              <span className="text-muted" style={{ fontSize: '0.9rem' }}>
-                                Page {currentPage} of {Math.ceil(recentTransactions.length / itemsPerPage)}
-                              </span>
-                              <Button
-                                variant="outline-primary"
-                                size="sm"
-                                onClick={() => setCurrentPage(prev => Math.min(Math.ceil(recentTransactions.length / itemsPerPage), prev + 1))}
-                                disabled={currentPage === Math.ceil(recentTransactions.length / itemsPerPage)}
-                              >
-                                Next
-                              </Button>
-                            </div>
-                          )}
-                        </Card.Body>
-                      </Card>
                     </Col>
 
                     {/* Sidebar */}
                     <Col lg={4}>
                       {/* Virtual Card */}
-                      <Card className="resources-card mb-4" style={{
+                      <Card className="resources-card mb-3" style={{
                         border: 'none',
                         borderRadius: '15px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
@@ -412,9 +319,9 @@ export default function Dashboard() {
                         }}>
                           <h5 className="mb-0">Virtual Card</h5>
                         </Card.Header>
-                        <Card.Body style={{ padding: '2rem' }}>
-                          <div className="text-center mb-3">
-                            <FaCreditCard size={60} style={{ color: '#C4A962', marginBottom: '1rem' }} />
+                        <Card.Body style={{ padding: '1.5rem' }}>
+                          <div className="text-center mb-2">
+                            <FaCreditCard size={50} style={{ color: '#C4A962', marginBottom: '0.75rem' }} />
                             <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>**** **** **** 1234</h4>
                             <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>Available Balance: ${subsidyBalance.toFixed(2)}</p>
                           </div>
@@ -436,7 +343,7 @@ export default function Dashboard() {
                       </Card>
 
                       {/* Ad Network Activity */}
-                      <Card className="progress-card mb-4" style={{
+                      <Card className="progress-card mb-3" style={{
                         border: 'none',
                         borderRadius: '15px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
@@ -449,10 +356,11 @@ export default function Dashboard() {
                         }}>
                           <h5 className="mb-0">Ad Network Activity</h5>
                         </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          {adNetworkActivity.map((activity) => (
-                            <div key={activity.id} className="activity-item mb-3" style={{
+                        <Card.Body style={{ padding: '1.5rem 1.5rem 1rem 1.5rem' }}>
+                          {adNetworkActivity.map((activity, index, array) => (
+                            <div key={activity.id} className="activity-item" style={{
                               padding: '1rem',
+                              marginBottom: index === array.length - 1 ? '0' : '0.75rem',
                               background: activity.status === 'available' ? '#f0f7f4' : '#f8f9fa',
                               borderRadius: '10px',
                               border: activity.status === 'available' ? '2px solid #2c5530' : '1px solid #e9ecef'
@@ -470,19 +378,6 @@ export default function Dashboard() {
                                 <span style={{ fontWeight: 600, color: '#2c5530' }}>${activity.earnings.toFixed(2)}</span>
                                 <small className="text-muted">{activity.date}</small>
                               </div>
-                              {activity.status === 'available' && (
-                                <Button 
-                                  variant="outline-primary" 
-                                  size="sm" 
-                                  className="w-100 mt-2"
-                                  style={{
-                                    borderColor: '#2c5530',
-                                    color: '#2c5530'
-                                  }}
-                                >
-                                  Engage Now
-                                </Button>
-                              )}
                             </div>
                           ))}
                         </Card.Body>
