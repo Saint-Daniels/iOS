@@ -51,13 +51,19 @@ export default function Home() {
             <Row className="align-items-center">
               <Col lg={6}>
                 <ScrollSlideIn direction="right" delay={0.2}>
-                  <div className="mission-image-wrapper-professional">
+                  <div className="mission-image-wrapper-professional" style={{ height: '600px' }}>
                     <Image
                       src="/images/broker.jpeg"
                       alt="Modern banking and healthcare technology"
                       width={600}
-                      height={450}
+                      height={600}
                       className="mission-image-professional"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center bottom'
+                      }}
                     />
                   </div>
                 </ScrollSlideIn>
