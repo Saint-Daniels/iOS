@@ -101,17 +101,6 @@ export default function ResourcesPage() {
         {/* Documents Grid */}
         <section className="service-fullpage-section">
           <Container>
-            <ScrollFadeIn>
-              <Row className="justify-content-center mb-5">
-                <Col lg={8} className="text-center">
-                  <div className="service-header">
-                    <h2 className="service-title-large">Available Documents</h2>
-                    <div className="service-divider"></div>
-                  </div>
-                </Col>
-              </Row>
-            </ScrollFadeIn>
-
             <Row className="g-4">
               {documents.map((doc, index) => (
                 <Col lg={4} md={6} key={index}>
