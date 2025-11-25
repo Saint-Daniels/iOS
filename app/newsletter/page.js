@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaGamepad, FaVideo, FaComment, FaTrophy, FaUsers, FaYoutube, FaTwitch, FaEye, FaClock } from 'react-icons/fa';
+import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaGamepad, FaVideo, FaComment, FaTrophy, FaUsers, FaYoutube, FaTwitch, FaEye, FaClock, FaFacebook, FaInstagram } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import MainNavbar from '../../components/Navbar';
@@ -150,11 +150,11 @@ export default function NewsPage() {
 
   const getCategoryColor = (category) => {
     const colors = {
-      fortnite: '#00d2ff',
-      cod: '#ff6b00',
-      commentary: '#9b59b6',
-      highlights: '#e74c3c',
-      tournaments: '#f39c12',
+      fortnite: '#C4A962',
+      cod: '#b39855',
+      commentary: '#d4b876',
+      highlights: '#C4A962',
+      tournaments: '#e8d4a0',
       all: '#2c5530'
     };
     return colors[category] || '#2c5530';
@@ -165,18 +165,18 @@ export default function NewsPage() {
       <MainNavbar />
       
       {/* Hero Section */}
-      <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' }}>
+      <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem', background: 'linear-gradient(135deg, #1B392F 0%, #2c5530 100%)' }}>
         <Container>
           <ScrollFadeIn>
             <Row className="justify-content-center text-center">
               <Col lg={10}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                  <FaGamepad size={60} style={{ color: '#00d2ff' }} />
+                  <FaGamepad size={60} style={{ color: '#C4A962' }} />
                 </div>
                 <h1 className="mission-title-professional" style={{ color: 'white', fontSize: '3rem' }}>
                   Saint Daniels Video Game Network
                 </h1>
-                <div className="mission-divider" style={{ margin: '1.5rem auto', background: '#00d2ff' }}></div>
+                <div className="mission-divider" style={{ margin: '1.5rem auto', background: '#C4A962' }}></div>
                 <p className="mission-description-professional" style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', color: 'rgba(255, 255, 255, 0.9)' }}>
                   Your destination for the coolest Fortnite and Call of Duty videos, epic gameplay highlights, 
                   expert commentary, and tournament coverage. Join the Saint Daniels gaming community and never miss a play.
@@ -187,15 +187,15 @@ export default function NewsPage() {
         </Container>
       </section>
 
-      {/* Search and Filter Section */}
+      {/* Search Section */}
       <section className="service-fullpage-section" style={{ background: '#f8f9fa', paddingTop: '3rem', paddingBottom: '2rem' }}>
         <Container>
           <ScrollFadeIn>
-            <Row className="align-items-center mb-4">
-              <Col lg={6}>
-                <div className="search-container">
+            <Row className="justify-content-center">
+              <Col lg={6} md={8} sm={10}>
+                <div className="search-container" style={{ width: '100%' }}>
                   <InputGroup>
-                    <InputGroup.Text style={{ background: '#2c5530', color: 'white', border: 'none' }}>
+                    <InputGroup.Text style={{ background: 'linear-gradient(135deg, #1B392F 0%, #2c5530 100%)', color: '#C4A962', border: 'none' }}>
                       <FaSearch />
                     </InputGroup.Text>
                     <Form.Control
@@ -204,55 +204,9 @@ export default function NewsPage() {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="news-search-input"
-                      style={{ borderLeft: 'none' }}
+                      style={{ borderLeft: 'none', borderColor: '#C4A962' }}
                     />
                   </InputGroup>
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="category-filter">
-                  <Form.Select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="news-category-select"
-                    style={{ borderColor: '#2c5530' }}
-                  >
-                    {gameCategories.map(category => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </div>
-              </Col>
-            </Row>
-
-            {/* Category Pills */}
-            <Row>
-              <Col>
-                <div className="category-pills" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center' }}>
-                  {gameCategories.map(category => (
-                    <Button
-                      key={category.id}
-                      variant={selectedCategory === category.id ? 'primary' : 'outline-primary'}
-                      onClick={() => setSelectedCategory(category.id)}
-                      className="category-pill"
-                      style={{ 
-                        backgroundColor: selectedCategory === category.id ? getCategoryColor(category.id) : 'transparent',
-                        borderColor: getCategoryColor(category.id),
-                        color: selectedCategory === category.id ? 'white' : getCategoryColor(category.id),
-                        borderRadius: '25px',
-                        padding: '0.5rem 1.25rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        border: '2px solid'
-                      }}
-                    >
-                      {category.icon}
-                      <span>{category.name}</span>
-                    </Button>
-                  ))}
                 </div>
               </Col>
             </Row>
@@ -475,7 +429,7 @@ export default function NewsPage() {
       </section>
 
       {/* Newsletter Subscription Section */}
-      <section className="service-fullpage-section" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)', color: 'white' }}>
+      <section className="service-fullpage-section" style={{ background: 'linear-gradient(135deg, #1B392F 0%, #2c5530 100%)', color: 'white' }}>
         <Container>
           <ScrollFadeIn>
             <Row className="justify-content-center">
@@ -487,7 +441,7 @@ export default function NewsPage() {
                   backdropFilter: 'blur(10px)'
                 }}>
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <FaGamepad size={50} style={{ color: '#00d2ff', marginBottom: '1rem' }} />
+                    <FaGamepad size={50} style={{ color: '#C4A962', marginBottom: '1rem' }} />
                   </div>
                   <h3 className="service-title-large" style={{ color: 'white', marginBottom: '1rem' }}>Join the Gaming Network</h3>
                   <p className="mission-description-professional" style={{ 
@@ -499,10 +453,11 @@ export default function NewsPage() {
                     and exclusive gaming content from the Saint Daniels network.
                   </p>
                   <div style={{
-                    background: 'rgba(255, 255, 255, 0.15)',
+                    background: 'rgba(196, 169, 98, 0.2)',
                     borderRadius: '12px',
                     padding: '2rem',
-                    marginBottom: '2rem'
+                    marginBottom: '2rem',
+                    border: '1px solid rgba(196, 169, 98, 0.3)'
                   }}>
                     <p style={{
                       color: 'white',
@@ -523,8 +478,8 @@ export default function NewsPage() {
                       href="mailto:submissions@saintdaniels.com"
                       style={{
                         display: 'inline-block',
-                        backgroundColor: '#00d2ff',
-                        color: 'white',
+                        background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                        color: '#1B392F',
                         padding: '1rem 2rem',
                         borderRadius: '8px',
                         textDecoration: 'none',
@@ -533,12 +488,14 @@ export default function NewsPage() {
                         transition: 'all 0.3s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#00b8e6';
+                        e.target.style.background = 'linear-gradient(135deg, #d4b876 0%, #C4A962 100%)';
                         e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 4px 12px rgba(196, 169, 98, 0.4)';
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#00d2ff';
+                        e.target.style.background = 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)';
                         e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = 'none';
                       }}
                     >
                       submissions@saintdaniels.com
@@ -557,9 +514,41 @@ export default function NewsPage() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.5rem',
-                      fontSize: '0.9rem'
-                    }}>
+                      fontSize: '0.9rem',
+                      transition: 'opacity 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
                       <FaYoutube size={20} /> YouTube
+                    </a>
+                    <a href="https://instagram.com/centuriesmutual" target="_blank" rel="noopener noreferrer" style={{
+                      color: 'white',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.9rem',
+                      transition: 'opacity 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
+                      <FaInstagram size={20} /> Instagram
+                    </a>
+                    <a href="https://facebook.com/saintdaniels" target="_blank" rel="noopener noreferrer" style={{
+                      color: 'white',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.9rem',
+                      transition: 'opacity 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
+                      <FaFacebook size={20} /> Facebook
                     </a>
                     <a href="https://tiktok.com/@_saintdaniels" target="_blank" rel="noopener noreferrer" style={{
                       color: 'white',
@@ -567,8 +556,12 @@ export default function NewsPage() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.5rem',
-                      fontSize: '0.9rem'
-                    }}>
+                      fontSize: '0.9rem',
+                      transition: 'opacity 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
                       <FaVideo size={20} /> TikTok
                     </a>
                   </div>
