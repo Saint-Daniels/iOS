@@ -156,63 +156,73 @@ export default function ResourcesPage() {
                       border: '1px solid #e9ecef',
                       borderRadius: '15px',
                       boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      flexDirection: 'column'
                     }}>
-                      <Card.Body style={{ padding: '2rem' }}>
+                      <Card.Body style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                         <div className="category-header" style={{ 
                           textAlign: 'center', 
-                          marginBottom: '1.5rem',
-                          paddingBottom: '1.5rem',
+                          marginBottom: '2rem',
+                          paddingBottom: '2rem',
                           borderBottom: '2px solid #f0f0f0'
                         }}>
                           <div className="category-icon" style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '70px',
-                            height: '70px',
+                            width: '80px',
+                            height: '80px',
                             borderRadius: '50%',
                             background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
                             color: 'white',
-                            marginBottom: '1rem'
+                            marginBottom: '1.25rem'
                           }}>
                             {category.icon}
                           </div>
                           <h3 className="category-title" style={{
-                            fontSize: '1.5rem',
+                            fontSize: '1.75rem',
                             fontWeight: 600,
                             color: '#2c5530',
-                            margin: 0
+                            margin: 0,
+                            lineHeight: '1.3'
                           }}>{category.title}</h3>
                         </div>
-                        <div className="resource-list">
+                        <div className="resource-list" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                           {category.resources.map((resource, resourceIndex) => (
                             <div key={resourceIndex} className="resource-item" style={{
-                              marginBottom: '1.5rem',
-                              paddingBottom: '1.5rem',
-                              borderBottom: resourceIndex < category.resources.length - 1 ? '1px solid #f0f0f0' : 'none'
+                              marginBottom: resourceIndex < category.resources.length - 1 ? '2rem' : '0',
+                              paddingBottom: resourceIndex < category.resources.length - 1 ? '2rem' : '0',
+                              borderBottom: resourceIndex < category.resources.length - 1 ? '1px solid #e9ecef' : 'none',
+                              flex: resourceIndex === category.resources.length - 1 ? 1 : 'none'
                             }}>
                               <h5 className="resource-item-title" style={{
-                                fontSize: '1.1rem',
+                                fontSize: '1.15rem',
                                 fontWeight: 600,
-                                marginBottom: '0.5rem',
-                                color: '#333'
+                                marginBottom: '0.75rem',
+                                color: '#1B392F',
+                                lineHeight: '1.4'
                               }}>{resource.title}</h5>
                               <p className="resource-item-description" style={{
-                                fontSize: '0.9rem',
+                                fontSize: '0.95rem',
                                 color: '#666',
-                                marginBottom: '0.75rem',
-                                lineHeight: '1.5'
+                                marginBottom: '1rem',
+                                lineHeight: '1.6',
+                                minHeight: '3rem'
                               }}>{resource.description}</p>
                               <div className="resource-item-footer" style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                marginTop: 'auto'
                               }}>
                                 <span className="resource-type" style={{
-                                  fontSize: '0.85rem',
+                                  fontSize: '0.875rem',
                                   color: '#888',
-                                  fontWeight: 500
+                                  fontWeight: 500,
+                                  padding: '0.375rem 0.875rem',
+                                  background: '#f8f9fa',
+                                  borderRadius: '20px'
                                 }}>{resource.type}</span>
                                 <a href={resource.link} className="resource-link" style={{
                                   display: 'flex',
@@ -220,14 +230,23 @@ export default function ResourcesPage() {
                                   gap: '0.5rem',
                                   color: '#2c5530',
                                   textDecoration: 'none',
-                                  fontWeight: 500,
-                                  fontSize: '0.9rem',
-                                  transition: 'color 0.3s ease'
+                                  fontWeight: 600,
+                                  fontSize: '0.95rem',
+                                  transition: 'all 0.3s ease',
+                                  padding: '0.5rem 1rem',
+                                  borderRadius: '6px',
+                                  background: 'transparent'
                                 }}
-                                onMouseEnter={(e) => e.target.style.color = '#4a7c59'}
-                                onMouseLeave={(e) => e.target.style.color = '#2c5530'}
+                                onMouseEnter={(e) => {
+                                  e.target.style.color = '#C4A962';
+                                  e.target.style.background = 'rgba(196, 169, 98, 0.1)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.target.style.color = '#2c5530';
+                                  e.target.style.background = 'transparent';
+                                }}
                                 >
-                                  <FaDownload size={14} />
+                                  <FaDownload size={16} />
                                   Download
                                 </a>
                               </div>
