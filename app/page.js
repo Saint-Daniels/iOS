@@ -221,13 +221,19 @@ export default function Home() {
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <ScrollSlideIn direction="right" delay={0.2}>
-                  <div className="service-image-wrapper">
+                  <div className="service-image-wrapper" style={{ height: '600px' }}>
                     <Image
-                      src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1000&q=80"
+                      src="/images/lifestyle.jpg"
                       alt="Member tracking healthcare rewards timeline"
                       width={600}
-                      height={400}
+                      height={600}
                       className="service-image"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center bottom'
+                      }}
                     />
                   </div>
                 </ScrollSlideIn>
