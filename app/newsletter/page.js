@@ -143,6 +143,30 @@ export default function NewsPage() {
       views: "22.1K",
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
+    },
+    {
+      id: 10,
+      title: "Fortnite Zero Build Mode - Pro Tips & Strategies",
+      excerpt: "Master the no-build meta with advanced movement and positioning techniques.",
+      category: "fortnite",
+      author: "Saint Daniels Gaming",
+      date: "3 weeks ago",
+      watchTime: "11:20",
+      views: "10.5K",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
+    },
+    {
+      id: 11,
+      title: "Call of Duty: Sniping Guide - Long Range Domination",
+      excerpt: "Learn the art of long-range sniping and become a deadly marksman in Warzone.",
+      category: "cod",
+      author: "Saint Daniels Gaming",
+      date: "4 weeks ago",
+      watchTime: "13:45",
+      views: "8.2K",
+      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     }
   ];
 
