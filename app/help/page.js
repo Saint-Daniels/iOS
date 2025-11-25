@@ -292,34 +292,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaFileInvoiceDollar size={40} style={{ color: '#2c5530' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#C4A962'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaFileInvoiceDollar size={20} style={{ color: 'white' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(196, 169, 98, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>
@@ -366,34 +411,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaIdCard size={40} style={{ color: '#C4A962' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#2c5530'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaIdCard size={20} style={{ color: '#1B392F' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(44, 85, 48, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>
@@ -440,34 +530,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaHome size={40} style={{ color: '#2c5530' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#C4A962'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaHome size={20} style={{ color: 'white' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(196, 169, 98, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>
@@ -514,34 +649,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaUniversity size={40} style={{ color: '#C4A962' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#2c5530'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaUniversity size={20} style={{ color: '#1B392F' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(44, 85, 48, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>
@@ -588,34 +768,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaPassport size={40} style={{ color: '#2c5530' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#C4A962'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaPassport size={20} style={{ color: 'white' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(196, 169, 98, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>
@@ -662,34 +887,79 @@ export default function HelpCenter() {
                   }}
                   >
                     <div style={{
-                      height: '180px',
+                      height: '200px',
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       position: 'relative',
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      padding: '20px'
                     }}>
                       <div style={{
-                        width: '100px',
-                        height: '130px',
+                        width: '120px',
+                        height: '160px',
                         background: 'white',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '2px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        position: 'relative'
+                        position: 'relative',
+                        transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                        transformStyle: 'preserve-3d'
                       }}>
-                        <FaCertificate size={40} style={{ color: '#C4A962' }} />
                         <div style={{
                           position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '2px',
-                          background: '#2c5530'
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          height: '40px',
+                          background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                          borderRadius: '2px 2px 0 0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <FaCertificate size={20} style={{ color: '#1B392F' }} />
+                        </div>
+                        <div style={{
+                          marginTop: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '0 12px'
+                        }}>
+                          <div style={{
+                            width: '100%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '80%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                          <div style={{
+                            width: '90%',
+                            height: '3px',
+                            background: '#e9ecef',
+                            borderRadius: '2px'
+                          }}></div>
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '20px solid transparent',
+                          borderTop: '20px solid rgba(44, 85, 48, 0.8)',
+                          borderRadius: '0 2px 0 0'
                         }}></div>
                       </div>
                     </div>

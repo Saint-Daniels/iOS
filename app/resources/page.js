@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaDownload, FaFileAlt, FaClipboardList, FaShieldAlt } from 'react-icons/fa';
+import { FaDownload, FaFileAlt, FaFilePdf, FaFileContract, FaFileInvoice, FaBook, FaListAlt, FaFileMedical, FaShieldAlt, FaLock } from 'react-icons/fa';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
@@ -14,55 +14,64 @@ export default function ResourcesPage() {
       title: "Healthcare Rewards Program Guide",
       description: "Complete guide to understanding how private subsidies work, earning rewards, and spending at pharmacies",
       link: "#",
-      icon: <FaFileAlt size={24} />
+      icon: <FaBook size={28} />,
+      color: '#2c5530'
     },
     {
       title: "Compound Interest Vault Guide",
       description: "Detailed explanation of how unused rewards grow through our compound network treasury",
       link: "#",
-      icon: <FaFileAlt size={24} />
+      icon: <FaFileInvoice size={28} />,
+      color: '#C4A962'
     },
     {
       title: "Pharmacy Network Directory",
       description: "Comprehensive list of participating pharmacies where you can redeem your private subsidy",
       link: "#",
-      icon: <FaFileAlt size={24} />
+      icon: <FaListAlt size={28} />,
+      color: '#2c5530'
     },
     {
       title: "Rewards Application Form",
       description: "Complete application form to enroll in the healthcare rewards program",
       link: "/application",
-      icon: <FaClipboardList size={24} />
+      icon: <FaFileContract size={28} />,
+      color: '#C4A962'
     },
     {
       title: "Pharmacy Verification Form",
       description: "Form to verify and connect your preferred pharmacy to your account",
       link: "#",
-      icon: <FaClipboardList size={24} />
+      icon: <FaFileMedical size={28} />,
+      color: '#2c5530'
     },
     {
       title: "Account Update Form",
       description: "Update your personal information, pharmacy preferences, or vault settings",
       link: "#",
-      icon: <FaClipboardList size={24} />
+      icon: <FaFileAlt size={28} />,
+      color: '#C4A962'
     },
     {
       title: "Privacy Policy",
       description: "How we protect your health data and maintain HIPAA-safe architecture",
       link: "/privacy",
-      icon: <FaShieldAlt size={24} />
+      icon: <FaLock size={28} />,
+      color: '#2c5530'
     },
     {
       title: "Terms of Service",
       description: "Terms and conditions for using the healthcare rewards platform",
       link: "/terms",
-      icon: <FaShieldAlt size={24} />
+      icon: <FaFileContract size={28} />,
+      color: '#C4A962'
     },
     {
       title: "Data Protection Notice",
       description: "Information about our blockchain-based privacy protections and data handling",
       link: "#",
-      icon: <FaShieldAlt size={24} />
+      icon: <FaShieldAlt size={28} />,
+      color: '#2c5530'
     }
   ];
 
@@ -136,14 +145,37 @@ export default function ResourcesPage() {
                           display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: '70px',
-                          height: '70px',
-                          borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                          color: 'white',
-                          margin: '0 auto 1.5rem'
+                          width: '80px',
+                          height: '100px',
+                          borderRadius: '8px',
+                          background: 'white',
+                          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                          margin: '0 auto 1.5rem',
+                          position: 'relative',
+                          border: '1px solid #e9ecef'
                         }}>
-                          {doc.icon}
+                          <div style={{
+                            position: 'absolute',
+                            top: '8px',
+                            left: '8px',
+                            right: '8px',
+                            bottom: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: doc.color
+                          }}>
+                            {doc.icon}
+                          </div>
+                          <div style={{
+                            position: 'absolute',
+                            bottom: '4px',
+                            right: '4px',
+                            width: '0',
+                            height: '0',
+                            borderLeft: '8px solid transparent',
+                            borderBottom: '8px solid #C4A962'
+                          }}></div>
                         </div>
                         <h4 style={{
                           fontSize: '1.25rem',
