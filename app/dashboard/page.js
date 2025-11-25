@@ -6,7 +6,6 @@ import { FaDollarSign, FaCreditCard, FaChartLine, FaGift, FaHospital, FaMobile, 
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
 
 export default function Dashboard() {
@@ -14,6 +13,8 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Check authentication
   useEffect(() => {
@@ -322,7 +323,9 @@ export default function Dashboard() {
                         </Card.Header>
                         <Card.Body style={{ padding: '1.5rem' }}>
                           <div className="transactions-list">
-                            {recentTransactions.map((transaction) => (
+                            {recentTransactions
+                              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                              .map((transaction) => (
                               <div key={transaction.id} className="transaction-item" style={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -365,6 +368,29 @@ export default function Dashboard() {
                               </div>
                             ))}
                           </div>
+                          {recentTransactions.length > itemsPerPage && (
+                            <div className="d-flex justify-content-center align-items-center gap-2 mt-3">
+                              <Button
+                                variant="outline-primary"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                disabled={currentPage === 1}
+                              >
+                                Previous
+                              </Button>
+                              <span className="text-muted" style={{ fontSize: '0.9rem' }}>
+                                Page {currentPage} of {Math.ceil(recentTransactions.length / itemsPerPage)}
+                              </span>
+                              <Button
+                                variant="outline-primary"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.min(Math.ceil(recentTransactions.length / itemsPerPage), prev + 1))}
+                                disabled={currentPage === Math.ceil(recentTransactions.length / itemsPerPage)}
+                              >
+                                Next
+                              </Button>
+                            </div>
+                          )}
                         </Card.Body>
                       </Card>
                     </Col>
@@ -788,7 +814,21 @@ export default function Dashboard() {
           </Modal.Footer>
         </Modal>
       </div>
-      <Footer />
+      
+      {/* Minimal Footer */}
+      <footer style={{
+        background: '#f8f9fa',
+        padding: '1.5rem 0',
+        textAlign: 'center',
+        borderTop: '1px solid #e9ecef',
+        marginTop: '3rem'
+      }}>
+        <Container>
+          <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>
+            © 2025 Saint Daniels Healthcare. All rights reserved.
+          </p>
+        </Container>
+      </footer>
     </PageTransition>
   );
 }
