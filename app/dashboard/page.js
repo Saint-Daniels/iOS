@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('balance');
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
+  const [chartPeriod, setChartPeriod] = useState('1W');
 
   // Check authentication
   useEffect(() => {
@@ -30,16 +31,101 @@ export default function Dashboard() {
   const totalSpent = 1209.30;
   const pharmacyCount = 3;
 
-  // Balance history for chart (last 7 days)
-  const balanceHistory = [
-    { day: 0, balance: 1100 },
-    { day: 1, balance: 1125 },
-    { day: 2, balance: 1150 },
-    { day: 3, balance: 1180 },
-    { day: 4, balance: 1200 },
-    { day: 5, balance: 1225 },
-    { day: 6, balance: 1247.50 }
-  ];
+  // Balance history data for different time periods
+  const getBalanceHistory = (period) => {
+    switch(period) {
+      case '1D':
+        // Today - hourly data
+        return [
+          { time: 0, balance: 1240 },
+          { time: 1, balance: 1242 },
+          { time: 2, balance: 1243 },
+          { time: 3, balance: 1244.5 },
+          { time: 4, balance: 1245.5 },
+          { time: 5, balance: 1246 },
+          { time: 6, balance: 1247.50 }
+        ];
+      case '1W':
+        // Last 7 days
+        return [
+          { time: 0, balance: 1100 },
+          { time: 1, balance: 1125 },
+          { time: 2, balance: 1150 },
+          { time: 3, balance: 1180 },
+          { time: 4, balance: 1200 },
+          { time: 5, balance: 1225 },
+          { time: 6, balance: 1247.50 }
+        ];
+      case '1M':
+        // Last 30 days (weekly points)
+        return [
+          { time: 0, balance: 850 },
+          { time: 1, balance: 920 },
+          { time: 2, balance: 980 },
+          { time: 3, balance: 1050 },
+          { time: 4, balance: 1120 },
+          { time: 5, balance: 1180 },
+          { time: 6, balance: 1247.50 }
+        ];
+      case '3M':
+        // Last 3 months (monthly points)
+        return [
+          { time: 0, balance: 600 },
+          { time: 1, balance: 750 },
+          { time: 2, balance: 900 },
+          { time: 3, balance: 1100 },
+          { time: 4, balance: 1247.50 }
+        ];
+      case '1Y':
+        // Last year (monthly points)
+        return [
+          { time: 0, balance: 200 },
+          { time: 1, balance: 350 },
+          { time: 2, balance: 500 },
+          { time: 3, balance: 650 },
+          { time: 4, balance: 800 },
+          { time: 5, balance: 950 },
+          { time: 6, balance: 1100 },
+          { time: 7, balance: 1150 },
+          { time: 8, balance: 1200 },
+          { time: 9, balance: 1220 },
+          { time: 10, balance: 1235 },
+          { time: 11, balance: 1247.50 }
+        ];
+      case '5Y':
+        // Last 5 years (yearly points)
+        return [
+          { time: 0, balance: 0 },
+          { time: 1, balance: 150 },
+          { time: 2, balance: 400 },
+          { time: 3, balance: 750 },
+          { time: 4, balance: 1100 },
+          { time: 5, balance: 1247.50 }
+        ];
+      case 'MAX':
+        // All time (yearly points)
+        return [
+          { time: 0, balance: 0 },
+          { time: 1, balance: 150 },
+          { time: 2, balance: 400 },
+          { time: 3, balance: 750 },
+          { time: 4, balance: 1100 },
+          { time: 5, balance: 1247.50 }
+        ];
+      default:
+        return [
+          { time: 0, balance: 1100 },
+          { time: 1, balance: 1125 },
+          { time: 2, balance: 1150 },
+          { time: 3, balance: 1180 },
+          { time: 4, balance: 1200 },
+          { time: 5, balance: 1225 },
+          { time: 6, balance: 1247.50 }
+        ];
+    }
+  };
+
+  const balanceHistory = getBalanceHistory(chartPeriod);
 
   const recentTransactions = [
     {
@@ -302,41 +388,72 @@ export default function Dashboard() {
                         border: 'none',
                         borderRadius: '16px',
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                        marginBottom: '1.5rem'
+                        marginBottom: '1.5rem',
+                        background: 'white'
                       }}>
-                        <Card.Body style={{ padding: '2rem' }}>
+                        <Card.Body style={{ padding: '1.5rem' }}>
+                          {/* Time Period Buttons */}
                           <div style={{
-                            fontSize: '0.75rem',
-                            color: '#8e8e93',
-                            fontWeight: 500,
-                            letterSpacing: '1px',
+                            display: 'flex',
+                            gap: '0.5rem',
                             marginBottom: '1.5rem',
-                            textTransform: 'uppercase',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            flexWrap: 'wrap',
+                            justifyContent: 'center'
                           }}>
-                            Balance Trend
+                            {['1D', '1W', '1M', '3M', '1Y', '5Y', 'MAX'].map((period) => (
+                              <button
+                                key={period}
+                                onClick={() => setChartPeriod(period)}
+                                style={{
+                                  padding: '0.4rem 0.8rem',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 600,
+                                  borderRadius: '6px',
+                                  border: 'none',
+                                  background: chartPeriod === period ? '#000000' : '#f5f5f5',
+                                  color: chartPeriod === period ? '#ffffff' : '#666666',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
+                                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                                  letterSpacing: '0.3px'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (chartPeriod !== period) {
+                                    e.target.style.background = '#e5e5e5';
+                                  }
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (chartPeriod !== period) {
+                                    e.target.style.background = '#f5f5f5';
+                                  }
+                                }}
+                              >
+                                {period}
+                              </button>
+                            ))}
                           </div>
-                          <div style={{ width: '100%', height: '180px', position: 'relative' }}>
-                            <svg width="100%" height="100%" viewBox="0 0 300 180" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+
+                          {/* Chart Display */}
+                          <div style={{ width: '100%', height: '220px', position: 'relative', marginBottom: '1rem' }}>
+                            <svg width="100%" height="100%" viewBox="0 0 300 220" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
                               <defs>
                                 <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                  <stop offset="0%" stopColor="#2c5530" stopOpacity="0.2" />
+                                  <stop offset="0%" stopColor="#2c5530" stopOpacity="0.15" />
                                   <stop offset="100%" stopColor="#2c5530" stopOpacity="0" />
                                 </linearGradient>
                               </defs>
-                              {/* Calculate chart points */}
                               {(() => {
                                 const minBalance = Math.min(...balanceHistory.map(b => b.balance));
                                 const maxBalance = Math.max(...balanceHistory.map(b => b.balance));
                                 const range = maxBalance - minBalance || 100;
-                                const padding = range * 0.2;
-                                const chartHeight = 140;
+                                const padding = range * 0.15;
+                                const chartHeight = 180;
                                 const chartWidth = 280;
-                                const stepX = chartWidth / (balanceHistory.length - 1);
+                                const stepX = balanceHistory.length > 1 ? chartWidth / (balanceHistory.length - 1) : 0;
                                 
                                 const points = balanceHistory.map((item, index) => {
                                   const x = 10 + (index * stepX);
-                                  const y = 170 - ((item.balance - minBalance + padding) / (range + padding * 2)) * chartHeight;
+                                  const y = 210 - ((item.balance - minBalance + padding) / (range + padding * 2)) * chartHeight;
                                   return { x, y, balance: item.balance };
                                 });
                                 
@@ -344,7 +461,12 @@ export default function Dashboard() {
                                   i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
                                 ).join(' ');
                                 
-                                const areaPath = `${pathData} L ${points[points.length - 1].x} 180 L ${points[0].x} 180 Z`;
+                                const areaPath = `${pathData} L ${points[points.length - 1].x} 220 L ${points[0].x} 220 Z`;
+                                
+                                const firstBalance = balanceHistory[0].balance;
+                                const lastBalance = balanceHistory[balanceHistory.length - 1].balance;
+                                const change = lastBalance - firstBalance;
+                                const changePercent = firstBalance > 0 ? ((change / firstBalance) * 100) : 0;
                                 
                                 return (
                                   <>
@@ -362,34 +484,72 @@ export default function Dashboard() {
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
-                                    {/* Data points */}
-                                    {points.map((point, index) => (
-                                      <circle
-                                        key={index}
-                                        cx={point.x}
-                                        cy={point.y}
-                                        r="3"
-                                        fill="#2c5530"
-                                      />
-                                    ))}
+                                    {/* Grid lines */}
+                                    <line x1="10" y1="220" x2="290" y2="220" stroke="#e5e5e5" strokeWidth="1" />
+                                    <line x1="10" y1="170" x2="290" y2="170" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                                    <line x1="10" y1="120" x2="290" y2="120" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                                    <line x1="10" y1="70" x2="290" y2="70" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
                                   </>
                                 );
                               })()}
-                              {/* Grid lines */}
-                              <line x1="10" y1="180" x2="290" y2="180" stroke="#e5e5e5" strokeWidth="1" />
-                              <line x1="10" y1="140" x2="290" y2="140" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
-                              <line x1="10" y1="100" x2="290" y2="100" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
                             </svg>
                           </div>
-                          <div style={{
-                            fontSize: '0.875rem',
-                            color: '#8e8e93',
-                            marginTop: '1rem',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                            textAlign: 'center'
-                          }}>
-                            Last 7 days
-                          </div>
+
+                          {/* Stats Display */}
+                          {(() => {
+                            const firstBalance = balanceHistory[0].balance;
+                            const lastBalance = balanceHistory[balanceHistory.length - 1].balance;
+                            const change = lastBalance - firstBalance;
+                            const changePercent = firstBalance > 0 ? ((change / firstBalance) * 100) : 0;
+                            const isPositive = change >= 0;
+                            
+                            return (
+                              <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                paddingTop: '1rem',
+                                borderTop: '1px solid #f0f0f0'
+                              }}>
+                                <div>
+                                  <div style={{
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93',
+                                    marginBottom: '0.25rem',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    Current Balance
+                                  </div>
+                                  <div style={{
+                                    fontSize: '1.5rem',
+                                    fontWeight: 700,
+                                    color: '#000000',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    ${lastBalance.toFixed(2)}
+                                  </div>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                  <div style={{
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93',
+                                    marginBottom: '0.25rem',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    {chartPeriod === '1D' ? 'Today' : chartPeriod === '1W' ? 'This Week' : chartPeriod === '1M' ? 'This Month' : chartPeriod === '3M' ? '3 Months' : chartPeriod === '1Y' ? 'This Year' : chartPeriod === '5Y' ? '5 Years' : 'All Time'}
+                                  </div>
+                                  <div style={{
+                                    fontSize: '1.25rem',
+                                    fontWeight: 700,
+                                    color: isPositive ? '#2c5530' : '#e74c3c',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    {isPositive ? '+' : ''}${change.toFixed(2)} ({isPositive ? '+' : ''}{changePercent.toFixed(2)}%)
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </Card.Body>
                       </Card>
                       <Card style={{
