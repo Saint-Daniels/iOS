@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [userLocation, setUserLocation] = useState(null);
   const [localPharmacies, setLocalPharmacies] = useState([]);
   const [locationError, setLocationError] = useState(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // Check authentication with enhanced security
   useEffect(() => {
@@ -523,9 +524,15 @@ export default function Dashboard() {
   ];
 
   const handleLogout = () => {
+    setShowAccountDropdown(false);
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     Cookies.remove('isLoggedIn');
     Cookies.remove('userEmail');
-    router.push('/');
+    setShowLogoutModal(false);
+    router.push('/login');
   };
 
   // Initialize with default location (bypass location requirement)
@@ -2012,6 +2019,64 @@ export default function Dashboard() {
               Save Settings
             </Button>
           </Modal.Footer>
+        </Modal>
+
+        {/* Logout Success Modal */}
+        <Modal 
+          show={showLogoutModal} 
+          onHide={() => setShowLogoutModal(false)}
+          backdrop="static"
+          keyboard={false}
+          centered
+        >
+          <Modal.Body style={{ padding: '2.5rem', textAlign: 'center' }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '2.5rem',
+              margin: '0 auto 1.5rem'
+            }}>
+              <FaCheckCircle />
+            </div>
+            <h4 style={{
+              fontSize: '1.5rem',
+              fontWeight: 500,
+              color: '#202124',
+              marginBottom: '1rem',
+              fontFamily: 'Roboto, sans-serif'
+            }}>
+              Successfully Logged Out
+            </h4>
+            <p style={{
+              fontSize: '0.9375rem',
+              color: '#5f6368',
+              marginBottom: '2rem',
+              fontFamily: 'Roboto, sans-serif'
+            }}>
+              You have been successfully logged out of your account.
+            </p>
+            <Button
+              onClick={confirmLogout}
+              style={{
+                background: '#2c5530',
+                border: 'none',
+                padding: '0.75rem 2rem',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                fontFamily: 'Roboto, sans-serif',
+                width: '100%'
+              }}
+            >
+              Continue to Login
+            </Button>
+          </Modal.Body>
         </Modal>
       </div>
       
