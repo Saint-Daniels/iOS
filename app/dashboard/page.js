@@ -765,7 +765,7 @@ export default function Dashboard() {
                         onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                         onClick={() => {
-                          setShowSettings(true);
+                          router.push('/settings');
                           setShowAccountDropdown(false);
                         }}
                       >
@@ -787,12 +787,12 @@ export default function Dashboard() {
                         onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                         onClick={() => {
-                          router.push('/help');
+                          router.push('/account');
                           setShowAccountDropdown(false);
                         }}
                       >
-                        <FaShieldAlt style={{ fontSize: '0.9rem', color: '#666' }} />
-                        <span>Help Center</span>
+                        <FaUser style={{ fontSize: '0.9rem', color: '#666' }} />
+                        <span>Account</span>
                       </div>
                       <div
                         style={{
