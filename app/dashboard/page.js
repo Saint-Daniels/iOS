@@ -1133,6 +1133,8 @@ export default function Dashboard() {
                                     marginBottom: '0',
                                     paddingTop: '0.25rem'
                                   }}>
+                                    <span style={{ color: '#2c5530', fontWeight: 500 }}>Task Completed</span>
+                                    <span>•</span>
                                     <span>{ad.date}</span>
                                     <span>•</span>
                                     <FaTag style={{ fontSize: '0.7rem' }} />
@@ -1304,6 +1306,8 @@ export default function Dashboard() {
                                     marginBottom: '0',
                                     paddingTop: '0.25rem'
                                   }}>
+                                    <span style={{ color: '#C4A962', fontWeight: 500 }}>Unread</span>
+                                    <span>•</span>
                                     <FaTag style={{ fontSize: '0.7rem' }} />
                                     <span>{ad.category}</span>
                                     <span>•</span>
