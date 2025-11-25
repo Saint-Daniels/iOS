@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaYoutube, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { FaYoutube, FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa';
 
 const Footer = () => {
   const pathname = usePathname();
@@ -49,6 +49,9 @@ const Footer = () => {
               </a>
               <a href="https://tiktok.com/@_saintdaniels" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="TikTok">
                 <FaTiktok />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61576418669825#" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook">
+                <FaFacebook />
               </a>
             </div>
           </div>
