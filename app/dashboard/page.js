@@ -681,7 +681,7 @@ export default function Dashboard() {
         <div style={{
           background: 'white',
           borderBottom: '1px solid #e5e5e5',
-          padding: '1rem 0',
+          padding: '0.75rem 0',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
@@ -689,18 +689,18 @@ export default function Dashboard() {
         }}>
           <Container fluid>
             <Row className="align-items-center">
-              <Col md={6}>
+              <Col xs={6} sm={6} md={6}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Image
                     src="/images/saintdanielslogo.jpeg"
                     alt="Saint Daniels Healthcare"
-                    width={120}
-                    height={40}
-                    style={{ objectFit: 'contain' }}
+                    width={100}
+                    height={32}
+                    style={{ objectFit: 'contain', maxWidth: '100%' }}
                   />
                 </div>
               </Col>
-              <Col md={6} className="text-end">
+              <Col xs={6} sm={6} md={6} className="text-end">
                 <div style={{ position: 'relative', display: 'inline-block' }}>
                   <button
                     onClick={() => setShowAccountDropdown(!showAccountDropdown)}
@@ -708,14 +708,14 @@ export default function Dashboard() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.5rem',
-                      padding: '0.5rem 1rem',
+                      padding: '0.5rem 0.75rem',
                       background: 'transparent',
                       border: '1px solid #e5e5e5',
                       borderRadius: '8px',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
                       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       color: '#1B392F',
                       fontWeight: 500
                     }}
@@ -729,7 +729,7 @@ export default function Dashboard() {
                     }}
                   >
                     <FaUser />
-                    <span>Member Account</span>
+                    <span className="d-none d-sm-inline">Member Account</span>
                     <span style={{ fontSize: '0.7rem', color: '#8e8e93' }}>
                       {showAccountDropdown ? '▲' : '▼'}
                     </span>
@@ -737,19 +737,22 @@ export default function Dashboard() {
 
                   {/* Dropdown Menu */}
                   {showAccountDropdown && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '100%',
-                      right: 0,
-                      marginTop: '0.5rem',
-                      background: 'white',
-                      border: '1px solid #e5e5e5',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                      minWidth: '200px',
-                      zIndex: 1002,
-                      overflow: 'hidden'
-                    }}>
+                    <div 
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        right: 0,
+                        marginTop: '0.5rem',
+                        background: 'white',
+                        border: '1px solid #e5e5e5',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                        minWidth: '200px',
+                        zIndex: 1002,
+                        overflow: 'hidden'
+                      }}
+                    >
                       <div
                         style={{
                           padding: '0.75rem 1rem',
@@ -764,9 +767,11 @@ export default function Dashboard() {
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={() => {
-                          router.push('/settings');
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                           setShowAccountDropdown(false);
+                          router.push('/settings');
                         }}
                       >
                         <FaCog style={{ fontSize: '0.9rem', color: '#666' }} />
@@ -786,9 +791,11 @@ export default function Dashboard() {
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={() => {
-                          router.push('/account');
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                           setShowAccountDropdown(false);
+                          router.push('/account');
                         }}
                       >
                         <FaUser style={{ fontSize: '0.9rem', color: '#666' }} />
@@ -842,7 +849,7 @@ export default function Dashboard() {
           />
         )}
 
-        <Container fluid style={{ padding: '2rem 0' }}>
+        <Container fluid style={{ padding: '1rem 0.5rem' }}>
           {/* Navigation Tabs */}
           <Row className="mb-4">
             <Col>
@@ -859,8 +866,8 @@ export default function Dashboard() {
                 <Tab eventKey="balance" title={
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
-                  <Row className="justify-content-center" style={{ marginTop: '1.5rem' }}>
-                    <Col lg={10} xl={8}>
+                  <Row className="justify-content-center" style={{ marginTop: '1rem' }}>
+                    <Col xs={12} lg={10} xl={8}>
                       <Card style={{
                         border: 'none',
                         borderRadius: '16px',
@@ -868,9 +875,9 @@ export default function Dashboard() {
                         background: 'white',
                         marginTop: '1rem'
                       }}>
-                        <Card.Body style={{ padding: '2rem' }}>
+                        <Card.Body style={{ padding: '1rem' }}>
                           {/* Chart Display */}
-                          <div style={{ width: '100%', height: '300px', position: 'relative', marginBottom: '2rem' }}>
+                          <div style={{ width: '100%', height: '250px', position: 'relative', marginBottom: '1.5rem', overflow: 'hidden' }}>
                             <svg width="100%" height="100%" viewBox="0 0 300 300" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
                               <defs>
                                 <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -953,7 +960,7 @@ export default function Dashboard() {
                                     Current Balance
                                   </div>
                                   <div style={{
-                                    fontSize: '2.5rem',
+                                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
                                     fontWeight: 700,
                                     color: '#000000',
                                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -972,7 +979,7 @@ export default function Dashboard() {
                                     {chartPeriod === '1D' ? 'Today' : chartPeriod === '1W' ? 'This Week' : chartPeriod === '1M' ? 'This Month' : chartPeriod === '3M' ? '3 Months' : chartPeriod === '1Y' ? 'This Year' : chartPeriod === '5Y' ? '5 Years' : 'All Time'}
                                   </div>
                                   <div style={{
-                                    fontSize: '1.5rem',
+                                    fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                                     fontWeight: 700,
                                     color: isPositive ? '#2c5530' : '#e74c3c',
                                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
@@ -996,8 +1003,8 @@ export default function Dashboard() {
                                 key={period}
                                 onClick={() => setChartPeriod(period)}
                                 style={{
-                                  padding: '0.5rem 1rem',
-                                  fontSize: '0.75rem',
+                                  padding: '0.4rem 0.75rem',
+                                  fontSize: '0.7rem',
                                   fontWeight: 600,
                                   borderRadius: '6px',
                                   border: 'none',
@@ -1006,7 +1013,8 @@ export default function Dashboard() {
                                   cursor: 'pointer',
                                   transition: 'all 0.2s ease',
                                   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                                  letterSpacing: '0.3px'
+                                  letterSpacing: '0.3px',
+                                  whiteSpace: 'nowrap'
                                 }}
                                 onMouseEnter={(e) => {
                                   if (chartPeriod !== period) {
@@ -1034,7 +1042,7 @@ export default function Dashboard() {
                 }>
                   <Row>
                     {/* Seen Ads Section */}
-                    <Col lg={6}>
+                    <Col xs={12} lg={6}>
                       <Card style={{
                         border: 'none',
                         borderRadius: '12px',
@@ -1047,9 +1055,9 @@ export default function Dashboard() {
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1.5rem 1.5rem',
-                                paddingTop: '1.5rem',
-                                paddingBottom: '2rem',
+                                padding: '1rem',
+                                paddingTop: '1rem',
+                                paddingBottom: '1.5rem',
                                 borderBottom: index < array.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
@@ -1215,7 +1223,7 @@ export default function Dashboard() {
                     </Col>
 
                     {/* Qualified Ads Section */}
-                    <Col lg={6}>
+                    <Col xs={12} lg={6}>
                       <Card style={{
                         border: 'none',
                         borderRadius: '12px',
@@ -1228,7 +1236,7 @@ export default function Dashboard() {
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1.5rem 1.5rem',
+                                padding: '1rem',
                                 paddingTop: '1.5rem',
                                 paddingBottom: '2rem',
                                 borderBottom: index < array.length - 1 ? '1px solid #f0f0f0' : 'none',
@@ -1396,13 +1404,13 @@ export default function Dashboard() {
                 }>
                   {userLocation && localPharmacies.length > 0 ? (
                     <Row>
-                      <Col lg={8}>
+                      <Col xs={12} lg={8} style={{ marginBottom: '1rem' }}>
                         <Card style={{
                           border: 'none',
                           borderRadius: '12px',
                           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                           overflow: 'hidden',
-                          height: '600px'
+                          height: '400px'
                         }}>
                           <Card.Body style={{ padding: 0, height: '100%' }}>
                             {/* Google Maps Embed */}
@@ -1436,7 +1444,7 @@ export default function Dashboard() {
                           </Card.Body>
                         </Card>
                       </Col>
-                      <Col lg={4}>
+                      <Col xs={12} lg={4}>
                         <Card style={{
                           border: 'none',
                           borderRadius: '12px',
@@ -1616,7 +1624,7 @@ export default function Dashboard() {
                           }}>
                             {transaction.icon}
                           </div>
-                          <div style={{ width: '200px', flexShrink: 0 }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{
                               fontSize: '0.875rem',
                               fontWeight: 500,
@@ -1633,36 +1641,39 @@ export default function Dashboard() {
                             </div>
                           </div>
                           <div style={{
-                            width: '150px',
-                            fontSize: '0.875rem',
-                            color: '#5f6368',
-                            flexShrink: 0
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.25rem',
+                            flex: 1,
+                            minWidth: 0
                           }}>
-                            {transaction.merchant}
+                            <div style={{
+                              fontSize: '0.75rem',
+                              color: '#5f6368',
+                              display: 'none'
+                            }}>
+                              {transaction.merchant}
+                            </div>
+                            <div style={{
+                              fontSize: '0.75rem',
+                              color: '#5f6368'
+                            }}>
+                              {transaction.date}
+                            </div>
+                            <div style={{
+                              fontSize: '0.875rem',
+                              fontWeight: 500,
+                              color: transaction.type === 'earned' || transaction.type === 'interest' 
+                                ? '#2c5530' 
+                                : '#e74c3c',
+                              fontFamily: 'Roboto, sans-serif',
+                              marginTop: '0.25rem'
+                            }}>
+                              {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                            </div>
                           </div>
                           <div style={{
-                            width: '120px',
-                            fontSize: '0.875rem',
-                            color: '#5f6368',
-                            flexShrink: 0
-                          }}>
-                            {transaction.date}
-                          </div>
-                          <div style={{
-                            width: '100px',
-                            textAlign: 'right',
-                            fontSize: '0.875rem',
-                            fontWeight: 500,
-                            color: transaction.type === 'earned' || transaction.type === 'interest' 
-                              ? '#2c5530' 
-                              : '#e74c3c',
-                            flexShrink: 0,
-                            fontFamily: 'Roboto, sans-serif'
-                          }}>
-                            {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
-                          </div>
-                          <div style={{
-                            width: '100px',
+                            display: 'none',
                             textAlign: 'center',
                             flexShrink: 0
                           }}>
