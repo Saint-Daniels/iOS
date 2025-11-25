@@ -10,7 +10,7 @@ import PageTransition from '../../components/PageTransition';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('balance');
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
 
@@ -236,186 +236,23 @@ export default function Dashboard() {
                 onSelect={(k) => setActiveTab(k)}
                 className="professional-tabs"
               >
-                <Tab eventKey="overview" title={
-                  <span><FaChartLine className="me-2" />Overview</span>
+                <Tab eventKey="balance" title={
+                  <span><FaWallet className="me-2" />Balance</span>
                 }>
-                  <Row>
-                    {/* Main Dashboard Stats */}
+                  <Row className="justify-content-center">
                     <Col lg={8}>
-                      <Card className="metrics-card mb-3" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '15px 15px 0 0'
-                        }}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="mb-0">Private Subsidy Balance</h3>
-                            <Badge bg="light" text="dark" style={{ fontSize: '0.9rem' }}>Live Data</Badge>
-                          </div>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          <Row>
-                            {quickStats.map((stat, index) => (
-                              <Col md={6} lg={3} key={index} className="mb-2">
-                                <div className="metric-item" style={{
-                                  textAlign: 'center',
-                                  padding: '1.5rem',
-                                  background: '#f8f9fa',
-                                  borderRadius: '12px',
-                                  height: '100%'
-                                }}>
-                                  <div className="metric-icon" style={{
-                                    color: stat.color,
-                                    fontSize: '2rem',
-                                    marginBottom: '1rem'
-                                  }}>
-                                    {stat.icon}
-                                  </div>
-                                  <div className="metric-content">
-                                    <h6 className="metric-label" style={{
-                                      fontSize: '0.85rem',
-                                      color: '#666',
-                                      marginBottom: '0.5rem',
-                                      fontWeight: 500
-                                    }}>{stat.label}</h6>
-                                    <h4 className="metric-value" style={{
-                                      fontSize: '1.75rem',
-                                      fontWeight: 700,
-                                      color: stat.color,
-                                      marginBottom: '0.5rem'
-                                    }}>{stat.value}</h4>
-                                    <Badge bg={stat.changeType === 'positive' ? 'success' : 'secondary'} style={{ fontSize: '0.75rem' }}>
-                                      {stat.change}
-                                    </Badge>
-                                  </div>
-                                </div>
-                              </Col>
-                            ))}
-                          </Row>
-                        </Card.Body>
-                      </Card>
-
-                    </Col>
-
-                    {/* Sidebar */}
-                    <Col lg={4}>
-                      {/* Virtual Card */}
-                      <Card className="resources-card mb-3" style={{
+                      <Card className="mb-4" style={{
                         border: 'none',
                         borderRadius: '15px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
                         background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
                         color: 'white'
                       }}>
-                        <Card.Header style={{
-                          background: 'transparent',
-                          border: 'none',
-                          color: 'white'
-                        }}>
-                          <h5 className="mb-0">Virtual Card</h5>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          <div className="text-center mb-2">
-                            <FaCreditCard size={50} style={{ color: '#C4A962', marginBottom: '0.75rem' }} />
-                            <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>**** **** **** 1234</h4>
-                            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>Available Balance: ${subsidyBalance.toFixed(2)}</p>
-                          </div>
-                          <Button 
-                            variant="light" 
-                            className="w-100"
-                            onClick={() => setShowVirtualCard(true)}
-                            style={{
-                              background: 'white',
-                              color: '#2c5530',
-                              border: 'none',
-                              fontWeight: 600
-                            }}
-                          >
-                            <FaEye className="me-2" />
-                            View Card Details
-                          </Button>
-                        </Card.Body>
-                      </Card>
-
-                      {/* Ad Network Activity */}
-                      <Card className="progress-card mb-3" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'white',
-                          border: 'none',
-                          borderBottom: '2px solid #e9ecef',
-                          borderRadius: '15px 15px 0 0'
-                        }}>
-                          <h5 className="mb-0">Ad Network Activity</h5>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem 1.5rem 1rem 1.5rem' }}>
-                          {adNetworkActivity.map((activity, index, array) => (
-                            <div key={activity.id} className="activity-item" style={{
-                              padding: '1rem',
-                              marginBottom: index === array.length - 1 ? '0' : '0.75rem',
-                              background: activity.status === 'available' ? '#f0f7f4' : '#f8f9fa',
-                              borderRadius: '10px',
-                              border: activity.status === 'available' ? '2px solid #2c5530' : '1px solid #e9ecef'
-                            }}>
-                              <div className="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                  <h6 className="mb-1" style={{ fontSize: '0.95rem', fontWeight: 600 }}>{activity.brand}</h6>
-                                  <p className="mb-0 text-muted" style={{ fontSize: '0.85rem' }}>{activity.campaign}</p>
-                                </div>
-                                <Badge bg={activity.status === 'completed' ? 'success' : 'primary'}>
-                                  {activity.status === 'completed' ? 'Completed' : 'Available'}
-                                </Badge>
-                              </div>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span style={{ fontWeight: 600, color: '#2c5530' }}>${activity.earnings.toFixed(2)}</span>
-                                <small className="text-muted">{activity.date}</small>
-                              </div>
-                            </div>
-                          ))}
-                        </Card.Body>
-                      </Card>
-
-                      {/* Compound Interest Info */}
-                      <Card className="analytics-card" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-                        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'transparent',
-                          border: 'none'
-                        }}>
-                          <h5 className="mb-0">Compound Interest</h5>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          <div className="text-center mb-3">
-                            <FaChartLine size={40} style={{ color: '#C4A962', marginBottom: '1rem' }} />
-                            <h3 style={{ color: '#2c5530', marginBottom: '0.5rem' }}>{compoundInterest}%</h3>
-                            <p className="text-muted mb-3" style={{ fontSize: '0.9rem' }}>Daily compound rate on unused balance</p>
-                          </div>
-                          <div className="interest-info">
-                            <div className="d-flex justify-content-between mb-2">
-                              <span style={{ fontSize: '0.9rem' }}>Current Balance:</span>
-                              <span style={{ fontWeight: 600, color: '#2c5530' }}>${subsidyBalance.toFixed(2)}</span>
-                            </div>
-                            <div className="d-flex justify-content-between mb-2">
-                              <span style={{ fontSize: '0.9rem' }}>Daily Interest:</span>
-                              <span style={{ fontWeight: 600, color: '#C4A962' }}>+${(subsidyBalance * compoundInterest / 100 / 365).toFixed(2)}</span>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                              <span style={{ fontSize: '0.9rem' }}>Projected 30-Day Growth:</span>
-                              <span style={{ fontWeight: 600, color: '#2c5530' }}>+${(subsidyBalance * compoundInterest / 100 / 12).toFixed(2)}</span>
-                            </div>
-                          </div>
+                        <Card.Body style={{ padding: '4rem 2rem', textAlign: 'center' }}>
+                          <FaWallet size={60} style={{ color: '#C4A962', marginBottom: '1.5rem' }} />
+                          <h6 style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem', fontSize: '1rem', fontWeight: 400 }}>Private Subsidy Balance</h6>
+                          <h1 style={{ color: 'white', fontWeight: 700, fontSize: '4rem', marginBottom: '1rem' }}>${subsidyBalance.toFixed(2)}</h1>
+                          <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', margin: 0 }}>Available to spend at participating pharmacies</p>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -425,132 +262,30 @@ export default function Dashboard() {
                 <Tab eventKey="pharmacy" title={
                   <span><FaHospital className="me-2" />Pharmacy Network</span>
                 }>
-                  <Row>
-                    <Col lg={8}>
-                      <Card className="mb-4" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '15px 15px 0 0'
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '15px',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <Card.Body style={{ padding: '2rem' }}>
+                      {pharmacyNetwork.map((pharmacy) => (
+                        <div key={pharmacy.id} className="mb-3 pb-3" style={{
+                          borderBottom: '1px solid #e9ecef'
                         }}>
-                          <h3 className="mb-0">Connected Pharmacies</h3>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '2rem' }}>
-                          {pharmacyNetwork.map((pharmacy) => (
-                            <div key={pharmacy.id} className="pharmacy-item mb-4" style={{
-                              padding: '1.5rem',
-                              background: '#f8f9fa',
-                              borderRadius: '12px',
-                              border: '1px solid #e9ecef'
-                            }}>
-                              <div className="d-flex align-items-start">
-                                <div className="pharmacy-icon me-3" style={{
-                                  width: '60px',
-                                  height: '60px',
-                                  borderRadius: '50%',
-                                  background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                                  color: 'white',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  fontSize: '1.5rem'
-                                }}>
-                                  <FaHospital />
-                                </div>
-                                <div className="flex-grow-1">
-                                  <div className="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                      <h5 className="mb-1" style={{ color: '#1B392F' }}>{pharmacy.name}</h5>
-                                      <p className="mb-0 text-muted" style={{ fontSize: '0.9rem' }}>{pharmacy.address}</p>
-                                    </div>
-                                    <Badge bg="success">Connected</Badge>
-                                  </div>
-                                  <div className="d-flex justify-content-between align-items-center mt-3">
-                                    <div>
-                                      <small className="text-muted">Last Used:</small>
-                                      <p className="mb-0" style={{ fontWeight: 500 }}>{pharmacy.lastUsed}</p>
-                                    </div>
-                                    <div className="text-end">
-                                      <small className="text-muted">Total Spent:</small>
-                                      <p className="mb-0" style={{ fontWeight: 600, color: '#2c5530' }}>${pharmacy.totalSpent.toFixed(2)}</p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h5 className="mb-1" style={{ color: '#1B392F' }}>{pharmacy.name}</h5>
+                              <p className="mb-0 text-muted" style={{ fontSize: '0.9rem' }}>{pharmacy.address}</p>
                             </div>
-                          ))}
-                          <Button 
-                            variant="primary" 
-                            className="w-100 mt-3"
-                            style={{
-                              background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                              border: 'none'
-                            }}
-                          >
-                            <FaHospital className="me-2" />
-                            Connect New Pharmacy
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-
-                    <Col lg={4}>
-                      <Card style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                      }}>
-                        <Card.Header style={{
-                          background: 'white',
-                          border: 'none',
-                          borderBottom: '2px solid #e9ecef',
-                          borderRadius: '15px 15px 0 0'
-                        }}>
-                          <h5 className="mb-0">Spending Summary</h5>
-                        </Card.Header>
-                        <Card.Body style={{ padding: '1.5rem' }}>
-                          <div className="summary-stats">
-                            <div className="stat-item mb-3" style={{
-                              padding: '1rem',
-                              background: '#f8f9fa',
-                              borderRadius: '10px'
-                            }}>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span style={{ fontSize: '0.9rem', color: '#666' }}>Total Earned</span>
-                                <span style={{ fontWeight: 700, color: '#2c5530', fontSize: '1.1rem' }}>${totalEarned.toFixed(2)}</span>
-                              </div>
-                            </div>
-                            <div className="stat-item mb-3" style={{
-                              padding: '1rem',
-                              background: '#f8f9fa',
-                              borderRadius: '10px'
-                            }}>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span style={{ fontSize: '0.9rem', color: '#666' }}>Total Spent</span>
-                                <span style={{ fontWeight: 700, color: '#e74c3c', fontSize: '1.1rem' }}>${totalSpent.toFixed(2)}</span>
-                              </div>
-                            </div>
-                            <div className="stat-item" style={{
-                              padding: '1rem',
-                              background: 'linear-gradient(135deg, #f0f7f4 0%, #e8f5ea 100%)',
-                              borderRadius: '10px',
-                              border: '2px solid #2c5530'
-                            }}>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span style={{ fontSize: '0.9rem', color: '#1B392F', fontWeight: 600 }}>Available Balance</span>
-                                <span style={{ fontWeight: 700, color: '#2c5530', fontSize: '1.25rem' }}>${subsidyBalance.toFixed(2)}</span>
-                              </div>
+                            <div className="text-end">
+                              <Badge bg="success" className="mb-2">Connected</Badge>
+                              <p className="mb-0" style={{ fontWeight: 600, color: '#2c5530' }}>${pharmacy.totalSpent.toFixed(2)}</p>
                             </div>
                           </div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
+                        </div>
+                      ))}
+                    </Card.Body>
+                  </Card>
                 </Tab>
 
                 <Tab eventKey="history" title={
@@ -561,65 +296,26 @@ export default function Dashboard() {
                     borderRadius: '15px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
                   }}>
-                    <Card.Header style={{
-                      background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '15px 15px 0 0'
-                    }}>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h3 className="mb-0">Complete Transaction History</h3>
-                        <Button variant="light" size="sm">
-                          <FaDownload className="me-2" />
-                          Export
-                        </Button>
-                      </div>
-                    </Card.Header>
                     <Card.Body style={{ padding: '2rem' }}>
-                      <div className="transactions-list">
-                        {[...recentTransactions, ...recentTransactions.map(t => ({ ...t, id: t.id + 10 }))].map((transaction) => (
-                          <div key={transaction.id} className="transaction-item" style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            padding: '1.25rem',
-                            marginBottom: '1rem',
-                            background: '#f8f9fa',
-                            borderRadius: '10px',
-                            border: '1px solid #e9ecef'
-                          }}>
-                            <div className="transaction-icon" style={{
-                              width: '50px',
-                              height: '50px',
-                              borderRadius: '50%',
-                              background: transaction.type === 'earned' ? 'rgba(44, 85, 48, 0.1)' : transaction.type === 'spent' ? 'rgba(231, 76, 60, 0.1)' : 'rgba(196, 169, 98, 0.1)',
-                              color: transaction.type === 'earned' ? '#2c5530' : transaction.type === 'spent' ? '#e74c3c' : '#C4A962',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              marginRight: '1rem',
-                              fontSize: '1.25rem'
-                            }}>
-                              {transaction.icon}
-                            </div>
-                            <div className="flex-grow-1">
+                      {recentTransactions.map((transaction) => (
+                        <div key={transaction.id} className="mb-3 pb-3" style={{
+                          borderBottom: '1px solid #e9ecef'
+                        }}>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div>
                               <h6 className="mb-1" style={{ fontSize: '1rem', fontWeight: 600 }}>{transaction.description}</h6>
-                              <div className="d-flex align-items-center gap-3">
-                                <Badge bg={transaction.category === 'Earning' ? 'success' : transaction.category === 'Pharmacy' ? 'primary' : 'warning'}>
-                                  {transaction.category}
-                                </Badge>
-                                <small className="text-muted">{transaction.date}</small>
-                              </div>
+                              <small className="text-muted">{transaction.date}</small>
                             </div>
-                            <div className="transaction-amount" style={{
-                              fontSize: '1.25rem',
+                            <div style={{
+                              fontSize: '1.1rem',
                               fontWeight: 700,
                               color: transaction.type === 'earned' || transaction.type === 'interest' ? '#2c5530' : '#e74c3c'
                             }}>
                               {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
                             </div>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </Card.Body>
                   </Card>
                 </Tab>
