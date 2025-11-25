@@ -80,8 +80,8 @@ saint-daniels-healthcare-rewards/
 1. **Clone the repository:**
 
 ```bash
-git clone https://gitlab.com/saint-daniels/saint-daniels-healthcare-rewards.git
-cd saint-daniels-healthcare-rewards
+git clone https://github.com/Saint-Daniels/Home.git
+cd Home
 ```
 
 2. **Install dependencies:**
@@ -123,46 +123,18 @@ npm start
 - **About** (`/about`): Company information
 - **Contact** (`/contact`): Contact information and offices
 
-## GitLab CI/CD Integration
+## Deployment
 
-Example `.gitlab-ci.yml` for Next.js deployment:
+This project can be deployed to:
+- **Vercel** (recommended for Next.js)
+- **Docker/Kubernetes** for containerized deployments
+- **Any Node.js hosting service**
 
-```yaml
-stages:
-  - build
-  - test
-  - deploy
-
-build:
-  stage: build
-  image: node:22
-  script:
-    - npm ci
-    - npm run build
-  artifacts:
-    paths:
-      - .next/
-    expire_in: 1 hour
-
-test:
-  stage: test
-  image: node:22
-  script:
-    - npm ci
-    - npm run lint
-
-deploy:
-  stage: deploy
-  image: node:22
-  script:
-    - npm ci
-    - npm run build
-    - npm start
-  environment:
-    name: production
-  only:
-    - main
-```
+For Vercel deployment:
+1. Connect your GitHub repository to Vercel
+2. Vercel will automatically detect Next.js and configure the build
+3. Set environment variables in Vercel dashboard
+4. Deploy!
 
 ## Contributing
 
@@ -170,7 +142,7 @@ deploy:
 2. Create a feature branch (`git checkout -b feature/new-feature`)
 3. Commit your changes (`git commit -m "Add new feature"`)
 4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a merge request
+5. Open a pull request on GitHub
 
 ## License
 
