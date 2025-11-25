@@ -517,13 +517,19 @@ export default function Home() {
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <ScrollSlideIn direction="left">
-                  <div className="service-image-wrapper">
+                  <div className="service-image-wrapper" style={{ height: '600px' }}>
                     <Image
                       src="/images/cat.jpeg"
                       alt="Data security and privacy protection - vintage illustration of privacy and protection"
                       width={600}
-                      height={400}
+                      height={600}
                       className="service-image"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center bottom'
+                      }}
                     />
                   </div>
                 </ScrollSlideIn>
