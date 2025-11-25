@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Modal, Form, ProgressBar, Tab, Tabs, Alert } from 'react-bootstrap';
-import { FaDollarSign, FaCreditCard, FaChartLine, FaGift, FaHospital, FaMobile, FaEye, FaLock, FaDownload, FaArrowUp, FaArrowDown, FaCalendarAlt, FaReceipt, FaStore, FaPercent, FaWallet, FaUser, FaCog, FaSignOutAlt, FaBell, FaHandshake, FaBullseye, FaUsers, FaShieldAlt, FaCheckCircle, FaClock, FaHistory } from 'react-icons/fa';
+import { FaDollarSign, FaCreditCard, FaChartLine, FaGift, FaHospital, FaMobile, FaEye, FaLock, FaDownload, FaArrowUp, FaArrowDown, FaCalendarAlt, FaReceipt, FaStore, FaPercent, FaWallet, FaUser, FaCog, FaSignOutAlt, FaBell, FaHandshake, FaBullseye, FaUsers, FaShieldAlt, FaCheckCircle, FaClock, FaHistory, FaEnvelope, FaStar, FaTag } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Navbar from '../../components/Navbar';
@@ -126,6 +126,89 @@ export default function Dashboard() {
   };
 
   const balanceHistory = getBalanceHistory(chartPeriod);
+
+  // Ad data for mailbox
+  const seenAds = [
+    {
+      id: 1,
+      brand: 'Health Brand A',
+      subject: 'Cardiovascular Health Education',
+      preview: 'Learn about heart health and earn $12.50 in your private subsidy',
+      earnings: 12.50,
+      date: '2 hours ago',
+      read: true,
+      category: 'Cardiovascular'
+    },
+    {
+      id: 2,
+      brand: 'Wellness Brand B',
+      subject: 'Nutrition & Metabolism Insights',
+      preview: 'Discover how nutrition affects your metabolism and unlock $8.75',
+      earnings: 8.75,
+      date: '1 day ago',
+      read: true,
+      category: 'Nutrition'
+    },
+    {
+      id: 3,
+      brand: 'Pharma Brand C',
+      subject: 'Mental Health Awareness Campaign',
+      preview: 'Support mental health awareness and earn rewards',
+      earnings: 15.00,
+      date: '2 days ago',
+      read: false,
+      category: 'Mental Health'
+    },
+    {
+      id: 4,
+      brand: 'Health Brand D',
+      subject: 'Preventive Care Information',
+      preview: 'Learn about preventive care strategies and earn $10.25',
+      earnings: 10.25,
+      date: '3 days ago',
+      read: true,
+      category: 'Preventive Care'
+    }
+  ];
+
+  const qualifiedAds = [
+    {
+      id: 5,
+      brand: 'Pharma Brand E',
+      subject: 'Diabetes Management Program',
+      preview: 'Join our diabetes management program and earn $20.00',
+      earnings: 20.00,
+      category: 'Diabetes',
+      expires: '3 days'
+    },
+    {
+      id: 6,
+      brand: 'Wellness Brand F',
+      subject: 'Fitness & Exercise Guide',
+      preview: 'Get personalized fitness recommendations and earn $15.50',
+      earnings: 15.50,
+      category: 'Fitness',
+      expires: '5 days'
+    },
+    {
+      id: 7,
+      brand: 'Health Brand G',
+      subject: 'Women\'s Health Initiative',
+      preview: 'Access women\'s health resources and earn $18.75',
+      earnings: 18.75,
+      category: 'Women\'s Health',
+      expires: '7 days'
+    },
+    {
+      id: 8,
+      brand: 'Pharma Brand H',
+      subject: 'Chronic Pain Management',
+      preview: 'Learn about chronic pain management and earn $22.00',
+      earnings: 22.00,
+      category: 'Pain Management',
+      expires: '2 days'
+    }
+  ];
 
   const recentTransactions = [
     {
@@ -336,67 +419,134 @@ export default function Dashboard() {
                 <Tab eventKey="balance" title={
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
-                  <Row>
-                    <Col lg={8}>
-                      <div style={{
-                        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)',
-                        borderRadius: '16px',
-                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                        padding: '5rem 3rem',
-                        textAlign: 'center',
-                        border: 'none',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        marginBottom: '2rem'
-                      }}>
-                        <div style={{
-                          fontSize: '0.75rem',
-                          color: '#8e8e93',
-                          fontWeight: 500,
-                          letterSpacing: '1px',
-                          marginBottom: '1.5rem',
-                          textTransform: 'uppercase',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                        }}>
-                          Private Subsidy Balance
-                        </div>
-                        <div style={{
-                          fontSize: '6rem',
-                          fontWeight: 700,
-                          color: '#000000',
-                          lineHeight: '1',
-                          marginBottom: '2rem',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          letterSpacing: '-0.02em'
-                        }}>
-                          ${subsidyBalance.toFixed(2)}
-                        </div>
-                        <div style={{
-                          fontSize: '0.9375rem',
-                          color: '#8e8e93',
-                          fontWeight: 400,
-                          letterSpacing: '0.2px',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          marginBottom: '3rem'
-                        }}>
-                          Available to spend at participating pharmacies
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4}>
+                  <Row className="justify-content-center">
+                    <Col lg={10} xl={8}>
                       <Card style={{
                         border: 'none',
                         borderRadius: '16px',
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                        marginBottom: '1.5rem',
                         background: 'white'
                       }}>
-                        <Card.Body style={{ padding: '1.5rem' }}>
+                        <Card.Body style={{ padding: '2rem' }}>
+                          {/* Chart Display */}
+                          <div style={{ width: '100%', height: '300px', position: 'relative', marginBottom: '2rem' }}>
+                            <svg width="100%" height="100%" viewBox="0 0 300 300" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                              <defs>
+                                <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#2c5530" stopOpacity="0.15" />
+                                  <stop offset="100%" stopColor="#2c5530" stopOpacity="0" />
+                                </linearGradient>
+                              </defs>
+                              {(() => {
+                                const minBalance = Math.min(...balanceHistory.map(b => b.balance));
+                                const maxBalance = Math.max(...balanceHistory.map(b => b.balance));
+                                const range = maxBalance - minBalance || 100;
+                                const padding = range * 0.15;
+                                const chartHeight = 260;
+                                const chartWidth = 280;
+                                const stepX = balanceHistory.length > 1 ? chartWidth / (balanceHistory.length - 1) : 0;
+                                
+                                const points = balanceHistory.map((item, index) => {
+                                  const x = 10 + (index * stepX);
+                                  const y = 290 - ((item.balance - minBalance + padding) / (range + padding * 2)) * chartHeight;
+                                  return { x, y, balance: item.balance };
+                                });
+                                
+                                const pathData = points.map((p, i) => 
+                                  i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
+                                ).join(' ');
+                                
+                                const areaPath = `${pathData} L ${points[points.length - 1].x} 300 L ${points[0].x} 300 Z`;
+                                
+                                return (
+                                  <>
+                                    {/* Area fill */}
+                                    <path
+                                      d={areaPath}
+                                      fill="url(#balanceGradient)"
+                                    />
+                                    {/* Line */}
+                                    <path
+                                      d={pathData}
+                                      fill="none"
+                                      stroke="#2c5530"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    {/* Grid lines */}
+                                    <line x1="10" y1="300" x2="290" y2="300" stroke="#e5e5e5" strokeWidth="1" />
+                                    <line x1="10" y1="230" x2="290" y2="230" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                                    <line x1="10" y1="160" x2="290" y2="160" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                                    <line x1="10" y1="90" x2="290" y2="90" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                                  </>
+                                );
+                              })()}
+                            </svg>
+                          </div>
+
+                          {/* Stats Display */}
+                          {(() => {
+                            const firstBalance = balanceHistory[0].balance;
+                            const lastBalance = balanceHistory[balanceHistory.length - 1].balance;
+                            const change = lastBalance - firstBalance;
+                            const changePercent = firstBalance > 0 ? ((change / firstBalance) * 100) : 0;
+                            const isPositive = change >= 0;
+                            
+                            return (
+                              <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                paddingBottom: '1.5rem',
+                                marginBottom: '1.5rem',
+                                borderBottom: '1px solid #f0f0f0'
+                              }}>
+                                <div>
+                                  <div style={{
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93',
+                                    marginBottom: '0.5rem',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    Current Balance
+                                  </div>
+                                  <div style={{
+                                    fontSize: '2.5rem',
+                                    fontWeight: 700,
+                                    color: '#000000',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                                    letterSpacing: '-0.02em'
+                                  }}>
+                                    ${lastBalance.toFixed(2)}
+                                  </div>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                  <div style={{
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93',
+                                    marginBottom: '0.5rem',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    {chartPeriod === '1D' ? 'Today' : chartPeriod === '1W' ? 'This Week' : chartPeriod === '1M' ? 'This Month' : chartPeriod === '3M' ? '3 Months' : chartPeriod === '1Y' ? 'This Year' : chartPeriod === '5Y' ? '5 Years' : 'All Time'}
+                                  </div>
+                                  <div style={{
+                                    fontSize: '1.5rem',
+                                    fontWeight: 700,
+                                    color: isPositive ? '#2c5530' : '#e74c3c',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    {isPositive ? '+' : ''}${change.toFixed(2)} ({isPositive ? '+' : ''}{changePercent.toFixed(2)}%)
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()}
+
                           {/* Time Period Buttons */}
                           <div style={{
                             display: 'flex',
                             gap: '0.5rem',
-                            marginBottom: '1.5rem',
                             flexWrap: 'wrap',
                             justifyContent: 'center'
                           }}>
@@ -405,7 +555,7 @@ export default function Dashboard() {
                                 key={period}
                                 onClick={() => setChartPeriod(period)}
                                 style={{
-                                  padding: '0.4rem 0.8rem',
+                                  padding: '0.5rem 1rem',
                                   fontSize: '0.75rem',
                                   fontWeight: 600,
                                   borderRadius: '6px',
@@ -432,159 +582,300 @@ export default function Dashboard() {
                               </button>
                             ))}
                           </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Tab>
 
-                          {/* Chart Display */}
-                          <div style={{ width: '100%', height: '220px', position: 'relative', marginBottom: '1rem' }}>
-                            <svg width="100%" height="100%" viewBox="0 0 300 220" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-                              <defs>
-                                <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                  <stop offset="0%" stopColor="#2c5530" stopOpacity="0.15" />
-                                  <stop offset="100%" stopColor="#2c5530" stopOpacity="0" />
-                                </linearGradient>
-                              </defs>
-                              {(() => {
-                                const minBalance = Math.min(...balanceHistory.map(b => b.balance));
-                                const maxBalance = Math.max(...balanceHistory.map(b => b.balance));
-                                const range = maxBalance - minBalance || 100;
-                                const padding = range * 0.15;
-                                const chartHeight = 180;
-                                const chartWidth = 280;
-                                const stepX = balanceHistory.length > 1 ? chartWidth / (balanceHistory.length - 1) : 0;
-                                
-                                const points = balanceHistory.map((item, index) => {
-                                  const x = 10 + (index * stepX);
-                                  const y = 210 - ((item.balance - minBalance + padding) / (range + padding * 2)) * chartHeight;
-                                  return { x, y, balance: item.balance };
-                                });
-                                
-                                const pathData = points.map((p, i) => 
-                                  i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
-                                ).join(' ');
-                                
-                                const areaPath = `${pathData} L ${points[points.length - 1].x} 220 L ${points[0].x} 220 Z`;
-                                
-                                const firstBalance = balanceHistory[0].balance;
-                                const lastBalance = balanceHistory[balanceHistory.length - 1].balance;
-                                const change = lastBalance - firstBalance;
-                                const changePercent = firstBalance > 0 ? ((change / firstBalance) * 100) : 0;
-                                
-                                return (
-                                  <>
-                                    {/* Area fill */}
-                                    <path
-                                      d={areaPath}
-                                      fill="url(#balanceGradient)"
-                                    />
-                                    {/* Line */}
-                                    <path
-                                      d={pathData}
-                                      fill="none"
-                                      stroke="#2c5530"
-                                      strokeWidth="2.5"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    />
-                                    {/* Grid lines */}
-                                    <line x1="10" y1="220" x2="290" y2="220" stroke="#e5e5e5" strokeWidth="1" />
-                                    <line x1="10" y1="170" x2="290" y2="170" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
-                                    <line x1="10" y1="120" x2="290" y2="120" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
-                                    <line x1="10" y1="70" x2="290" y2="70" stroke="#f0f0f0" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
-                                  </>
-                                );
-                              })()}
-                            </svg>
+                <Tab eventKey="mailbox" title={
+                  <span><FaEnvelope className="me-2" />Mailbox</span>
+                }>
+                  <Row>
+                    {/* Seen Ads Section */}
+                    <Col lg={6}>
+                      <Card style={{
+                        border: 'none',
+                        borderRadius: '12px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        marginBottom: '2rem',
+                        background: 'white'
+                      }}>
+                        <Card.Header style={{
+                          background: 'white',
+                          border: 'none',
+                          borderBottom: '1px solid #e5e5e5',
+                          padding: '1rem 1.5rem',
+                          borderRadius: '12px 12px 0 0'
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem'
+                          }}>
+                            <FaEye style={{ color: '#2c5530', fontSize: '1.1rem' }} />
+                            <h5 style={{
+                              margin: 0,
+                              fontSize: '1.1rem',
+                              fontWeight: 600,
+                              color: '#1B392F',
+                              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            }}>
+                              Ads You've Seen
+                            </h5>
+                            <Badge bg="secondary" style={{
+                              fontSize: '0.7rem',
+                              padding: '0.25rem 0.5rem',
+                              marginLeft: 'auto'
+                            }}>
+                              {seenAds.length}
+                            </Badge>
                           </div>
-
-                          {/* Stats Display */}
-                          {(() => {
-                            const firstBalance = balanceHistory[0].balance;
-                            const lastBalance = balanceHistory[balanceHistory.length - 1].balance;
-                            const change = lastBalance - firstBalance;
-                            const changePercent = firstBalance > 0 ? ((change / firstBalance) * 100) : 0;
-                            const isPositive = change >= 0;
-                            
-                            return (
+                        </Card.Header>
+                        <Card.Body style={{ padding: 0 }}>
+                          {seenAds.map((ad, index) => (
+                            <div
+                              key={ad.id}
+                              style={{
+                                padding: '1rem 1.5rem',
+                                borderBottom: index < seenAds.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                cursor: 'pointer',
+                                transition: 'background 0.2s ease',
+                                background: ad.read ? 'white' : '#f8f9fa'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f5f5f5';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = ad.read ? 'white' : '#f8f9fa';
+                              }}
+                            >
                               <div style={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                paddingTop: '1rem',
-                                borderTop: '1px solid #f0f0f0'
+                                alignItems: 'flex-start',
+                                gap: '1rem'
                               }}>
-                                <div>
-                                  <div style={{
-                                    fontSize: '0.75rem',
-                                    color: '#8e8e93',
-                                    marginBottom: '0.25rem',
-                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                                  }}>
-                                    Current Balance
-                                  </div>
-                                  <div style={{
-                                    fontSize: '1.5rem',
-                                    fontWeight: 700,
-                                    color: '#000000',
-                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                                  }}>
-                                    ${lastBalance.toFixed(2)}
-                                  </div>
+                                <div style={{
+                                  width: '40px',
+                                  height: '40px',
+                                  borderRadius: '50%',
+                                  background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                                  color: 'white',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: '1rem',
+                                  flexShrink: 0
+                                }}>
+                                  {ad.brand.charAt(0)}
                                 </div>
-                                <div style={{ textAlign: 'right' }}>
+                                <div style={{ flex: 1, minWidth: 0 }}>
                                   <div style={{
-                                    fontSize: '0.75rem',
-                                    color: '#8e8e93',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    marginBottom: '0.5rem'
+                                  }}>
+                                    <span style={{
+                                      fontSize: '0.875rem',
+                                      fontWeight: 600,
+                                      color: '#1B392F',
+                                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                    }}>
+                                      {ad.brand}
+                                    </span>
+                                    {!ad.read && (
+                                      <div style={{
+                                        width: '8px',
+                                        height: '8px',
+                                        borderRadius: '50%',
+                                        background: '#2c5530'
+                                      }}></div>
+                                    )}
+                                    <Badge bg="success" style={{
+                                      fontSize: '0.65rem',
+                                      padding: '0.2rem 0.4rem',
+                                      marginLeft: 'auto'
+                                    }}>
+                                      +${ad.earnings.toFixed(2)}
+                                    </Badge>
+                                  </div>
+                                  <div style={{
+                                    fontSize: '0.9rem',
+                                    fontWeight: ad.read ? 400 : 600,
+                                    color: '#333',
                                     marginBottom: '0.25rem',
                                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                                   }}>
-                                    {chartPeriod === '1D' ? 'Today' : chartPeriod === '1W' ? 'This Week' : chartPeriod === '1M' ? 'This Month' : chartPeriod === '3M' ? '3 Months' : chartPeriod === '1Y' ? 'This Year' : chartPeriod === '5Y' ? '5 Years' : 'All Time'}
+                                    {ad.subject}
                                   </div>
                                   <div style={{
-                                    fontSize: '1.25rem',
-                                    fontWeight: 700,
-                                    color: isPositive ? '#2c5530' : '#e74c3c',
-                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                    fontSize: '0.8rem',
+                                    color: '#666',
+                                    marginBottom: '0.5rem',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap'
                                   }}>
-                                    {isPositive ? '+' : ''}${change.toFixed(2)} ({isPositive ? '+' : ''}{changePercent.toFixed(2)}%)
+                                    {ad.preview}
+                                  </div>
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.75rem',
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93'
+                                  }}>
+                                    <span>{ad.date}</span>
+                                    <span>•</span>
+                                    <FaTag style={{ fontSize: '0.7rem' }} />
+                                    <span>{ad.category}</span>
                                   </div>
                                 </div>
                               </div>
-                            );
-                          })()}
+                            </div>
+                          ))}
                         </Card.Body>
                       </Card>
+                    </Col>
+
+                    {/* Qualified Ads Section */}
+                    <Col lg={6}>
                       <Card style={{
                         border: 'none',
-                        borderRadius: '16px',
-                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+                        borderRadius: '12px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        marginBottom: '2rem',
+                        background: 'white'
                       }}>
-                        <Card.Body style={{ padding: '2rem' }}>
+                        <Card.Header style={{
+                          background: 'white',
+                          border: 'none',
+                          borderBottom: '1px solid #e5e5e5',
+                          padding: '1rem 1.5rem',
+                          borderRadius: '12px 12px 0 0'
+                        }}>
                           <div style={{
-                            fontSize: '0.75rem',
-                            color: '#8e8e93',
-                            fontWeight: 500,
-                            letterSpacing: '1px',
-                            marginBottom: '1rem',
-                            textTransform: 'uppercase',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem'
                           }}>
-                            Monthly Earnings
+                            <FaGift style={{ color: '#C4A962', fontSize: '1.1rem' }} />
+                            <h5 style={{
+                              margin: 0,
+                              fontSize: '1.1rem',
+                              fontWeight: 600,
+                              color: '#1B392F',
+                              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            }}>
+                              Ads You Qualify For
+                            </h5>
+                            <Badge bg="warning" style={{
+                              fontSize: '0.7rem',
+                              padding: '0.25rem 0.5rem',
+                              marginLeft: 'auto'
+                            }}>
+                              {qualifiedAds.length}
+                            </Badge>
                           </div>
-                          <div style={{
-                            fontSize: '2.5rem',
-                            fontWeight: 700,
-                            color: '#000000',
-                            marginBottom: '1.5rem',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                          }}>
-                            ${monthlyEarnings.toFixed(2)}
-                          </div>
-                          <div style={{
-                            fontSize: '0.875rem',
-                            color: '#8e8e93',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                          }}>
-                            This month
-                          </div>
+                        </Card.Header>
+                        <Card.Body style={{ padding: 0 }}>
+                          {qualifiedAds.map((ad, index) => (
+                            <div
+                              key={ad.id}
+                              style={{
+                                padding: '1rem 1.5rem',
+                                borderBottom: index < qualifiedAds.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                cursor: 'pointer',
+                                transition: 'background 0.2s ease',
+                                background: 'white'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f5f5f5';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'white';
+                              }}
+                            >
+                              <div style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: '1rem'
+                              }}>
+                                <div style={{
+                                  width: '40px',
+                                  height: '40px',
+                                  borderRadius: '50%',
+                                  background: 'linear-gradient(135deg, #C4A962 0%, #b39855 100%)',
+                                  color: 'white',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: '1rem',
+                                  flexShrink: 0
+                                }}>
+                                  {ad.brand.charAt(0)}
+                                </div>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    marginBottom: '0.5rem'
+                                  }}>
+                                    <span style={{
+                                      fontSize: '0.875rem',
+                                      fontWeight: 600,
+                                      color: '#1B392F',
+                                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                    }}>
+                                      {ad.brand}
+                                    </span>
+                                    <Badge bg="warning" style={{
+                                      fontSize: '0.65rem',
+                                      padding: '0.2rem 0.4rem',
+                                      marginLeft: 'auto'
+                                    }}>
+                                      +${ad.earnings.toFixed(2)}
+                                    </Badge>
+                                  </div>
+                                  <div style={{
+                                    fontSize: '0.9rem',
+                                    fontWeight: 600,
+                                    color: '#333',
+                                    marginBottom: '0.25rem',
+                                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                  }}>
+                                    {ad.subject}
+                                  </div>
+                                  <div style={{
+                                    fontSize: '0.8rem',
+                                    color: '#666',
+                                    marginBottom: '0.5rem',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap'
+                                  }}>
+                                    {ad.preview}
+                                  </div>
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.75rem',
+                                    fontSize: '0.75rem',
+                                    color: '#8e8e93'
+                                  }}>
+                                    <FaTag style={{ fontSize: '0.7rem' }} />
+                                    <span>{ad.category}</span>
+                                    <span>•</span>
+                                    <span style={{ color: '#C4A962', fontWeight: 600 }}>
+                                      Expires in {ad.expires}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </Card.Body>
                       </Card>
                     </Col>
