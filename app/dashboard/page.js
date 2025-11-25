@@ -5,6 +5,7 @@ import { Container, Row, Col, Card, Button, Badge, Modal, Form, ProgressBar, Tab
 import { FaDollarSign, FaCreditCard, FaChartLine, FaGift, FaHospital, FaMobile, FaEye, FaLock, FaDownload, FaArrowUp, FaArrowDown, FaCalendarAlt, FaReceipt, FaStore, FaPercent, FaWallet, FaUser, FaCog, FaSignOutAlt, FaBell, FaHandshake, FaBullseye, FaUsers, FaShieldAlt, FaCheckCircle, FaClock, FaHistory, FaEnvelope, FaStar, FaTag } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 import PageTransition from '../../components/PageTransition';
 
@@ -681,7 +682,18 @@ export default function Dashboard() {
         }}>
           <Container fluid>
             <Row className="align-items-center">
-              <Col className="text-end">
+              <Col md={6}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Image
+                    src="/images/saintdanielslogo.jpeg"
+                    alt="Saint Daniels Healthcare"
+                    width={120}
+                    height={40}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </Col>
+              <Col md={6} className="text-end">
                 <div style={{ position: 'relative', display: 'inline-block' }}>
                   <button
                     onClick={() => setShowAccountDropdown(!showAccountDropdown)}
@@ -1461,25 +1473,6 @@ export default function Dashboard() {
                           maxHeight: '600px',
                           overflowY: 'auto'
                         }}>
-                          <Card.Header style={{
-                            background: 'white',
-                            border: 'none',
-                            borderBottom: '1px solid #e8eaed',
-                            padding: '1rem 1.5rem',
-                            position: 'sticky',
-                            top: 0,
-                            zIndex: 10
-                          }}>
-                            <h5 style={{
-                              margin: 0,
-                              fontSize: '1.1rem',
-                              fontWeight: 500,
-                              color: '#202124',
-                              fontFamily: 'Roboto, sans-serif'
-                            }}>
-                              Nearby Pharmacies
-                            </h5>
-                          </Card.Header>
                           <Card.Body style={{ padding: 0 }}>
                             {localPharmacies.map((pharmacy, index) => (
                               <div
