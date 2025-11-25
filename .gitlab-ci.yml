@@ -1,0 +1,41 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  image: node:22
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+    expire_in: 1 hour
+  only:
+    - main
+    - develop
+
+test:
+  stage: test
+  image: node:22
+  script:
+    - npm ci
+    - npm run lint
+  only:
+    - main
+    - develop
+
+deploy:
+  stage: deploy
+  image: node:22
+  script:
+    - npm ci
+    - npm run build
+    - echo "Build completed successfully"
+  environment:
+    name: production
+  only:
+    - main
+
