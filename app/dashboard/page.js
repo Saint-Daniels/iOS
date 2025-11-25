@@ -1049,48 +1049,19 @@ export default function Dashboard() {
                         marginBottom: '2rem',
                         background: 'white'
                       }}>
-                        <Card.Header style={{
-                          background: 'white',
-                          border: 'none',
-                          borderBottom: '1px solid #e5e5e5',
-                          padding: '1rem 1.5rem',
-                          borderRadius: '12px 12px 0 0'
-                        }}>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.75rem'
-                          }}>
-                            <FaEye style={{ color: '#2c5530', fontSize: '1.1rem' }} />
-                            <h5 style={{
-                              margin: 0,
-                              fontSize: '1.1rem',
-                              fontWeight: 600,
-                              color: '#1B392F',
-                              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                            }}>
-                              Read
-                            </h5>
-                            <Badge bg="secondary" style={{
-                              fontSize: '0.7rem',
-                              padding: '0.25rem 0.5rem',
-                              marginLeft: 'auto'
-                            }}>
-                              {seenAds.length}
-                            </Badge>
-                          </div>
-                        </Card.Header>
                         <Card.Body style={{ padding: 0 }}>
                           {seenAds.map((ad, index) => (
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1.25rem 1.5rem',
-                                paddingBottom: '1.5rem',
+                                padding: '1.5rem 1.5rem',
+                                paddingTop: '1.5rem',
+                                paddingBottom: '2rem',
                                 borderBottom: index < seenAds.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
-                                background: ad.read ? 'white' : '#f8f9fa'
+                                background: ad.read ? 'white' : '#f8f9fa',
+                                minHeight: '120px'
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.background = '#f5f5f5';
@@ -1161,11 +1132,12 @@ export default function Dashboard() {
                                   <div style={{
                                     fontSize: '0.8rem',
                                     color: '#666',
-                                    marginBottom: '0.75rem',
+                                    marginBottom: '0.875rem',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
                                     whiteSpace: 'nowrap',
-                                    lineHeight: '1.4'
+                                    lineHeight: '1.5',
+                                    paddingBottom: '0.25rem'
                                   }}>
                                     {ad.preview}
                                   </div>
@@ -1175,8 +1147,9 @@ export default function Dashboard() {
                                     gap: '0.75rem',
                                     fontSize: '0.75rem',
                                     color: '#8e8e93',
-                                    lineHeight: '1.4',
-                                    marginBottom: '0'
+                                    lineHeight: '1.5',
+                                    marginBottom: '0',
+                                    paddingTop: '0.25rem'
                                   }}>
                                     <span>{ad.date}</span>
                                     <span>•</span>
@@ -1200,48 +1173,19 @@ export default function Dashboard() {
                         marginBottom: '2rem',
                         background: 'white'
                       }}>
-                        <Card.Header style={{
-                          background: 'white',
-                          border: 'none',
-                          borderBottom: '1px solid #e5e5e5',
-                          padding: '1rem 1.5rem',
-                          borderRadius: '12px 12px 0 0'
-                        }}>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.75rem'
-                          }}>
-                            <FaGift style={{ color: '#C4A962', fontSize: '1.1rem' }} />
-                            <h5 style={{
-                              margin: 0,
-                              fontSize: '1.1rem',
-                              fontWeight: 600,
-                              color: '#1B392F',
-                              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                            }}>
-                              Unread
-                            </h5>
-                            <Badge bg="warning" style={{
-                              fontSize: '0.7rem',
-                              padding: '0.25rem 0.5rem',
-                              marginLeft: 'auto'
-                            }}>
-                              {qualifiedAds.length}
-                            </Badge>
-                          </div>
-                        </Card.Header>
                         <Card.Body style={{ padding: 0 }}>
                           {qualifiedAds.map((ad, index) => (
                             <div
                               key={ad.id}
                               style={{
-                                padding: '1.25rem 1.5rem',
-                                paddingBottom: '1.5rem',
+                                padding: '1.5rem 1.5rem',
+                                paddingTop: '1.5rem',
+                                paddingBottom: '2rem',
                                 borderBottom: index < qualifiedAds.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
-                                background: 'white'
+                                background: 'white',
+                                minHeight: '120px'
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.background = '#f5f5f5';
@@ -1304,11 +1248,12 @@ export default function Dashboard() {
                                   <div style={{
                                     fontSize: '0.8rem',
                                     color: '#666',
-                                    marginBottom: '0.75rem',
+                                    marginBottom: '0.875rem',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
                                     whiteSpace: 'nowrap',
-                                    lineHeight: '1.4'
+                                    lineHeight: '1.5',
+                                    paddingBottom: '0.25rem'
                                   }}>
                                     {ad.preview}
                                   </div>
@@ -1318,8 +1263,9 @@ export default function Dashboard() {
                                     gap: '0.75rem',
                                     fontSize: '0.75rem',
                                     color: '#8e8e93',
-                                    lineHeight: '1.4',
-                                    marginBottom: '0'
+                                    lineHeight: '1.5',
+                                    marginBottom: '0',
+                                    paddingTop: '0.25rem'
                                   }}>
                                     <FaTag style={{ fontSize: '0.7rem' }} />
                                     <span>{ad.category}</span>
