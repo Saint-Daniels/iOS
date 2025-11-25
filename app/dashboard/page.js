@@ -747,7 +747,7 @@ export default function Dashboard() {
                       borderRadius: '8px',
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                       minWidth: '200px',
-                      zIndex: 1001,
+                      zIndex: 1002,
                       overflow: 'hidden'
                     }}>
                       <div
