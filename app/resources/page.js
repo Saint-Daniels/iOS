@@ -168,25 +168,32 @@ export default function ResourcesPage() {
                               marginBottom: resourceIndex < category.resources.length - 1 ? '2rem' : '0',
                               paddingBottom: resourceIndex < category.resources.length - 1 ? '2rem' : '0',
                               borderBottom: resourceIndex < category.resources.length - 1 ? '1px solid #e9ecef' : 'none',
-                              flex: resourceIndex === category.resources.length - 1 ? 1 : 'none'
+                              flex: resourceIndex === category.resources.length - 1 ? 1 : 'none',
+                              textAlign: 'center',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
                             }}>
                               <h5 className="resource-item-title" style={{
                                 fontSize: '1.15rem',
                                 fontWeight: 600,
                                 marginBottom: '0.75rem',
                                 color: '#1B392F',
-                                lineHeight: '1.4'
+                                lineHeight: '1.4',
+                                textAlign: 'center'
                               }}>{resource.title}</h5>
                               <p className="resource-item-description" style={{
                                 fontSize: '0.95rem',
                                 color: '#666',
                                 marginBottom: '1rem',
                                 lineHeight: '1.6',
-                                minHeight: '3rem'
+                                minHeight: '3rem',
+                                textAlign: 'center',
+                                maxWidth: '100%'
                               }}>{resource.description}</p>
                               <div className="resource-item-footer" style={{
                                 display: 'flex',
-                                justifyContent: 'flex-end',
+                                justifyContent: 'center',
                                 alignItems: 'center',
                                 marginTop: 'auto'
                               }}>

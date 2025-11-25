@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Container, Row, Col, Accordion, Card, Button, Form, Modal, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, Modal, Alert } from 'react-bootstrap';
 import { FaPhone, FaEnvelope, FaDollarSign, FaChartLine, FaLightbulb, FaExclamationTriangle, FaSearch, FaFileAlt, FaDownload, FaComments, FaMobile, FaHospital } from 'react-icons/fa';
 import MainNavbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -272,34 +272,54 @@ export default function HelpCenter() {
               </Row>
             </ScrollFadeIn>
 
-            <Row className="justify-content-center">
-              <Col lg={10}>
-                <Accordion defaultActiveKey="0" className="faq-accordion">
-                  {filteredFAQs.map((faq, index) => (
-                    <Accordion.Item eventKey={index.toString()} key={index} style={{
+            <Row className="g-4">
+              {filteredFAQs.map((faq, index) => (
+                <Col lg={4} md={6} key={index}>
+                  <ScrollFadeIn delay={index * 0.1}>
+                    <Card style={{
                       border: '1px solid #e9ecef',
-                      borderRadius: '12px',
-                      marginBottom: '1rem',
-                      overflow: 'hidden'
-                    }}>
-                      <Accordion.Header style={{
-                        background: '#f8f9fa',
-                        padding: '1.25rem',
-                        fontWeight: 600,
-                        fontSize: '1.1rem',
-                        color: '#1B392F'
+                      borderRadius: '15px',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                      height: '100%',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
+                    }}
+                    >
+                      <Card.Body style={{
+                        padding: '2rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1
                       }}>
-                        {faq.question}
-                      </Accordion.Header>
-                      <Accordion.Body style={{
-                        padding: '1.5rem',
-                        fontSize: '1rem',
-                        lineHeight: '1.7',
-                        color: '#666'
-                      }}>
-                        {faq.answer}
+                        <h4 style={{
+                          fontSize: '1.2rem',
+                          fontWeight: 600,
+                          color: '#1B392F',
+                          marginBottom: '1rem',
+                          lineHeight: '1.4',
+                          minHeight: '3.5rem'
+                        }}>
+                          {faq.question}
+                        </h4>
+                        <p style={{
+                          fontSize: '1rem',
+                          lineHeight: '1.7',
+                          color: '#666',
+                          marginBottom: '1.5rem',
+                          flex: 1
+                        }}>
+                          {faq.answer}
+                        </p>
                         <div style={{
-                          marginTop: '1rem',
                           paddingTop: '1rem',
                           borderTop: '1px solid #e9ecef',
                           fontSize: '0.875rem',
@@ -308,11 +328,11 @@ export default function HelpCenter() {
                         }}>
                           Category: {faq.category}
                         </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  ))}
-                </Accordion>
-              </Col>
+                      </Card.Body>
+                    </Card>
+                  </ScrollFadeIn>
+                </Col>
+              ))}
             </Row>
           </Container>
         </section>
