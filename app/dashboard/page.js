@@ -240,21 +240,44 @@ export default function Dashboard() {
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
                   <Row className="justify-content-center">
-                    <Col lg={8}>
-                      <Card className="mb-4" style={{
-                        border: 'none',
-                        borderRadius: '15px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                        color: 'white'
+                    <Col lg={6} md={8}>
+                      <div style={{
+                        background: 'white',
+                        borderRadius: '12px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        padding: '4rem 2rem',
+                        textAlign: 'center',
+                        border: '1px solid #f0f0f0'
                       }}>
-                        <Card.Body style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-                          <FaWallet size={60} style={{ color: '#C4A962', marginBottom: '1.5rem' }} />
-                          <h6 style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem', fontSize: '1rem', fontWeight: 400 }}>Private Subsidy Balance</h6>
-                          <h1 style={{ color: 'white', fontWeight: 700, fontSize: '4rem', marginBottom: '1rem' }}>${subsidyBalance.toFixed(2)}</h1>
-                          <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', margin: 0 }}>Available to spend at participating pharmacies</p>
-                        </Card.Body>
-                      </Card>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#666',
+                          fontWeight: 500,
+                          letterSpacing: '0.5px',
+                          marginBottom: '1rem',
+                          textTransform: 'uppercase'
+                        }}>
+                          Private Subsidy Balance
+                        </div>
+                        <div style={{
+                          fontSize: '5rem',
+                          fontWeight: 700,
+                          color: '#1B392F',
+                          lineHeight: '1.1',
+                          marginBottom: '1.5rem',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                        }}>
+                          ${subsidyBalance.toFixed(2)}
+                        </div>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#999',
+                          fontWeight: 400,
+                          letterSpacing: '0.3px'
+                        }}>
+                          Available to spend at participating pharmacies
+                        </div>
+                      </div>
                     </Col>
                   </Row>
                 </Tab>
