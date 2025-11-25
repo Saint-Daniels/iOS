@@ -14,13 +14,40 @@ export default function Dashboard() {
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
   const [chartPeriod, setChartPeriod] = useState('1W');
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
-  // Check authentication
+  // Check authentication with enhanced security
   useEffect(() => {
     const isLoggedIn = Cookies.get('isLoggedIn');
-    if (!isLoggedIn) {
+    const userEmail = Cookies.get('userEmail');
+    
+    // Enhanced security check
+    if (!isLoggedIn || isLoggedIn !== 'true' || !userEmail) {
+      // Clear any invalid cookies
+      Cookies.remove('isLoggedIn');
+      Cookies.remove('userEmail');
       router.push('/login');
+      return;
     }
+
+    // Additional security: verify session is still valid
+    // In production, you would verify with your backend
+    const checkSession = async () => {
+      try {
+        // Add session validation logic here if needed
+        // For now, we'll just ensure cookies are valid
+        if (!Cookies.get('isLoggedIn')) {
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error('Session validation error:', error);
+        Cookies.remove('isLoggedIn');
+        Cookies.remove('userEmail');
+        router.push('/login');
+      }
+    };
+
+    checkSession();
   }, [router]);
 
   // Dashboard data
@@ -364,50 +391,202 @@ export default function Dashboard() {
   return (
     <PageTransition>
       <Navbar />
-      <div className="professional-dashboard">
-        {/* Header */}
-        <header className="dashboard-header" style={{
-          background: 'linear-gradient(135deg, #1B392F 0%, #2c5530 100%)',
-          color: 'white',
-          padding: '1.5rem 0',
-          marginBottom: '2rem'
+      <div className="professional-dashboard" style={{ position: 'relative' }}>
+        {/* Top Bar with Account Dropdown */}
+        <div style={{
+          background: 'white',
+          borderBottom: '1px solid #e5e5e5',
+          padding: '1rem 0',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
         }}>
           <Container fluid>
             <Row className="align-items-center">
-              <Col md={6}>
-                <div className="d-flex align-items-center">
-                  <div className="header-icon me-3" style={{ color: '#C4A962' }}>
-                    <FaWallet size={28} />
-                  </div>
-                  <div>
-                    <h1 className="mb-0" style={{ color: 'white', fontSize: '1.75rem' }}>Saint Daniels Healthcare Rewards</h1>
-                    <p className="mb-0" style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>Private Subsidy Dashboard</p>
-                  </div>
-                </div>
-              </Col>
-              <Col md={6} className="text-end">
-                <div className="d-flex align-items-center justify-content-end gap-3">
-                  <Button variant="outline-light" size="sm" className="notification-btn">
-                    <FaBell />
-                    <span className="notification-badge">2</span>
-                  </Button>
-                  <Button variant="outline-light" size="sm" onClick={() => setShowSettings(true)}>
-                    <FaCog />
-                  </Button>
-                  <div className="user-profile" style={{ color: 'white' }}>
-                    <FaUser className="me-2" />
+              <Col className="text-end">
+                <div style={{ position: 'relative', display: 'inline-block' }}>
+                  <button
+                    onClick={() => setShowAccountDropdown(!showAccountDropdown)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      background: 'transparent',
+                      border: '1px solid #e5e5e5',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      fontSize: '0.9rem',
+                      color: '#1B392F',
+                      fontWeight: 500
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#2c5530';
+                      e.currentTarget.style.background = '#f8f9fa';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e5e5e5';
+                      e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    <FaUser />
                     <span>Member Account</span>
-                  </div>
-                  <Button variant="outline-light" size="sm" onClick={handleLogout}>
-                    <FaSignOutAlt />
-                  </Button>
+                    <span style={{ fontSize: '0.7rem', color: '#8e8e93' }}>
+                      {showAccountDropdown ? '▲' : '▼'}
+                    </span>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {showAccountDropdown && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: 0,
+                      marginTop: '0.5rem',
+                      background: 'white',
+                      border: '1px solid #e5e5e5',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                      minWidth: '200px',
+                      zIndex: 1001,
+                      overflow: 'hidden'
+                    }}>
+                      <div
+                        style={{
+                          padding: '0.75rem 1rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease',
+                          borderBottom: '1px solid #f0f0f0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          fontSize: '0.9rem',
+                          color: '#1B392F'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        onClick={() => {
+                          setShowSettings(true);
+                          setShowAccountDropdown(false);
+                        }}
+                      >
+                        <FaCog style={{ fontSize: '0.9rem', color: '#666' }} />
+                        <span>Settings</span>
+                      </div>
+                      <div
+                        style={{
+                          padding: '0.75rem 1rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease',
+                          borderBottom: '1px solid #f0f0f0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          fontSize: '0.9rem',
+                          color: '#1B392F'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        onClick={() => {
+                          router.push('/help');
+                          setShowAccountDropdown(false);
+                        }}
+                      >
+                        <FaShieldAlt style={{ fontSize: '0.9rem', color: '#666' }} />
+                        <span>Help Center</span>
+                      </div>
+                      <div
+                        style={{
+                          padding: '0.75rem 1rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease',
+                          borderBottom: '1px solid #f0f0f0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          fontSize: '0.9rem',
+                          color: '#1B392F'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        onClick={() => {
+                          router.push('/documents');
+                          setShowAccountDropdown(false);
+                        }}
+                      >
+                        <FaDownload style={{ fontSize: '0.9rem', color: '#666' }} />
+                        <span>Documents</span>
+                      </div>
+                      <div
+                        style={{
+                          padding: '0.75rem 1rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease',
+                          borderBottom: '1px solid #f0f0f0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          fontSize: '0.9rem',
+                          color: '#1B392F'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        onClick={() => {
+                          router.push('/privacy');
+                          setShowAccountDropdown(false);
+                        }}
+                      >
+                        <FaLock style={{ fontSize: '0.9rem', color: '#666' }} />
+                        <span>Privacy Policy</span>
+                      </div>
+                      <div
+                        style={{
+                          padding: '0.75rem 1rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          fontSize: '0.9rem',
+                          color: '#e74c3c'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#fff5f5'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        onClick={() => {
+                          handleLogout();
+                          setShowAccountDropdown(false);
+                        }}
+                      >
+                        <FaSignOutAlt style={{ fontSize: '0.9rem' }} />
+                        <span>Log Out</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Col>
             </Row>
           </Container>
-        </header>
+        </div>
 
-        <Container fluid style={{ padding: '1rem 0 2rem 0' }}>
+        {/* Close dropdown when clicking outside */}
+        {showAccountDropdown && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 1000
+            }}
+            onClick={() => setShowAccountDropdown(false)}
+          />
+        )}
+
+        <Container fluid style={{ padding: '2rem 0' }}>
           {/* Navigation Tabs */}
           <Row className="mb-4">
             <Col>
