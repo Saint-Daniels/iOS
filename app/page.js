@@ -223,7 +223,7 @@ export default function Home() {
                 <ScrollSlideIn direction="right" delay={0.2}>
                   <div className="service-image-wrapper" style={{ height: '600px' }}>
                     <Image
-                      src="/images/lifestyle.jpg"
+                      src="/images/ranch.jpeg"
                       alt="Member tracking healthcare rewards timeline"
                       width={600}
                       height={600}
