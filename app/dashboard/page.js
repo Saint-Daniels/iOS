@@ -792,50 +792,6 @@ export default function Dashboard() {
                           padding: '0.75rem 1rem',
                           cursor: 'pointer',
                           transition: 'background 0.2s ease',
-                          borderBottom: '1px solid #f0f0f0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.9rem',
-                          color: '#1B392F'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={() => {
-                          router.push('/documents');
-                          setShowAccountDropdown(false);
-                        }}
-                      >
-                        <FaDownload style={{ fontSize: '0.9rem', color: '#666' }} />
-                        <span>Documents</span>
-                      </div>
-                      <div
-                        style={{
-                          padding: '0.75rem 1rem',
-                          cursor: 'pointer',
-                          transition: 'background 0.2s ease',
-                          borderBottom: '1px solid #f0f0f0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.9rem',
-                          color: '#1B392F'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={() => {
-                          router.push('/privacy');
-                          setShowAccountDropdown(false);
-                        }}
-                      >
-                        <FaLock style={{ fontSize: '0.9rem', color: '#666' }} />
-                        <span>Privacy Policy</span>
-                      </div>
-                      <div
-                        style={{
-                          padding: '0.75rem 1rem',
-                          cursor: 'pointer',
-                          transition: 'background 0.2s ease',
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.75rem',
