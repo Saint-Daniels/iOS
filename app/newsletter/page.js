@@ -199,19 +199,51 @@ export default function NewsPage() {
       <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem', background: 'linear-gradient(135deg, #1B392F 0%, #2c5530 100%)' }}>
         <Container>
           <ScrollFadeIn>
-            <Row className="justify-content-center text-center">
-              <Col lg={10}>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                  <FaGamepad size={60} style={{ color: '#C4A962' }} />
+            <Row className="align-items-center">
+              <Col lg={6}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <FaGamepad size={50} style={{ color: '#C4A962' }} />
+                  <h1 className="mission-title-professional" style={{ color: 'white', fontSize: '2.5rem', margin: 0 }}>
+                    Saint Daniels Video Game Network
+                  </h1>
                 </div>
-                <h1 className="mission-title-professional" style={{ color: 'white', fontSize: '3rem' }}>
-                  Saint Daniels Video Game Network
-                </h1>
-                <div className="mission-divider" style={{ margin: '1.5rem auto', background: '#C4A962' }}></div>
-                <p className="mission-description-professional" style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', color: 'rgba(255, 255, 255, 0.9)' }}>
+                <div className="mission-divider" style={{ margin: '1.5rem 0', background: '#C4A962', width: '100px' }}></div>
+                <p className="mission-description-professional" style={{ fontSize: '1.1rem', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '1.5rem', lineHeight: '1.7' }}>
                   Your destination for the coolest Fortnite and Call of Duty videos, epic gameplay highlights, 
                   expert commentary, and tournament coverage. Join the Saint Daniels gaming community and never miss a play.
                 </p>
+                <p style={{ fontSize: '1rem', color: '#C4A962', fontWeight: 600, marginTop: '1.5rem' }}>
+                  📧 Newsletter: Stay updated with the latest gaming content, tournament highlights, and exclusive gameplay from the Saint Daniels network.
+                </p>
+              </Col>
+              <Col lg={6}>
+                <ScrollSlideIn direction="right">
+                  <div style={{
+                    position: 'relative',
+                    paddingBottom: '56.25%', // 16:9 aspect ratio
+                    height: 0,
+                    overflow: 'hidden',
+                    borderRadius: '12px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
+                    background: '#000'
+                  }}>
+                    <iframe
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: '12px'
+                      }}
+                      src="https://www.youtube.com/embed/PkXxV7v1x8E"
+                      title="Fortnite Gameplay Video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </ScrollSlideIn>
               </Col>
             </Row>
           </ScrollFadeIn>
