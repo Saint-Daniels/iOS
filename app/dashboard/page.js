@@ -524,16 +524,22 @@ export default function Dashboard() {
     router.push('/');
   };
 
-  // Check if location consent was given
-  useEffect(() => {
+  // Check if location consent was given (only when pharmacy tab is accessed)
+  const checkLocationOnPharmacyTab = () => {
     const hasConsented = localStorage.getItem('locationConsent');
+    const modalShownThisSession = sessionStorage.getItem('locationModalShown');
+    
     if (hasConsented === 'true') {
       setLocationConsent(true);
-      getCurrentLocation();
-    } else {
+      if (!userLocation) {
+        getCurrentLocation();
+      }
+    } else if (modalShownThisSession !== 'true') {
+      // Only show modal if not shown this session
       setShowLocationModal(true);
+      sessionStorage.setItem('locationModalShown', 'true');
     }
-  }, []);
+  };
 
   // Get user's current location
   const getCurrentLocation = () => {
@@ -833,19 +839,25 @@ export default function Dashboard() {
             <Col>
               <Tabs
                 activeKey={activeTab}
-                onSelect={(k) => setActiveTab(k)}
+                onSelect={(k) => {
+                  setActiveTab(k);
+                  if (k === 'pharmacy') {
+                    checkLocationOnPharmacyTab();
+                  }
+                }}
                 className="professional-tabs"
               >
                 <Tab eventKey="balance" title={
                   <span><FaWallet className="me-2" />Balance</span>
                 }>
-                  <Row className="justify-content-center">
+                  <Row className="justify-content-center" style={{ marginTop: '1.5rem' }}>
                     <Col lg={10} xl={8}>
                       <Card style={{
                         border: 'none',
                         borderRadius: '16px',
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                        background: 'white'
+                        background: 'white',
+                        marginTop: '1rem'
                       }}>
                         <Card.Body style={{ padding: '2rem' }}>
                           {/* Chart Display */}
@@ -1041,7 +1053,7 @@ export default function Dashboard() {
                               color: '#1B392F',
                               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                             }}>
-                              Ads You've Seen
+                              Read
                             </h5>
                             <Badge bg="secondary" style={{
                               fontSize: '0.7rem',
@@ -1188,7 +1200,7 @@ export default function Dashboard() {
                               color: '#1B392F',
                               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
                             }}>
-                              Ads You Qualify For
+                              Unread
                             </h5>
                             <Badge bg="warning" style={{
                               fontSize: '0.7rem',
