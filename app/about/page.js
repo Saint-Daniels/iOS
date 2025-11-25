@@ -124,20 +124,20 @@ export default function AboutUs() {
               <Row className="g-4">
                 <Col md={4}>
                   <div className="stat-item">
-                    <div className="stat-number">50,000+</div>
-                    <div className="stat-label">Active Members</div>
+                    <div className="stat-number" style={{ color: '#2c5530' }}>50,000+</div>
+                    <div className="stat-label" style={{ color: '#2c5530' }}>Active Members</div>
                   </div>
                 </Col>
                 <Col md={4}>
                   <div className="stat-item">
-                    <div className="stat-number">100+</div>
-                    <div className="stat-label">Healthcare Partners</div>
+                    <div className="stat-number" style={{ color: '#2c5530' }}>100+</div>
+                    <div className="stat-label" style={{ color: '#2c5530' }}>Healthcare Partners</div>
                   </div>
                 </Col>
                 <Col md={4}>
                   <div className="stat-item">
-                    <div className="stat-number">1M+</div>
-                    <div className="stat-label">Career Milestones</div>
+                    <div className="stat-number" style={{ color: '#2c5530' }}>1M+</div>
+                    <div className="stat-label" style={{ color: '#2c5530' }}>Career Milestones</div>
                   </div>
                 </Col>
               </Row>
