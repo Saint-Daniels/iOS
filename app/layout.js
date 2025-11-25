@@ -13,12 +13,12 @@ const inter = Inter({
 
 export const metadata = {
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
-  title: 'Saint Daniels Healthcare - Blockchain based Private Subsidy program',
-  description: 'Blockchain based Private Subsidy program - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
-  keywords: 'blockchain healthcare, private subsidy, healthcare rewards, pharmacy network, compound interest, healthcare finance, blockchain rewards, Saint Daniels Healthcare',
+  title: 'Saint Daniels Healthcare Rewards',
+  description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
+  keywords: 'healthcare rewards, private subsidy, healthcare rewards, pharmacy network, compound interest, healthcare finance, Saint Daniels Healthcare',
   openGraph: {
-    title: 'Saint Daniels Healthcare - Blockchain based Private Subsidy program',
-    description: 'Blockchain based Private Subsidy program - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
+    title: 'Saint Daniels Healthcare Rewards',
+    description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
     url: 'https://saintdanielshealthcare.com',
     siteName: 'Saint Daniels Healthcare',
     type: 'website',
