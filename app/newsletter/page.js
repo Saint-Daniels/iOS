@@ -2,140 +2,150 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaNewspaper, FaGraduationCap, FaHeart, FaLightbulb, FaUsers, FaTrophy, FaBook, FaChartLine } from 'react-icons/fa';
+import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaGamepad, FaVideo, FaComment, FaTrophy, FaUsers, FaYoutube, FaTwitch } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import MainNavbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { ScrollFadeIn, ScrollSlideIn } from '../../components/ScrollAnimation';
 
 export default function NewsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const newsCategories = [
-    { id: 'all', name: 'All News', icon: <FaNewspaper /> },
-    { id: 'career', name: 'Career Development', icon: <FaGraduationCap /> },
-    { id: 'wellness', name: 'Workplace Wellness', icon: <FaHeart /> },
-    { id: 'education', name: 'Public Health Education', icon: <FaLightbulb /> },
-    { id: 'community', name: 'Community', icon: <FaUsers /> },
-    { id: 'success', name: 'Success Stories', icon: <FaTrophy /> }
+  const gameCategories = [
+    { id: 'all', name: 'All Content', icon: <FaGamepad /> },
+    { id: 'fortnite', name: 'Fortnite', icon: <FaGamepad /> },
+    { id: 'cod', name: 'Call of Duty', icon: <FaGamepad /> },
+    { id: 'commentary', name: 'Commentary', icon: <FaComment /> },
+    { id: 'highlights', name: 'Highlights', icon: <FaVideo /> },
+    { id: 'tournaments', name: 'Tournaments', icon: <FaTrophy /> }
   ];
 
-  const featuredNews = [
+  const featuredContent = [
     {
       id: 1,
-      title: "Saint Daniels Healthcare Launches New Career Development Program",
-      excerpt: "We're excited to announce our comprehensive career development program designed to help professionals achieve their career goals through personalized coaching and evidence-based strategies.",
-      category: "career",
-      author: "Dr. Sarah Johnson",
+      title: "Epic Fortnite Victory Royale - 20 Kill Solo Win!",
+      excerpt: "Watch as we dominate the Fortnite battlefield with insane building skills and clutch plays. This victory royale showcases the best of Saint Daniels gaming network.",
+      category: "fortnite",
+      author: "Saint Daniels Gaming",
       date: "December 15, 2024",
-      readTime: "5 min read",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      featured: true
+      watchTime: "12 min watch",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
+      featured: true,
+      videoUrl: "#"
     },
     {
       id: 2,
-      title: "Workplace Wellness Initiative Shows 40% Improvement in Employee Satisfaction",
-      excerpt: "Our latest workplace wellness program has demonstrated significant improvements in team dynamics, stress reduction, and overall job satisfaction among participating organizations.",
-      category: "wellness",
-      author: "Michael Chen",
+      title: "Call of Duty: Warzone - Insane 1v4 Clutch Commentary",
+      excerpt: "Breaking down the most intense 1v4 clutch in Warzone history. Our commentary team analyzes every move, strategy, and decision that led to this incredible play.",
+      category: "cod",
+      author: "Saint Daniels Gaming",
       date: "December 12, 2024",
-      readTime: "4 min read",
-      image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      featured: true
+      watchTime: "8 min watch",
+      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
+      featured: true,
+      videoUrl: "#"
     },
     {
       id: 3,
-      title: "Public Health Education: Building Healthier Workplaces",
-      excerpt: "Learn about our evidence-based public health education programs that are transforming workplace wellness and professional development across various industries.",
-      category: "education",
-      author: "Dr. Emily Rodriguez",
+      title: "Fortnite vs Call of Duty: Meta Analysis & Strategy Breakdown",
+      excerpt: "Our gaming experts dive deep into the current meta for both Fortnite and Call of Duty, discussing weapon loadouts, map strategies, and competitive play insights.",
+      category: "commentary",
+      author: "Saint Daniels Gaming",
       date: "December 10, 2024",
-      readTime: "6 min read",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      featured: true
+      watchTime: "15 min watch",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
+      featured: true,
+      videoUrl: "#"
     }
   ];
 
-  const regularNews = [
+  const regularContent = [
     {
       id: 4,
-      title: "Community Networking Event: Building Professional Connections",
-      excerpt: "Join us for our monthly networking event where professionals from various industries come together to share experiences and build meaningful connections.",
-      category: "community",
-      author: "Jennifer Martinez",
+      title: "Fortnite Chapter 5: New Map Locations & Loot Routes",
+      excerpt: "Exploring the latest Fortnite map changes and the best landing spots for maximum loot and survival chances.",
+      category: "fortnite",
+      author: "Saint Daniels Gaming",
       date: "December 8, 2024",
-      readTime: "3 min read",
-      image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "10 min watch",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     },
     {
       id: 5,
-      title: "Success Story: How Career Coaching Transformed Sarah's Professional Journey",
-      excerpt: "Read about Sarah's inspiring journey from career uncertainty to landing her dream role through our personalized coaching program.",
-      category: "success",
-      author: "David Thompson",
+      title: "Call of Duty: Best Loadouts for Ranked Play",
+      excerpt: "Top-tier weapon builds and class setups for dominating in Call of Duty ranked matches. Tested and proven by our pro players.",
+      category: "cod",
+      author: "Saint Daniels Gaming",
       date: "December 5, 2024",
-      readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "7 min watch",
+      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     },
     {
       id: 6,
-      title: "New Research: The Impact of Workplace Wellness on Career Development",
-      excerpt: "Our latest research study reveals the significant correlation between workplace wellness programs and career advancement opportunities.",
-      category: "wellness",
-      author: "Dr. Lisa Wang",
+      title: "Fortnite Tournament Highlights - Saint Daniels Championship",
+      excerpt: "Relive the best moments from our recent Fortnite tournament featuring top players from the Saint Daniels gaming network.",
+      category: "tournaments",
+      author: "Saint Daniels Gaming",
       date: "December 3, 2024",
-      readTime: "8 min read",
-      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "20 min watch",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     },
     {
       id: 7,
-      title: "Intensive Career Development Program: Now Accepting Applications",
-      excerpt: "Applications are now open for our intensive career development program. This structured program offers comprehensive coaching for professionals seeking career transformation.",
-      category: "career",
-      author: "Robert Kim",
+      title: "Call of Duty: Warzone 2.0 - New Meta Breakdown",
+      excerpt: "Analyzing the latest Warzone 2.0 updates, weapon changes, and how they impact competitive play strategies.",
+      category: "cod",
+      author: "Saint Daniels Gaming",
       date: "November 30, 2024",
-      readTime: "4 min read",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "9 min watch",
+      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     },
     {
       id: 8,
-      title: "Community Spotlight: Meet Our Career Development Mentors",
-      excerpt: "Get to know the experienced professionals who serve as mentors in our community-based career support program.",
-      category: "community",
-      author: "Amanda Foster",
+      title: "Fortnite Building Techniques: Advanced Edit Course",
+      excerpt: "Master the most advanced building and editing techniques in Fortnite with our comprehensive tutorial series.",
+      category: "fortnite",
+      author: "Saint Daniels Gaming",
       date: "November 28, 2024",
-      readTime: "5 min read",
-      image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "14 min watch",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     },
     {
       id: 9,
-      title: "Public Health Education: New Course on Workplace Safety",
-      excerpt: "We're launching a new course focused on workplace safety and health promotion, designed for professionals in various industries.",
-      category: "education",
-      author: "Dr. Mark Stevens",
+      title: "Top 10 Plays of the Week - Fortnite & Call of Duty",
+      excerpt: "The most insane plays, clutches, and highlights from the Saint Daniels gaming network this week.",
+      category: "highlights",
+      author: "Saint Daniels Gaming",
       date: "November 25, 2024",
-      readTime: "6 min read",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      watchTime: "18 min watch",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
+      videoUrl: "#"
     }
   ];
 
-  const allNews = [...featuredNews, ...regularNews];
+  const allContent = [...featuredContent, ...regularContent];
 
-  const filteredNews = allNews.filter(article => {
-    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
+  const filteredContent = allContent.filter(item => {
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const getCategoryColor = (category) => {
     const colors = {
-      career: '#2c5530',
-      wellness: '#e74c3c',
-      education: '#3498db',
-      community: '#9b59b6',
-      success: '#f39c12',
+      fortnite: '#00d2ff',
+      cod: '#ff6b00',
+      commentary: '#9b59b6',
+      highlights: '#e74c3c',
+      tournaments: '#f39c12',
       all: '#2c5530'
     };
     return colors[category] || '#2c5530';
@@ -145,234 +155,342 @@ export default function NewsPage() {
     <div className="news-page">
       <MainNavbar />
       
-      {/* Featured Hero Article */}
-      <section className="news-hero-article">
+      {/* Hero Section */}
+      <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' }}>
         <Container>
-          <Row>
-            <Col lg={8}>
-              <div className="hero-article-content">
-                <div className="hero-article-meta">
-                  <Badge className="hero-category-badge" style={{ backgroundColor: '#2c5530' }}>
-                    BREAKING NEWS
-                  </Badge>
-                  <span className="hero-article-date">December 15, 2024</span>
+          <ScrollFadeIn>
+            <Row className="justify-content-center text-center">
+              <Col lg={10}>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                  <FaGamepad size={60} style={{ color: '#00d2ff' }} />
                 </div>
-                <h1 className="hero-article-title">
-                  Saint Daniels Healthcare Launches Comprehensive Career Development Initiative
+                <h1 className="mission-title-professional" style={{ color: 'white', fontSize: '3rem' }}>
+                  Saint Daniels Video Game Network
                 </h1>
-                <p className="hero-article-subtitle">
-                  New program combines career coaching, workplace wellness, and public health education 
-                  to transform professional development across industries.
+                <div className="mission-divider" style={{ margin: '1.5rem auto', background: '#00d2ff' }}></div>
+                <p className="mission-description-professional" style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', color: 'rgba(255, 255, 255, 0.9)' }}>
+                  Your destination for the coolest Fortnite and Call of Duty videos, epic gameplay highlights, 
+                  expert commentary, and tournament coverage. Join the Saint Daniels gaming community and never miss a play.
                 </p>
-                <div className="hero-article-meta-details">
-                  <div className="hero-author">
-                    <FaUser className="meta-icon" />
-                    <span>Dr. Sarah Johnson, Chief Development Officer</span>
-                  </div>
-                  <div className="hero-read-time">
-                    <FaBook className="meta-icon" />
-                    <span>8 min read</span>
-                  </div>
-                </div>
-                <p className="hero-article-excerpt">
-                  Saint Daniels Healthcare today announced the launch of its most comprehensive career development 
-                  program to date, integrating personalized coaching, workplace wellness initiatives, and evidence-based 
-                  public health education. The initiative represents a $2.5 million investment in professional development 
-                  and is expected to serve over 1,000 professionals in its first year.
-                </p>
-                <Button 
-                  variant="outline-primary" 
-                  className="hero-read-more-btn"
-                  style={{ borderColor: '#2c5530', color: '#2c5530' }}
-                >
-                  Read Full Article <FaArrowRight />
-                </Button>
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="hero-article-image">
-                <Image 
-                  src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Career development program launch"
-                  width={500}
-                  height={400}
-                  className="hero-image"
-                />
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </ScrollFadeIn>
         </Container>
       </section>
 
       {/* Search and Filter Section */}
-      <section className="news-filter-section">
+      <section className="service-fullpage-section" style={{ background: '#f8f9fa', paddingTop: '3rem', paddingBottom: '2rem' }}>
         <Container>
-          <Row className="align-items-center mb-4">
-            <Col lg={6}>
-              <div className="search-container">
-                <InputGroup>
-                  <InputGroup.Text>
-                    <FaSearch />
-                  </InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Search news articles..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="news-search-input"
-                  />
-                </InputGroup>
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="category-filter">
-                <Form.Select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="news-category-select"
-                >
-                  {newsCategories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </div>
-            </Col>
-          </Row>
-
-          {/* Category Pills */}
-          <Row>
-            <Col>
-              <div className="category-pills">
-                {newsCategories.map(category => (
-                  <Button
-                    key={category.id}
-                    variant={selectedCategory === category.id ? 'primary' : 'outline-primary'}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className="category-pill"
-                    style={{ 
-                      backgroundColor: selectedCategory === category.id ? getCategoryColor(category.id) : 'transparent',
-                      borderColor: getCategoryColor(category.id),
-                      color: selectedCategory === category.id ? 'white' : getCategoryColor(category.id)
-                    }}
+          <ScrollFadeIn>
+            <Row className="align-items-center mb-4">
+              <Col lg={6}>
+                <div className="search-container">
+                  <InputGroup>
+                    <InputGroup.Text style={{ background: '#2c5530', color: 'white', border: 'none' }}>
+                      <FaSearch />
+                    </InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      placeholder="Search videos and content..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="news-search-input"
+                      style={{ borderLeft: 'none' }}
+                    />
+                  </InputGroup>
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="category-filter">
+                  <Form.Select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="news-category-select"
+                    style={{ borderColor: '#2c5530' }}
                   >
-                    {category.icon}
-                    <span>{category.name}</span>
-                  </Button>
-                ))}
-              </div>
-            </Col>
-          </Row>
+                    {gameCategories.map(category => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+              </Col>
+            </Row>
+
+            {/* Category Pills */}
+            <Row>
+              <Col>
+                <div className="category-pills" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center' }}>
+                  {gameCategories.map(category => (
+                    <Button
+                      key={category.id}
+                      variant={selectedCategory === category.id ? 'primary' : 'outline-primary'}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className="category-pill"
+                      style={{ 
+                        backgroundColor: selectedCategory === category.id ? getCategoryColor(category.id) : 'transparent',
+                        borderColor: getCategoryColor(category.id),
+                        color: selectedCategory === category.id ? 'white' : getCategoryColor(category.id),
+                        borderRadius: '25px',
+                        padding: '0.5rem 1.25rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        border: '2px solid'
+                      }}
+                    >
+                      {category.icon}
+                      <span>{category.name}</span>
+                    </Button>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+          </ScrollFadeIn>
         </Container>
       </section>
 
-      {/* Featured News Section */}
-      <section className="featured-news-section">
+      {/* Featured Content Section */}
+      <section className="service-fullpage-section">
         <Container>
-          <Row className="mb-4">
-            <Col>
-              <h2 className="section-title">Featured Stories</h2>
-              <p className="section-subtitle">Highlighting our most important news and updates</p>
-            </Col>
-          </Row>
+          <ScrollFadeIn>
+            <Row className="mb-5">
+              <Col className="text-center">
+                <h2 className="service-title-large">Featured Videos</h2>
+                <div className="service-divider"></div>
+                <p className="section-subtitle" style={{ marginTop: '1rem' }}>Top gaming content from the Saint Daniels network</p>
+              </Col>
+            </Row>
+          </ScrollFadeIn>
 
           <Row className="g-4">
-            {featuredNews.map((article) => (
-              <Col lg={4} md={6} key={article.id}>
-                <Card className="featured-news-card">
-                  <div className="news-image-container">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      width={400}
-                      height={200}
-                      className="news-image"
-                    />
-                    <Badge 
-                      className="news-category-badge"
-                      style={{ backgroundColor: getCategoryColor(article.category) }}
-                    >
-                      {newsCategories.find(cat => cat.id === article.category)?.name}
-                    </Badge>
-                  </div>
-                  <Card.Body>
-                    <Card.Title className="news-card-title">{article.title}</Card.Title>
-                    <div className="news-meta">
-                      <div className="news-author">
-                        <FaUser className="meta-icon" />
-                        <span>{article.author}</span>
-                      </div>
-                      <div className="news-date">
-                        <FaCalendarAlt className="meta-icon" />
-                        <span>{article.date}</span>
+            {featuredContent.map((item, index) => (
+              <Col lg={4} md={6} key={item.id}>
+                <ScrollFadeIn delay={index * 0.2}>
+                  <Card className="featured-news-card" style={{
+                    border: 'none',
+                    borderRadius: '15px',
+                    overflow: 'hidden',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+                    transition: 'transform 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <div className="news-image-container" style={{ position: 'relative' }}>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={400}
+                        height={250}
+                        className="news-image"
+                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        display: 'flex',
+                        gap: '0.5rem'
+                      }}>
+                        <Badge 
+                          style={{ 
+                            backgroundColor: getCategoryColor(item.category),
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.85rem'
+                          }}
+                        >
+                          {gameCategories.find(cat => cat.id === item.category)?.name}
+                        </Badge>
+                        <Badge 
+                          style={{ 
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.85rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                          }}
+                        >
+                          <FaVideo /> {item.watchTime}
+                        </Badge>
                       </div>
                     </div>
-                    <Button 
-                      variant="outline-primary" 
-                      className="read-more-btn"
-                      style={{ borderColor: getCategoryColor(article.category), color: getCategoryColor(article.category) }}
-                    >
-                      Read More <FaArrowRight />
-                    </Button>
-                  </Card.Body>
-                </Card>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <Card.Title className="news-card-title" style={{
+                        fontSize: '1.25rem',
+                        fontWeight: 600,
+                        marginBottom: '1rem',
+                        color: '#333',
+                        minHeight: '3.5rem'
+                      }}>{item.title}</Card.Title>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        color: '#666',
+                        marginBottom: '1rem',
+                        lineHeight: '1.6'
+                      }}>{item.excerpt}</p>
+                      <div className="news-meta" style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+                        fontSize: '0.85rem',
+                        color: '#888'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <FaUser size={14} />
+                          <span>{item.author}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <FaCalendarAlt size={14} />
+                          <span>{item.date}</span>
+                        </div>
+                      </div>
+                      <Button 
+                        variant="outline-primary" 
+                        className="read-more-btn w-100"
+                        style={{ 
+                          borderColor: getCategoryColor(item.category), 
+                          color: getCategoryColor(item.category),
+                          borderRadius: '8px',
+                          padding: '0.75rem',
+                          fontWeight: 600
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.backgroundColor = getCategoryColor(item.category);
+                          e.target.style.color = 'white';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.backgroundColor = 'transparent';
+                          e.target.style.color = getCategoryColor(item.category);
+                        }}
+                      >
+                        <FaVideo style={{ marginRight: '0.5rem' }} />
+                        Watch Video <FaArrowRight style={{ marginLeft: '0.5rem' }} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
               </Col>
             ))}
           </Row>
         </Container>
       </section>
 
-      {/* Regular News Section */}
-      <section className="regular-news-section">
+      {/* Latest Content Section */}
+      <section className="service-fullpage-section" style={{ background: '#f8f9fa' }}>
         <Container>
-          <Row className="mb-4">
-            <Col>
-              <h2 className="section-title">Latest News</h2>
-              <p className="section-subtitle">Stay up to date with our latest articles and updates</p>
-            </Col>
-          </Row>
+          <ScrollFadeIn>
+            <Row className="mb-5">
+              <Col className="text-center">
+                <h2 className="service-title-large">Latest Content</h2>
+                <div className="service-divider"></div>
+                <p className="section-subtitle" style={{ marginTop: '1rem' }}>Fresh gaming videos and commentary every week</p>
+              </Col>
+            </Row>
+          </ScrollFadeIn>
 
           <Row className="g-4">
-            {filteredNews.filter(article => !article.featured).map(article => (
-              <Col lg={4} md={6} key={article.id}>
-                <Card className="regular-news-card">
-                  <div className="news-image-container">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      width={400}
-                      height={200}
-                      className="news-image"
-                    />
-                    <Badge 
-                      className="news-category-badge"
-                      style={{ backgroundColor: getCategoryColor(article.category) }}
-                    >
-                      {newsCategories.find(cat => cat.id === article.category)?.name}
-                    </Badge>
-                  </div>
-                  <Card.Body>
-                    <Card.Title className="news-card-title">{article.title}</Card.Title>
-                    <div className="news-meta">
-                      <div className="news-author">
-                        <FaUser className="meta-icon" />
-                        <span>{article.author}</span>
-                      </div>
-                      <div className="news-date">
-                        <FaCalendarAlt className="meta-icon" />
-                        <span>{article.date}</span>
+            {filteredContent.filter(item => !item.featured).map((item, index) => (
+              <Col lg={4} md={6} key={item.id}>
+                <ScrollFadeIn delay={index * 0.15}>
+                  <Card className="regular-news-card" style={{
+                    border: 'none',
+                    borderRadius: '15px',
+                    overflow: 'hidden',
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
+                    transition: 'transform 0.3s ease',
+                    cursor: 'pointer',
+                    height: '100%'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <div className="news-image-container" style={{ position: 'relative' }}>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={400}
+                        height={200}
+                        className="news-image"
+                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px'
+                      }}>
+                        <Badge 
+                          style={{ 
+                            backgroundColor: getCategoryColor(item.category),
+                            padding: '0.4rem 0.8rem',
+                            fontSize: '0.8rem'
+                          }}
+                        >
+                          {gameCategories.find(cat => cat.id === item.category)?.name}
+                        </Badge>
                       </div>
                     </div>
-                    <Button 
-                      variant="outline-primary" 
-                      className="read-more-btn"
-                      style={{ borderColor: getCategoryColor(article.category), color: getCategoryColor(article.category) }}
-                    >
-                      Read More <FaArrowRight />
-                    </Button>
-                  </Card.Body>
-                </Card>
+                    <Card.Body style={{ padding: '1.25rem' }}>
+                      <Card.Title className="news-card-title" style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        marginBottom: '0.75rem',
+                        color: '#333',
+                        minHeight: '3rem'
+                      }}>{item.title}</Card.Title>
+                      <p style={{
+                        fontSize: '0.85rem',
+                        color: '#666',
+                        marginBottom: '1rem',
+                        lineHeight: '1.5'
+                      }}>{item.excerpt}</p>
+                      <div className="news-meta" style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+                        fontSize: '0.8rem',
+                        color: '#888'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <FaVideo size={12} />
+                          <span>{item.watchTime}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <FaCalendarAlt size={12} />
+                          <span>{item.date}</span>
+                        </div>
+                      </div>
+                      <Button 
+                        variant="outline-primary" 
+                        className="read-more-btn w-100"
+                        style={{ 
+                          borderColor: getCategoryColor(item.category), 
+                          color: getCategoryColor(item.category),
+                          borderRadius: '8px',
+                          padding: '0.6rem',
+                          fontSize: '0.9rem',
+                          fontWeight: 500
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.backgroundColor = getCategoryColor(item.category);
+                          e.target.style.color = 'white';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.backgroundColor = 'transparent';
+                          e.target.style.color = getCategoryColor(item.category);
+                        }}
+                      >
+                        <FaVideo style={{ marginRight: '0.5rem' }} />
+                        Watch <FaArrowRight style={{ marginLeft: '0.5rem' }} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
               </Col>
             ))}
           </Row>
@@ -380,38 +498,107 @@ export default function NewsPage() {
       </section>
 
       {/* Newsletter Subscription Section */}
-      <section className="newsletter-subscription-section">
+      <section className="service-fullpage-section" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)', color: 'white' }}>
         <Container>
-          <Row className="justify-content-center">
-            <Col lg={8} className="text-center">
-              <div className="newsletter-subscription-card">
-                <h3 className="newsletter-title">Stay Updated</h3>
-                <p className="newsletter-subtitle">
-                  Subscribe to our newsletter for the latest news, insights, and updates from Saint Daniels Healthcare.
-                </p>
-                <Form className="newsletter-form">
-                  <Row className="g-3">
-                    <Col md={8}>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter your email address"
-                        className="newsletter-email-input"
-                      />
-                    </Col>
-                    <Col md={4}>
-                      <Button 
-                        type="submit" 
-                        className="newsletter-subscribe-btn w-100"
-                        style={{ backgroundColor: '#2c5530', borderColor: '#2c5530' }}
-                      >
-                        Subscribe
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form>
-              </div>
-            </Col>
-          </Row>
+          <ScrollFadeIn>
+            <Row className="justify-content-center">
+              <Col lg={8} className="text-center">
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '20px',
+                  padding: '3rem',
+                  backdropFilter: 'blur(10px)'
+                }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <FaGamepad size={50} style={{ color: '#00d2ff', marginBottom: '1rem' }} />
+                  </div>
+                  <h3 className="service-title-large" style={{ color: 'white', marginBottom: '1rem' }}>Join the Gaming Network</h3>
+                  <p className="mission-description-professional" style={{ 
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    marginBottom: '2rem',
+                    fontSize: '1.1rem'
+                  }}>
+                    Subscribe to get notified about new Fortnite and Call of Duty videos, tournament highlights, 
+                    and exclusive gaming content from the Saint Daniels network.
+                  </p>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    borderRadius: '12px',
+                    padding: '2rem',
+                    marginBottom: '2rem'
+                  }}>
+                    <p style={{
+                      color: 'white',
+                      fontSize: '1.1rem',
+                      fontWeight: 600,
+                      marginBottom: '1rem'
+                    }}>
+                      Want to submit your gaming content?
+                    </p>
+                    <p style={{
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1rem',
+                      marginBottom: '1.5rem'
+                    }}>
+                      Send your Fortnite and Call of Duty videos, highlights, and commentary to:
+                    </p>
+                    <a 
+                      href="mailto:submissions@saintdaniels.com"
+                      style={{
+                        display: 'inline-block',
+                        backgroundColor: '#00d2ff',
+                        color: 'white',
+                        padding: '1rem 2rem',
+                        borderRadius: '8px',
+                        textDecoration: 'none',
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#00b8e6';
+                        e.target.style.transform = 'translateY(-2px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#00d2ff';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      submissions@saintdaniels.com
+                    </a>
+                  </div>
+                  <div style={{
+                    marginTop: '2rem',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '1.5rem',
+                    flexWrap: 'wrap'
+                  }}>
+                    <a href="https://youtube.com/@saintdaniels" target="_blank" rel="noopener noreferrer" style={{
+                      color: 'white',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.9rem'
+                    }}>
+                      <FaYoutube size={20} /> YouTube
+                    </a>
+                    <a href="https://tiktok.com/@_saintdaniels" target="_blank" rel="noopener noreferrer" style={{
+                      color: 'white',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.9rem'
+                    }}>
+                      <FaVideo size={20} /> TikTok
+                    </a>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </ScrollFadeIn>
         </Container>
       </section>
 

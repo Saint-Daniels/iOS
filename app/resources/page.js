@@ -1,82 +1,83 @@
 'use client';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaBook, FaFilePdf, FaVideo, FaDownload, FaExternalLinkAlt, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaFilePdf, FaDownload, FaExternalLinkAlt, FaPhone, FaEnvelope, FaShieldAlt, FaFileAlt, FaClipboardList } from 'react-icons/fa';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
+import { ScrollFadeIn, ScrollSlideIn } from '../../components/ScrollAnimation';
 import Link from 'next/link';
 
 export default function ResourcesPage() {
-  const resourceCategories = [
+  const documentCategories = [
     {
-      title: "Career Development Guides",
-      icon: <FaBook size={32} />,
+      title: "Program Documentation",
+      icon: <FaFileAlt size={32} />,
       resources: [
         {
-          title: "Career Assessment Tools",
-          description: "Comprehensive tools to evaluate your skills, interests, and career goals",
+          title: "Healthcare Rewards Program Guide",
+          description: "Complete guide to understanding how private subsidies work, earning rewards, and spending at pharmacies",
           type: "PDF Guide",
           link: "#"
         },
         {
-          title: "Resume & Cover Letter Templates",
-          description: "Professional templates and strategies for job applications",
+          title: "Compound Interest Vault Guide",
+          description: "Detailed explanation of how unused rewards grow through our compound network treasury",
           type: "PDF Guide",
           link: "#"
         },
         {
-          title: "Interview Preparation Workbook",
-          description: "Step-by-step guide to excel in job interviews and career conversations",
-          type: "PDF Guide",
+          title: "Pharmacy Network Directory",
+          description: "Comprehensive list of participating pharmacies where you can redeem your private subsidy",
+          type: "PDF Directory",
           link: "#"
         }
       ]
     },
     {
-      title: "Educational Videos",
-      icon: <FaVideo size={32} />,
+      title: "Application Forms",
+      icon: <FaClipboardList size={32} />,
       resources: [
         {
-          title: "Career Coaching Fundamentals",
-          description: "Learn the basics of professional development and career advancement",
-          type: "Video Series",
+          title: "Rewards Application Form",
+          description: "Complete application form to enroll in the healthcare rewards program",
+          type: "PDF Form",
+          link: "/application"
+        },
+        {
+          title: "Pharmacy Verification Form",
+          description: "Form to verify and connect your preferred pharmacy to your account",
+          type: "PDF Form",
           link: "#"
         },
         {
-          title: "Workplace Wellness Techniques",
-          description: "Guided sessions for stress management and workplace productivity",
-          type: "Video Series",
-          link: "#"
-        },
-        {
-          title: "Public Health Education",
-          description: "Educational content about workplace health and safety practices",
-          type: "Video Series",
+          title: "Account Update Form",
+          description: "Update your personal information, pharmacy preferences, or vault settings",
+          type: "PDF Form",
           link: "#"
         }
       ]
     },
     {
-      title: "Forms & Documents",
-      icon: <FaFilePdf size={32} />,
+      title: "Legal & Privacy Documents",
+      icon: <FaShieldAlt size={32} />,
       resources: [
         {
-          title: "Career Development Application",
-          description: "Required forms for career coaching program registration",
-          type: "PDF Form",
-          link: "#"
+          title: "Privacy Policy",
+          description: "How we protect your health data and maintain HIPAA-safe architecture",
+          type: "PDF Document",
+          link: "/privacy"
         },
         {
-          title: "Insurance Verification",
-          description: "Forms to verify your health insurance coverage",
-          type: "PDF Form",
-          link: "#"
+          title: "Terms of Service",
+          description: "Terms and conditions for using the healthcare rewards platform",
+          type: "PDF Document",
+          link: "/terms"
         },
         {
-          title: "Program Consent Forms",
-          description: "HIPAA-compliant consent and authorization forms for career services",
-          type: "PDF Form",
+          title: "Data Protection Notice",
+          description: "Information about our blockchain-based privacy protections and data handling",
+          type: "PDF Document",
           link: "#"
         }
       ]
@@ -85,26 +86,26 @@ export default function ResourcesPage() {
 
   const quickLinks = [
     {
-      title: "Career Support",
-      description: "24/7 career coaching and professional development support",
-      icon: <FaPhone size={24} />,
-      link: "/contact"
+      title: "Start Application",
+      description: "Begin your healthcare rewards enrollment process",
+      icon: <FaFileAlt size={24} />,
+      link: "/application"
     },
     {
-      title: "Insurance Information",
-      description: "Learn about accepted health insurance plans",
+      title: "Learn More",
+      description: "Understand how the private subsidy program works",
       icon: <FaFilePdf size={24} />,
-      link: "/insurance"
+      link: "/learnmore"
     },
     {
-      title: "Program Options",
-      description: "Explore our comprehensive career development services",
-      icon: <FaBook size={24} />,
-      link: "/services"
+      title: "Privacy Policy",
+      description: "Review our privacy and data protection policies",
+      icon: <FaShieldAlt size={24} />,
+      link: "/privacy"
     },
     {
-      title: "Contact Us",
-      description: "Get in touch with our career development team",
+      title: "Contact Support",
+      description: "Get help with documents or program questions",
       icon: <FaEnvelope size={24} />,
       link: "/contact"
     }
@@ -115,51 +116,127 @@ export default function ResourcesPage() {
       <Navbar />
       <div className="resources-page">
         {/* Hero Section */}
-        <section className="resources-hero">
+        <section className="mission-section-professional" style={{ paddingTop: '4rem', paddingBottom: '3rem' }}>
           <Container>
-            <Row className="justify-content-center text-center">
-              <Col lg={8}>
-                <h1 className="resources-title">Library</h1>
-                <p className="resources-subtitle">
-                  Explore our comprehensive digital library of career development resources, workplace wellness materials, and professional support tools 
-                  to help you advance your career and improve your workplace health.
-                </p>
-              </Col>
-            </Row>
+            <ScrollFadeIn>
+              <Row className="justify-content-center text-center">
+                <Col lg={10}>
+                  <h1 className="mission-title-professional">Documents</h1>
+                  <div className="mission-divider" style={{ margin: '1.5rem auto' }}></div>
+                  <p className="mission-description-professional" style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto' }}>
+                    Access all program documentation, application forms, and legal documents for the Healthcare Rewards program. 
+                    Find everything you need to understand, enroll in, and manage your private subsidy account.
+                  </p>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
           </Container>
         </section>
 
-        {/* Resource Categories */}
-        <section className="resource-categories-section">
+        {/* Document Categories */}
+        <section className="service-fullpage-section">
           <Container>
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Document Categories</h2>
+                    <div className="service-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
+
             <Row className="g-4">
-              {resourceCategories.map((category, index) => (
-                <Col lg={4} key={index}>
-                  <Card className="resource-category-card">
-                    <Card.Body>
-                      <div className="category-header">
-                        <div className="category-icon">
-                          {category.icon}
-                        </div>
-                        <h3 className="category-title">{category.title}</h3>
-                      </div>
-                      <div className="resource-list">
-                        {category.resources.map((resource, resourceIndex) => (
-                          <div key={resourceIndex} className="resource-item">
-                            <h5 className="resource-item-title">{resource.title}</h5>
-                            <p className="resource-item-description">{resource.description}</p>
-                            <div className="resource-item-footer">
-                              <span className="resource-type">{resource.type}</span>
-                              <a href={resource.link} className="resource-link">
-                                <FaDownload size={16} />
-                                Download
-                              </a>
-                            </div>
+              {documentCategories.map((category, index) => (
+                <Col lg={4} md={6} key={index}>
+                  <ScrollFadeIn delay={index * 0.2}>
+                    <Card className="resource-category-card" style={{
+                      height: '100%',
+                      border: '1px solid #e9ecef',
+                      borderRadius: '15px',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <Card.Body style={{ padding: '2rem' }}>
+                        <div className="category-header" style={{ 
+                          textAlign: 'center', 
+                          marginBottom: '1.5rem',
+                          paddingBottom: '1.5rem',
+                          borderBottom: '2px solid #f0f0f0'
+                        }}>
+                          <div className="category-icon" style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '70px',
+                            height: '70px',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                            color: 'white',
+                            marginBottom: '1rem'
+                          }}>
+                            {category.icon}
                           </div>
-                        ))}
-                      </div>
-                    </Card.Body>
-                  </Card>
+                          <h3 className="category-title" style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            color: '#2c5530',
+                            margin: 0
+                          }}>{category.title}</h3>
+                        </div>
+                        <div className="resource-list">
+                          {category.resources.map((resource, resourceIndex) => (
+                            <div key={resourceIndex} className="resource-item" style={{
+                              marginBottom: '1.5rem',
+                              paddingBottom: '1.5rem',
+                              borderBottom: resourceIndex < category.resources.length - 1 ? '1px solid #f0f0f0' : 'none'
+                            }}>
+                              <h5 className="resource-item-title" style={{
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                marginBottom: '0.5rem',
+                                color: '#333'
+                              }}>{resource.title}</h5>
+                              <p className="resource-item-description" style={{
+                                fontSize: '0.9rem',
+                                color: '#666',
+                                marginBottom: '0.75rem',
+                                lineHeight: '1.5'
+                              }}>{resource.description}</p>
+                              <div className="resource-item-footer" style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                              }}>
+                                <span className="resource-type" style={{
+                                  fontSize: '0.85rem',
+                                  color: '#888',
+                                  fontWeight: 500
+                                }}>{resource.type}</span>
+                                <a href={resource.link} className="resource-link" style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '0.5rem',
+                                  color: '#2c5530',
+                                  textDecoration: 'none',
+                                  fontWeight: 500,
+                                  fontSize: '0.9rem',
+                                  transition: 'color 0.3s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.color = '#4a7c59'}
+                                onMouseLeave={(e) => e.target.style.color = '#2c5530'}
+                                >
+                                  <FaDownload size={14} />
+                                  Download
+                                </a>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </ScrollFadeIn>
                 </Col>
               ))}
             </Row>
@@ -167,30 +244,82 @@ export default function ResourcesPage() {
         </section>
 
         {/* Quick Links Section */}
-        <section className="quick-links-section">
+        <section className="service-fullpage-section" style={{ background: '#f8f9fa' }}>
           <Container>
-            <Row className="justify-content-center mb-5">
-              <Col lg={8} className="text-center">
-                <h2 className="section-title">Library Services</h2>
-                <p className="section-subtitle">
-                  Access our library services and professional support
-                </p>
-              </Col>
-            </Row>
+            <ScrollFadeIn>
+              <Row className="justify-content-center mb-5">
+                <Col lg={8} className="text-center">
+                  <div className="service-header">
+                    <h2 className="service-title-large">Quick Access</h2>
+                    <div className="service-divider"></div>
+                  </div>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
             
             <Row className="g-4">
               {quickLinks.map((link, index) => (
                 <Col lg={3} md={6} key={index}>
-                  <Link href={link.link} className="quick-link-card">
-                    <div className="quick-link-icon">
-                      {link.icon}
-                    </div>
-                    <h4 className="quick-link-title">{link.title}</h4>
-                    <p className="quick-link-description">{link.description}</p>
-                    <div className="quick-link-arrow">
-                      <FaExternalLinkAlt size={16} />
-                    </div>
-                  </Link>
+                  <ScrollFadeIn delay={index * 0.15}>
+                    <Link href={link.link} className="quick-link-card" style={{
+                      display: 'block',
+                      background: 'white',
+                      borderRadius: '12px',
+                      padding: '2rem',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
+                      transition: 'all 0.3s ease',
+                      height: '100%',
+                      border: '1px solid #e9ecef'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
+                    }}
+                    >
+                      <div className="quick-link-icon" style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                        color: 'white',
+                        marginBottom: '1rem'
+                      }}>
+                        {link.icon}
+                      </div>
+                      <h4 className="quick-link-title" style={{
+                        fontSize: '1.2rem',
+                        fontWeight: 600,
+                        marginBottom: '0.75rem',
+                        color: '#2c5530'
+                      }}>{link.title}</h4>
+                      <p className="quick-link-description" style={{
+                        fontSize: '0.9rem',
+                        color: '#666',
+                        marginBottom: '1rem',
+                        lineHeight: '1.5'
+                      }}>{link.description}</p>
+                      <div className="quick-link-arrow" style={{
+                        color: '#2c5530',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        fontWeight: 500,
+                        fontSize: '0.9rem'
+                      }}>
+                        View <FaExternalLinkAlt size={14} />
+                      </div>
+                    </Link>
+                  </ScrollFadeIn>
                 </Col>
               ))}
             </Row>
@@ -198,50 +327,46 @@ export default function ResourcesPage() {
         </section>
 
         {/* Contact Information */}
-        <section className="contact-info-section">
+        <section className="service-fullpage-section">
           <Container>
-            <Row className="justify-content-center">
-              <Col lg={8} className="text-center">
-                <h2 className="section-title">Need More Library Resources?</h2>
-                <p className="section-subtitle">
-                  Our library team is here to help you find the resources you need for your career development and workplace wellness journey.
-                </p>
-                <div className="contact-info">
-                  <div className="contact-item">
-                    <FaPhone size={20} />
-                    <span>Call us at (555) 123-4567</span>
+            <ScrollFadeIn>
+              <Row className="justify-content-center">
+                <Col lg={8} className="text-center">
+                  <h2 className="section-title-professional">Need Help Finding Documents?</h2>
+                  <p className="mission-description-professional" style={{ marginBottom: '2rem' }}>
+                    Our support team is here to help you locate the documents you need for your healthcare rewards account.
+                  </p>
+                  <div className="contact-buttons" style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap'
+                  }}>
+                    <Link href="/contact" className="btn-primary-lonestar" style={{
+                      padding: '0.75rem 2rem',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      display: 'inline-block'
+                    }}>
+                      Contact Support
+                    </Link>
+                    <Link href="/help" className="btn-secondary-lonestar" style={{
+                      padding: '0.75rem 2rem',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      display: 'inline-block'
+                    }}>
+                      Help Center
+                    </Link>
                   </div>
-                  <div className="contact-item">
-                    <FaEnvelope size={20} />
-                    <span>Email us at info@saintdaniels.com</span>
-                  </div>
-                  <div className="contact-item">
-                    <FaMapMarkerAlt size={20} />
-                    <span>Visit our facility for in-person support</span>
-                  </div>
-                </div>
-                <div className="contact-buttons">
-                  <Link href="/contact" className="btn-primary-lonestar">
-                    Contact Us
-                  </Link>
-                  <Link href="/appointment" className="btn-secondary-lonestar">
-                    Schedule Appointment
-                  </Link>
-                </div>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            </ScrollFadeIn>
           </Container>
         </section>
       </div>
       
-      {/* Custom Footer with only copyright */}
-      <footer className="footer-minimal">
-        <div className="container">
-          <div className="footer-bottom">
-            <p>© 2025 Saint Daniels Healthcare. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </PageTransition>
   );
 }

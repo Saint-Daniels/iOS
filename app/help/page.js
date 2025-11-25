@@ -44,7 +44,7 @@ export default function HelpCenter() {
     },
     {
       question: "How do I find career development resources?",
-      answer: "You can access our extensive library of career development resources through the Resources section, including guides, templates, educational videos, and professional development materials.",
+      answer: "You can access our extensive documents library through the Documents section, including healthcare rewards guides, application forms, privacy policies, and program documentation.",
       category: "Resources"
     },
     {
@@ -134,8 +134,8 @@ export default function HelpCenter() {
     {
       title: "Download Resources",
       icon: <FaDownload size={20} />,
-      description: "Access our library of career development materials",
-      action: "Browse Library",
+      description: "Access our documents library",
+      action: "Browse Documents",
       color: "#3498db",
       link: "/resources"
     },

@@ -55,8 +55,8 @@ const Footer = () => {
           <div className="footer-column">
             <h4 className="footer-title">MEMBERS</h4>
             <ul className="footer-links">
-              <li><Link href="/resources">Library</Link></li>
               <li><Link href="/newsletter">Newsletter</Link></li>
+              <li><Link href="/resources">Documents</Link></li>
               <li><Link href="/help">Help Center</Link></li>
             </ul>
           </div>
