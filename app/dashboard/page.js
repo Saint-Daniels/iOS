@@ -17,6 +17,9 @@ export default function Dashboard() {
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [transactionPage, setTransactionPage] = useState(1);
   const transactionsPerPage = 10;
+  const [readPage, setReadPage] = useState(1);
+  const [unreadPage, setUnreadPage] = useState(1);
+  const adsPerPage = 5;
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [locationConsent, setLocationConsent] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
@@ -524,20 +527,31 @@ export default function Dashboard() {
     router.push('/');
   };
 
+  // Initialize with default location (bypass location requirement)
+  useEffect(() => {
+    // Default location: Dallas, TX (can be changed to any default location)
+    const defaultLocation = {
+      lat: 32.7767,
+      lng: -96.7970
+    };
+    
+    if (!userLocation) {
+      setUserLocation(defaultLocation);
+      fetchNearbyPharmacies(defaultLocation);
+    }
+  }, []);
+
   // Check if location consent was given (only when pharmacy tab is accessed)
   const checkLocationOnPharmacyTab = () => {
-    const hasConsented = localStorage.getItem('locationConsent');
-    const modalShownThisSession = sessionStorage.getItem('locationModalShown');
+    // Bypass location requirement - use default location
+    const defaultLocation = {
+      lat: 32.7767,
+      lng: -96.7970
+    };
     
-    if (hasConsented === 'true') {
-      setLocationConsent(true);
-      if (!userLocation) {
-        getCurrentLocation();
-      }
-    } else if (modalShownThisSession !== 'true') {
-      // Only show modal if not shown this session
-      setShowLocationModal(true);
-      sessionStorage.setItem('locationModalShown', 'true');
+    if (!userLocation) {
+      setUserLocation(defaultLocation);
+      fetchNearbyPharmacies(defaultLocation);
     }
   };
 
@@ -1050,14 +1064,14 @@ export default function Dashboard() {
                         background: 'white'
                       }}>
                         <Card.Body style={{ padding: 0 }}>
-                          {seenAds.map((ad, index) => (
+                          {seenAds.slice((readPage - 1) * adsPerPage, readPage * adsPerPage).map((ad, index, array) => (
                             <div
                               key={ad.id}
                               style={{
                                 padding: '1.5rem 1.5rem',
                                 paddingTop: '1.5rem',
                                 paddingBottom: '2rem',
-                                borderBottom: index < seenAds.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                borderBottom: index < array.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
                                 background: ad.read ? 'white' : '#f8f9fa',
@@ -1161,6 +1175,61 @@ export default function Dashboard() {
                             </div>
                           ))}
                         </Card.Body>
+                        {seenAds.length > adsPerPage && (
+                          <Card.Footer style={{
+                            background: 'white',
+                            border: 'none',
+                            borderTop: '1px solid #e8eaed',
+                            padding: '1rem 1.5rem',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}>
+                            <div style={{
+                              fontSize: '0.875rem',
+                              color: '#5f6368',
+                              fontFamily: 'Roboto, sans-serif'
+                            }}>
+                              Showing {((readPage - 1) * adsPerPage) + 1} - {Math.min(readPage * adsPerPage, seenAds.length)} of {seenAds.length}
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <button
+                                onClick={() => setReadPage(prev => Math.max(1, prev - 1))}
+                                disabled={readPage === 1}
+                                style={{
+                                  padding: '0.5rem 1rem',
+                                  fontSize: '0.875rem',
+                                  border: '1px solid #dadce0',
+                                  borderRadius: '4px',
+                                  background: readPage === 1 ? '#f8f9fa' : 'white',
+                                  color: readPage === 1 ? '#dadce0' : '#1a73e8',
+                                  cursor: readPage === 1 ? 'not-allowed' : 'pointer',
+                                  fontFamily: 'Roboto, sans-serif',
+                                  fontWeight: 500
+                                }}
+                              >
+                                Previous
+                              </button>
+                              <button
+                                onClick={() => setReadPage(prev => Math.min(Math.ceil(seenAds.length / adsPerPage), prev + 1))}
+                                disabled={readPage === Math.ceil(seenAds.length / adsPerPage)}
+                                style={{
+                                  padding: '0.5rem 1rem',
+                                  fontSize: '0.875rem',
+                                  border: '1px solid #dadce0',
+                                  borderRadius: '4px',
+                                  background: readPage === Math.ceil(seenAds.length / adsPerPage) ? '#f8f9fa' : 'white',
+                                  color: readPage === Math.ceil(seenAds.length / adsPerPage) ? '#dadce0' : '#1a73e8',
+                                  cursor: readPage === Math.ceil(seenAds.length / adsPerPage) ? 'not-allowed' : 'pointer',
+                                  fontFamily: 'Roboto, sans-serif',
+                                  fontWeight: 500
+                                }}
+                              >
+                                Next
+                              </button>
+                            </div>
+                          </Card.Footer>
+                        )}
                       </Card>
                     </Col>
 
@@ -1174,14 +1243,14 @@ export default function Dashboard() {
                         background: 'white'
                       }}>
                         <Card.Body style={{ padding: 0 }}>
-                          {qualifiedAds.map((ad, index) => (
+                          {qualifiedAds.slice((unreadPage - 1) * adsPerPage, unreadPage * adsPerPage).map((ad, index, array) => (
                             <div
                               key={ad.id}
                               style={{
                                 padding: '1.5rem 1.5rem',
                                 paddingTop: '1.5rem',
                                 paddingBottom: '2rem',
-                                borderBottom: index < qualifiedAds.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                borderBottom: index < array.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 cursor: 'pointer',
                                 transition: 'background 0.2s ease',
                                 background: 'white',
@@ -1279,6 +1348,61 @@ export default function Dashboard() {
                             </div>
                           ))}
                         </Card.Body>
+                        {qualifiedAds.length > adsPerPage && (
+                          <Card.Footer style={{
+                            background: 'white',
+                            border: 'none',
+                            borderTop: '1px solid #e8eaed',
+                            padding: '1rem 1.5rem',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}>
+                            <div style={{
+                              fontSize: '0.875rem',
+                              color: '#5f6368',
+                              fontFamily: 'Roboto, sans-serif'
+                            }}>
+                              Showing {((unreadPage - 1) * adsPerPage) + 1} - {Math.min(unreadPage * adsPerPage, qualifiedAds.length)} of {qualifiedAds.length}
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <button
+                                onClick={() => setUnreadPage(prev => Math.max(1, prev - 1))}
+                                disabled={unreadPage === 1}
+                                style={{
+                                  padding: '0.5rem 1rem',
+                                  fontSize: '0.875rem',
+                                  border: '1px solid #dadce0',
+                                  borderRadius: '4px',
+                                  background: unreadPage === 1 ? '#f8f9fa' : 'white',
+                                  color: unreadPage === 1 ? '#dadce0' : '#1a73e8',
+                                  cursor: unreadPage === 1 ? 'not-allowed' : 'pointer',
+                                  fontFamily: 'Roboto, sans-serif',
+                                  fontWeight: 500
+                                }}
+                              >
+                                Previous
+                              </button>
+                              <button
+                                onClick={() => setUnreadPage(prev => Math.min(Math.ceil(qualifiedAds.length / adsPerPage), prev + 1))}
+                                disabled={unreadPage === Math.ceil(qualifiedAds.length / adsPerPage)}
+                                style={{
+                                  padding: '0.5rem 1rem',
+                                  fontSize: '0.875rem',
+                                  border: '1px solid #dadce0',
+                                  borderRadius: '4px',
+                                  background: unreadPage === Math.ceil(qualifiedAds.length / adsPerPage) ? '#f8f9fa' : 'white',
+                                  color: unreadPage === Math.ceil(qualifiedAds.length / adsPerPage) ? '#dadce0' : '#1a73e8',
+                                  cursor: unreadPage === Math.ceil(qualifiedAds.length / adsPerPage) ? 'not-allowed' : 'pointer',
+                                  fontFamily: 'Roboto, sans-serif',
+                                  fontWeight: 500
+                                }}
+                              >
+                                Next
+                              </button>
+                            </div>
+                          </Card.Footer>
+                        )}
                       </Card>
                     </Col>
                   </Row>
@@ -1287,7 +1411,7 @@ export default function Dashboard() {
                 <Tab eventKey="pharmacy" title={
                   <span><FaHospital className="me-2" />Pharmacy Network</span>
                 }>
-                  {userLocation ? (
+                  {userLocation && localPharmacies.length > 0 ? (
                     <Row>
                       <Col lg={8}>
                         <Card style={{
@@ -1448,38 +1572,13 @@ export default function Dashboard() {
                       padding: '4rem 2rem'
                     }}>
                       <Card.Body>
-                        <FaHospital size={64} style={{ color: '#dadce0', marginBottom: '1.5rem' }} />
-                        <h4 style={{
-                          fontSize: '1.5rem',
-                          fontWeight: 400,
-                          color: '#202124',
-                          marginBottom: '1rem',
-                          fontFamily: 'Roboto, sans-serif'
-                        }}>
-                          Enable Location Services
-                        </h4>
-                        <p style={{
+                        <div style={{
                           fontSize: '0.9375rem',
                           color: '#5f6368',
-                          marginBottom: '2rem',
                           fontFamily: 'Roboto, sans-serif'
                         }}>
-                          Allow location access to find nearby pharmacies where you can use your private subsidy.
-                        </p>
-                        <Button
-                          onClick={() => setShowLocationModal(true)}
-                          style={{
-                            background: '#1a73e8',
-                            border: 'none',
-                            padding: '0.75rem 2rem',
-                            borderRadius: '4px',
-                            fontSize: '0.875rem',
-                            fontWeight: 500,
-                            fontFamily: 'Roboto, sans-serif'
-                          }}
-                        >
-                          Enable Location
-                        </Button>
+                          Loading pharmacy locations...
+                        </div>
                       </Card.Body>
                     </Card>
                   )}
