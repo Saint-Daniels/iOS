@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, Modal, Alert } from 'react-bootstrap';
-import { FaPhone, FaEnvelope, FaDollarSign, FaChartLine, FaLightbulb, FaExclamationTriangle, FaSearch, FaFileAlt, FaDownload, FaComments, FaMobile, FaHospital } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaDollarSign, FaChartLine, FaLightbulb, FaExclamationTriangle, FaSearch, FaFileAlt, FaDownload, FaComments, FaMobile, FaHospital, FaFileInvoiceDollar, FaIdCard, FaHome, FaUniversity, FaPassport, FaCertificate, FaFileContract } from 'react-icons/fa';
 import MainNavbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
@@ -73,11 +73,6 @@ export default function HelpCenter() {
       answer: "You can report concerns through our secure reporting system. Click the 'Report Issue' button above to submit your issue. All reports are confidential and reviewed within 24 hours.",
       category: "Support"
     },
-    {
-      question: "Can I get more information about the program?",
-      answer: "Yes! Visit our Learn More page for comprehensive details about how the private subsidy program works, or contact our support team for personalized assistance.",
-      category: "Information"
-    }
   ];
 
 
@@ -258,81 +253,467 @@ export default function HelpCenter() {
 
 
 
-        {/* FAQ Section */}
+        {/* Required Documents Section */}
         <section className="service-fullpage-section">
           <Container>
             <ScrollFadeIn>
               <Row className="justify-content-center mb-5">
                 <Col lg={8} className="text-center">
                   <div className="service-header">
-                    <h2 className="service-title-large">Frequently Asked Questions</h2>
+                    <h2 className="service-title-large">Required Documents</h2>
                     <div className="service-divider"></div>
+                    <p className="mission-description-professional" style={{ marginTop: '1rem', fontSize: '1.1rem' }}>
+                      Access important documents needed to complete your healthcare rewards enrollment and verify your eligibility
+                    </p>
                   </div>
                 </Col>
               </Row>
             </ScrollFadeIn>
 
             <Row className="g-4">
-              {filteredFAQs.map((faq, index) => (
-                <Col lg={4} md={6} key={index}>
-                  <ScrollFadeIn delay={index * 0.1}>
-                    <Card style={{
-                      border: '1px solid #e9ecef',
-                      borderRadius: '15px',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-                      height: '100%',
-                      transition: 'all 0.3s ease',
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.1}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                       display: 'flex',
-                      flexDirection: 'column'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.12)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
-                    }}
-                    >
-                      <Card.Body style={{
-                        padding: '2rem',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                         display: 'flex',
-                        flexDirection: 'column',
-                        flex: 1
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
                       }}>
-                        <h4 style={{
-                          fontSize: '1.2rem',
-                          fontWeight: 600,
-                          color: '#1B392F',
-                          marginBottom: '1rem',
-                          lineHeight: '1.4',
-                          minHeight: '3.5rem'
-                        }}>
-                          {faq.question}
-                        </h4>
-                        <p style={{
-                          fontSize: '1rem',
-                          lineHeight: '1.7',
-                          color: '#666',
-                          marginBottom: '1.5rem',
-                          flex: 1
-                        }}>
-                          {faq.answer}
-                        </p>
+                        <FaFileInvoiceDollar size={40} style={{ color: '#2c5530' }} />
                         <div style={{
-                          paddingTop: '1rem',
-                          borderTop: '1px solid #e9ecef',
-                          fontSize: '0.875rem',
-                          color: '#C4A962',
-                          fontWeight: 500
-                        }}>
-                          Category: {faq.category}
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </ScrollFadeIn>
-                </Col>
-              ))}
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#C4A962'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Tax Documents
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        W-2 forms, 1099s, or tax returns for income verification
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.2}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <FaIdCard size={40} style={{ color: '#C4A962' }} />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#2c5530'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Citizenship Verification
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        Birth certificate, passport, or naturalization certificate
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.3}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <FaHome size={40} style={{ color: '#2c5530' }} />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#C4A962'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Residence Verification
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        Utility bills, lease agreement, or mortgage statement
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.4}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <FaUniversity size={40} style={{ color: '#C4A962' }} />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#2c5530'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Bank Information
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        Bank statements or account verification for direct deposit setup
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.5}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <FaPassport size={40} style={{ color: '#2c5530' }} />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#C4A962'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Identity Documents
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        Driver's license, state ID, or government-issued identification
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
+
+              <Col lg={4} md={6}>
+                <ScrollFadeIn delay={0.6}>
+                  <Card style={{
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    background: 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                  }}
+                  >
+                    <div style={{
+                      height: '180px',
+                      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{
+                        width: '100px',
+                        height: '130px',
+                        background: 'white',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <FaCertificate size={40} style={{ color: '#C4A962' }} />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          background: '#2c5530'
+                        }}></div>
+                      </div>
+                    </div>
+                    <Card.Body style={{ padding: '1.5rem' }}>
+                      <h4 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        color: '#1B392F',
+                        marginBottom: '0.5rem'
+                      }}>
+                        Employment Verification
+                      </h4>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        color: '#666',
+                        marginBottom: '0'
+                      }}>
+                        Pay stubs, employment letter, or employer verification forms
+                      </p>
+                    </Card.Body>
+                  </Card>
+                </ScrollFadeIn>
+              </Col>
             </Row>
           </Container>
         </section>
