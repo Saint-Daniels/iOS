@@ -329,13 +329,19 @@ export default function Home() {
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="service-image-wrapper">
+                <div className="service-image-wrapper" style={{ height: '600px' }}>
                   <Image
-                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+                    src="/images/marketplace.jpeg"
                     alt="Healthcare advertiser meeting"
                     width={600}
-                    height={400}
+                    height={600}
                     className="service-image"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center bottom'
+                    }}
                   />
                 </div>
               </Col>
