@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaGamepad, FaVideo, FaComment, FaTrophy, FaUsers, FaYoutube, FaTwitch } from 'react-icons/fa';
+import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaGamepad, FaVideo, FaComment, FaTrophy, FaUsers, FaYoutube, FaTwitch, FaEye, FaClock } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import MainNavbar from '../../components/Navbar';
@@ -26,11 +26,12 @@ export default function NewsPage() {
     {
       id: 1,
       title: "Epic Fortnite Victory Royale - 20 Kill Solo Win!",
-      excerpt: "Watch as we dominate the Fortnite battlefield with insane building skills and clutch plays. This victory royale showcases the best of Saint Daniels gaming network.",
+      excerpt: "Watch as we dominate the Fortnite battlefield with insane building skills and clutch plays.",
       category: "fortnite",
       author: "Saint Daniels Gaming",
-      date: "December 15, 2024",
-      watchTime: "12 min watch",
+      date: "2 days ago",
+      watchTime: "12:45",
+      views: "12.5K",
       image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
       featured: true,
       videoUrl: "#"
@@ -38,11 +39,12 @@ export default function NewsPage() {
     {
       id: 2,
       title: "Call of Duty: Warzone - Insane 1v4 Clutch Commentary",
-      excerpt: "Breaking down the most intense 1v4 clutch in Warzone history. Our commentary team analyzes every move, strategy, and decision that led to this incredible play.",
+      excerpt: "Breaking down the most intense 1v4 clutch in Warzone history.",
       category: "cod",
       author: "Saint Daniels Gaming",
-      date: "December 12, 2024",
-      watchTime: "8 min watch",
+      date: "5 days ago",
+      watchTime: "8:32",
+      views: "8.9K",
       image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
       featured: true,
       videoUrl: "#"
@@ -50,11 +52,12 @@ export default function NewsPage() {
     {
       id: 3,
       title: "Fortnite vs Call of Duty: Meta Analysis & Strategy Breakdown",
-      excerpt: "Our gaming experts dive deep into the current meta for both Fortnite and Call of Duty, discussing weapon loadouts, map strategies, and competitive play insights.",
+      excerpt: "Our gaming experts dive deep into the current meta for both games.",
       category: "commentary",
       author: "Saint Daniels Gaming",
-      date: "December 10, 2024",
-      watchTime: "15 min watch",
+      date: "1 week ago",
+      watchTime: "15:20",
+      views: "15.2K",
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
       featured: true,
       videoUrl: "#"
@@ -65,66 +68,72 @@ export default function NewsPage() {
     {
       id: 4,
       title: "Fortnite Chapter 5: New Map Locations & Loot Routes",
-      excerpt: "Exploring the latest Fortnite map changes and the best landing spots for maximum loot and survival chances.",
+      excerpt: "Exploring the latest Fortnite map changes and the best landing spots.",
       category: "fortnite",
       author: "Saint Daniels Gaming",
-      date: "December 8, 2024",
-      watchTime: "10 min watch",
+      date: "1 week ago",
+      watchTime: "10:15",
+      views: "9.3K",
       image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     },
     {
       id: 5,
       title: "Call of Duty: Best Loadouts for Ranked Play",
-      excerpt: "Top-tier weapon builds and class setups for dominating in Call of Duty ranked matches. Tested and proven by our pro players.",
+      excerpt: "Top-tier weapon builds and class setups for dominating ranked matches.",
       category: "cod",
       author: "Saint Daniels Gaming",
-      date: "December 5, 2024",
-      watchTime: "7 min watch",
+      date: "1 week ago",
+      watchTime: "7:28",
+      views: "7.1K",
       image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     },
     {
       id: 6,
       title: "Fortnite Tournament Highlights - Saint Daniels Championship",
-      excerpt: "Relive the best moments from our recent Fortnite tournament featuring top players from the Saint Daniels gaming network.",
+      excerpt: "Relive the best moments from our recent Fortnite tournament.",
       category: "tournaments",
       author: "Saint Daniels Gaming",
-      date: "December 3, 2024",
-      watchTime: "20 min watch",
+      date: "2 weeks ago",
+      watchTime: "20:45",
+      views: "18.7K",
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     },
     {
       id: 7,
       title: "Call of Duty: Warzone 2.0 - New Meta Breakdown",
-      excerpt: "Analyzing the latest Warzone 2.0 updates, weapon changes, and how they impact competitive play strategies.",
+      excerpt: "Analyzing the latest Warzone 2.0 updates and weapon changes.",
       category: "cod",
       author: "Saint Daniels Gaming",
-      date: "November 30, 2024",
-      watchTime: "9 min watch",
+      date: "2 weeks ago",
+      watchTime: "9:12",
+      views: "6.8K",
       image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     },
     {
       id: 8,
       title: "Fortnite Building Techniques: Advanced Edit Course",
-      excerpt: "Master the most advanced building and editing techniques in Fortnite with our comprehensive tutorial series.",
+      excerpt: "Master the most advanced building and editing techniques.",
       category: "fortnite",
       author: "Saint Daniels Gaming",
-      date: "November 28, 2024",
-      watchTime: "14 min watch",
+      date: "2 weeks ago",
+      watchTime: "14:30",
+      views: "11.4K",
       image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     },
     {
       id: 9,
       title: "Top 10 Plays of the Week - Fortnite & Call of Duty",
-      excerpt: "The most insane plays, clutches, and highlights from the Saint Daniels gaming network this week.",
+      excerpt: "The most insane plays, clutches, and highlights this week.",
       category: "highlights",
       author: "Saint Daniels Gaming",
-      date: "November 25, 2024",
-      watchTime: "18 min watch",
+      date: "3 weeks ago",
+      watchTime: "18:05",
+      views: "22.1K",
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80",
       videoUrl: "#"
     }
@@ -251,128 +260,106 @@ export default function NewsPage() {
         </Container>
       </section>
 
-      {/* Featured Content Section */}
-      <section className="service-fullpage-section">
-        <Container>
+      {/* YouTube-Style Video Grid */}
+      <section className="service-fullpage-section" style={{ background: '#f9f9f9', paddingTop: '2rem', paddingBottom: '3rem' }}>
+        <Container fluid style={{ maxWidth: '1400px' }}>
           <ScrollFadeIn>
-            <Row className="mb-5">
-              <Col className="text-center">
-                <h2 className="service-title-large">Featured Videos</h2>
-                <div className="service-divider"></div>
-                <p className="section-subtitle" style={{ marginTop: '1rem' }}>Top gaming content from the Saint Daniels network</p>
+            <Row className="mb-4">
+              <Col>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#030303', marginBottom: '0.5rem' }}>Featured</h2>
               </Col>
             </Row>
           </ScrollFadeIn>
 
-          <Row className="g-4">
+          <Row className="g-3">
             {featuredContent.map((item, index) => (
-              <Col lg={4} md={6} key={item.id}>
-                <ScrollFadeIn delay={index * 0.2}>
-                  <Card className="featured-news-card" style={{
-                    border: 'none',
-                    borderRadius: '15px',
-                    overflow: 'hidden',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                    transition: 'transform 0.3s ease',
-                    cursor: 'pointer'
+              <Col xl={4} lg={4} md={6} sm={12} key={item.id}>
+                <ScrollFadeIn delay={index * 0.1}>
+                  <div style={{
+                    cursor: 'pointer',
+                    width: '100%'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                   >
-                    <div className="news-image-container" style={{ position: 'relative' }}>
+                    <div style={{ position: 'relative', width: '100%', marginBottom: '0.75rem' }}>
                       <Image
                         src={item.image}
                         alt={item.title}
                         width={400}
-                        height={250}
-                        className="news-image"
-                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                        height={225}
+                        style={{ 
+                          width: '100%', 
+                          height: 'auto', 
+                          aspectRatio: '16/9',
+                          objectFit: 'cover',
+                          borderRadius: '12px'
+                        }}
                       />
                       <div style={{
                         position: 'absolute',
-                        top: '10px',
-                        left: '10px',
+                        bottom: '8px',
+                        right: '8px',
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        color: 'white',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        fontWeight: 500,
                         display: 'flex',
-                        gap: '0.5rem'
+                        alignItems: 'center',
+                        gap: '0.25rem'
                       }}>
-                        <Badge 
-                          style={{ 
-                            backgroundColor: getCategoryColor(item.category),
-                            padding: '0.5rem 1rem',
-                            fontSize: '0.85rem'
-                          }}
-                        >
-                          {gameCategories.find(cat => cat.id === item.category)?.name}
-                        </Badge>
-                        <Badge 
-                          style={{ 
-                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                            padding: '0.5rem 1rem',
-                            fontSize: '0.85rem',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem'
-                          }}
-                        >
-                          <FaVideo /> {item.watchTime}
-                        </Badge>
+                        <FaClock size={10} />
+                        {item.watchTime}
                       </div>
                     </div>
-                    <Card.Body style={{ padding: '1.5rem' }}>
-                      <Card.Title className="news-card-title" style={{
-                        fontSize: '1.25rem',
-                        fontWeight: 600,
-                        marginBottom: '1rem',
-                        color: '#333',
-                        minHeight: '3.5rem'
-                      }}>{item.title}</Card.Title>
-                      <p style={{
-                        fontSize: '0.9rem',
-                        color: '#666',
-                        marginBottom: '1rem',
-                        lineHeight: '1.6'
-                      }}>{item.excerpt}</p>
-                      <div className="news-meta" style={{
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
+                      <div style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
                         display: 'flex',
-                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: '1rem',
-                        fontSize: '0.85rem',
-                        color: '#888'
+                        justifyContent: 'center',
+                        color: 'white',
+                        flexShrink: 0
                       }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <FaUser size={14} />
-                          <span>{item.author}</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <FaCalendarAlt size={14} />
+                        <FaGamepad size={18} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <h3 style={{
+                          fontSize: '0.95rem',
+                          fontWeight: 500,
+                          color: '#030303',
+                          marginBottom: '0.25rem',
+                          lineHeight: '1.4',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}>{item.title}</h3>
+                        <p style={{
+                          fontSize: '0.85rem',
+                          color: '#606060',
+                          marginBottom: '0.25rem'
+                        }}>{item.author}</p>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          fontSize: '0.85rem',
+                          color: '#606060'
+                        }}>
+                          <span>{item.views} views</span>
+                          <span>•</span>
                           <span>{item.date}</span>
                         </div>
                       </div>
-                      <Button 
-                        variant="outline-primary" 
-                        className="read-more-btn w-100"
-                        style={{ 
-                          borderColor: getCategoryColor(item.category), 
-                          color: getCategoryColor(item.category),
-                          borderRadius: '8px',
-                          padding: '0.75rem',
-                          fontWeight: 600
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = getCategoryColor(item.category);
-                          e.target.style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = 'transparent';
-                          e.target.style.color = getCategoryColor(item.category);
-                        }}
-                      >
-                        <FaVideo style={{ marginRight: '0.5rem' }} />
-                        Watch Video <FaArrowRight style={{ marginLeft: '0.5rem' }} />
-                      </Button>
-                    </Card.Body>
-                  </Card>
+                    </div>
+                  </div>
                 </ScrollFadeIn>
               </Col>
             ))}
@@ -380,116 +367,106 @@ export default function NewsPage() {
         </Container>
       </section>
 
-      {/* Latest Content Section */}
-      <section className="service-fullpage-section" style={{ background: '#f8f9fa' }}>
-        <Container>
+      {/* Latest Videos - YouTube Style Grid */}
+      <section className="service-fullpage-section" style={{ background: '#f9f9f9', paddingTop: '1rem', paddingBottom: '3rem' }}>
+        <Container fluid style={{ maxWidth: '1400px' }}>
           <ScrollFadeIn>
-            <Row className="mb-5">
-              <Col className="text-center">
-                <h2 className="service-title-large">Latest Content</h2>
-                <div className="service-divider"></div>
-                <p className="section-subtitle" style={{ marginTop: '1rem' }}>Fresh gaming videos and commentary every week</p>
+            <Row className="mb-4">
+              <Col>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#030303', marginBottom: '0.5rem' }}>Latest</h2>
               </Col>
             </Row>
           </ScrollFadeIn>
 
-          <Row className="g-4">
+          <Row className="g-3">
             {filteredContent.filter(item => !item.featured).map((item, index) => (
-              <Col lg={4} md={6} key={item.id}>
-                <ScrollFadeIn delay={index * 0.15}>
-                  <Card className="regular-news-card" style={{
-                    border: 'none',
-                    borderRadius: '15px',
-                    overflow: 'hidden',
-                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
-                    transition: 'transform 0.3s ease',
+              <Col xl={3} lg={4} md={6} sm={12} key={item.id}>
+                <ScrollFadeIn delay={index * 0.1}>
+                  <div style={{
                     cursor: 'pointer',
-                    height: '100%'
+                    width: '100%'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                   >
-                    <div className="news-image-container" style={{ position: 'relative' }}>
+                    <div style={{ position: 'relative', width: '100%', marginBottom: '0.75rem' }}>
                       <Image
                         src={item.image}
                         alt={item.title}
                         width={400}
-                        height={200}
-                        className="news-image"
-                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                        height={225}
+                        style={{ 
+                          width: '100%', 
+                          height: 'auto', 
+                          aspectRatio: '16/9',
+                          objectFit: 'cover',
+                          borderRadius: '12px'
+                        }}
                       />
                       <div style={{
                         position: 'absolute',
-                        top: '10px',
-                        left: '10px'
+                        bottom: '8px',
+                        right: '8px',
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        color: 'white',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        fontWeight: 500,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem'
                       }}>
-                        <Badge 
-                          style={{ 
-                            backgroundColor: getCategoryColor(item.category),
-                            padding: '0.4rem 0.8rem',
-                            fontSize: '0.8rem'
-                          }}
-                        >
-                          {gameCategories.find(cat => cat.id === item.category)?.name}
-                        </Badge>
+                        <FaClock size={10} />
+                        {item.watchTime}
                       </div>
                     </div>
-                    <Card.Body style={{ padding: '1.25rem' }}>
-                      <Card.Title className="news-card-title" style={{
-                        fontSize: '1.1rem',
-                        fontWeight: 600,
-                        marginBottom: '0.75rem',
-                        color: '#333',
-                        minHeight: '3rem'
-                      }}>{item.title}</Card.Title>
-                      <p style={{
-                        fontSize: '0.85rem',
-                        color: '#666',
-                        marginBottom: '1rem',
-                        lineHeight: '1.5'
-                      }}>{item.excerpt}</p>
-                      <div className="news-meta" style={{
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
+                      <div style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
                         display: 'flex',
-                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: '1rem',
-                        fontSize: '0.8rem',
-                        color: '#888'
+                        justifyContent: 'center',
+                        color: 'white',
+                        flexShrink: 0
                       }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <FaVideo size={12} />
-                          <span>{item.watchTime}</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <FaCalendarAlt size={12} />
+                        <FaGamepad size={18} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <h3 style={{
+                          fontSize: '0.95rem',
+                          fontWeight: 500,
+                          color: '#030303',
+                          marginBottom: '0.25rem',
+                          lineHeight: '1.4',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}>{item.title}</h3>
+                        <p style={{
+                          fontSize: '0.85rem',
+                          color: '#606060',
+                          marginBottom: '0.25rem'
+                        }}>{item.author}</p>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          fontSize: '0.85rem',
+                          color: '#606060'
+                        }}>
+                          <span>{item.views} views</span>
+                          <span>•</span>
                           <span>{item.date}</span>
                         </div>
                       </div>
-                      <Button 
-                        variant="outline-primary" 
-                        className="read-more-btn w-100"
-                        style={{ 
-                          borderColor: getCategoryColor(item.category), 
-                          color: getCategoryColor(item.category),
-                          borderRadius: '8px',
-                          padding: '0.6rem',
-                          fontSize: '0.9rem',
-                          fontWeight: 500
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = getCategoryColor(item.category);
-                          e.target.style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = 'transparent';
-                          e.target.style.color = getCategoryColor(item.category);
-                        }}
-                      >
-                        <FaVideo style={{ marginRight: '0.5rem' }} />
-                        Watch <FaArrowRight style={{ marginLeft: '0.5rem' }} />
-                      </Button>
-                    </Card.Body>
-                  </Card>
+                    </div>
+                  </div>
                 </ScrollFadeIn>
               </Col>
             ))}
