@@ -17,6 +17,11 @@ export default function Dashboard() {
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [transactionPage, setTransactionPage] = useState(1);
   const transactionsPerPage = 10;
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [locationConsent, setLocationConsent] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [localPharmacies, setLocalPharmacies] = useState([]);
+  const [locationError, setLocationError] = useState(null);
 
   // Check authentication with enhanced security
   useEffect(() => {
@@ -517,6 +522,112 @@ export default function Dashboard() {
     Cookies.remove('isLoggedIn');
     Cookies.remove('userEmail');
     router.push('/');
+  };
+
+  // Check if location consent was given
+  useEffect(() => {
+    const hasConsented = localStorage.getItem('locationConsent');
+    if (hasConsented === 'true') {
+      setLocationConsent(true);
+      getCurrentLocation();
+    } else {
+      setShowLocationModal(true);
+    }
+  }, []);
+
+  // Get user's current location
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocation is not supported by your browser');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setUserLocation(location);
+        fetchNearbyPharmacies(location);
+      },
+      (error) => {
+        setLocationError('Unable to retrieve your location. Please enable location services.');
+        console.error('Location error:', error);
+      }
+    );
+  };
+
+  // Fetch nearby pharmacies (mock data for now - in production, use actual API)
+  const fetchNearbyPharmacies = (location) => {
+    // Mock pharmacy data - in production, call your API endpoint
+    const mockPharmacies = [
+      {
+        id: 1,
+        name: 'CVS Pharmacy',
+        address: '123 Main St, Your City, ST 12345',
+        lat: location.lat + 0.01,
+        lng: location.lng + 0.01,
+        distance: '0.5 mi',
+        phone: '(555) 123-4567',
+        hours: 'Mon-Sun: 8am-10pm',
+        acceptsSubsidy: true
+      },
+      {
+        id: 2,
+        name: 'Walgreens',
+        address: '456 Oak Ave, Your City, ST 12345',
+        lat: location.lat - 0.015,
+        lng: location.lng + 0.02,
+        distance: '0.8 mi',
+        phone: '(555) 234-5678',
+        hours: 'Mon-Sun: 7am-11pm',
+        acceptsSubsidy: true
+      },
+      {
+        id: 3,
+        name: 'Rite Aid',
+        address: '789 Pine Rd, Your City, ST 12345',
+        lat: location.lat + 0.02,
+        lng: location.lng - 0.01,
+        distance: '1.2 mi',
+        phone: '(555) 345-6789',
+        hours: 'Mon-Sun: 9am-9pm',
+        acceptsSubsidy: true
+      },
+      {
+        id: 4,
+        name: 'Walmart Pharmacy',
+        address: '321 Elm St, Your City, ST 12345',
+        lat: location.lat - 0.025,
+        lng: location.lng - 0.015,
+        distance: '1.5 mi',
+        phone: '(555) 456-7890',
+        hours: 'Mon-Sun: 8am-9pm',
+        acceptsSubsidy: true
+      },
+      {
+        id: 5,
+        name: 'Target Pharmacy',
+        address: '654 Maple Dr, Your City, ST 12345',
+        lat: location.lat + 0.03,
+        lng: location.lng + 0.025,
+        distance: '2.0 mi',
+        phone: '(555) 567-8901',
+        hours: 'Mon-Sun: 8am-10pm',
+        acceptsSubsidy: true
+      }
+    ];
+    setLocalPharmacies(mockPharmacies);
+  };
+
+  // Handle location consent
+  const handleLocationConsent = () => {
+    if (locationConsent) {
+      localStorage.setItem('locationConsent', 'true');
+      setShowLocationModal(false);
+      getCurrentLocation();
+    }
   };
 
   return (
@@ -1194,30 +1305,202 @@ export default function Dashboard() {
                 <Tab eventKey="pharmacy" title={
                   <span><FaHospital className="me-2" />Pharmacy Network</span>
                 }>
-                  <Card style={{
-                    border: 'none',
-                    borderRadius: '15px',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
-                  }}>
-                    <Card.Body style={{ padding: '2rem' }}>
-                      {pharmacyNetwork.map((pharmacy) => (
-                        <div key={pharmacy.id} className="mb-3 pb-3" style={{
-                          borderBottom: '1px solid #e9ecef'
+                  {userLocation ? (
+                    <Row>
+                      <Col lg={8}>
+                        <Card style={{
+                          border: 'none',
+                          borderRadius: '12px',
+                          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                          overflow: 'hidden',
+                          height: '600px'
                         }}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h5 className="mb-1" style={{ color: '#1B392F' }}>{pharmacy.name}</h5>
-                              <p className="mb-0 text-muted" style={{ fontSize: '0.9rem' }}>{pharmacy.address}</p>
+                          <Card.Body style={{ padding: 0, height: '100%' }}>
+                            {/* Google Maps Embed */}
+                            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                              <iframe
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
+                                loading="lazy"
+                                allowFullScreen
+                                referrerPolicy="no-referrer-when-downgrade"
+                                src={`https://www.google.com/maps/embed/v1/search?key=AIzaSyBFw0Qbyq9zTFTd-tUY6d-s6U4uUgLhV0k&q=pharmacy+near+${userLocation.lat},${userLocation.lng}&zoom=13`}
+                              ></iframe>
+                              {/* Custom markers overlay */}
+                              <div style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                left: '1rem',
+                                background: 'white',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '8px',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                                zIndex: 1000,
+                                fontFamily: 'Roboto, sans-serif',
+                                fontSize: '0.875rem',
+                                color: '#202124'
+                              }}>
+                                <strong>{localPharmacies.length}</strong> pharmacies nearby
+                              </div>
                             </div>
-                            <div className="text-end">
-                              <Badge bg="success" className="mb-2">Connected</Badge>
-                              <p className="mb-0" style={{ fontWeight: 600, color: '#2c5530' }}>${pharmacy.totalSpent.toFixed(2)}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </Card.Body>
-                  </Card>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                      <Col lg={4}>
+                        <Card style={{
+                          border: 'none',
+                          borderRadius: '12px',
+                          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                          maxHeight: '600px',
+                          overflowY: 'auto'
+                        }}>
+                          <Card.Header style={{
+                            background: 'white',
+                            border: 'none',
+                            borderBottom: '1px solid #e8eaed',
+                            padding: '1rem 1.5rem',
+                            position: 'sticky',
+                            top: 0,
+                            zIndex: 10
+                          }}>
+                            <h5 style={{
+                              margin: 0,
+                              fontSize: '1.1rem',
+                              fontWeight: 500,
+                              color: '#202124',
+                              fontFamily: 'Roboto, sans-serif'
+                            }}>
+                              Nearby Pharmacies
+                            </h5>
+                          </Card.Header>
+                          <Card.Body style={{ padding: 0 }}>
+                            {localPharmacies.map((pharmacy, index) => (
+                              <div
+                                key={pharmacy.id}
+                                style={{
+                                  padding: '1rem 1.5rem',
+                                  borderBottom: index < localPharmacies.length - 1 ? '1px solid #e8eaed' : 'none',
+                                  cursor: 'pointer',
+                                  transition: 'background 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                                onClick={() => {
+                                  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pharmacy.address)}`, '_blank');
+                                }}
+                              >
+                                <div style={{
+                                  display: 'flex',
+                                  alignItems: 'flex-start',
+                                  gap: '1rem'
+                                }}>
+                                  <div style={{
+                                    width: '48px',
+                                    height: '48px',
+                                    borderRadius: '8px',
+                                    background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '1.25rem',
+                                    flexShrink: 0
+                                  }}>
+                                    <FaHospital />
+                                  </div>
+                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{
+                                      fontSize: '0.9375rem',
+                                      fontWeight: 500,
+                                      color: '#202124',
+                                      marginBottom: '0.25rem',
+                                      fontFamily: 'Roboto, sans-serif'
+                                    }}>
+                                      {pharmacy.name}
+                                    </div>
+                                    <div style={{
+                                      fontSize: '0.8125rem',
+                                      color: '#5f6368',
+                                      marginBottom: '0.5rem',
+                                      fontFamily: 'Roboto, sans-serif'
+                                    }}>
+                                      {pharmacy.address}
+                                    </div>
+                                    <div style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '0.75rem',
+                                      fontSize: '0.75rem',
+                                      color: '#5f6368',
+                                      fontFamily: 'Roboto, sans-serif'
+                                    }}>
+                                      <span>{pharmacy.distance}</span>
+                                      <span>•</span>
+                                      <span>{pharmacy.hours}</span>
+                                    </div>
+                                    <div style={{ marginTop: '0.5rem' }}>
+                                      <Badge bg="success" style={{
+                                        fontSize: '0.7rem',
+                                        padding: '0.25rem 0.5rem',
+                                        background: '#34a853',
+                                        border: 'none'
+                                      }}>
+                                        Accepts Private Subsidy
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    </Row>
+                  ) : (
+                    <Card style={{
+                      border: 'none',
+                      borderRadius: '12px',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                      textAlign: 'center',
+                      padding: '4rem 2rem'
+                    }}>
+                      <Card.Body>
+                        <FaHospital size={64} style={{ color: '#dadce0', marginBottom: '1.5rem' }} />
+                        <h4 style={{
+                          fontSize: '1.5rem',
+                          fontWeight: 400,
+                          color: '#202124',
+                          marginBottom: '1rem',
+                          fontFamily: 'Roboto, sans-serif'
+                        }}>
+                          Enable Location Services
+                        </h4>
+                        <p style={{
+                          fontSize: '0.9375rem',
+                          color: '#5f6368',
+                          marginBottom: '2rem',
+                          fontFamily: 'Roboto, sans-serif'
+                        }}>
+                          Allow location access to find nearby pharmacies where you can use your private subsidy.
+                        </p>
+                        <Button
+                          onClick={() => setShowLocationModal(true)}
+                          style={{
+                            background: '#1a73e8',
+                            border: 'none',
+                            padding: '0.75rem 2rem',
+                            borderRadius: '4px',
+                            fontSize: '0.875rem',
+                            fontWeight: 500,
+                            fontFamily: 'Roboto, sans-serif'
+                          }}
+                        >
+                          Enable Location
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  )}
                 </Tab>
 
                 <Tab eventKey="history" title={
@@ -1478,6 +1761,173 @@ export default function Dashboard() {
             </Col>
           </Row>
         </Container>
+
+        {/* Location Permission Modal */}
+        <Modal 
+          show={showLocationModal} 
+          onHide={() => {
+            if (locationConsent) {
+              setShowLocationModal(false);
+            }
+          }}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header style={{ borderBottom: '1px solid #e8eaed' }}>
+            <Modal.Title style={{
+              fontSize: '1.25rem',
+              fontWeight: 400,
+              color: '#202124',
+              fontFamily: 'Roboto, sans-serif'
+            }}>
+              Enable Location Services
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ padding: '2rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <div style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2rem',
+                margin: '0 auto 1.5rem'
+              }}>
+                <FaHospital />
+              </div>
+              <h4 style={{
+                fontSize: '1.25rem',
+                fontWeight: 400,
+                color: '#202124',
+                marginBottom: '1rem',
+                fontFamily: 'Roboto, sans-serif'
+              }}>
+                Find Pharmacies Near You
+              </h4>
+              <p style={{
+                fontSize: '0.9375rem',
+                color: '#5f6368',
+                lineHeight: '1.5',
+                marginBottom: '1.5rem',
+                fontFamily: 'Roboto, sans-serif'
+              }}>
+                We'll use your current location to show you nearby pharmacies where you can spend your private subsidy. Your location data is kept private and secure.
+              </p>
+            </div>
+
+            <div style={{
+              background: '#f8f9fa',
+              borderRadius: '8px',
+              padding: '1.5rem',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '1rem',
+                marginBottom: '1rem'
+              }}>
+                <input
+                  type="checkbox"
+                  id="locationConsent"
+                  checked={locationConsent}
+                  onChange={(e) => setLocationConsent(e.target.checked)}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    marginTop: '2px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <label
+                  htmlFor="locationConsent"
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#202124',
+                    fontFamily: 'Roboto, sans-serif',
+                    cursor: 'pointer',
+                    lineHeight: '1.5'
+                  }}
+                >
+                  I consent to sharing my location to find nearby pharmacies. I have read and agree to the{' '}
+                  <a
+                    href="/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: '#1a73e8',
+                      textDecoration: 'none'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Privacy Policy
+                  </a>
+                  {' '}and{' '}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: '#1a73e8',
+                      textDecoration: 'none'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Terms and Conditions
+                  </a>
+                  .
+                </label>
+              </div>
+            </div>
+
+            {locationError && (
+              <Alert variant="danger" style={{
+                marginBottom: '1rem',
+                fontSize: '0.875rem',
+                fontFamily: 'Roboto, sans-serif'
+              }}>
+                {locationError}
+              </Alert>
+            )}
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '1px solid #e8eaed', padding: '1rem 1.5rem' }}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShowLocationModal(false);
+                setLocationConsent(false);
+              }}
+              style={{
+                border: '1px solid #dadce0',
+                background: 'white',
+                color: '#5f6368',
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 500
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleLocationConsent}
+              disabled={!locationConsent}
+              style={{
+                background: locationConsent ? '#1a73e8' : '#dadce0',
+                border: 'none',
+                color: locationConsent ? 'white' : '#5f6368',
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 500,
+                cursor: locationConsent ? 'pointer' : 'not-allowed'
+              }}
+            >
+              Allow Location Access
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         {/* Virtual Card Modal */}
         <Modal show={showVirtualCard} onHide={() => setShowVirtualCard(false)}>
