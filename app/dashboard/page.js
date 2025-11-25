@@ -15,6 +15,8 @@ export default function Dashboard() {
   const [showVirtualCard, setShowVirtualCard] = useState(false);
   const [chartPeriod, setChartPeriod] = useState('1W');
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const [transactionPage, setTransactionPage] = useState(1);
+  const transactionsPerPage = 10;
 
   // Check authentication with enhanced security
   useEffect(() => {
@@ -237,7 +239,7 @@ export default function Dashboard() {
     }
   ];
 
-  const recentTransactions = [
+  const allTransactions = [
     {
       id: 1,
       type: 'earned',
@@ -245,7 +247,9 @@ export default function Dashboard() {
       description: 'Ad Network Engagement - Health Brand Campaign',
       date: '2 hours ago',
       category: 'Earning',
-      icon: <FaGift />
+      icon: <FaGift />,
+      merchant: 'Health Brand A',
+      status: 'Completed'
     },
     {
       id: 2,
@@ -254,7 +258,9 @@ export default function Dashboard() {
       description: 'CVS Pharmacy - Prescription & OTC Items',
       date: '1 day ago',
       category: 'Pharmacy',
-      icon: <FaHospital />
+      icon: <FaHospital />,
+      merchant: 'CVS Pharmacy',
+      status: 'Completed'
     },
     {
       id: 3,
@@ -263,7 +269,9 @@ export default function Dashboard() {
       description: 'Ad Network Engagement - Wellness Content',
       date: '2 days ago',
       category: 'Earning',
-      icon: <FaGift />
+      icon: <FaGift />,
+      merchant: 'Wellness Brand B',
+      status: 'Completed'
     },
     {
       id: 4,
@@ -272,7 +280,9 @@ export default function Dashboard() {
       description: 'Daily Compound Interest',
       date: '3 days ago',
       category: 'Growth',
-      icon: <FaChartLine />
+      icon: <FaChartLine />,
+      merchant: 'Compound Treasury',
+      status: 'Completed'
     },
     {
       id: 5,
@@ -281,9 +291,130 @@ export default function Dashboard() {
       description: 'Walgreens - Preventative Care Kit',
       date: '5 days ago',
       category: 'Pharmacy',
-      icon: <FaHospital />
+      icon: <FaHospital />,
+      merchant: 'Walgreens',
+      status: 'Completed'
+    },
+    {
+      id: 6,
+      type: 'earned',
+      amount: 15.00,
+      description: 'Ad Network Engagement - Mental Health Awareness',
+      date: '1 week ago',
+      category: 'Earning',
+      icon: <FaGift />,
+      merchant: 'Pharma Brand C',
+      status: 'Completed'
+    },
+    {
+      id: 7,
+      type: 'spent',
+      amount: 67.50,
+      description: 'Rite Aid - Prescription Medications',
+      date: '1 week ago',
+      category: 'Pharmacy',
+      icon: <FaHospital />,
+      merchant: 'Rite Aid',
+      status: 'Completed'
+    },
+    {
+      id: 8,
+      type: 'interest',
+      amount: 2.85,
+      description: 'Daily Compound Interest',
+      date: '1 week ago',
+      category: 'Growth',
+      icon: <FaChartLine />,
+      merchant: 'Compound Treasury',
+      status: 'Completed'
+    },
+    {
+      id: 9,
+      type: 'earned',
+      amount: 10.25,
+      description: 'Ad Network Engagement - Preventive Care',
+      date: '2 weeks ago',
+      category: 'Earning',
+      icon: <FaGift />,
+      merchant: 'Health Brand D',
+      status: 'Completed'
+    },
+    {
+      id: 10,
+      type: 'spent',
+      amount: 34.20,
+      description: 'CVS Pharmacy - OTC Supplements',
+      date: '2 weeks ago',
+      category: 'Pharmacy',
+      icon: <FaHospital />,
+      merchant: 'CVS Pharmacy',
+      status: 'Completed'
+    },
+    {
+      id: 11,
+      type: 'interest',
+      amount: 2.10,
+      description: 'Daily Compound Interest',
+      date: '2 weeks ago',
+      category: 'Growth',
+      icon: <FaChartLine />,
+      merchant: 'Compound Treasury',
+      status: 'Completed'
+    },
+    {
+      id: 12,
+      type: 'earned',
+      amount: 18.50,
+      description: 'Ad Network Engagement - Wellness Program',
+      date: '3 weeks ago',
+      category: 'Earning',
+      icon: <FaGift />,
+      merchant: 'Wellness Brand E',
+      status: 'Completed'
+    },
+    {
+      id: 13,
+      type: 'spent',
+      amount: 52.75,
+      description: 'Walgreens - Prescription Refill',
+      date: '3 weeks ago',
+      category: 'Pharmacy',
+      icon: <FaHospital />,
+      merchant: 'Walgreens',
+      status: 'Completed'
+    },
+    {
+      id: 14,
+      type: 'interest',
+      amount: 1.95,
+      description: 'Daily Compound Interest',
+      date: '3 weeks ago',
+      category: 'Growth',
+      icon: <FaChartLine />,
+      merchant: 'Compound Treasury',
+      status: 'Completed'
+    },
+    {
+      id: 15,
+      type: 'earned',
+      amount: 22.00,
+      description: 'Ad Network Engagement - Health Education',
+      date: '1 month ago',
+      category: 'Earning',
+      icon: <FaGift />,
+      merchant: 'Health Brand F',
+      status: 'Completed'
     }
   ];
+
+  const recentTransactions = allTransactions.slice(0, 5);
+  
+  // Pagination for transaction history
+  const totalTransactionPages = Math.ceil(allTransactions.length / transactionsPerPage);
+  const paginatedTransactions = allTransactions.slice(
+    (transactionPage - 1) * transactionsPerPage,
+    transactionPage * transactionsPerPage
+  );
 
   const adNetworkActivity = [
     {
@@ -390,8 +521,7 @@ export default function Dashboard() {
 
   return (
     <PageTransition>
-      <Navbar />
-      <div className="professional-dashboard" style={{ position: 'relative' }}>
+      <div className="professional-dashboard" style={{ position: 'relative', minHeight: '100vh', background: '#f8f9fa' }}>
         {/* Top Bar with Account Dropdown */}
         <div style={{
           background: 'white',
@@ -1095,30 +1225,253 @@ export default function Dashboard() {
                 }>
                   <Card style={{
                     border: 'none',
-                    borderRadius: '15px',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
+                    borderRadius: '8px',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+                    background: 'white'
                   }}>
-                    <Card.Body style={{ padding: '2rem' }}>
-                      {recentTransactions.map((transaction) => (
-                        <div key={transaction.id} className="mb-3 pb-3" style={{
-                          borderBottom: '1px solid #e9ecef'
+                    <Card.Header style={{
+                      background: 'white',
+                      border: 'none',
+                      borderBottom: '1px solid #e8eaed',
+                      padding: '1rem 1.5rem',
+                      borderRadius: '8px 8px 0 0'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}>
+                        <h5 style={{
+                          margin: 0,
+                          fontSize: '1.25rem',
+                          fontWeight: 400,
+                          color: '#202124',
+                          fontFamily: 'Google Sans, Roboto, sans-serif'
                         }}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h6 className="mb-1" style={{ fontSize: '1rem', fontWeight: 600 }}>{transaction.description}</h6>
-                              <small className="text-muted">{transaction.date}</small>
+                          All Transactions
+                        </h5>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#5f6368',
+                          fontFamily: 'Roboto, sans-serif'
+                        }}>
+                          {allTransactions.length} transactions
+                        </div>
+                      </div>
+                    </Card.Header>
+                    <Card.Body style={{ padding: 0 }}>
+                      <div style={{
+                        borderBottom: '1px solid #e8eaed',
+                        padding: '0.75rem 1.5rem',
+                        background: '#f8f9fa',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        fontSize: '0.75rem',
+                        color: '#5f6368',
+                        fontFamily: 'Roboto, sans-serif',
+                        fontWeight: 500,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}>
+                        <div style={{ width: '200px' }}>Description</div>
+                        <div style={{ width: '150px' }}>Merchant</div>
+                        <div style={{ width: '120px' }}>Date</div>
+                        <div style={{ width: '100px', textAlign: 'right' }}>Amount</div>
+                        <div style={{ width: '100px', textAlign: 'center' }}>Status</div>
+                      </div>
+                      {paginatedTransactions.map((transaction, index) => (
+                        <div
+                          key={transaction.id}
+                          style={{
+                            padding: '1rem 1.5rem',
+                            borderBottom: index < paginatedTransactions.length - 1 ? '1px solid #e8eaed' : 'none',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            cursor: 'pointer',
+                            transition: 'background 0.2s ease',
+                            fontFamily: 'Roboto, sans-serif'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = '#f8f9fa';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'white';
+                          }}
+                        >
+                          <div style={{
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
+                            background: transaction.type === 'earned' || transaction.type === 'interest' 
+                              ? 'rgba(44, 85, 48, 0.1)' 
+                              : 'rgba(231, 76, 60, 0.1)',
+                            color: transaction.type === 'earned' || transaction.type === 'interest' 
+                              ? '#2c5530' 
+                              : '#e74c3c',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.1rem',
+                            flexShrink: 0
+                          }}>
+                            {transaction.icon}
+                          </div>
+                          <div style={{ width: '200px', flexShrink: 0 }}>
+                            <div style={{
+                              fontSize: '0.875rem',
+                              fontWeight: 500,
+                              color: '#202124',
+                              marginBottom: '0.25rem'
+                            }}>
+                              {transaction.description}
                             </div>
                             <div style={{
-                              fontSize: '1.1rem',
-                              fontWeight: 700,
-                              color: transaction.type === 'earned' || transaction.type === 'interest' ? '#2c5530' : '#e74c3c'
+                              fontSize: '0.75rem',
+                              color: '#5f6368'
                             }}>
-                              {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                              {transaction.category}
                             </div>
+                          </div>
+                          <div style={{
+                            width: '150px',
+                            fontSize: '0.875rem',
+                            color: '#5f6368',
+                            flexShrink: 0
+                          }}>
+                            {transaction.merchant}
+                          </div>
+                          <div style={{
+                            width: '120px',
+                            fontSize: '0.875rem',
+                            color: '#5f6368',
+                            flexShrink: 0
+                          }}>
+                            {transaction.date}
+                          </div>
+                          <div style={{
+                            width: '100px',
+                            textAlign: 'right',
+                            fontSize: '0.875rem',
+                            fontWeight: 500,
+                            color: transaction.type === 'earned' || transaction.type === 'interest' 
+                              ? '#2c5530' 
+                              : '#e74c3c',
+                            flexShrink: 0,
+                            fontFamily: 'Roboto, sans-serif'
+                          }}>
+                            {transaction.type === 'earned' || transaction.type === 'interest' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                          </div>
+                          <div style={{
+                            width: '100px',
+                            textAlign: 'center',
+                            flexShrink: 0
+                          }}>
+                            <Badge bg="success" style={{
+                              fontSize: '0.7rem',
+                              padding: '0.25rem 0.5rem',
+                              fontWeight: 500,
+                              background: '#34a853',
+                              border: 'none'
+                            }}>
+                              {transaction.status}
+                            </Badge>
                           </div>
                         </div>
                       ))}
                     </Card.Body>
+                    {/* Pagination */}
+                    {totalTransactionPages > 1 && (
+                      <Card.Footer style={{
+                        background: 'white',
+                        border: 'none',
+                        borderTop: '1px solid #e8eaed',
+                        padding: '1rem 1.5rem',
+                        borderRadius: '0 0 8px 8px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#5f6368',
+                          fontFamily: 'Roboto, sans-serif'
+                        }}>
+                          Showing {((transactionPage - 1) * transactionsPerPage) + 1} - {Math.min(transactionPage * transactionsPerPage, allTransactions.length)} of {allTransactions.length}
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem',
+                          alignItems: 'center'
+                        }}>
+                          <button
+                            onClick={() => setTransactionPage(prev => Math.max(1, prev - 1))}
+                            disabled={transactionPage === 1}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              border: '1px solid #dadce0',
+                              borderRadius: '4px',
+                              background: transactionPage === 1 ? '#f8f9fa' : 'white',
+                              color: transactionPage === 1 ? '#dadce0' : '#1a73e8',
+                              cursor: transactionPage === 1 ? 'not-allowed' : 'pointer',
+                              fontFamily: 'Roboto, sans-serif',
+                              fontWeight: 500,
+                              transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              if (transactionPage !== 1) {
+                                e.target.style.background = '#f8f9fa';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (transactionPage !== 1) {
+                                e.target.style.background = 'white';
+                              }
+                            }}
+                          >
+                            Previous
+                          </button>
+                          <div style={{
+                            fontSize: '0.875rem',
+                            color: '#5f6368',
+                            fontFamily: 'Roboto, sans-serif',
+                            padding: '0 1rem'
+                          }}>
+                            Page {transactionPage} of {totalTransactionPages}
+                          </div>
+                          <button
+                            onClick={() => setTransactionPage(prev => Math.min(totalTransactionPages, prev + 1))}
+                            disabled={transactionPage === totalTransactionPages}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              border: '1px solid #dadce0',
+                              borderRadius: '4px',
+                              background: transactionPage === totalTransactionPages ? '#f8f9fa' : 'white',
+                              color: transactionPage === totalTransactionPages ? '#dadce0' : '#1a73e8',
+                              cursor: transactionPage === totalTransactionPages ? 'not-allowed' : 'pointer',
+                              fontFamily: 'Roboto, sans-serif',
+                              fontWeight: 500,
+                              transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              if (transactionPage !== totalTransactionPages) {
+                                e.target.style.background = '#f8f9fa';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (transactionPage !== totalTransactionPages) {
+                                e.target.style.background = 'white';
+                              }
+                            }}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </Card.Footer>
+                    )}
                   </Card>
                 </Tab>
               </Tabs>
