@@ -2873,6 +2873,12 @@ html {
   padding: 0;
 }
 
+@media (max-width: 768px) {
+  .home-page {
+    padding-bottom: 4rem !important;
+  }
+}
+
 .feature-card {
   background: white;
   padding: 2rem;
@@ -6972,6 +6978,13 @@ html, body {
     height: 300px;
     object-fit: cover;
     object-position: top center;
+  }
+  
+  .hero-image-lonestar {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    width: 100%;
   }
 }
 
