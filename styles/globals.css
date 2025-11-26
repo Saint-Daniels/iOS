@@ -62,7 +62,13 @@ body {
   color: var(--royal-cream);
   padding: 4rem var(--container-padding) 2rem;
   width: 100%;
-  margin-top: 0;
+  margin-top: auto;
+}
+
+@media (min-width: 992px) {
+  .footer {
+    margin-top: auto;
+  }
 }
 
 /* Card Styles */
@@ -2866,11 +2872,13 @@ html {
 
 /* Animation Styles */
 .home-page {
-  min-height: auto;
+  min-height: calc(100vh - 200px);
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .feature-card {
@@ -6704,12 +6712,11 @@ html, body {
 /* Lonestar Mental Health Design Styles */
 .hero-section-lonestar {
   background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc6 100%);
-  padding: 4rem 0 0 0;
+  padding: 4rem 0;
   min-height: auto;
   display: flex;
   align-items: center;
-  margin-bottom: 0;
-  padding-bottom: 0;
+  margin-bottom: 3rem;
 }
 
 .hero-content-lonestar {

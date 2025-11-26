@@ -9,10 +9,10 @@ export default function Home() {
   return (
     <PageTransition>
       <Navbar />
-      <div className="home-page" style={{ margin: 0, padding: 0, minHeight: 'auto', marginBottom: 0 }}>
+      <div className="home-page" style={{ margin: 0, padding: 0 }}>
         <Hero />
+        <Footer />
       </div>
-      <Footer />
     </PageTransition>
   );
 }
