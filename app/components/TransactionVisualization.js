@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useMemo, Suspense } from 'react';
+import { useRef, useMemo, Suspense, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Line } from '@react-three/drei';
+import { OrbitControls, Line, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 function TransactionNode({ position, label, color, size = 1 }) {
@@ -21,15 +21,20 @@ function TransactionNode({ position, label, color, size = 1 }) {
         <sphereGeometry args={[size, 32, 32]} />
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} />
       </mesh>
-      <Text
+      <Html
         position={[0, size + 0.5, 0]}
-        fontSize={0.3}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
+        center
+        style={{
+          color: 'white',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          textShadow: '0 0 10px rgba(0,0,0,0.8)',
+          pointerEvents: 'none',
+          userSelect: 'none'
+        }}
       >
         {label}
-      </Text>
+      </Html>
     </group>
   );
 }
@@ -51,10 +56,67 @@ function TransactionFlow({ start, end, color }) {
 }
 
 export default function TransactionVisualization() {
+  const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '500px', 
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#00ff88'
+      }}>
+        Loading visualization...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '500px', 
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#ff0088',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}>
+        <div>Error loading visualization</div>
+        <div style={{ fontSize: '0.9rem', color: '#ccc' }}>{error.message}</div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: '100%', height: '500px', background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)' }}>
-      <Suspense fallback={<div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00ff88' }}>Loading...</div>}>
-        <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
+      <Suspense fallback={
+        <div style={{ 
+          width: '100%', 
+          height: '100%', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          color: '#00ff88' 
+        }}>
+          Loading...
+        </div>
+      }>
+        <Canvas 
+          camera={{ position: [0, 5, 10], fov: 50 }}
+          onCreated={() => setError(null)}
+          onError={(e) => setError(e)}
+        >
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00ff88" />
