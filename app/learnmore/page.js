@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import {
   FaDollarSign,
@@ -25,6 +24,7 @@ import {
   FaBuilding,
   FaClipboardCheck,
   FaLeaf,
+  FaArrowRight,
 } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,21 +32,8 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageTransition from '../../components/PageTransition';
 import { ScrollFadeIn, ScrollSlideIn } from '../../components/ScrollAnimation';
-import TransactionVisualization from '../components/TransactionVisualization';
-import dynamic from 'next/dynamic';
-
-// Dynamically import Three.js to avoid SSR issues
-const DynamicTransactionViz = dynamic(() => import('../components/TransactionVisualization'), {
-  ssr: false,
-  loading: () => <div style={{ width: '100%', height: '500px', background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00ff88' }}>Loading visualization...</div>
-});
 
 export default function LearnMore() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <PageTransition>
@@ -88,10 +75,65 @@ export default function LearnMore() {
                 <ScrollSlideIn direction="right">
                   <div style={{ 
                     borderRadius: '20px', 
-                    overflow: 'hidden',
+                    padding: '3rem',
+                    background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.1) 100%)',
+                    border: '2px solid rgba(0, 255, 136, 0.3)',
                     boxShadow: '0 20px 60px rgba(0, 255, 136, 0.3)'
                   }}>
-                    {mounted && <DynamicTransactionViz />}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
+                      {/* Transaction Flow Visualization */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
+                        <div style={{
+                          flex: 1,
+                          textAlign: 'center',
+                          padding: '1.5rem',
+                          background: 'rgba(0, 255, 136, 0.2)',
+                          borderRadius: '15px',
+                          border: '2px solid rgba(0, 255, 136, 0.5)'
+                        }}>
+                          <FaBolt style={{ fontSize: '2rem', color: '#00ff88', marginBottom: '0.5rem' }} />
+                          <div style={{ color: '#00ff88', fontWeight: 'bold', fontSize: '1.1rem' }}>Advertiser</div>
+                        </div>
+                        <FaArrowRight style={{ fontSize: '1.5rem', color: '#00ff88' }} />
+                        <div style={{
+                          flex: 1,
+                          textAlign: 'center',
+                          padding: '1.5rem',
+                          background: 'rgba(0, 136, 255, 0.2)',
+                          borderRadius: '15px',
+                          border: '2px solid rgba(0, 136, 255, 0.5)'
+                        }}>
+                          <FaShieldAlt style={{ fontSize: '2rem', color: '#0088ff', marginBottom: '0.5rem' }} />
+                          <div style={{ color: '#0088ff', fontWeight: 'bold', fontSize: '1.1rem' }}>Escrow</div>
+                        </div>
+                      </div>
+                      
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
+                        <div style={{
+                          flex: 1,
+                          textAlign: 'center',
+                          padding: '1.5rem',
+                          background: 'rgba(255, 136, 0, 0.2)',
+                          borderRadius: '15px',
+                          border: '2px solid rgba(255, 136, 0, 0.5)'
+                        }}>
+                          <FaMobile style={{ fontSize: '2rem', color: '#ff8800', marginBottom: '0.5rem' }} />
+                          <div style={{ color: '#ff8800', fontWeight: 'bold', fontSize: '1.1rem' }}>Wallet</div>
+                        </div>
+                        <FaArrowRight style={{ fontSize: '1.5rem', color: '#ff8800' }} />
+                        <div style={{
+                          flex: 1,
+                          textAlign: 'center',
+                          padding: '1.5rem',
+                          background: 'rgba(255, 0, 136, 0.2)',
+                          borderRadius: '15px',
+                          border: '2px solid rgba(255, 0, 136, 0.5)'
+                        }}>
+                          <FaBuilding style={{ fontSize: '2rem', color: '#ff0088', marginBottom: '0.5rem' }} />
+                          <div style={{ color: '#ff0088', fontWeight: 'bold', fontSize: '1.1rem' }}>Pharmacy</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
