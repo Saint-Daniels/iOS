@@ -6703,7 +6703,7 @@ html, body {
 /* Lonestar Mental Health Design Styles */
 .hero-section-lonestar {
   background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc6 100%);
-  padding: 4rem 0 0 0;
+  padding: 4rem 0;
   min-height: auto;
   display: flex;
   align-items: center;
@@ -6711,7 +6711,11 @@ html, body {
 }
 
 .hero-content-lonestar {
-  padding-right: 2rem;
+  padding-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .hero-title-lonestar {
@@ -6779,16 +6783,18 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 1.5rem;
+  height: 100%;
 }
 
 .hero-image-main {
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 100%;
   height: auto;
   object-fit: cover;
-  object-position: top;
+  object-position: center;
 }
 
 .mission-section-lonestar {
@@ -6923,7 +6929,11 @@ html, body {
   }
   
   .hero-image-lonestar {
-    padding-left: 2rem;
+    padding-left: 1.5rem;
+  }
+  
+  .hero-content-lonestar {
+    padding-right: 1.5rem;
   }
 }
 

@@ -9,11 +9,11 @@ export default function Hero() {
   const router = useRouter();
 
   return (
-    <section className="hero-section-lonestar">
-      <Container>
-        <Row className="align-items-center">
-          <Col lg={6} className="order-2 order-lg-1">
-            <div className="hero-content-lonestar">
+      <section className="hero-section-lonestar">
+        <Container>
+          <Row className="align-items-center justify-content-center">
+            <Col lg={6} className="order-2 order-lg-1">
+              <div className="hero-content-lonestar">
               <h1 className="hero-title-lonestar">
                 Healthcare Rewards: Earn Well. Live Well
               </h1>
