@@ -15,6 +15,7 @@ import {
   FaUsers,
   FaChartLine,
   FaHeart,
+  FaHeartbeat,
   FaBookOpen,
   FaShieldAlt,
   FaLock,
