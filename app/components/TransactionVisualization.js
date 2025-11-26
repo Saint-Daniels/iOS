@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Line } from '@react-three/drei';
 import * as THREE from 'three';
@@ -53,24 +53,28 @@ function TransactionFlow({ start, end, color }) {
 export default function TransactionVisualization() {
   return (
     <div style={{ width: '100%', height: '500px', background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)' }}>
-      <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00ff88" />
-        
-        {/* Transaction Flow Visualization */}
-        <TransactionNode position={[-4, 2, 0]} label="Advertiser" color="#00ff88" size={0.8} />
-        <TransactionNode position={[0, 0, 0]} label="Escrow" color="#0088ff" size={1} />
-        <TransactionNode position={[4, -2, 0]} label="Wallet" color="#ff8800" size={0.9} />
-        <TransactionNode position={[0, -4, 0]} label="Pharmacy" color="#ff0088" size={0.8} />
-        
-        {/* Flow Lines */}
-        <TransactionFlow start={[-4, 2, 0]} end={[0, 0, 0]} color="#00ff88" />
-        <TransactionFlow start={[0, 0, 0]} end={[4, -2, 0]} color="#0088ff" />
-        <TransactionFlow start={[4, -2, 0]} end={[0, -4, 0]} color="#ff8800" />
-        
-        <OrbitControls enableZoom={true} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-      </Canvas>
+      <Suspense fallback={<div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00ff88' }}>Loading...</div>}>
+        <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00ff88" />
+          
+          {/* Transaction Flow Visualization */}
+          <Suspense fallback={null}>
+            <TransactionNode position={[-4, 2, 0]} label="Advertiser" color="#00ff88" size={0.8} />
+            <TransactionNode position={[0, 0, 0]} label="Escrow" color="#0088ff" size={1} />
+            <TransactionNode position={[4, -2, 0]} label="Wallet" color="#ff8800" size={0.9} />
+            <TransactionNode position={[0, -4, 0]} label="Pharmacy" color="#ff0088" size={0.8} />
+          </Suspense>
+          
+          {/* Flow Lines */}
+          <TransactionFlow start={[-4, 2, 0]} end={[0, 0, 0]} color="#00ff88" />
+          <TransactionFlow start={[0, 0, 0]} end={[4, -2, 0]} color="#0088ff" />
+          <TransactionFlow start={[4, -2, 0]} end={[0, -4, 0]} color="#ff8800" />
+          
+          <OrbitControls enableZoom={true} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }
