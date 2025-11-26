@@ -47,6 +47,9 @@ export default function Hero() {
                 width={800}
                 height={500}
                 className="hero-image-main"
+                style={{
+                  objectPosition: 'top center'
+                }}
                 priority
               />
             </div>
