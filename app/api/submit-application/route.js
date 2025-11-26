@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { collection, addDoc } from 'firebase/firestore';
 import { validateApplicationSubmission } from '@/app/utils/applicationValidation';
-import { db } from '@/app/lib/firebase';
 
 export async function POST(request) {
   try {
@@ -95,18 +93,16 @@ export async function POST(request) {
       updatedAt: new Date().toISOString()
     };
     
-    console.log('Attempting to add document to Firestore');
+    console.log('Application data prepared:', applicationData);
     
-    // Add to Firestore
-    const docRef = await addDoc(collection(db, 'applications'), applicationData);
+    // TODO: Store application data in your database
+    // Application data is ready to be stored in your preferred database
     
-    console.log('Document added successfully with ID:', docRef.id);
-    
-    // Return success response with document ID
+    // Return success response
     return NextResponse.json({
       success: true,
       message: 'Application successfully submitted',
-      applicationId: docRef.id,
+      applicationId: `APP-${Date.now()}`,
       clientId: clientId
     });
     

@@ -1,6 +1,3 @@
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getApp } from 'firebase/app';
-
 /**
  * Extracts the marketingID from URL query parameters
  * @returns {string|null} The marketing ID or null if not found
@@ -20,34 +17,43 @@ export const extractMarketingID = () => {
 };
 
 /**
- * Submits lead data to Firestore including the marketing ID
+ * Submits lead data via API route
  * @param {Object} leadData - The lead data to submit
  * @param {string} leadData.firstName - First name of the lead
  * @param {string} leadData.lastName - Last name of the lead
  * @param {string} leadData.email - Email of the lead
  * @param {string} leadData.phone - Phone number of the lead
- * @returns {Promise<string>} Document ID of the new lead
+ * @returns {Promise<string>} Lead ID
  */
 export const submitLeadToFirestore = async (leadData) => {
   try {
-    const firebaseApp = getApp();
-    const db = getFirestore(firebaseApp);
-    
     // Get marketing ID from URL or use default
     const marketingID = extractMarketingID();
     
-    // Prepare the lead data with marketing ID and timestamp
+    // Prepare the lead data with marketing ID
     const leadWithTracking = {
       ...leadData,
       marketingID,
-      timestamp: serverTimestamp()
+      timestamp: new Date().toISOString()
     };
     
-    // Add the document to the leads collection
-    const docRef = await addDoc(collection(db, 'leads'), leadWithTracking);
+    // Submit via API route
+    const response = await fetch('/api/submit-lead', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(leadWithTracking)
+    });
     
-    console.log('Lead successfully submitted with ID:', docRef.id);
-    return docRef.id;
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('Lead successfully submitted with ID:', result.leadId);
+      return result.leadId;
+    } else {
+      throw new Error(result.error || 'Failed to submit lead');
+    }
   } catch (error) {
     console.error('Error submitting lead data:', error);
     throw error;

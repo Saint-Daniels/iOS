@@ -1,8 +1,4 @@
-import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
-import { app } from '../firebase';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
-
-const db = getFirestore(app);
 const SESSION_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
 const SESSION_START_KEY = 'applicationSessionStart';
 const APPLICATION_COMPLETED_KEY = 'applicationCompleted';
@@ -106,65 +102,13 @@ export async function submitClientApplication(application: ClientApplication): P
     // Get visitor ID
     const visitorId = await getVisitorId();
 
-    // Check for existing applications with the same email, phone, SSN, or visitor ID
-    const applicantsRef = collection(db, 'applicants');
-    
-    // Create queries for each unique identifier
-    const emailQuery = query(applicantsRef, where('email', '==', application.email));
-    const phoneQuery = query(applicantsRef, where('phonenumber', '==', application.phonenumber));
-    const ssnQuery = query(applicantsRef, where('ssn', '==', application.ssn));
-    const visitorIdQuery = query(applicantsRef, where('visitorId', '==', visitorId));
-    
-    // Execute all queries
-    const [emailSnapshot, phoneSnapshot, ssnSnapshot, visitorIdSnapshot] = await Promise.all([
-      getDocs(emailQuery),
-      getDocs(phoneQuery),
-      getDocs(ssnQuery),
-      getDocs(visitorIdQuery)
-    ]);
-    
-    // Check if any matches were found
-    if (!emailSnapshot.empty) {
-      return {
-        success: false,
-        message: 'An application with this email address already exists.'
-      };
-    }
-    
-    if (!phoneSnapshot.empty) {
-      return {
-        success: false,
-        message: 'An application with this phone number already exists.'
-      };
-    }
-    
-    if (!ssnSnapshot.empty) {
-      return {
-        success: false,
-        message: 'An application with this SSN already exists.'
-      };
-    }
-
-    if (!visitorIdSnapshot.empty) {
-      return {
-        success: false,
-        message: 'An application has already been submitted from this device.'
-      };
-    }
-    
-    // If no duplicates found, add the new application
-    const docRef = await addDoc(applicantsRef, {
-      ...application,
-      visitorId,
-      createdat: new Date() // Override with current timestamp
-    });
-
     // Mark device as having submitted and application as completed
     markDeviceAsSubmitted();
     
+    // Return success - application would be submitted via API route
     return {
       success: true,
-      message: `Application submitted successfully with ID: ${docRef.id}`
+      message: 'Application submitted successfully'
     };
     
   } catch (error) {

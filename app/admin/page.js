@@ -5,9 +5,7 @@ export const dynamic = 'force-dynamic';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form, Alert, Modal } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaKey, FaCheckCircle } from 'react-icons/fa';
-import { adminResetUserPassword, adminUpdateUserEmail, adminUpdateUserPassword } from '@/lib/firebase';
-import { db } from '@/lib/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+// Firebase removed - admin functionality needs to be implemented via API
 
 export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -27,23 +25,10 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchUsers = async () => {
-    if (!db) {
-      setError('Firebase is not initialized');
-      setLoading(false);
-      return;
-    }
-
     try {
-      const usersRef = collection(db, 'users');
-      const q = query(usersRef, where('role', '!=', 'admin'));
-      const querySnapshot = await getDocs(q);
-      
-      const usersList = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      
-      setUsers(usersList);
+      // TODO: Implement user fetching via API route
+      setUsers([]);
+      setError('User management functionality needs to be implemented via API');
     } catch (error) {
       setError('Error fetching users: ' + error.message);
     } finally {
@@ -53,12 +38,8 @@ export default function AdminDashboard() {
 
   const handleResetPassword = async (userId) => {
     try {
-      const result = await adminResetUserPassword(userId);
-      if (result.success) {
-        setSuccess('Password reset email sent successfully');
-      } else {
-        setError(result.error);
-      }
+      // TODO: Implement password reset via API route
+      setError('Password reset functionality needs to be implemented via API');
     } catch (error) {
       setError('Error resetting password: ' + error.message);
     }
@@ -71,14 +52,9 @@ export default function AdminDashboard() {
     }
 
     try {
-      const result = await adminUpdateUserEmail(selectedUser.id, emailForm.newEmail);
-      if (result.success) {
-        setSuccess('Email updated successfully');
-        setShowEmailModal(false);
-        fetchUsers(); // Refresh user list
-      } else {
-        setError(result.error);
-      }
+      // TODO: Implement email update via API route
+      setError('Email update functionality needs to be implemented via API');
+      setShowEmailModal(false);
     } catch (error) {
       setError('Error updating email: ' + error.message);
     }
@@ -91,7 +67,8 @@ export default function AdminDashboard() {
     }
 
     try {
-      const result = await adminUpdateUserPassword(selectedUser.id, passwordForm.newPassword);
+      // TODO: Implement password update via API route
+      const result = { success: false, error: 'Password update functionality needs to be implemented via API' };
       if (result.success) {
         setSuccess('Password update request sent successfully');
         setShowPasswordModal(false);

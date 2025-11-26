@@ -11,8 +11,19 @@ const inter = Inter({
   display: 'swap',
 });
 
+const getMetadataBase = () => {
+  try {
+    if (process.env.VERCEL_URL) {
+      return new URL(`https://${process.env.VERCEL_URL}`);
+    }
+    return new URL('http://localhost:3031');
+  } catch (error) {
+    return new URL('http://localhost:3031');
+  }
+};
+
 export const metadata = {
-  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
+  metadataBase: getMetadataBase(),
   title: 'Saint Daniels Healthcare Rewards',
   description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
   keywords: 'healthcare rewards, private subsidy, healthcare rewards, pharmacy network, compound interest, healthcare finance, Saint Daniels Healthcare',

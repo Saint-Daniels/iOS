@@ -11,8 +11,7 @@ import { ScrollFadeIn } from '../../components/ScrollAnimation';
 import { extractMarketingID } from '../utils/leadTracking';
 import { storeClientData } from '../utils/clientUtils';
 import SignaturePad from 'signature_pad';
-import { collection, addDoc, query, where, getDocs, doc, setDoc } from 'firebase/firestore';
-import { db } from '@/app/lib/firebase';
+// Firebase imports removed - using API routes instead
 
 // Add function to generate unique lead ID
 const generateLeadId = () => {
@@ -897,9 +896,22 @@ const ApplicationForm = () => {
         }
       };
 
-      // Store in leads collection
-      await setDoc(doc(db, 'leads', leadId), leadData);
-      console.log('Initial lead data stored successfully');
+      // Store lead data via API
+      try {
+        const response = await fetch('/api/submit-lead', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(leadData)
+        });
+        const result = await response.json();
+        if (result.success) {
+          console.log('Initial lead data stored successfully');
+        }
+      } catch (error) {
+        console.error('Error storing initial lead data:', error);
+      }
     } catch (error) {
       console.error('Error storing initial lead data:', error);
     }
@@ -1003,38 +1015,27 @@ const ApplicationForm = () => {
         }
       };
 
-      console.log('Checking for duplicate applications');
-      // Check for duplicate email
-      const emailQuery = query(
-        collection(db, 'applications'),
-        where('email', '==', formData.email)
-      );
-      const emailSnapshot = await getDocs(emailQuery);
+      console.log('Submitting application via API');
+      // Submit application via API route (validation happens server-side)
+      const response = await fetch('/api/submit-application', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(applicationData)
+      });
+
+      const result = await response.json();
       
-      if (!emailSnapshot.empty) {
-        console.log('Duplicate email found');
-        alert('An application with this email already exists. Please use a different email address.');
+      if (!result.success) {
+        console.log('Application submission failed:', result.error);
+        setErrorModalMessage(result.error || 'Failed to submit application. Please try again.');
+        setShowErrorModal(true);
         setIsSubmitting(false);
         return;
       }
 
-      // Check for duplicate phone
-      const phoneQuery = query(
-        collection(db, 'applications'),
-        where('phone', '==', formData.phone)
-      );
-      const phoneSnapshot = await getDocs(phoneQuery);
-      
-      if (!phoneSnapshot.empty) {
-        console.log('Duplicate phone found');
-        alert('An application with this phone number already exists. Please use a different phone number.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      console.log('Submitting application to Firestore');
-      const docRef = await addDoc(collection(db, 'applications'), applicationData);
-      console.log('Application submitted successfully with ID:', docRef.id);
+      console.log('Application submitted successfully with ID:', result.applicationId);
 
       setSuccess(true);
       setIsSubmitting(false);
