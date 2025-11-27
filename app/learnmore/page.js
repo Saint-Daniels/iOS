@@ -25,6 +25,7 @@ import {
   FaClipboardCheck,
   FaLeaf,
   FaArrowRight,
+  FaWallet,
 } from 'react-icons/fa';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
