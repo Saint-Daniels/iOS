@@ -26,7 +26,6 @@ import {
   FaLeaf,
   FaArrowRight,
 } from 'react-icons/fa';
-import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -501,18 +500,48 @@ export default function LearnMore() {
             <Row className="align-items-center">
               <Col lg={6}>
                 <ScrollSlideIn direction="right">
-                  <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                    <Image
-                      src="/images/broker.jpeg"
-                      alt="Modern banking and healthcare technology"
-                      width={600}
-                      height={600}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                  <div style={{ 
+                    height: '600px', 
+                    borderRadius: '20px', 
+                    background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      width: '200px',
+                      height: '200px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.2)',
+                      top: '20%',
+                      left: '10%',
+                      filter: 'blur(40px)'
+                    }}></div>
+                    <div style={{
+                      position: 'absolute',
+                      width: '150px',
+                      height: '150px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.15)',
+                      bottom: '20%',
+                      right: '15%',
+                      filter: 'blur(30px)'
+                    }}></div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '2rem',
+                      zIndex: 1
+                    }}>
+                      <FaWallet style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                      <FaDollarSign style={{ fontSize: '4rem', color: '#007bff', opacity: 0.6 }} />
+                      <FaMobile style={{ fontSize: '3rem', color: '#007bff', opacity: 0.7 }} />
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
@@ -743,18 +772,41 @@ export default function LearnMore() {
               </Col>
               <Col lg={6}>
                 <ScrollSlideIn direction="right">
-                  <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                    <Image
-                      src="/images/river.jpg"
-                      alt="Financial data and healthcare analytics"
-                      width={600}
-                      height={600}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                  <div style={{ 
+                    height: '600px', 
+                    borderRadius: '20px', 
+                    background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      width: '180px',
+                      height: '180px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.2)',
+                      top: '15%',
+                      right: '10%',
+                      filter: 'blur(35px)'
+                    }}></div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '1.5rem',
+                      zIndex: 1
+                    }}>
+                      <FaChartLine style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                      <div style={{ display: 'flex', gap: '1rem' }}>
+                        <FaBullseye style={{ fontSize: '2.5rem', color: '#007bff', opacity: 0.7 }} />
+                        <FaHandshake style={{ fontSize: '2.5rem', color: '#007bff', opacity: 0.7 }} />
+                        <FaUsers style={{ fontSize: '2.5rem', color: '#007bff', opacity: 0.7 }} />
+                      </div>
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
@@ -789,18 +841,41 @@ export default function LearnMore() {
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <ScrollSlideIn direction="right">
-                  <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                    <Image
-                      src="/images/ranch.jpeg"
-                      alt="Member tracking healthcare rewards timeline"
-                      width={600}
-                      height={600}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                  <div style={{ 
+                    height: '600px', 
+                    borderRadius: '20px', 
+                    background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      width: '220px',
+                      height: '220px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.18)',
+                      bottom: '10%',
+                      left: '5%',
+                      filter: 'blur(45px)'
+                    }}></div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '2rem',
+                      zIndex: 1
+                    }}>
+                      <FaGift style={{ fontSize: '4rem', color: '#007bff', opacity: 0.8 }} />
+                      <div style={{ display: 'flex', gap: '1.5rem' }}>
+                        <FaListUl style={{ fontSize: '3rem', color: '#007bff', opacity: 0.7 }} />
+                        <FaChartLine style={{ fontSize: '3rem', color: '#007bff', opacity: 0.7 }} />
+                      </div>
+                      <FaMobile style={{ fontSize: '3.5rem', color: '#007bff', opacity: 0.75 }} />
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
@@ -811,7 +886,7 @@ export default function LearnMore() {
                     <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '2rem' }}>
                       Watch a sponsored insight, receive your private subsidy, and choose whether to spend it instantly at the
                       pharmacy counter or keep it in your wallet. Transparent receipts show how every
-                      penny was funded, where it was redeemed, and how much interest accrued while you waited.
+                      penny was funded and where it was redeemed.
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div style={{
@@ -1010,18 +1085,41 @@ export default function LearnMore() {
                 </div>
               </Col>
               <Col lg={6}>
-                <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                  <Image
-                    src="/images/marketplace.jpeg"
-                    alt="Healthcare advertiser meeting"
-                    width={600}
-                    height={600}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
+                <div style={{ 
+                  height: '600px', 
+                  borderRadius: '20px', 
+                  background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                  boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    width: '200px',
+                    height: '200px',
+                    borderRadius: '50%',
+                    background: 'rgba(0, 123, 255, 0.2)',
+                    top: '20%',
+                    right: '10%',
+                    filter: 'blur(40px)'
+                  }}></div>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '2rem',
+                    zIndex: 1
+                  }}>
+                    <FaHandshake style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                      <FaBullseye style={{ fontSize: '3rem', color: '#007bff', opacity: 0.7 }} />
+                      <FaLightbulb style={{ fontSize: '3rem', color: '#007bff', opacity: 0.7 }} />
+                    </div>
+                    <FaBuilding style={{ fontSize: '3.5rem', color: '#007bff', opacity: 0.75 }} />
+                  </div>
                 </div>
               </Col>
             </Row>
@@ -1096,18 +1194,38 @@ export default function LearnMore() {
 
             <Row className="align-items-center mb-5">
               <Col lg={6}>
-                <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                  <Image
-                    src="/images/pharamcy.jpeg"
-                    alt="Pharmacist scanning app"
-                    width={600}
-                    height={600}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
+                <div style={{ 
+                  height: '600px', 
+                  borderRadius: '20px', 
+                  background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                  boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    width: '190px',
+                    height: '190px',
+                    borderRadius: '50%',
+                    background: 'rgba(0, 123, 255, 0.18)',
+                    bottom: '15%',
+                    left: '8%',
+                    filter: 'blur(38px)'
+                  }}></div>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '2rem',
+                    zIndex: 1
+                  }}>
+                    <FaMobile style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                    <FaHeart style={{ fontSize: '4rem', color: '#007bff', opacity: 0.7 }} />
+                    <FaUsers style={{ fontSize: '3.5rem', color: '#007bff', opacity: 0.75 }} />
+                  </div>
                 </div>
               </Col>
               <Col lg={6}>
@@ -1195,8 +1313,8 @@ export default function LearnMore() {
                   height: '100%',
                   boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)'
                 }}>
-                  <h4 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#2c3e50' }}>Interest Insights</h4>
-                  <p style={{ fontSize: '1rem', lineHeight: '1.8', color: '#6c757d' }}>Real-time projections show how much future care you can fund if you defer a purchase.</p>
+                  <h4 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#2c3e50' }}>Balance Insights</h4>
+                  <p style={{ fontSize: '1rem', lineHeight: '1.8', color: '#6c757d' }}>Real-time tracking shows how much future care you can fund with your current balance.</p>
                 </div>
               </Col>
             </Row>
@@ -1283,18 +1401,38 @@ export default function LearnMore() {
               </Col>
               <Col lg={6}>
                 <ScrollSlideIn direction="right">
-                  <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                    <Image
-                      src="/images/Eligibility.jpeg"
-                      alt="Simple enrollment process"
-                      width={600}
-                      height={600}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                  <div style={{ 
+                    height: '600px', 
+                    borderRadius: '20px', 
+                    background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      width: '210px',
+                      height: '210px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.2)',
+                      top: '10%',
+                      left: '5%',
+                      filter: 'blur(42px)'
+                    }}></div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '2rem',
+                      zIndex: 1
+                    }}>
+                      <FaUsers style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                      <FaMobile style={{ fontSize: '4rem', color: '#007bff', opacity: 0.7 }} />
+                      <FaDollarSign style={{ fontSize: '3.5rem', color: '#007bff', opacity: 0.75 }} />
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
@@ -1329,18 +1467,38 @@ export default function LearnMore() {
             <Row className="align-items-center mb-5">
               <Col lg={6}>
                 <ScrollSlideIn direction="left">
-                  <div style={{ height: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)' }}>
-                    <Image
-                      src="/images/cat.jpeg"
-                      alt="Data security and privacy protection"
-                      width={600}
-                      height={600}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                  <div style={{ 
+                    height: '600px', 
+                    borderRadius: '20px', 
+                    background: 'linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%)',
+                    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      width: '200px',
+                      height: '200px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 123, 255, 0.18)',
+                      bottom: '20%',
+                      right: '8%',
+                      filter: 'blur(40px)'
+                    }}></div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '2rem',
+                      zIndex: 1
+                    }}>
+                      <FaShieldAlt style={{ fontSize: '5rem', color: '#007bff', opacity: 0.8 }} />
+                      <FaLock style={{ fontSize: '4rem', color: '#007bff', opacity: 0.7 }} />
+                      <FaEye style={{ fontSize: '3.5rem', color: '#007bff', opacity: 0.75 }} />
+                    </div>
                   </div>
                 </ScrollSlideIn>
               </Col>
