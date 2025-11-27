@@ -1,7 +1,6 @@
 'use client';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -40,16 +39,17 @@ export default function Hero() {
           </Col>
           <Col lg={6} className="order-1 order-lg-2">
             <div className="hero-image-lonestar">
-              <Image 
-                src="/images/Poland.jpeg"
+              <img 
+                src="/ .gif"
                 alt="Saint Daniels Healthcare"
-                width={800}
-                height={500}
                 className="hero-image-main"
                 style={{
-                  objectPosition: 'top center'
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '100%',
+                  objectFit: 'contain',
+                  borderRadius: '10px'
                 }}
-                priority
               />
             </div>
           </Col>
