@@ -40,7 +40,7 @@ export default function Hero() {
           <Col lg={6} className="order-1 order-lg-2">
             <div className="hero-image-lonestar">
               <img 
-                src="/ .gif"
+                src="/%20.gif"
                 alt="Saint Daniels Healthcare"
                 className="hero-image-main"
                 style={{
