@@ -315,7 +315,7 @@ export default function LearnMore() {
                     </div>
                     <h3 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#2c3e50' }}>Grow</h3>
                     <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '2rem' }}>
-                      Skip a purchase and your unspent balance compounds daily inside our healthcare treasury, giving you more leverage for future care.
+                      Skip a purchase and your unspent balance stays in your wallet, ready for future care needs.
                     </p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                       <span style={{
@@ -457,7 +457,7 @@ export default function LearnMore() {
                     </div>
                     <h4 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: '#2c3e50' }}>Network Visibility</h4>
                     <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '1.5rem' }}>
-                      Every receipt shows which advertiser funded the purchase and how much compound interest you preserved by leaving part of the subsidy untouched.
+                      Every receipt shows which advertiser funded the purchase and how much of your subsidy remains available.
                     </p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                       <span style={{
@@ -530,8 +530,7 @@ export default function LearnMore() {
                     <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '3rem' }}>
                       Saint Daniels Healthcare Rewards converts privacy-safe ad attention into a private subsidy. Every time you
                       engage with health brands inside our ad network, dollars flow into your reward wallet, ready to be spent at
-                      any participating pharmacy. Skip a purchase and the unused balance compounds daily, so your care budget
-                      grows automatically while you focus on feeling better.
+                      any participating pharmacy. Skip a purchase and the unused balance stays in your wallet, ready for when you need it.
                     </p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -614,8 +613,8 @@ export default function LearnMore() {
                           <FaChartLine />
                         </div>
                         <div>
-                          <h4 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#2c3e50' }}>Compound Growth</h4>
-                          <p style={{ fontSize: '1rem', color: '#6c757d' }}>Unused dollars earn daily compound interest so the value of your subsidy keeps expanding.</p>
+                          <h4 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#2c3e50' }}>Secure Storage</h4>
+                          <p style={{ fontSize: '1rem', color: '#6c757d' }}>Unused dollars stay safely in your wallet, ready for when you need them.</p>
                         </div>
                       </div>
                     </div>
@@ -647,7 +646,7 @@ export default function LearnMore() {
                     <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '3rem' }}>
                       Advertisers place offers in our closed healthcare ad network. Members opt in, view personalized content,
                       and immediately unlock a private subsidy that can be routed to any verified pharmacy. Our treasury keeps
-                      unused balances compounding, so every week you wait to spend, your total subsidy earns more interest.
+                      unused balances stay in your wallet, ready for when you need them.
                     </p>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '3rem' }}>
@@ -671,7 +670,7 @@ export default function LearnMore() {
                         boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)'
                       }}>
                         <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#007bff', marginBottom: '0.5rem' }}>18%</div>
-                        <div style={{ fontSize: '0.9rem', color: '#6c757d' }}>Compound rate</div>
+                        <div style={{ fontSize: '0.9rem', color: '#6c757d' }}>Network rate</div>
                       </div>
                       <div style={{
                         padding: '1.5rem',
@@ -735,7 +734,7 @@ export default function LearnMore() {
                           border: '1px solid rgba(0, 123, 255, 0.2)'
                         }}>
                           <FaChartLine style={{ fontSize: '1.5rem', color: '#007bff' }} />
-                          <span style={{ color: '#6c757d' }}>Compound treasury</span>
+                          <span style={{ color: '#6c757d' }}>Network treasury</span>
                         </div>
                       </div>
                     </div>
@@ -811,7 +810,7 @@ export default function LearnMore() {
                     <h3 style={{ fontSize: '2rem', marginBottom: '1.5rem', color: '#2c3e50' }}>Earn, spend, and grow in one tap</h3>
                     <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '2rem' }}>
                       Watch a sponsored insight, receive your private subsidy, and choose whether to spend it instantly at the
-                      pharmacy counter or let it ride inside the compound rewards vault. Transparent receipts show how every
+                      pharmacy counter or keep it in your wallet. Transparent receipts show how every
                       penny was funded, where it was redeemed, and how much interest accrued while you waited.
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -849,7 +848,7 @@ export default function LearnMore() {
                         border: '1px solid rgba(0, 123, 255, 0.2)'
                       }}>
                         <FaChartLine style={{ fontSize: '1.5rem', color: '#007bff' }} />
-                        <span style={{ color: '#6c757d', fontSize: '1.1rem' }}>Daily compounding ledger</span>
+                        <span style={{ color: '#6c757d', fontSize: '1.1rem' }}>Daily balance tracking</span>
                       </div>
                     </div>
                   </div>
@@ -926,7 +925,7 @@ export default function LearnMore() {
                     e.currentTarget.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
                   }}>
                     <h4 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#2c3e50' }}>Grow</h4>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8', color: '#6c757d' }}>Let unspent balances earn compound interest that can later cover higher-cost treatments.</p>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.8', color: '#6c757d' }}>Keep unspent balances in your wallet to save for higher-cost treatments when needed.</p>
                   </div>
                 </ScrollFadeIn>
               </Col>
@@ -1116,8 +1115,7 @@ export default function LearnMore() {
                   <h3 style={{ fontSize: '2rem', marginBottom: '1.5rem', color: '#2c3e50' }}>Use rewards where care happens</h3>
                   <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '2rem' }}>
                     Show your virtual card in your app, let the pharmacist process it, and watch your private subsidy cover the
-                    bill. Every receipt explains which advertiser funded the purchase and how much compound interest you kept
-                    by not spending everything at once.
+                    bill. Every receipt explains which advertiser funded the purchase and how much of your subsidy remains available.
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div style={{
@@ -1401,7 +1399,7 @@ export default function LearnMore() {
           </Container>
         </section>
 
-        {/* Compound Growth Vaults */}
+        {/* Savings Vaults */}
         <section style={{ 
           padding: '120px 0',
           background: 'linear-gradient(135deg, #f5f1e8 0%, #e8dcc6 100%)'
@@ -1416,10 +1414,10 @@ export default function LearnMore() {
                     color: '#2c3e50',
                     marginBottom: '1rem'
                   }}>
-                    Compound Growth Vaults
+                    Savings Vaults
                   </h2>
                   <p style={{ fontSize: '1.25rem', color: '#6c757d' }}>
-                    Pick the strategy that matches your refill schedule and risk tolerance.
+                    Organize your rewards to match your refill schedule and health goals.
                   </p>
                 </Col>
               </Row>
@@ -1519,7 +1517,7 @@ export default function LearnMore() {
                     </div>
                     <h3 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: '#2c3e50' }}>Maintenance Track</h3>
                     <p style={{ fontSize: '1rem', lineHeight: '1.8', color: '#6c757d', marginBottom: '1.5rem' }}>
-                      Medium-term compounding aligned with 30/60/90-day prescription cycles.
+                      Medium-term savings aligned with 30/60/90-day prescription cycles.
                     </p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                       <span style={{

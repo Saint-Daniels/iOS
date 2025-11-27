@@ -19,9 +19,8 @@ export default function Hero() {
               </h1>
               <p className="hero-description-lonestar">
                 Saint Daniels Healthcare Rewards converts every qualified sponsor interaction into a private subsidy you can
-                deploy at trusted pharmacies or allow to grow through our compound network. Download the app to track each
-                reward, authorize spending with a secure virtual card, and build a long-term wellness balance with complete
-                transparency.
+                deploy at trusted pharmacies. Download the app to track each reward, authorize spending with a secure virtual card, 
+                and build a long-term wellness balance with complete transparency.
               </p>
               <div className="hero-buttons-lonestar">
                 <button 

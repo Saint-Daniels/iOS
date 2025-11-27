@@ -25,11 +25,11 @@ const getMetadataBase = () => {
 export const metadata = {
   metadataBase: getMetadataBase(),
   title: 'Saint Daniels Healthcare Rewards',
-  description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
-  keywords: 'healthcare rewards, private subsidy, healthcare rewards, pharmacy network, compound interest, healthcare finance, Saint Daniels Healthcare',
+  description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and build your wellness balance.',
+  keywords: 'healthcare rewards, private subsidy, healthcare rewards, pharmacy network, healthcare finance, Saint Daniels Healthcare',
   openGraph: {
     title: 'Saint Daniels Healthcare Rewards',
-    description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and grow your balance with compound interest.',
+    description: 'Saint Daniels Healthcare Rewards - Earn healthcare rewards through our ad network, spend at pharmacies, and build your wellness balance.',
     url: 'https://saintdanielshealthcare.com',
     siteName: 'Saint Daniels Healthcare',
     type: 'website',
