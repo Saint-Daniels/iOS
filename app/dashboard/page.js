@@ -15,7 +15,6 @@ export default function Dashboard() {
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
   const [chartPeriod, setChartPeriod] = useState('1W');
-  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [transactionPage, setTransactionPage] = useState(1);
   const transactionsPerPage = 10;
   const [readPage, setReadPage] = useState(1);
@@ -524,7 +523,6 @@ export default function Dashboard() {
   ];
 
   const handleLogout = () => {
-    setShowAccountDropdown(false);
     setShowLogoutModal(true);
   };
 
@@ -701,152 +699,42 @@ export default function Dashboard() {
                 </div>
               </Col>
               <Col xs={6} sm={6} md={6} className="text-end">
-                <div style={{ position: 'relative', display: 'inline-block' }}>
-                  <button
-                    onClick={() => setShowAccountDropdown(!showAccountDropdown)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.5rem 0.75rem',
-                      background: 'transparent',
-                      border: '1px solid #e5e5e5',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                      fontSize: '0.85rem',
-                      color: '#1B392F',
-                      fontWeight: 500
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#2c5530';
-                      e.currentTarget.style.background = '#f8f9fa';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = '#e5e5e5';
-                      e.currentTarget.style.background = 'transparent';
-                    }}
-                  >
-                    <FaUser />
-                    <span className="d-none d-sm-inline">Member Account</span>
-                    <span style={{ fontSize: '0.7rem', color: '#8e8e93' }}>
-                      {showAccountDropdown ? '▲' : '▼'}
-                    </span>
-                  </button>
-
-                  {/* Dropdown Menu */}
-                  {showAccountDropdown && (
-                    <div 
-                      style={{
-                        position: 'absolute',
-                        top: '100%',
-                        right: 0,
-                        marginTop: '0.5rem',
-                        background: 'white',
-                        border: '1px solid #e5e5e5',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                        minWidth: '200px',
-                        zIndex: 1002,
-                        overflow: 'hidden'
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: '0.75rem 1rem',
-                          cursor: 'pointer',
-                          transition: 'background 0.2s ease',
-                          borderBottom: '1px solid #f0f0f0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.9rem',
-                          color: '#1B392F'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setShowAccountDropdown(false);
-                          // Navigate to settings page or show settings modal
-                          setShowSettings(true);
-                        }}
-                      >
-                        <FaCog style={{ fontSize: '0.9rem', color: '#666' }} />
-                        <span>Settings</span>
-                      </div>
-                      <div
-                        style={{
-                          padding: '0.75rem 1rem',
-                          cursor: 'pointer',
-                          transition: 'background 0.2s ease',
-                          borderBottom: '1px solid #f0f0f0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.9rem',
-                          color: '#1B392F'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setShowAccountDropdown(false);
-                          // For now, just close dropdown - can add account page later
-                          alert('Account page coming soon');
-                        }}
-                      >
-                        <FaUser style={{ fontSize: '0.9rem', color: '#666' }} />
-                        <span>Account</span>
-                      </div>
-                      <div
-                        style={{
-                          padding: '0.75rem 1rem',
-                          cursor: 'pointer',
-                          transition: 'background 0.2s ease',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.9rem',
-                          color: '#e74c3c'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#fff5f5'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setShowAccountDropdown(false);
-                          handleLogout();
-                        }}
-                      >
-                        <FaSignOutAlt style={{ fontSize: '0.9rem' }} />
-                        <span>Log Out</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <button
+                  onClick={() => setShowSettings(true)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.6rem 1.2rem',
+                    background: '#28a745',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                    fontSize: '0.9rem',
+                    color: 'white',
+                    fontWeight: 600,
+                    boxShadow: '0 2px 4px rgba(40, 167, 69, 0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#218838';
+                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(40, 167, 69, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#28a745';
+                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.2)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <FaCog />
+                  <span className="d-none d-sm-inline">Account Settings</span>
+                </button>
               </Col>
             </Row>
           </Container>
         </div>
-
-        {/* Close dropdown when clicking outside */}
-        {showAccountDropdown && (
-          <div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 1001
-            }}
-            onClick={() => setShowAccountDropdown(false)}
-          />
-        )}
 
         <Container fluid style={{ padding: '1rem 0.5rem' }}>
           {/* Navigation Tabs */}
