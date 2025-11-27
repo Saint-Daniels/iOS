@@ -1400,7 +1400,7 @@ export default function Dashboard() {
                 </Tab>
 
                 <Tab eventKey="pharmacy" title={
-                  <span><FaHospital className="me-2" />Pharmacy Network</span>
+                  <span><FaHospital className="me-2" />Pharmacy</span>
                 }>
                   {userLocation && localPharmacies.length > 0 ? (
                     <Row>
@@ -1557,7 +1557,7 @@ export default function Dashboard() {
                 </Tab>
 
                 <Tab eventKey="history" title={
-                  <span><FaHistory className="me-2" />Transaction History</span>
+                  <span><FaHistory className="me-2" />Transactions</span>
                 }>
                   <Card style={{
                     border: 'none',
