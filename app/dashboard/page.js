@@ -738,7 +738,6 @@ export default function Dashboard() {
                   {/* Dropdown Menu */}
                   {showAccountDropdown && (
                     <div 
-                      onClick={(e) => e.stopPropagation()}
                       style={{
                         position: 'absolute',
                         top: '100%',
@@ -771,7 +770,8 @@ export default function Dashboard() {
                           e.preventDefault();
                           e.stopPropagation();
                           setShowAccountDropdown(false);
-                          router.push('/settings');
+                          // Navigate to settings page or show settings modal
+                          setShowSettings(true);
                         }}
                       >
                         <FaCog style={{ fontSize: '0.9rem', color: '#666' }} />
@@ -795,7 +795,8 @@ export default function Dashboard() {
                           e.preventDefault();
                           e.stopPropagation();
                           setShowAccountDropdown(false);
-                          router.push('/account');
+                          // For now, just close dropdown - can add account page later
+                          alert('Account page coming soon');
                         }}
                       >
                         <FaUser style={{ fontSize: '0.9rem', color: '#666' }} />
@@ -818,9 +819,7 @@ export default function Dashboard() {
                           e.preventDefault();
                           e.stopPropagation();
                           setShowAccountDropdown(false);
-                          setTimeout(() => {
-                            handleLogout();
-                          }, 100);
+                          handleLogout();
                         }}
                       >
                         <FaSignOutAlt style={{ fontSize: '0.9rem' }} />
@@ -843,7 +842,7 @@ export default function Dashboard() {
               left: 0,
               right: 0,
               bottom: 0,
-              zIndex: 1000
+              zIndex: 1001
             }}
             onClick={() => setShowAccountDropdown(false)}
           />
