@@ -844,6 +844,7 @@ export default function Dashboard() {
                   background: 'white',
                   borderBottom: '2px solid #f0f0f0',
                   padding: '1.5rem',
+                  paddingBottom: '2rem',
                   borderRadius: '16px 16px 0 0'
                 }}>
                   <div className="d-flex justify-content-between align-items-center">
