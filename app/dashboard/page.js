@@ -11,7 +11,7 @@ import PageTransition from '../../components/PageTransition';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('balance');
+  const [activeTab, setActiveTab] = useState('inbox');
   const [showSettings, setShowSettings] = useState(false);
   const [showVirtualCard, setShowVirtualCard] = useState(false);
   const [chartPeriod, setChartPeriod] = useState('1W');
@@ -26,6 +26,9 @@ export default function Dashboard() {
   const [localPharmacies, setLocalPharmacies] = useState([]);
   const [locationError, setLocationError] = useState(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showBalanceModal, setShowBalanceModal] = useState(false);
+  const [showPharmacyMap, setShowPharmacyMap] = useState(false);
+  const [selectedAd, setSelectedAd] = useState(null);
 
   // Check authentication with enhanced security
   useEffect(() => {
@@ -533,17 +536,51 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  // Initialize with default location (bypass location requirement)
-  useEffect(() => {
-    // Default location: Dallas, TX (can be changed to any default location)
-    const defaultLocation = {
-      lat: 32.7767,
-      lng: -96.7970
-    };
-    
-    if (!userLocation) {
+  // Get user's current location using geolocation API
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          setUserLocation(location);
+          fetchNearbyPharmacies(location);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          setLocationError('Unable to get your location. Using default location.');
+          // Default location: Dallas, TX
+          const defaultLocation = {
+            lat: 32.7767,
+            lng: -96.7970
+          };
+          setUserLocation(defaultLocation);
+          fetchNearbyPharmacies(defaultLocation);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
+    } else {
+      setLocationError('Geolocation is not supported by your browser.');
+      // Default location: Dallas, TX
+      const defaultLocation = {
+        lat: 32.7767,
+        lng: -96.7970
+      };
       setUserLocation(defaultLocation);
       fetchNearbyPharmacies(defaultLocation);
+    }
+  };
+
+  // Initialize with geolocation
+  useEffect(() => {
+    if (!userLocation) {
+      getCurrentLocation();
     }
   }, []);
 
@@ -773,8 +810,263 @@ export default function Dashboard() {
         </div>
 
         <Container fluid style={{ padding: '1rem 0.5rem' }}>
-          {/* Navigation Tabs */}
-          <Row className="mb-4">
+          {/* Balance Widget in Header */}
+          <Row className="mb-3">
+            <Col xs={12} className="d-flex justify-content-end align-items-center gap-3">
+              <div 
+                onClick={() => setShowBalanceModal(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.75rem 1.5rem',
+                  background: 'white',
+                  borderRadius: '12px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                }}
+              >
+                <FaWallet style={{ fontSize: '1.5rem', color: '#2c5530' }} />
+                <div>
+                  <div style={{ fontSize: '0.75rem', color: '#666', fontWeight: 500 }}>Balance</div>
+                  <div style={{ fontSize: '1.25rem', color: '#2c5530', fontWeight: 700 }}>
+                    ${subsidyBalance.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+              
+              <button
+                onClick={() => setShowPharmacyMap(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  background: 'white',
+                  border: '2px solid #2c5530',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  color: '#2c5530',
+                  fontWeight: 600
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#2c5530';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'white';
+                  e.currentTarget.style.color = '#2c5530';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <FaHospital style={{ fontSize: '1.5rem' }} />
+                <span className="d-none d-sm-inline">Pharmacies</span>
+              </button>
+            </Col>
+          </Row>
+
+          {/* Mailbox Inbox View */}
+          <Row>
+            <Col xs={12}>
+              <Card style={{
+                border: 'none',
+                borderRadius: '16px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                background: 'white',
+                minHeight: '600px'
+              }}>
+                <Card.Header style={{
+                  background: 'white',
+                  borderBottom: '2px solid #f0f0f0',
+                  padding: '1.5rem',
+                  borderRadius: '16px 16px 0 0'
+                }}>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h4 style={{ margin: 0, color: '#2c5530', fontWeight: 600 }}>
+                      <FaEnvelope className="me-2" />
+                      Inbox - Available Ads
+                    </h4>
+                    <Badge bg="success" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
+                      {qualifiedAds.length} New
+                    </Badge>
+                  </div>
+                </Card.Header>
+                <Card.Body style={{ padding: 0 }}>
+                  {/* Available Ads List */}
+                  <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+                    {qualifiedAds.map((ad, index) => (
+                      <div
+                        key={ad.id}
+                        onClick={() => setSelectedAd(ad)}
+                        style={{
+                          padding: '1.5rem',
+                          borderBottom: '1px solid #f0f0f0',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          background: selectedAd?.id === ad.id ? '#f8f9fa' : 'white'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedAd?.id !== ad.id) {
+                            e.currentTarget.style.background = '#f8f9fa';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedAd?.id !== ad.id) {
+                            e.currentTarget.style.background = 'white';
+                          }
+                        }}
+                      >
+                        <div className="d-flex justify-content-between align-items-start">
+                          <div style={{ flex: 1 }}>
+                            <div className="d-flex align-items-center gap-2 mb-2">
+                              <Badge bg="primary" style={{ fontSize: '0.75rem' }}>
+                                {ad.category}
+                              </Badge>
+                              <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                                {ad.brand}
+                              </span>
+                            </div>
+                            <h5 style={{ 
+                              margin: '0.5rem 0', 
+                              color: '#2c5530', 
+                              fontWeight: 600,
+                              fontSize: '1.1rem'
+                            }}>
+                              {ad.subject}
+                            </h5>
+                            <p style={{ 
+                              margin: '0.5rem 0', 
+                              color: '#666', 
+                              fontSize: '0.95rem',
+                              lineHeight: '1.5'
+                            }}>
+                              {ad.preview}
+                            </p>
+                            <div className="d-flex align-items-center gap-3 mt-2">
+                              <span style={{ 
+                                color: '#2c5530', 
+                                fontWeight: 700,
+                                fontSize: '1.1rem'
+                              }}>
+                                +${ad.earnings.toFixed(2)}
+                              </span>
+                              <span style={{ fontSize: '0.875rem', color: '#999' }}>
+                                Expires in {ad.expires}
+                              </span>
+                            </div>
+                          </div>
+                          <FaEnvelope style={{ 
+                            fontSize: '1.5rem', 
+                            color: '#2c5530',
+                            opacity: 0.3,
+                            marginLeft: '1rem'
+                          }} />
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {/* Seen Ads Section */}
+                    {seenAds.length > 0 && (
+                      <>
+                        <div style={{
+                          padding: '1rem 1.5rem',
+                          background: '#f8f9fa',
+                          borderBottom: '1px solid #e0e0e0',
+                          fontWeight: 600,
+                          color: '#666',
+                          fontSize: '0.875rem'
+                        }}>
+                          Previously Viewed
+                        </div>
+                        {seenAds.map((ad) => (
+                          <div
+                            key={ad.id}
+                            onClick={() => setSelectedAd(ad)}
+                            style={{
+                              padding: '1.5rem',
+                              borderBottom: '1px solid #f0f0f0',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              background: selectedAd?.id === ad.id ? '#f8f9fa' : 'white',
+                              opacity: 0.7
+                            }}
+                            onMouseEnter={(e) => {
+                              if (selectedAd?.id !== ad.id) {
+                                e.currentTarget.style.background = '#f8f9fa';
+                                e.currentTarget.style.opacity = '1';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (selectedAd?.id !== ad.id) {
+                                e.currentTarget.style.background = 'white';
+                                e.currentTarget.style.opacity = '0.7';
+                              }
+                            }}
+                          >
+                            <div className="d-flex justify-content-between align-items-start">
+                              <div style={{ flex: 1 }}>
+                                <div className="d-flex align-items-center gap-2 mb-2">
+                                  <Badge bg="secondary" style={{ fontSize: '0.75rem' }}>
+                                    {ad.category}
+                                  </Badge>
+                                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                                    {ad.brand}
+                                  </span>
+                                  {ad.read && (
+                                    <FaCheckCircle style={{ fontSize: '0.875rem', color: '#28a745' }} />
+                                  )}
+                                </div>
+                                <h5 style={{ 
+                                  margin: '0.5rem 0', 
+                                  color: '#2c5530', 
+                                  fontWeight: 600,
+                                  fontSize: '1rem'
+                                }}>
+                                  {ad.subject}
+                                </h5>
+                                <p style={{ 
+                                  margin: '0.5rem 0', 
+                                  color: '#666', 
+                                  fontSize: '0.9rem'
+                                }}>
+                                  {ad.preview}
+                                </p>
+                                <div className="d-flex align-items-center gap-3 mt-2">
+                                  <span style={{ 
+                                    color: '#2c5530', 
+                                    fontWeight: 600
+                                  }}>
+                                    +${ad.earnings.toFixed(2)}
+                                  </span>
+                                  <span style={{ fontSize: '0.875rem', color: '#999' }}>
+                                    {ad.date}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* Old Tabs Structure - Keeping for reference but will be replaced */}
+          <Row className="mb-4" style={{ display: 'none' }}>
             <Col>
               <Tabs
                 activeKey={activeTab}
@@ -1957,6 +2249,192 @@ export default function Dashboard() {
               Save Settings
             </Button>
           </Modal.Footer>
+        </Modal>
+
+        {/* Balance Modal with Transactions */}
+        <Modal 
+          show={showBalanceModal} 
+          onHide={() => setShowBalanceModal(false)}
+          size="lg"
+          centered
+        >
+          <Modal.Header closeButton style={{ borderBottom: '2px solid #f0f0f0' }}>
+            <Modal.Title style={{ color: '#2c5530', fontWeight: 600 }}>
+              <FaWallet className="me-2" />
+              Balance & Transaction History
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ padding: '1.5rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+              borderRadius: '12px',
+              padding: '2rem',
+              color: 'white',
+              marginBottom: '2rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '0.875rem', opacity: 0.9, marginBottom: '0.5rem' }}>
+                Current Balance
+              </div>
+              <div style={{ fontSize: '2.5rem', fontWeight: 700 }}>
+                ${subsidyBalance.toFixed(2)}
+              </div>
+            </div>
+
+            <h5 style={{ marginBottom: '1rem', color: '#2c5530', fontWeight: 600 }}>
+              Recent Transactions
+            </h5>
+            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+              {allTransactions.slice(0, 10).map((transaction) => (
+                <div
+                  key={transaction.id}
+                  style={{
+                    padding: '1rem',
+                    borderBottom: '1px solid #f0f0f0',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: transaction.type === 'earned' ? '#d4edda' : transaction.type === 'spent' ? '#f8d7da' : '#d1ecf1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: transaction.type === 'earned' ? '#155724' : transaction.type === 'spent' ? '#721c24' : '#0c5460'
+                    }}>
+                      {transaction.icon}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, color: '#2c5530' }}>
+                        {transaction.description}
+                      </div>
+                      <div style={{ fontSize: '0.875rem', color: '#666' }}>
+                        {transaction.date} • {transaction.merchant}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{
+                    fontWeight: 700,
+                    fontSize: '1.1rem',
+                    color: transaction.type === 'earned' ? '#28a745' : transaction.type === 'spent' ? '#dc3545' : '#17a2b8'
+                  }}>
+                    {transaction.type === 'earned' ? '+' : transaction.type === 'spent' ? '-' : '+'}${transaction.amount.toFixed(2)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        {/* Pharmacy Map Modal with 3D Google Maps */}
+        <Modal 
+          show={showPharmacyMap} 
+          onHide={() => setShowPharmacyMap(false)}
+          size="xl"
+          centered
+          fullscreen="lg-down"
+        >
+          <Modal.Header closeButton style={{ borderBottom: '2px solid #f0f0f0' }}>
+            <Modal.Title style={{ color: '#2c5530', fontWeight: 600 }}>
+              <FaHospital className="me-2" />
+              Nearby Pharmacies
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ padding: 0, height: '70vh' }}>
+            {userLocation ? (
+              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                {/* Google Maps 3D View */}
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://www.google.com/maps/embed/v1/view?key=AIzaSyBFw0Qbyq9zTFTd-tUY6d-s6U4uUgLhV0k&center=${userLocation.lat},${userLocation.lng}&zoom=14&maptype=roadmap`}
+                ></iframe>
+                
+                {/* Pharmacy List Overlay */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: 'white',
+                  maxHeight: '40%',
+                  overflowY: 'auto',
+                  borderTop: '2px solid #2c5530',
+                  padding: '1rem'
+                }}>
+                  <h6 style={{ marginBottom: '1rem', color: '#2c5530', fontWeight: 600 }}>
+                    Pharmacies Near You
+                  </h6>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {localPharmacies.map((pharmacy) => (
+                      <div
+                        key={pharmacy.id}
+                        style={{
+                          padding: '1rem',
+                          border: '1px solid #e0e0e0',
+                          borderRadius: '8px',
+                          background: 'white',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = '#2c5530';
+                          e.currentTarget.style.boxShadow = '0 2px 8px rgba(44, 85, 48, 0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = '#e0e0e0';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                          <div>
+                            <div style={{ fontWeight: 600, color: '#2c5530', marginBottom: '0.25rem' }}>
+                              {pharmacy.name}
+                            </div>
+                            <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.25rem' }}>
+                              {pharmacy.address}
+                            </div>
+                            <div style={{ fontSize: '0.875rem', color: '#666' }}>
+                              {pharmacy.distance} • {pharmacy.hours}
+                            </div>
+                          </div>
+                          {pharmacy.acceptsSubsidy && (
+                            <Badge bg="success" style={{ fontSize: '0.75rem' }}>
+                              Accepts Subsidy
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}>
+                <FaHospital style={{ fontSize: '3rem', color: '#ccc' }} />
+                <p style={{ color: '#666' }}>Loading location...</p>
+                <Button onClick={getCurrentLocation} variant="primary">
+                  Enable Location
+                </Button>
+              </div>
+            )}
+          </Modal.Body>
         </Modal>
 
         {/* Logout Success Modal */}
