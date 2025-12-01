@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import SignatureCanvas from 'react-signature-canvas';
+import { Container, Row, Col, Form, Button, Alert, Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import PageTransition from '../../components/PageTransition';
 import Navbar from '../../components/Navbar';
@@ -25,6 +26,9 @@ export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [marketingID, setMarketingID] = useState('UNKNOWN');
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showLeaveWarning, setShowLeaveWarning] = useState(false);
+  const signatureCanvasRef = useRef(null);
   
   const [formData, setFormData] = useState({
     // Plan Selection
@@ -85,8 +89,9 @@ export default function SignupPage() {
     desiredDeductible: '',
     
     // Current Coverage
-    hasCurrentCoverage: false,
+    hasCurrentCoverage: '',
     currentCoverageType: '',
+    coverageTypeDetail: '', // Medicare, Tricare, ACA, Group
     currentPlanName: '',
     currentPolicyNumber: '',
     coverageEndDate: '',
@@ -94,16 +99,11 @@ export default function SignupPage() {
     losingCoverageReason: '',
     losingCoverageDate: '',
     
-    // Additional Information
-    preferredLanguage: 'English',
-    needsInterpreter: false,
-    hasDisability: false,
-    hasTobaccoUse: false,
-    
     // Terms
     agreeToTerms: false,
     agreeToPrivacy: false,
-    consentToContact: true
+    consentToContact: false,
+    signature: null
   });
 
   useEffect(() => {
@@ -118,6 +118,7 @@ export default function SignupPage() {
       const hasFormData = formData.firstName || formData.email || formData.planType;
       if (hasFormData) {
         e.preventDefault();
+        setShowLeaveWarning(true);
         e.returnValue = 'Are you sure you want to leave? All your information will be lost.';
         return e.returnValue;
       }
@@ -151,6 +152,19 @@ export default function SignupPage() {
     return `${medicare.slice(0, 3)}-${medicare.slice(3, 6)}-${medicare.slice(6, 9)}A`;
   };
 
+  const formatCurrency = (value) => {
+    // Remove all non-digit characters
+    const numbers = value.replace(/\D/g, '');
+    if (!numbers) return '';
+    // Add commas and dollar sign
+    return '$' + numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  const parseCurrency = (value) => {
+    // Remove dollar sign and commas, return as number string
+    return value.replace(/[$,]/g, '');
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
@@ -162,6 +176,10 @@ export default function SignupPage() {
       } else {
         setFormData(prev => ({ ...prev, [name]: formatPhone(value) }));
       }
+    } else if (name === 'householdIncome' || name === 'expectedIncome' || name === 'desiredPremium' || name === 'desiredDeductible') {
+      // Format currency fields
+      const formatted = formatCurrency(value);
+      setFormData(prev => ({ ...prev, [name]: formatted }));
     } else {
       setFormData(prev => ({
         ...prev,
@@ -236,6 +254,10 @@ export default function SignupPage() {
             return false;
           }
         }
+        if (!formData.desiredPremium || !formData.desiredDeductible) {
+          setError('Please provide desired monthly premium and annual deductible');
+          return false;
+        }
         break;
       case 5:
         // Coverage information is optional but validate if provided
@@ -243,6 +265,22 @@ export default function SignupPage() {
       case 6:
         if (!formData.agreeToTerms || !formData.agreeToPrivacy) {
           setError('You must agree to the Terms of Service and Privacy Policy');
+          return false;
+        }
+        if (!formData.signature) {
+          setError('You must provide an electronic signature');
+          return false;
+        }
+        if (!formData.desiredPremium || !formData.desiredDeductible) {
+          setError('Please provide desired premium and deductible amounts');
+          return false;
+        }
+        if (!formData.hasCurrentCoverage) {
+          setError('Please indicate whether you currently have health insurance coverage');
+          return false;
+        }
+        if (formData.hasCurrentCoverage === 'Yes' && !formData.coverageTypeDetail) {
+          setError('Please specify the type of coverage you have');
           return false;
         }
         break;
@@ -299,7 +337,11 @@ export default function SignupPage() {
         throw new Error('Submission failed');
       }
 
-      // Redirect to application page with plan type
+      // Generate enrollment ID
+      const enrollmentId = 'ENR-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+
+      // Redirect to thank you page with enrollment ID
+      router.push(`/signup/thank-you?enrollmentId=${enrollmentId}`);
       router.push(`/application?planType=${formData.planType}`);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -736,12 +778,11 @@ export default function SignupPage() {
                   <Form.Group className="mb-3">
                     <Form.Label>Household Income <span className="text-danger">*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       name="householdIncome"
                       value={formData.householdIncome}
                       onChange={handleChange}
-                      min="0"
-                      step="0.01"
+                      placeholder="$0"
                       required
                     />
                   </Form.Group>
@@ -760,12 +801,11 @@ export default function SignupPage() {
               <Form.Group className="mb-3">
                 <Form.Label>Expected Income for {new Date().getFullYear()} <span className="text-danger">*</span></Form.Label>
                 <Form.Control
-                  type="number"
+                  type="text"
                   name="expectedIncome"
                   value={formData.expectedIncome}
                   onChange={handleChange}
-                  min="0"
-                  step="0.01"
+                  placeholder="$0"
                   required
                 />
                 <Form.Text className="text-muted">Your best estimate of total household income for the year</Form.Text>
@@ -788,32 +828,30 @@ export default function SignupPage() {
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Desired Monthly Premium</Form.Label>
+                    <Form.Label>Desired Monthly Premium <span className="text-danger">*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       name="desiredPremium"
                       value={formData.desiredPremium}
                       onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      placeholder="e.g., 300"
+                      placeholder="$0"
+                      required
                     />
-                    <Form.Text className="text-muted">Your preferred monthly premium amount (optional)</Form.Text>
+                    <Form.Text className="text-muted">Your preferred monthly premium amount</Form.Text>
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Desired Annual Deductible</Form.Label>
+                    <Form.Label>Desired Annual Deductible <span className="text-danger">*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       name="desiredDeductible"
                       value={formData.desiredDeductible}
                       onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      placeholder="e.g., 5000"
+                      placeholder="$0"
+                      required
                     />
-                    <Form.Text className="text-muted">Your preferred annual deductible amount (optional)</Form.Text>
+                    <Form.Text className="text-muted">Your preferred annual deductible amount</Form.Text>
                   </Form.Group>
                 </Col>
               </Row>
@@ -911,32 +949,30 @@ export default function SignupPage() {
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Desired Monthly Premium</Form.Label>
+                    <Form.Label>Desired Monthly Premium <span className="text-danger">*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       name="desiredPremium"
                       value={formData.desiredPremium}
                       onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      placeholder="e.g., 150"
+                      placeholder="$0"
+                      required
                     />
-                    <Form.Text className="text-muted">Your preferred monthly premium amount for Medicare plan (optional)</Form.Text>
+                    <Form.Text className="text-muted">Your preferred monthly premium amount for Medicare plan</Form.Text>
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Desired Annual Deductible</Form.Label>
+                    <Form.Label>Desired Annual Deductible <span className="text-danger">*</span></Form.Label>
                     <Form.Control
-                      type="number"
+                      type="text"
                       name="desiredDeductible"
                       value={formData.desiredDeductible}
                       onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      placeholder="e.g., 2000"
+                      placeholder="$0"
+                      required
                     />
-                    <Form.Text className="text-muted">Your preferred annual deductible amount (optional)</Form.Text>
+                    <Form.Text className="text-muted">Your preferred annual deductible amount</Form.Text>
                   </Form.Group>
                 </Col>
               </Row>
@@ -950,18 +986,51 @@ export default function SignupPage() {
             <h2 className="step-title">Current Coverage Information</h2>
             <p className="step-description">Tell us about your current health insurance, if any</p>
             
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="hasCurrentCoverage"
-                checked={formData.hasCurrentCoverage}
-                onChange={handleChange}
-                label="I currently have health insurance coverage"
-              />
+            <Form.Group className="mb-4">
+              <Form.Label>Do you currently have health insurance coverage? <span className="text-danger">*</span></Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  name="hasCurrentCoverage"
+                  id="hasCoverageYes"
+                  value="Yes"
+                  checked={formData.hasCurrentCoverage === 'Yes'}
+                  onChange={handleChange}
+                  label="Yes"
+                  required
+                />
+                <Form.Check
+                  type="radio"
+                  name="hasCurrentCoverage"
+                  id="hasCoverageNo"
+                  value="No"
+                  checked={formData.hasCurrentCoverage === 'No'}
+                  onChange={handleChange}
+                  label="No"
+                  required
+                />
+              </div>
             </Form.Group>
 
-            {formData.hasCurrentCoverage && (
+            {formData.hasCurrentCoverage === 'Yes' && (
               <>
+                <Form.Group className="mb-3">
+                  <Form.Label>What type of coverage do you have? <span className="text-danger">*</span></Form.Label>
+                  <Form.Control 
+                    as="select" 
+                    name="coverageTypeDetail" 
+                    value={formData.coverageTypeDetail} 
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select</option>
+                    <option value="Medicare">Medicare</option>
+                    <option value="Tricare">Tricare</option>
+                    <option value="ACA">ACA (Affordable Care Act)</option>
+                    <option value="Group">Group Coverage</option>
+                  </Form.Control>
+                </Form.Group>
+
                 <Row>
                   <Col md={6}>
                     <Form.Group className="mb-3">
@@ -1013,94 +1082,44 @@ export default function SignupPage() {
                     </Form.Group>
                   </Col>
                 </Row>
-              </>
-            )}
 
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="losingCoverage"
-                checked={formData.losingCoverage}
-                onChange={handleChange}
-                label="I am losing my current coverage"
-              />
-            </Form.Group>
-
-            {formData.losingCoverage && (
-              <>
-                <Form.Group className="mb-3">
-                  <Form.Label>Reason for Losing Coverage</Form.Label>
-                  <Form.Control as="select" name="losingCoverageReason" value={formData.losingCoverageReason} onChange={handleChange}>
-                    <option value="">Select</option>
-                    <option value="Job Loss">Job loss</option>
-                    <option value="Divorce">Divorce</option>
-                    <option value="Age Out">Aging out of parent's plan</option>
-                    <option value="Plan Termination">Plan termination</option>
-                    <option value="Moving">Moving to new area</option>
-                    <option value="Other">Other</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Date Coverage Ends</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="losingCoverageDate"
-                    value={formData.losingCoverageDate}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </>
-            )}
-
-            <hr className="my-4" />
-
-            <h4 className="mb-3">Additional Information</h4>
-
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Preferred Language</Form.Label>
-                  <Form.Control as="select" name="preferredLanguage" value={formData.preferredLanguage} onChange={handleChange}>
-                    <option value="English">English</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="French">French</option>
-                    <option value="Other">Other</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
                 <Form.Group className="mb-3">
                   <Form.Check
                     type="checkbox"
-                    name="needsInterpreter"
-                    checked={formData.needsInterpreter}
+                    name="losingCoverage"
+                    checked={formData.losingCoverage}
                     onChange={handleChange}
-                    label="I need interpreter services"
+                    label="I am losing my current coverage"
                   />
                 </Form.Group>
-              </Col>
-            </Row>
 
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="hasDisability"
-                checked={formData.hasDisability}
-                onChange={handleChange}
-                label="I have a disability"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="hasTobaccoUse"
-                checked={formData.hasTobaccoUse}
-                onChange={handleChange}
-                label="I use tobacco products"
-              />
-            </Form.Group>
+                {formData.losingCoverage && (
+                  <>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Reason for Losing Coverage</Form.Label>
+                      <Form.Control as="select" name="losingCoverageReason" value={formData.losingCoverageReason} onChange={handleChange}>
+                        <option value="">Select</option>
+                        <option value="Job Loss">Job loss</option>
+                        <option value="Divorce">Divorce</option>
+                        <option value="Age Out">Aging out of parent's plan</option>
+                        <option value="Plan Termination">Plan termination</option>
+                        <option value="Moving">Moving to new area</option>
+                        <option value="Other">Other</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Date Coverage Ends</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="losingCoverageDate"
+                        value={formData.losingCoverageDate}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </>
+                )}
+              </>
+            )}
           </div>
         );
 
@@ -1161,14 +1180,62 @@ export default function SignupPage() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="consentToContact"
-                checked={formData.consentToContact}
-                onChange={handleChange}
-                label="I consent to be contacted about my enrollment application"
-              />
+            <Form.Group className="mb-4">
+              <Form.Label className="mb-3 d-block">
+                <strong>Electronic Signature <span className="text-danger">*</span></strong>
+                <br />
+                <small className="text-muted">By signing below, you consent to be contacted about your enrollment application and acknowledge this as your legal signature.</small>
+              </Form.Label>
+              <div style={{ 
+                border: '2px solid #ddd', 
+                borderRadius: '8px', 
+                padding: '1rem',
+                background: '#f9f9f9',
+                marginBottom: '1rem'
+              }}>
+                <SignatureCanvas
+                  ref={signatureCanvasRef}
+                  canvasProps={{
+                    width: 500,
+                    height: 150,
+                    className: 'signature-canvas'
+                  }}
+                  backgroundColor="#ffffff"
+                  penColor="#000000"
+                />
+              </div>
+              <div className="d-flex gap-2">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => {
+                    if (signatureCanvasRef.current) {
+                      signatureCanvasRef.current.clear();
+                      setFormData(prev => ({ ...prev, signature: null }));
+                    }
+                  }}
+                >
+                  Clear Signature
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => {
+                    if (signatureCanvasRef.current && !signatureCanvasRef.current.isEmpty()) {
+                      const signatureData = signatureCanvasRef.current.toDataURL();
+                      setFormData(prev => ({ ...prev, signature: signatureData, consentToContact: true }));
+                    }
+                  }}
+                >
+                  Save Signature
+                </Button>
+              </div>
+              {formData.signature && (
+                <Alert variant="success" className="mt-2">
+                  <FaCheckCircle className="me-2" />
+                  Signature saved. You consent to be contacted about your enrollment application.
+                </Alert>
+              )}
             </Form.Group>
 
             <Alert variant="info" className="mt-4">
@@ -1287,7 +1354,7 @@ export default function SignupPage() {
 
                   <div className="text-center mt-4">
                     <p className="text-muted">
-                      Already have an account? <Link href="/login">Login here</Link>
+                      Already have an account? <Link href="/login">Login here</Link> | <Link href="#" onClick={(e) => { e.preventDefault(); setShowContactModal(true); }} style={{ cursor: 'pointer' }}>Contact Us</Link>
                     </p>
                   </div>
                 </div>
@@ -1296,6 +1363,56 @@ export default function SignupPage() {
           </Container>
         </div>
         <Footer />
+
+        {/* Contact Us Modal */}
+        <Modal show={showContactModal} onHide={() => setShowContactModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Contact Us</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <h5>Saint Daniels Healthcare</h5>
+              <p><strong>Phone:</strong> <a href="tel:+18001234567">1-800-123-4567</a></p>
+              <p><strong>Email:</strong> <a href="mailto:info@saintdaniels.com">info@saintdaniels.com</a></p>
+              <p><strong>Address:</strong><br />
+              123 Healthcare Drive<br />
+              Dallas, TX 75201</p>
+              <p><strong>Hours:</strong><br />
+              Monday - Friday: 8:00 AM - 6:00 PM<br />
+              Saturday: 9:00 AM - 2:00 PM<br />
+              Sunday: Closed</p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowContactModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Leave Warning Modal */}
+        <Modal show={showLeaveWarning} onHide={() => setShowLeaveWarning(false)} backdrop="static" keyboard={false} centered>
+          <Modal.Header>
+            <Modal.Title>Warning: Data Loss</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Alert variant="warning">
+              <strong>Are you sure you want to leave?</strong><br />
+              All the information you've entered will be lost if you navigate away from this page.
+            </Alert>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowLeaveWarning(false)}>
+              Stay on Page
+            </Button>
+            <Button variant="danger" onClick={() => {
+              setShowLeaveWarning(false);
+              router.push('/');
+            }}>
+              Leave Anyway
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </PageTransition>
   );
