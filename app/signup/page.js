@@ -1244,7 +1244,20 @@ export default function SignupPage() {
                         <Button
                           type="submit"
                           variant="primary"
-                          style={{ minWidth: '120px' }}
+                          style={{ 
+                            minWidth: '120px',
+                            transition: 'all 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = '#2c5530';
+                            e.currentTarget.style.borderColor = '#2c5530';
+                            e.currentTarget.style.color = 'white';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = '';
+                            e.currentTarget.style.borderColor = '';
+                            e.currentTarget.style.color = '';
+                          }}
                         >
                           Next
                           <FaArrowRight className="ms-2" />
