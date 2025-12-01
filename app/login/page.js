@@ -189,31 +189,31 @@ export default function Login() {
                     >
                       {isVerifying ? 'Verifying...' : 'Sign In'}
                     </Button>
-
-                    <Link href="/signup" className="text-decoration-none">
-                      <Button 
-                        variant="outline" 
-                        className="w-100 py-3"
-                        style={{
-                          border: '2px solid #C4A962',
-                          backgroundColor: 'white',
-                          color: '#C4A962',
-                          fontWeight: '600',
-                          transition: 'all 0.3s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = '#C4A962';
-                          e.currentTarget.style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = 'white';
-                          e.currentTarget.style.color = '#C4A962';
-                        }}
-                      >
-                        Start Enrollment
-                      </Button>
-                    </Link>
                   </Form>
+
+                  <Link href="/signup" className="text-decoration-none d-block">
+                    <Button 
+                      variant="outline" 
+                      className="w-100 py-3"
+                      style={{
+                        border: '2px solid #C4A962',
+                        backgroundColor: 'white',
+                        color: '#C4A962',
+                        fontWeight: '600',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#C4A962';
+                        e.currentTarget.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'white';
+                        e.currentTarget.style.color = '#C4A962';
+                      }}
+                    >
+                      Start Enrollment
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Col>
