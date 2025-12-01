@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Modal, Form, ProgressBar, Tab, Tabs, Alert } from 'react-bootstrap';
 import { FaDollarSign, FaCreditCard, FaChartLine, FaGift, FaHospital, FaMobile, FaEye, FaLock, FaDownload, FaArrowUp, FaArrowDown, FaCalendarAlt, FaReceipt, FaStore, FaPercent, FaWallet, FaUser, FaCog, FaSignOutAlt, FaBell, FaHandshake, FaBullseye, FaUsers, FaShieldAlt, FaCheckCircle, FaClock, FaHistory, FaEnvelope, FaStar, FaTag } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
@@ -29,6 +30,7 @@ export default function Dashboard() {
   const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showPharmacyMap, setShowPharmacyMap] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   // Check authentication with enhanced security
   useEffect(() => {
@@ -584,6 +586,19 @@ export default function Dashboard() {
     }
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showDropdown && !event.target.closest('[data-dropdown]')) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
+
   // Check if location consent was given (only when pharmacy tab is accessed)
   const checkLocationOnPharmacyTab = () => {
     if (!userLocation) {
@@ -690,7 +705,104 @@ export default function Dashboard() {
                 </div>
               </Col>
               <Col xs={6} sm={6} md={6} className="text-end">
-                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
+                  {/* Dropdown Menu */}
+                  <div style={{ position: 'relative' }} data-dropdown>
+                    <button
+                      onClick={() => setShowDropdown(!showDropdown)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        padding: '0.6rem 1.2rem',
+                        background: '#2c5530',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                        fontSize: '0.9rem',
+                        color: 'white',
+                        fontWeight: 600,
+                        boxShadow: '0 2px 4px rgba(44, 85, 48, 0.2)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#1e3a2a';
+                        e.currentTarget.style.boxShadow = '0 4px 8px rgba(44, 85, 48, 0.3)';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = '#2c5530';
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(44, 85, 48, 0.2)';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      <FaUser />
+                      <span className="d-none d-sm-inline">Menu</span>
+                    </button>
+                    {showDropdown && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '100%',
+                        right: 0,
+                        marginTop: '0.5rem',
+                        background: 'white',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                        minWidth: '200px',
+                        zIndex: 1000,
+                        border: '1px solid #e0e0e0'
+                      }}>
+                        <Link href="/dashboard/enrollment" style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <div
+                            style={{
+                              padding: '0.75rem 1rem',
+                              cursor: 'pointer',
+                              borderBottom: '1px solid #f0f0f0',
+                              transition: 'background 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                            onClick={() => setShowDropdown(false)}
+                          >
+                            <FaUser className="me-2" />
+                            Enrollment
+                          </div>
+                        </Link>
+                        <Link href="/dashboard/bank" style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <div
+                            style={{
+                              padding: '0.75rem 1rem',
+                              cursor: 'pointer',
+                              borderBottom: '1px solid #f0f0f0',
+                              transition: 'background 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                            onClick={() => setShowDropdown(false)}
+                          >
+                            <FaWallet className="me-2" />
+                            Bank
+                          </div>
+                        </Link>
+                        <Link href="/dashboard/profile" style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <div
+                            style={{
+                              padding: '0.75rem 1rem',
+                              cursor: 'pointer',
+                              transition: 'background 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                            onClick={() => setShowDropdown(false)}
+                          >
+                            <FaUser className="me-2" />
+                            Profile
+                          </div>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                   <button
                     onClick={() => setShowSettings(true)}
                     style={{
@@ -2174,22 +2286,6 @@ export default function Dashboard() {
               <Form.Group className="mb-3">
                 <Form.Label>Email Notifications</Form.Label>
                 <Form.Check type="switch" defaultChecked label="Receive earnings notifications" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Compound Interest Vault</Form.Label>
-                <Form.Select>
-                  <option>Essentials Track (Conservative)</option>
-                  <option>Maintenance Track (Balanced)</option>
-                  <option>Future Care Track (High-Yield)</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Preferred Pharmacy</Form.Label>
-                <Form.Select>
-                  <option>CVS Pharmacy</option>
-                  <option>Walgreens</option>
-                  <option>Rite Aid</option>
-                </Form.Select>
               </Form.Group>
             </Form>
           </Modal.Body>
