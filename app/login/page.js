@@ -108,7 +108,7 @@ export default function Login() {
   };
 
   return (
-    <div className="login-page">
+    <div className="login-page" style={{ background: '#1B392F' }}>
       <Navbar bg="transparent" expand="lg" className="px-5 py-3">
         <Container>
           <Link href="/" className="navbar-brand ms-5">
@@ -174,11 +174,31 @@ export default function Login() {
                     </Form.Group>
 
                     <Form.Group className="mb-4">
-                      <Form.Check
-                        type="checkbox"
-                        id="remember-me"
-                        label="Remember me"
-                      />
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Form.Check
+                          type="checkbox"
+                          id="remember-me"
+                          label="Remember me"
+                        />
+                        <Link 
+                          href="/contact" 
+                          className="text-decoration-none"
+                          style={{
+                            color: '#C4A962',
+                            fontSize: '0.95rem',
+                            fontWeight: '500',
+                            transition: 'color 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.color = '#b39855';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.color = '#C4A962';
+                          }}
+                        >
+                          Contact Us
+                        </Link>
+                      </div>
                     </Form.Group>
 
                     <Button 
@@ -214,27 +234,6 @@ export default function Login() {
                       Start Enrollment
                     </Button>
                   </Link>
-
-                  <div className="text-center mt-3">
-                    <Link 
-                      href="/contact" 
-                      className="text-decoration-none"
-                      style={{
-                        color: '#C4A962',
-                        fontSize: '0.95rem',
-                        fontWeight: '500',
-                        transition: 'color 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = '#b39855';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = '#C4A962';
-                      }}
-                    >
-                      Contact Us
-                    </Link>
-                  </div>
                 </div>
               </div>
             </Col>
