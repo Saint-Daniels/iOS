@@ -98,6 +98,11 @@ export default function ForgotPassword() {
                             Back to Login
                           </Link>
                         </p>
+                        <p className="mb-0 mt-3">
+                          <Link href="/contact" className="text-primary text-decoration-none">
+                            Need help? Contact us
+                          </Link>
+                        </p>
                       </div>
                     </Form>
                   )}
