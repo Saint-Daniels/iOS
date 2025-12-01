@@ -706,7 +706,7 @@ export default function Dashboard() {
               </Col>
               <Col xs={6} sm={6} md={6} className="text-end">
                 <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
-                  {/* Dropdown Menu */}
+                  {/* Account Settings Button with Dropdown */}
                   <div style={{ position: 'relative' }} data-dropdown>
                     <button
                       onClick={() => setShowDropdown(!showDropdown)}
@@ -715,7 +715,7 @@ export default function Dashboard() {
                         alignItems: 'center',
                         gap: '0.5rem',
                         padding: '0.6rem 1.2rem',
-                        background: '#2c5530',
+                        background: '#28a745',
                         border: 'none',
                         borderRadius: '8px',
                         cursor: 'pointer',
@@ -724,21 +724,21 @@ export default function Dashboard() {
                         fontSize: '0.9rem',
                         color: 'white',
                         fontWeight: 600,
-                        boxShadow: '0 2px 4px rgba(44, 85, 48, 0.2)'
+                        boxShadow: '0 2px 4px rgba(40, 167, 69, 0.2)'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#1e3a2a';
-                        e.currentTarget.style.boxShadow = '0 4px 8px rgba(44, 85, 48, 0.3)';
+                        e.currentTarget.style.background = '#218838';
+                        e.currentTarget.style.boxShadow = '0 4px 8px rgba(40, 167, 69, 0.3)';
                         e.currentTarget.style.transform = 'translateY(-1px)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#2c5530';
-                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(44, 85, 48, 0.2)';
+                        e.currentTarget.style.background = '#28a745';
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.2)';
                         e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >
-                      <FaUser />
-                      <span className="d-none d-sm-inline">Menu</span>
+                      <FaCog />
+                      <span className="d-none d-sm-inline">Account</span>
                     </button>
                     {showDropdown && (
                       <div style={{
@@ -790,6 +790,7 @@ export default function Dashboard() {
                             style={{
                               padding: '0.75rem 1rem',
                               cursor: 'pointer',
+                              borderBottom: '1px solid #f0f0f0',
                               transition: 'background 0.2s ease'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
@@ -800,41 +801,26 @@ export default function Dashboard() {
                             Profile
                           </div>
                         </Link>
+                        <div
+                          onClick={() => {
+                            setShowDropdown(false);
+                            setShowSettings(true);
+                          }}
+                          style={{
+                            padding: '0.75rem 1rem',
+                            cursor: 'pointer',
+                            transition: 'background 0.2s ease',
+                            borderTop: '1px solid #f0f0f0'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
+                          onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                        >
+                          <FaCog className="me-2" />
+                          Settings
+                        </div>
                       </div>
                     )}
                   </div>
-                  <button
-                    onClick={() => setShowSettings(true)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.6rem 1.2rem',
-                      background: '#28a745',
-                      border: 'none',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                      fontSize: '0.9rem',
-                      color: 'white',
-                      fontWeight: 600,
-                      boxShadow: '0 2px 4px rgba(40, 167, 69, 0.2)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#218838';
-                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(40, 167, 69, 0.3)';
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#28a745';
-                      e.currentTarget.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.2)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    <FaCog />
-                    <span className="d-none d-sm-inline">Account Settings</span>
-                  </button>
                   <button
                     onClick={handleLogout}
                     style={{
