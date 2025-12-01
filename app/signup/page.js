@@ -111,6 +111,24 @@ export default function SignupPage() {
     setMarketingID(extractedID);
   }, []);
 
+  // Warn users before leaving the page to prevent data loss
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Only warn if user has started filling out the form
+      const hasFormData = formData.firstName || formData.email || formData.planType;
+      if (hasFormData) {
+        e.preventDefault();
+        e.returnValue = 'Are you sure you want to leave? All your information will be lost.';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [formData]);
+
   const formatSSN = (value) => {
     const ssn = value.replace(/\D/g, '');
     if (ssn.length <= 3) return ssn;

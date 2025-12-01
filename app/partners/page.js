@@ -31,7 +31,7 @@ export default function Partners() {
                 <Card.Body>
                   <Card.Title>Centuries Mutual Insurance Brokerage</Card.Title>
                   <Card.Text>
-                    A comprehensive wealth management firm specializing in tax planning, life insurance, and health insurance solutions. Our expert advisors help you secure your financial future while ensuring optimal healthcare coverage.
+                    We are a trusted financial services company dedicated to providing comprehensive solutions and building lasting relationships with our clients.
                   </Card.Text>
                   <ul className="partner-features">
                     <li>Tax Planning & Wealth Management</li>
@@ -39,7 +39,7 @@ export default function Partners() {
                     <li>Health Insurance Coverage</li>
                     <li>Financial Advisory Services</li>
                   </ul>
-                  <Link href="/contact" className="learn-more">
+                  <Link href="/learnmore" className="learn-more">
                     Learn More →
                   </Link>
                 </Card.Body>

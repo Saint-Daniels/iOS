@@ -214,12 +214,49 @@ export default function Login() {
                       Start Enrollment
                     </Button>
                   </Link>
+
+                  <div className="text-center mt-3">
+                    <Link 
+                      href="/contact" 
+                      className="text-decoration-none"
+                      style={{
+                        color: '#C4A962',
+                        fontSize: '0.95rem',
+                        fontWeight: '500',
+                        transition: 'color 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#b39855';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#C4A962';
+                      }}
+                    >
+                      Contact Us
+                    </Link>
+                  </div>
                 </div>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
+
+      {/* Copyright Footer */}
+      <footer style={{
+        backgroundColor: '#1B392F',
+        color: 'white',
+        padding: '1rem 0',
+        textAlign: 'center',
+        width: '100%',
+        marginTop: 'auto'
+      }}>
+        <Container>
+          <p style={{ margin: 0, fontSize: '0.9rem' }}>
+            © 2025 Saint Daniels Healthcare. All rights reserved.
+          </p>
+        </Container>
+      </footer>
 
       {/* 2FA Verification Modal */}
       <Modal 
