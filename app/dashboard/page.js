@@ -759,13 +759,17 @@ export default function Dashboard() {
                               padding: '0.75rem 1rem',
                               cursor: 'pointer',
                               borderBottom: '1px solid #f0f0f0',
-                              transition: 'background 0.2s ease'
+                              transition: 'background 0.2s ease',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '0.5rem'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                             onClick={() => setShowDropdown(false)}
                           >
-                            <FaUser className="me-2" />
+                            <FaUser />
                             Enrollment
                           </div>
                         </Link>
@@ -775,13 +779,17 @@ export default function Dashboard() {
                               padding: '0.75rem 1rem',
                               cursor: 'pointer',
                               borderBottom: '1px solid #f0f0f0',
-                              transition: 'background 0.2s ease'
+                              transition: 'background 0.2s ease',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '0.5rem'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                             onClick={() => setShowDropdown(false)}
                           >
-                            <FaWallet className="me-2" />
+                            <FaWallet />
                             Bank
                           </div>
                         </Link>
@@ -791,13 +799,17 @@ export default function Dashboard() {
                               padding: '0.75rem 1rem',
                               cursor: 'pointer',
                               borderBottom: '1px solid #f0f0f0',
-                              transition: 'background 0.2s ease'
+                              transition: 'background 0.2s ease',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '0.5rem'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                             onClick={() => setShowDropdown(false)}
                           >
-                            <FaUser className="me-2" />
+                            <FaUser />
                             Profile
                           </div>
                         </Link>
@@ -810,12 +822,16 @@ export default function Dashboard() {
                             padding: '0.75rem 1rem',
                             cursor: 'pointer',
                             transition: 'background 0.2s ease',
-                            borderTop: '1px solid #f0f0f0'
+                            borderTop: '1px solid #f0f0f0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.5rem'
                           }}
                           onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
                           onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
                         >
-                          <FaCog className="me-2" />
+                          <FaCog />
                           Settings
                         </div>
                       </div>
