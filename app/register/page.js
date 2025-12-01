@@ -80,6 +80,10 @@ export default function SignupPage() {
     hasMedicaid: false,
     hasOtherCoverage: false,
     
+    // Plan Preferences (shared for both ACA and Medicare)
+    desiredPremium: '',
+    desiredDeductible: '',
+    
     // Current Coverage
     hasCurrentCoverage: false,
     currentCoverageType: '',
@@ -758,6 +762,43 @@ export default function SignupPage() {
                   label="I expect my income to change significantly this year"
                 />
               </Form.Group>
+
+              <hr className="my-4" />
+
+              <h4 className="mb-3">Plan Preferences</h4>
+              
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Desired Monthly Premium</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="desiredPremium"
+                      value={formData.desiredPremium}
+                      onChange={handleChange}
+                      min="0"
+                      step="0.01"
+                      placeholder="e.g., 300"
+                    />
+                    <Form.Text className="text-muted">Your preferred monthly premium amount (optional)</Form.Text>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Desired Annual Deductible</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="desiredDeductible"
+                      value={formData.desiredDeductible}
+                      onChange={handleChange}
+                      min="0"
+                      step="0.01"
+                      placeholder="e.g., 5000"
+                    />
+                    <Form.Text className="text-muted">Your preferred annual deductible amount (optional)</Form.Text>
+                  </Form.Group>
+                </Col>
+              </Row>
             </div>
           );
         } else {
@@ -844,6 +885,43 @@ export default function SignupPage() {
                   label="I have other health insurance coverage"
                 />
               </Form.Group>
+
+              <hr className="my-4" />
+
+              <h4 className="mb-3">Plan Preferences</h4>
+              
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Desired Monthly Premium</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="desiredPremium"
+                      value={formData.desiredPremium}
+                      onChange={handleChange}
+                      min="0"
+                      step="0.01"
+                      placeholder="e.g., 150"
+                    />
+                    <Form.Text className="text-muted">Your preferred monthly premium amount for Medicare plan (optional)</Form.Text>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Desired Annual Deductible</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="desiredDeductible"
+                      value={formData.desiredDeductible}
+                      onChange={handleChange}
+                      min="0"
+                      step="0.01"
+                      placeholder="e.g., 2000"
+                    />
+                    <Form.Text className="text-muted">Your preferred annual deductible amount (optional)</Form.Text>
+                  </Form.Group>
+                </Col>
+              </Row>
             </div>
           );
         }
