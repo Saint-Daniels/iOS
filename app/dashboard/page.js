@@ -586,55 +586,9 @@ export default function Dashboard() {
 
   // Check if location consent was given (only when pharmacy tab is accessed)
   const checkLocationOnPharmacyTab = () => {
-    // Bypass location requirement - use default location
-    const defaultLocation = {
-      lat: 32.7767,
-      lng: -96.7970
-    };
-    
     if (!userLocation) {
-      setUserLocation(defaultLocation);
-      fetchNearbyPharmacies(defaultLocation);
+      getCurrentLocation();
     }
-  };
-
-  // Get user's current location
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationError('Geolocation is not supported by your browser');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const location = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        setUserLocation(location);
-        fetchNearbyPharmacies(location);
-      },
-      (error) => {
-        let errorMessage = 'Unable to retrieve your location. Please enable location services.';
-        if (error.code) {
-          switch(error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage = 'Location access denied. Please enable location permissions in your browser settings.';
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = 'Location information is unavailable.';
-              break;
-            case error.TIMEOUT:
-              errorMessage = 'Location request timed out. Please try again.';
-              break;
-            default:
-              errorMessage = 'An unknown error occurred while retrieving your location.';
-              break;
-          }
-        }
-        setLocationError(errorMessage);
-      }
-    );
   };
 
   // Fetch nearby pharmacies (mock data for now - in production, use actual API)
