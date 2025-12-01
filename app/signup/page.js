@@ -31,6 +31,9 @@ export default function SignupPage() {
   const signatureCanvasRef = useRef(null);
   
   const [formData, setFormData] = useState({
+    // Disclaimer
+    acceptedDisclaimer: false,
+    
     // Plan Selection
     planType: '',
     
@@ -193,12 +196,18 @@ export default function SignupPage() {
     
     switch(stepNum) {
       case 1:
+        if (!formData.acceptedDisclaimer) {
+          setError('You must accept the terms and conditions and privacy policy to continue');
+          return false;
+        }
+        break;
+      case 2:
         if (!formData.planType) {
           setError('Please select a plan type');
           return false;
         }
         break;
-      case 2:
+      case 3:
         if (!formData.firstName || !formData.lastName || !formData.dateOfBirth || 
             !formData.ssn || !formData.gender || !formData.email || !formData.phone) {
           setError('Please fill in all required personal information fields');
@@ -220,7 +229,7 @@ export default function SignupPage() {
           return false;
         }
         break;
-      case 3:
+      case 4:
         if (!formData.streetAddress || !formData.city || !formData.state || !formData.zipCode) {
           setError('Please fill in all required address fields');
           return false;
@@ -234,7 +243,7 @@ export default function SignupPage() {
           return false;
         }
         break;
-      case 4:
+      case 5:
         if (formData.planType === 'ACA') {
           if (!formData.householdSize || !formData.taxFilingStatus) {
             setError('Please fill in all required household information');
@@ -259,10 +268,10 @@ export default function SignupPage() {
           return false;
         }
         break;
-      case 5:
+      case 6:
         // Coverage information is optional but validate if provided
         break;
-      case 6:
+      case 7:
         if (!formData.agreeToTerms || !formData.agreeToPrivacy) {
           setError('You must agree to the Terms of Service and Privacy Policy');
           return false;
@@ -290,7 +299,7 @@ export default function SignupPage() {
 
   const nextStep = () => {
     if (validateStep(step)) {
-      if (step === 1) {
+      if (step === 2) {
         setPlanType(formData.planType);
       }
       setStep(step + 1);
@@ -355,6 +364,110 @@ export default function SignupPage() {
       case 1:
         return (
           <div className="step-content">
+            <h2 className="step-title">Important Information & Disclaimers</h2>
+            <p className="step-description">Please read and accept the following terms before proceeding with your health insurance enrollment</p>
+            
+            <Alert variant="info" className="mb-4">
+              <strong>Health Insurance Enrollment</strong><br />
+              You are about to begin the enrollment process for health insurance coverage. By proceeding, you acknowledge that you are applying for health insurance and understand that this application will be reviewed by insurance providers.
+            </Alert>
+
+            <div style={{ 
+              maxHeight: '400px', 
+              overflowY: 'auto', 
+              border: '1px solid #dee2e6', 
+              borderRadius: '8px', 
+              padding: '1.5rem',
+              marginBottom: '2rem',
+              background: '#f8f9fa'
+            }}>
+              <h4 style={{ color: '#2c5530', marginBottom: '1.5rem' }}>Terms and Conditions</h4>
+              
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>1. Application Process</h5>
+              <p>By submitting this enrollment application, you agree to provide accurate and complete information. Any false or misleading information may result in denial of coverage or cancellation of your policy.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>2. Eligibility</h5>
+              <p>Eligibility for health insurance coverage is subject to verification of the information provided. Coverage is not guaranteed and is subject to underwriting approval by the insurance carrier.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>3. Premiums and Payments</h5>
+              <p>You are responsible for paying all premiums and fees associated with your health insurance plan. Premium amounts are subject to change and will be communicated to you upon plan approval.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>4. Coverage Terms</h5>
+              <p>Coverage terms, benefits, and limitations are determined by the insurance carrier and are outlined in your policy documents. Please review all policy materials carefully upon receipt.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>5. Data Collection and Use</h5>
+              <p>We collect and use your personal information to process your enrollment application, communicate with you about your application, and provide customer service. Your information may be shared with insurance carriers, third-party service providers, and as required by law.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>6. Communication</h5>
+              <p>By providing your contact information, you consent to receive communications via phone, email, and mail regarding your enrollment application and health insurance coverage.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>7. Limitation of Liability</h5>
+              <p>Saint Daniels Healthcare acts as an insurance broker and is not responsible for coverage decisions made by insurance carriers. We are not liable for any claims, damages, or losses arising from your health insurance coverage or lack thereof.</p>
+
+              <h4 style={{ color: '#2c5530', marginTop: '2rem', marginBottom: '1.5rem' }}>Privacy Policy</h4>
+              
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Information We Collect</h5>
+              <p>We collect personal information including but not limited to: name, date of birth, Social Security number, contact information, health information, income information, and other data necessary to process your enrollment application.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>How We Use Your Information</h5>
+              <p>Your information is used to:</p>
+              <ul>
+                <li>Process and submit your enrollment application to insurance carriers</li>
+                <li>Communicate with you about your application status</li>
+                <li>Provide customer service and support</li>
+                <li>Comply with legal and regulatory requirements</li>
+                <li>Improve our services</li>
+              </ul>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Information Sharing</h5>
+              <p>We may share your information with:</p>
+              <ul>
+                <li>Insurance carriers and their affiliates</li>
+                <li>Third-party service providers who assist in processing your application</li>
+                <li>Government agencies as required by law</li>
+                <li>Legal authorities when required by court order or subpoena</li>
+              </ul>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Data Security</h5>
+              <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Your Rights</h5>
+              <p>You have the right to:</p>
+              <ul>
+                <li>Access your personal information</li>
+                <li>Request corrections to inaccurate information</li>
+                <li>Request deletion of your information (subject to legal requirements)</li>
+                <li>Opt-out of certain communications</li>
+              </ul>
+
+              <h5 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Contact Us</h5>
+              <p>For questions about our privacy practices or to exercise your rights, please contact us at <a href="mailto:privacy@saintdaniels.com">privacy@saintdaniels.com</a> or call 1-800-123-4567.</p>
+
+              <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#666' }}>
+                <strong>Last Updated:</strong> {new Date().toLocaleDateString()}
+              </p>
+            </div>
+
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                name="acceptedDisclaimer"
+                checked={formData.acceptedDisclaimer}
+                onChange={handleChange}
+                required
+                label={
+                  <>
+                    I have read and understand the Terms and Conditions and Privacy Policy. I acknowledge that I am applying for health insurance coverage and consent to the collection, use, and sharing of my information as described above. <span className="text-danger">*</span>
+                  </>
+                }
+              />
+            </Form.Group>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="step-content">
             <h2 className="step-title">Select Your Plan Type</h2>
             <p className="step-description">Choose the type of health insurance plan you're enrolling in</p>
             
@@ -409,7 +522,7 @@ export default function SignupPage() {
           </div>
         );
 
-      case 2:
+      case 3:
         return (
           <div className="step-content">
             <h2 className="step-title">Personal Information</h2>
@@ -542,7 +655,7 @@ export default function SignupPage() {
           </div>
         );
 
-      case 3:
+      case 4:
         return (
           <div className="step-content">
             <h2 className="step-title">Address & Citizenship</h2>
@@ -699,7 +812,7 @@ export default function SignupPage() {
           </div>
         );
 
-      case 4:
+      case 5:
         if (formData.planType === 'ACA') {
           return (
             <div className="step-content">
@@ -980,7 +1093,7 @@ export default function SignupPage() {
           );
         }
 
-      case 5:
+      case 6:
         return (
           <div className="step-content">
             <h2 className="step-title">Current Coverage Information</h2>
@@ -1123,7 +1236,7 @@ export default function SignupPage() {
           </div>
         );
 
-      case 6:
+      case 7:
         return (
           <div className="step-content">
             <h2 className="step-title">Review & Consent</h2>
@@ -1249,7 +1362,7 @@ export default function SignupPage() {
     }
   };
 
-  const totalSteps = 6;
+  const totalSteps = 7;
 
   return (
     <PageTransition>
@@ -1294,7 +1407,7 @@ export default function SignupPage() {
                     {renderStepContent()}
 
                     <div className="form-navigation mt-5 d-flex justify-content-between">
-                      {step > 1 ? (
+                      {step > 2 ? (
                         <Button
                           variant="outline-secondary"
                           onClick={prevStep}
