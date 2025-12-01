@@ -2004,6 +2004,7 @@ export default function Dashboard() {
               style={{
                 background: '#2c5530',
                 border: 'none',
+                color: 'white',
                 padding: '0.75rem 2rem',
                 borderRadius: '4px',
                 fontSize: '0.875rem',
