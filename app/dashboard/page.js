@@ -699,38 +699,74 @@ export default function Dashboard() {
                 </div>
               </Col>
               <Col xs={6} sm={6} md={6} className="text-end">
-                <button
-                  onClick={() => setShowSettings(true)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.6rem 1.2rem',
-                    background: '#28a745',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                    fontSize: '0.9rem',
-                    color: 'white',
-                    fontWeight: 600,
-                    boxShadow: '0 2px 4px rgba(40, 167, 69, 0.2)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#218838';
-                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(40, 167, 69, 0.3)';
-                    e.currentTarget.style.transform = 'translateY(-1px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#28a745';
-                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.2)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  <FaCog />
-                  <span className="d-none d-sm-inline">Account Settings</span>
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', alignItems: 'center' }}>
+                  <button
+                    onClick={() => setShowSettings(true)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.6rem 1.2rem',
+                      background: '#28a745',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      fontSize: '0.9rem',
+                      color: 'white',
+                      fontWeight: 600,
+                      boxShadow: '0 2px 4px rgba(40, 167, 69, 0.2)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#218838';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(40, 167, 69, 0.3)';
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = '#28a745';
+                      e.currentTarget.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <FaCog />
+                    <span className="d-none d-sm-inline">Account Settings</span>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.6rem 1.2rem',
+                      background: 'transparent',
+                      border: '2px solid #dc3545',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      fontSize: '0.9rem',
+                      color: '#dc3545',
+                      fontWeight: 600,
+                      boxShadow: '0 2px 4px rgba(220, 53, 69, 0.1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#dc3545';
+                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(220, 53, 69, 0.3)';
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.color = '#dc3545';
+                      e.currentTarget.style.boxShadow = '0 2px 4px rgba(220, 53, 69, 0.1)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <FaSignOutAlt />
+                    <span className="d-none d-sm-inline">Logout</span>
+                  </button>
+                </div>
               </Col>
             </Row>
           </Container>
