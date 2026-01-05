@@ -1,150 +1,90 @@
-# Saint Daniels Healthcare Rewards
+# Saint Daniels iOS App
 
-**Project Name:** saint-daniels-healthcare-rewards  
-**Purpose:** Frontend web application for healthcare rewards, private subsidies, ad network earnings, pharmacy spending, and compound interest management for the Saint Daniels ecosystem.
-
-## Overview
-
-The Saint Daniels Healthcare Rewards project is a Next.js 15 frontend application that provides a comprehensive platform for managing healthcare rewards and private subsidies.
-
-It handles:
-
-- **Healthcare Rewards Management**: Track private subsidies earned through ad network engagement
-- **Pharmacy Network**: Find and connect with participating pharmacies to spend rewards
-- **Compound Interest**: Monitor and grow unused rewards through daily compound interest
-- **Ad Network Integration**: View and engage with health brand campaigns to earn rewards
-- **User Dashboard**: Comprehensive dashboard for balance tracking, transaction history, and mailbox
-- **Application Portal**: Health insurance enrollment and application management
-
-This project works alongside the Saint Daniels backend services to provide a seamless user experience for healthcare reward management.
+A comprehensive iOS application for managing healthcare rewards and private subsidies. Watch ads, earn rewards, and cash out your earnings.
 
 ## Features
 
-- **Next.js 15** with React 18
-- **Responsive Design**: Mobile-optimized dashboard and pages
-- **Healthcare Rewards Dashboard**: Real-time balance tracking with Robinhood-style charts
-- **Pharmacy Network**: Interactive Google Maps integration for finding nearby pharmacies
-- **Mailbox System**: Gmail-style interface for ad campaigns and rewards
-- **Transaction History**: Comprehensive transaction tracking with pagination
-- **Application Portal**: Multi-step health insurance enrollment form
-- **Video Game Network**: Newsletter page for Fortnite and Call of Duty content
-- **Document Management**: Professional document library and help center
+- **Splash Screen**: Beautiful splash screen with Saint Daniels branding
+- **Authentication**: Secure login system with email and password
+- **Wallet**: View your balance, earnings, and transaction history with interactive charts
+- **Mailbox**: Browse and watch ad campaigns to earn rewards
+- **Settings**: Manage your account, notifications, and app preferences
+- **Cashout**: Withdraw your earnings directly to your bank account
 
-## Tech Stack
+## Requirements
 
-- **Framework**: Next.js 15.3.2
-- **Language**: JavaScript/TypeScript
-- **UI Libraries**: React Bootstrap, Tailwind CSS, Framer Motion
-- **Icons**: React Icons
-- **Maps**: Google Maps API
-- **Authentication**: NextAuth.js
-- **Styling**: CSS Modules, Global CSS, Inline Styles
-- **Deployment**: Vercel (or Docker/Kubernetes)
+- iOS 17.0+
+- Xcode 15.0+
+- Swift 5.0+
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/saint-daniels/ios.git
+cd ios
+```
+
+2. Open the project in Xcode:
+```bash
+open SaintDaniels.xcodeproj
+```
+
+3. Build and run the app on a simulator or device
 
 ## Project Structure
 
 ```
-saint-daniels-healthcare-rewards/
-├── app/                    # Next.js App Router pages
-│   ├── dashboard/          # User dashboard with tabs
-│   ├── application/        # Health insurance application
-│   ├── documents/          # Document library
-│   ├── newsletter/         # Video game network content
-│   ├── help/               # Help center
-│   ├── about/              # About page
-│   ├── contact/            # Contact page
-│   └── layout.js           # Root layout with metadata
-├── components/             # React components
-│   ├── Hero.js             # Homepage hero section
-│   ├── Footer.js           # Site footer
-│   ├── Navbar.js           # Navigation bar
-│   └── ScrollAnimation.js  # Framer Motion animations
-├── public/                 # Static assets
-│   └── images/             # Image files
-├── styles/                 # Global styles
-│   └── globals.css         # Global CSS
-├── package.json            # Dependencies and scripts
-└── next.config.js          # Next.js configuration
+SaintDaniels/
+├── AppDelegate.swift          # App lifecycle management
+├── SceneDelegate.swift        # Scene configuration
+├── ContentView.swift          # Root view with navigation
+├── Views/                     # All view files
+│   ├── SplashView.swift       # Splash screen
+│   ├── LoginView.swift        # Login screen
+│   ├── MainTabView.swift      # Tab bar navigation
+│   ├── WalletView.swift       # Wallet and balance
+│   ├── MailboxView.swift      # Ad campaigns mailbox
+│   ├── SettingsView.swift     # App settings
+│   └── AdDetailView.swift     # Ad viewing screen
+├── Models/                    # Data models
+│   ├── UserModel.swift        # User and authentication
+│   ├── AdModel.swift          # Ad campaign model
+│   └── TransactionModel.swift # Transaction model
+└── Services/                  # Business logic
+    └── RewardsService.swift   # Rewards management
 ```
 
-## Getting Started
+## Key Features
 
-### Prerequisites
+### Wallet
+- View your current balance
+- Track total earnings and spending
+- Interactive balance history charts
+- Quick cashout functionality
+- Transaction history
 
-- Node.js >= 22.x
-- NPM or Yarn
-- Git
+### Mailbox
+- Browse available ad campaigns
+- Watch ads to earn rewards
+- Track watched and unread ads
+- Filter by inbox/unread
 
-### Installation
+### Settings
+- Account management
+- Notification preferences
+- Transaction and cashout history
+- Help and support
+- App information
 
-1. **Clone the repository:**
+## Design
 
-```bash
-git clone https://github.com/Saint-Daniels/Home.git
-cd Home
-```
-
-2. **Install dependencies:**
-
-```bash
-npm install
-```
-
-3. **Configure environment variables in `.env.local`:**
-
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-```
-
-4. **Run the development server:**
-
-```bash
-npm run dev
-```
-
-5. **Open [http://localhost:3000](http://localhost:3000) in your browser**
-
-### Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-## Key Pages
-
-- **Homepage** (`/`): Healthcare rewards overview, eligibility, privacy, and enrollment
-- **Dashboard** (`/dashboard`): User dashboard with Balance, Mailbox, Pharmacy Network, and Transaction History tabs
-- **Application** (`/application`): Health insurance enrollment form
-- **Documents** (`/documents`): Program documentation and forms
-- **Newsletter** (`/newsletter`): Saint Daniels Video Game Network content
-- **Help Center** (`/help`): Support and required documents
-- **About** (`/about`): Company information
-- **Contact** (`/contact`): Contact information and offices
-
-## Deployment
-
-This project can be deployed to:
-- **Vercel** (recommended for Next.js)
-- **Docker/Kubernetes** for containerized deployments
-- **Any Node.js hosting service**
-
-For Vercel deployment:
-1. Connect your GitHub repository to Vercel
-2. Vercel will automatically detect Next.js and configure the build
-3. Set environment variables in Vercel dashboard
-4. Deploy!
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -m "Add new feature"`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a pull request on GitHub
+The app uses a modern, clean design with:
+- Primary color: #C4A962 (Gold)
+- Background color: #1B392F (Dark green)
+- SwiftUI for all UI components
+- Native iOS design patterns
 
 ## License
 
 Copyright © 2025 Saint Daniels Healthcare. All rights reserved.
-
